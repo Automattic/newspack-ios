@@ -1,0 +1,119 @@
+PODS:
+  - 1PasswordExtension (1.8.5)
+  - AFNetworking (3.2.1):
+    - AFNetworking/NSURLSession (= 3.2.1)
+    - AFNetworking/Reachability (= 3.2.1)
+    - AFNetworking/Security (= 3.2.1)
+    - AFNetworking/Serialization (= 3.2.1)
+    - AFNetworking/UIKit (= 3.2.1)
+  - AFNetworking/NSURLSession (3.2.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.2.1)
+  - AFNetworking/Security (3.2.1)
+  - AFNetworking/Serialization (3.2.1)
+  - AFNetworking/UIKit (3.2.1):
+    - AFNetworking/NSURLSession
+  - Alamofire (4.7.3)
+  - CocoaLumberjack (3.4.2):
+    - CocoaLumberjack/Default (= 3.4.2)
+    - CocoaLumberjack/Extensions (= 3.4.2)
+  - CocoaLumberjack/Default (3.4.2)
+  - CocoaLumberjack/Extensions (3.4.2):
+    - CocoaLumberjack/Default
+  - FormatterKit/Resources (1.8.2)
+  - FormatterKit/TimeIntervalFormatter (1.8.2):
+    - FormatterKit/Resources
+  - GoogleSignInRepacked (4.1.2):
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
+  - GoogleToolboxForMac/DebugUtils (2.2.0):
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+  - GoogleToolboxForMac/Defines (2.2.0)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.0)":
+    - GoogleToolboxForMac/DebugUtils (= 2.2.0)
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.0)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.2.0)"
+  - Gridicons (0.18)
+  - lottie-ios (2.5.2)
+  - NSObject-SafeExpectations (0.0.3)
+  - "NSURL+IDN (0.3)"
+  - SVProgressHUD (2.2.5)
+  - UIDeviceIdentifier (1.1.4)
+  - WordPressAuthenticator (1.1.8):
+    - 1PasswordExtension (= 1.8.5)
+    - Alamofire (= 4.7.3)
+    - CocoaLumberjack (= 3.4.2)
+    - GoogleSignInRepacked (= 4.1.2)
+    - Gridicons (~> 0.15)
+    - lottie-ios (= 2.5.2)
+    - "NSURL+IDN (= 0.3)"
+    - SVProgressHUD (= 2.2.5)
+    - WordPressKit (~> 1.8.0)
+    - WordPressShared (~> 1.4)
+    - WordPressUI (~> 1.0)
+  - WordPressKit (1.8.0):
+    - Alamofire (~> 4.7.3)
+    - CocoaLumberjack (= 3.4.2)
+    - NSObject-SafeExpectations (= 0.0.3)
+    - UIDeviceIdentifier (~> 1.1.4)
+    - WordPressShared (~> 1.4)
+    - wpxmlrpc (= 0.8.4)
+  - WordPressShared (1.6.2):
+    - CocoaLumberjack (~> 3.4)
+    - FormatterKit/TimeIntervalFormatter (= 1.8.2)
+  - WordPressUI (1.2.0)
+  - wpxmlrpc (0.8.4)
+
+DEPENDENCIES:
+  - AFNetworking (= 3.2.1)
+  - Alamofire (= 4.7.3)
+  - CocoaLumberjack (= 3.4.2)
+  - WordPressAuthenticator (~> 1.1.8)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - 1PasswordExtension
+    - AFNetworking
+    - Alamofire
+    - CocoaLumberjack
+    - FormatterKit
+    - GoogleSignInRepacked
+    - GoogleToolboxForMac
+    - Gridicons
+    - lottie-ios
+    - NSObject-SafeExpectations
+    - "NSURL+IDN"
+    - SVProgressHUD
+    - UIDeviceIdentifier
+    - WordPressAuthenticator
+    - WordPressKit
+    - WordPressShared
+    - WordPressUI
+    - wpxmlrpc
+
+SPEC CHECKSUMS:
+  1PasswordExtension: 0e95bdea64ec8ff2f4f693be5467a09fac42a83d
+  AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  CocoaLumberjack: db7cc9e464771f12054c22ff6947c5a58d43a0fd
+  FormatterKit: 4b8f29acc9b872d5d12a63efb560661e8f2e1b98
+  GoogleSignInRepacked: d357702618c555f38923576924661325eb1ef22b
+  GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
+  Gridicons: 04261236382e9c62c62c9a104f2f532c1bdf6a78
+  lottie-ios: 3fef45d3fabe63e3c7c2eb603dd64ddfffc73062
+  NSObject-SafeExpectations: b989b68a8a9b7b9f2b264a8b52ba9d7aab8f3129
+  "NSURL+IDN": 82355a0afd532fe1de08f6417c134b49b1a1c4b3
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  UIDeviceIdentifier: 8f8a24b257a4d978c8d40ad1e7355b944ffbfa8c
+  WordPressAuthenticator: edea3f3cb344c97f2381722286c398a027054d4c
+  WordPressKit: 23d7de239367cfea9f9eef8aefe1933e47566cf2
+  WordPressShared: 111e5c935a4540a403d63811f1aba2a14e2fd074
+  WordPressUI: 44fe43a9c5c504dfd534286e39e1ce6ebcd69ff5
+  wpxmlrpc: 6ba55c773cfa27083ae4a2173e69b19f46da98e2
+
+PODFILE CHECKSUM: 54f4f5c01bfb7a7a91bdc5f46c00387911c53569
+
+COCOAPODS: 1.5.3
