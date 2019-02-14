@@ -5,12 +5,10 @@ SCRIPT_PATH=${SOURCE_ROOT}/Credentials/replace_secrets.rb
 
 CREDS_INPUT_PATH=${SOURCE_ROOT}/Credentials/ApiCredentials.tpl
 CREDS_OUTPUT_PATH=${DERIVED_PATH}/ApiCredentials.swift
-
 CREDS_TEMPLATE_PATH=${SOURCE_ROOT}/Credentials/Templates/ApiCredentials-Template.swift
 
 PLIST_INPUT_PATH=${SOURCE_ROOT}/Credentials/InfoPlist.tpl
 PLIST_OUTPUT_PATH=${DERIVED_PATH}/InfoPlist.h
-
 PLIST_TEMPLATE_PATH=${SOURCE_ROOT}/Credentials/Templates/InfoPlist-Template.h
 
 
@@ -57,6 +55,5 @@ else
     ##
     echo ">> Generating Credentials ${PLIST_OUTPUT_PATH}"
     ruby ${SCRIPT_PATH} -i ${PLIST_INPUT_PATH} -s ${SECRETS_PATH} > ${PLIST_OUTPUT_PATH}
-
 
 fi
