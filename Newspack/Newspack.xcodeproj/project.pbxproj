@@ -6,6 +6,20 @@
 	objectVersion = 50;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		E6E1FA7D2216134300119ECE /* GenerateCredentials */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = E6E1FA7E2216134300119ECE /* Build configuration list for PBXAggregateTarget "GenerateCredentials" */;
+			buildPhases = (
+				E6E1FA812216134E00119ECE /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = GenerateCredentials;
+			productName = GenerateCredentials;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD12211FE86004E5B91 /* AppDelegate.swift */; };
 		E6138FD42211FE86004E5B91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD32211FE86004E5B91 /* ViewController.swift */; };
@@ -14,6 +28,12 @@
 		E6138FDC2211FE88004E5B91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6138FDB2211FE88004E5B91 /* Assets.xcassets */; };
 		E6138FDF2211FE88004E5B91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6138FDD2211FE88004E5B91 /* LaunchScreen.storyboard */; };
 		E6138FEA2211FE88004E5B91 /* NewspackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FE92211FE88004E5B91 /* NewspackTests.swift */; };
+		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
+		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
+		E66B7D4722162754004355D3 /* ApiCredentials-Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66B7D4322162754004355D3 /* ApiCredentials-Template.swift */; };
+		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
+		E6E1FA8B2216220200119ECE /* bash_secrets in Resources */ = {isa = PBXBuildFile; fileRef = E6E1FA882216220200119ECE /* bash_secrets */; };
+		E6E1FA8C2216220200119ECE /* ApiCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E1FA8A2216220200119ECE /* ApiCredentials.swift */; };
 		EA27D6504B828267DD8A28ED /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDB59DB68FD7578F7CF8D30 /* Pods_Newspack.framework */; };
 /* End PBXBuildFile section */
 
@@ -25,7 +45,27 @@
 			remoteGlobalIDString = E6138FCD2211FE86004E5B91;
 			remoteInfo = Newspack;
 		};
+		E6E1FA822216152A00119ECE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6138FC62211FE86004E5B91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E6E1FA7D2216134300119ECE;
+			remoteInfo = GenerateCredentials;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E6E1FA692216123600119ECE /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8EDB59DB68FD7578F7CF8D30 /* Pods_Newspack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Newspack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +82,14 @@
 		E6138FE52211FE88004E5B91 /* NewspackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewspackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6138FE92211FE88004E5B91 /* NewspackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewspackTests.swift; sourceTree = "<group>"; };
 		E6138FEB2211FE88004E5B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
+		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
+		E66B7D4222162754004355D3 /* InfoPlist-Template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "InfoPlist-Template.h"; sourceTree = "<group>"; };
+		E66B7D4322162754004355D3 /* ApiCredentials-Template.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ApiCredentials-Template.swift"; sourceTree = "<group>"; };
+		E66B7D4422162754004355D3 /* replace_secrets.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = replace_secrets.rb; sourceTree = "<group>"; };
+		E6E1FA882216220200119ECE /* bash_secrets */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bash_secrets; sourceTree = "<group>"; };
+		E6E1FA892216220200119ECE /* InfoPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoPlist.h; sourceTree = "<group>"; };
+		E6E1FA8A2216220200119ECE /* ApiCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCredentials.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +131,8 @@
 		E6138FC52211FE86004E5B91 = {
 			isa = PBXGroup;
 			children = (
+				E66B7D3E22162754004355D3 /* Credentials */,
+				E6E1FA87221621D200119ECE /* DerivedSources */,
 				E6138FD02211FE86004E5B91 /* Newspack */,
 				E6138FE82211FE88004E5B91 /* NewspackTests */,
 				E6138FCF2211FE86004E5B91 /* Products */,
@@ -187,6 +237,36 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		E66B7D3E22162754004355D3 /* Credentials */ = {
+			isa = PBXGroup;
+			children = (
+				E66B7D3F22162754004355D3 /* ApiCredentials.tpl */,
+				E66B7D4022162754004355D3 /* InfoPlist.tpl */,
+				E66B7D4122162754004355D3 /* Templates */,
+				E66B7D4422162754004355D3 /* replace_secrets.rb */,
+			);
+			path = Credentials;
+			sourceTree = "<group>";
+		};
+		E66B7D4122162754004355D3 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				E66B7D4222162754004355D3 /* InfoPlist-Template.h */,
+				E66B7D4322162754004355D3 /* ApiCredentials-Template.swift */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
+		E6E1FA87221621D200119ECE /* DerivedSources */ = {
+			isa = PBXGroup;
+			children = (
+				E6E1FA8A2216220200119ECE /* ApiCredentials.swift */,
+				E6E1FA882216220200119ECE /* bash_secrets */,
+				E6E1FA892216220200119ECE /* InfoPlist.h */,
+			);
+			path = DerivedSources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -200,10 +280,12 @@
 				E6138FCC2211FE86004E5B91 /* Resources */,
 				57A1A1C3189CD84747189849 /* [CP] Embed Pods Frameworks */,
 				255955E8A0A04FB77360458E /* [CP] Copy Pods Resources */,
+				E6E1FA692216123600119ECE /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E6E1FA832216152A00119ECE /* PBXTargetDependency */,
 			);
 			name = Newspack;
 			productName = Newspack;
@@ -245,6 +327,9 @@
 						CreatedOnToolsVersion = 10.1;
 						TestTargetID = E6138FCD2211FE86004E5B91;
 					};
+					E6E1FA7D2216134300119ECE = {
+						CreatedOnToolsVersion = 10.1;
+					};
 				};
 			};
 			buildConfigurationList = E6138FC92211FE86004E5B91 /* Build configuration list for PBXProject "Newspack" */;
@@ -262,6 +347,7 @@
 			targets = (
 				E6138FCD2211FE86004E5B91 /* Newspack */,
 				E6138FE42211FE88004E5B91 /* NewspackTests */,
+				E6E1FA7D2216134300119ECE /* GenerateCredentials */,
 			);
 		};
 /* End PBXProject section */
@@ -271,9 +357,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */,
 				E6138FDF2211FE88004E5B91 /* LaunchScreen.storyboard in Resources */,
+				E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */,
 				E6138FDC2211FE88004E5B91 /* Assets.xcassets in Resources */,
 				E6138FD72211FE86004E5B91 /* Main.storyboard in Resources */,
+				E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */,
+				E6E1FA8B2216220200119ECE /* bash_secrets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +455,31 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Newspack/Pods-Newspack-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E6E1FA812216134E00119ECE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Credentials/replace_secrets.rb",
+				"$(SRCROOT)/Credentials/ApiCredentials.tpl",
+				"$(SRCROOT)/Credentials/InfoPlist.tpl",
+				"~/.mobile-secrets/iOS/newspack/newspack_app_credentials.json",
+				"$(SRCROOT)/Credentials/Templates/APICredentials-Template.swift",
+				"$(SRCROOT)/Credentials/Templates/InfoPlist-Template.h",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/DerivedSources/ApiCredentials.swift",
+				"$(SRCROOT)/DerivedSources/InfoPlist.h",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$SRCROOT/../Scripts/build-phases/generate-credentials.sh\n";
+		};
 		F8D50333FAE94DE7AC283F9B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -395,8 +510,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6138FD42211FE86004E5B91 /* ViewController.swift in Sources */,
+				E66B7D4722162754004355D3 /* ApiCredentials-Template.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */,
+				E6E1FA8C2216220200119ECE /* ApiCredentials.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +532,11 @@
 			isa = PBXTargetDependency;
 			target = E6138FCD2211FE86004E5B91 /* Newspack */;
 			targetProxy = E6138FE62211FE88004E5B91 /* PBXContainerItemProxy */;
+		};
+		E6E1FA832216152A00119ECE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E6E1FA7D2216134300119ECE /* GenerateCredentials */;
+			targetProxy = E6E1FA822216152A00119ECE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -558,6 +680,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C3C6109B65774AD2159D9E5E /* Pods-Newspack.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PZYM8XX95Q;
@@ -577,6 +700,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DFC0543D82050B0CDC7390DB /* Pods-Newspack.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PZYM8XX95Q;
@@ -634,6 +758,24 @@
 			};
 			name = Release;
 		};
+		E6E1FA7F2216134300119ECE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PZYM8XX95Q;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E6E1FA802216134300119ECE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PZYM8XX95Q;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -660,6 +802,15 @@
 			buildConfigurations = (
 				E6138FF22211FE88004E5B91 /* Debug */,
 				E6138FF32211FE88004E5B91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E6E1FA7E2216134300119ECE /* Build configuration list for PBXAggregateTarget "GenerateCredentials" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E6E1FA7F2216134300119ECE /* Debug */,
+				E6E1FA802216134300119ECE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
