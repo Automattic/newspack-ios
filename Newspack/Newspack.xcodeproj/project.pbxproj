@@ -30,9 +30,7 @@
 		E6138FEA2211FE88004E5B91 /* NewspackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FE92211FE88004E5B91 /* NewspackTests.swift */; };
 		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
 		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
-		E66B7D4722162754004355D3 /* ApiCredentials-Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66B7D4322162754004355D3 /* ApiCredentials-Template.swift */; };
 		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
-		E6E1FA8B2216220200119ECE /* bash_secrets in Resources */ = {isa = PBXBuildFile; fileRef = E6E1FA882216220200119ECE /* bash_secrets */; };
 		E6E1FA8C2216220200119ECE /* ApiCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E1FA8A2216220200119ECE /* ApiCredentials.swift */; };
 		EA27D6504B828267DD8A28ED /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDB59DB68FD7578F7CF8D30 /* Pods_Newspack.framework */; };
 /* End PBXBuildFile section */
@@ -84,10 +82,7 @@
 		E6138FEB2211FE88004E5B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
 		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
-		E66B7D4222162754004355D3 /* InfoPlist-Template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "InfoPlist-Template.h"; sourceTree = "<group>"; };
-		E66B7D4322162754004355D3 /* ApiCredentials-Template.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ApiCredentials-Template.swift"; sourceTree = "<group>"; };
 		E66B7D4422162754004355D3 /* replace_secrets.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = replace_secrets.rb; sourceTree = "<group>"; };
-		E6E1FA882216220200119ECE /* bash_secrets */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bash_secrets; sourceTree = "<group>"; };
 		E6E1FA892216220200119ECE /* InfoPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoPlist.h; sourceTree = "<group>"; };
 		E6E1FA8A2216220200119ECE /* ApiCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCredentials.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -242,26 +237,15 @@
 			children = (
 				E66B7D3F22162754004355D3 /* ApiCredentials.tpl */,
 				E66B7D4022162754004355D3 /* InfoPlist.tpl */,
-				E66B7D4122162754004355D3 /* Templates */,
 				E66B7D4422162754004355D3 /* replace_secrets.rb */,
 			);
 			path = Credentials;
-			sourceTree = "<group>";
-		};
-		E66B7D4122162754004355D3 /* Templates */ = {
-			isa = PBXGroup;
-			children = (
-				E66B7D4222162754004355D3 /* InfoPlist-Template.h */,
-				E66B7D4322162754004355D3 /* ApiCredentials-Template.swift */,
-			);
-			path = Templates;
 			sourceTree = "<group>";
 		};
 		E6E1FA87221621D200119ECE /* DerivedSources */ = {
 			isa = PBXGroup;
 			children = (
 				E6E1FA8A2216220200119ECE /* ApiCredentials.swift */,
-				E6E1FA882216220200119ECE /* bash_secrets */,
 				E6E1FA892216220200119ECE /* InfoPlist.h */,
 			);
 			path = DerivedSources;
@@ -363,7 +347,6 @@
 				E6138FDC2211FE88004E5B91 /* Assets.xcassets in Resources */,
 				E6138FD72211FE86004E5B91 /* Main.storyboard in Resources */,
 				E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */,
-				E6E1FA8B2216220200119ECE /* bash_secrets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,7 +493,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6138FD42211FE86004E5B91 /* ViewController.swift in Sources */,
-				E66B7D4722162754004355D3 /* ApiCredentials-Template.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */,
 				E6E1FA8C2216220200119ECE /* ApiCredentials.swift in Sources */,
@@ -616,6 +598,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SECRETS_PATH = "$HOME/.mobile-secrets/iOS/newspack/newspack_app_credentials.json";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -670,6 +653,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				SECRETS_PATH = "$HOME/.mobile-secrets/iOS/newspack/newspack_app_credentials.json";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
