@@ -61,7 +61,7 @@ PODS:
     - UIDeviceIdentifier (~> 1.1.4)
     - WordPressShared (~> 1.4)
     - wpxmlrpc (= 0.8.4)
-  - WordPressShared (1.6.2):
+  - WordPressShared (1.7.0):
     - CocoaLumberjack (~> 3.4)
     - FormatterKit/TimeIntervalFormatter (= 1.8.2)
   - WordPressUI (1.2.0)
@@ -72,6 +72,7 @@ DEPENDENCIES:
   - Alamofire (= 4.7.3)
   - CocoaLumberjack (= 3.4.2)
   - WordPressAuthenticator (~> 1.1.8)
+  - WordPressKit (~> 1.8.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -110,10 +111,10 @@ SPEC CHECKSUMS:
   UIDeviceIdentifier: 8f8a24b257a4d978c8d40ad1e7355b944ffbfa8c
   WordPressAuthenticator: edea3f3cb344c97f2381722286c398a027054d4c
   WordPressKit: 23d7de239367cfea9f9eef8aefe1933e47566cf2
-  WordPressShared: 111e5c935a4540a403d63811f1aba2a14e2fd074
+  WordPressShared: cfbda56868419842dd7a106a4e807069a0c17aa9
   WordPressUI: 44fe43a9c5c504dfd534286e39e1ce6ebcd69ff5
   wpxmlrpc: 6ba55c773cfa27083ae4a2173e69b19f46da98e2
 
-PODFILE CHECKSUM: 54f4f5c01bfb7a7a91bdc5f46c00387911c53569
+PODFILE CHECKSUM: 6e71ab0930ccc8fb58168e30cf87a8b533540d84
 
 COCOAPODS: 1.5.3
