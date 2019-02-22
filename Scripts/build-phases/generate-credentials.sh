@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DERIVED_PATH=${SOURCE_ROOT}/DerivedSources
+DERIVED_PATH=${BUILT_PRODUCTS_DIR}/../DerivedSources
 SCRIPT_PATH=${SOURCE_ROOT}/Credentials/replace_secrets.rb
 
 CREDS_INPUT_PATH=${SOURCE_ROOT}/Credentials/ApiCredentials.tpl
@@ -11,6 +11,7 @@ PLIST_INPUT_PATH=${SOURCE_ROOT}/Credentials/InfoPlist.tpl
 PLIST_OUTPUT_PATH=${DERIVED_PATH}/InfoPlist.h
 PLIST_TEMPLATE_PATH=${SOURCE_ROOT}/Credentials/Templates/InfoPlist-Template.h
 
+echo ">> Derived path is ${DERIVED_PATH}"
 
 ## Validate Secrets!
 ##
