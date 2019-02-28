@@ -21,5 +21,6 @@ target 'Newspack' do
 
     pod 'CocoaLumberjack', '3.4.2'
     pod 'WordPressAuthenticator', '~> 1.1.8'
-	pod 'WordPressKit', '~> 1.8.0'
+    pod 'WordPressKit', '~> 1.8.0'
+    pod 'WPMediaPicker', '1.3.2'
 end

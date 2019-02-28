@@ -65,6 +65,7 @@ PODS:
     - CocoaLumberjack (~> 3.4)
     - FormatterKit/TimeIntervalFormatter (= 1.8.2)
   - WordPressUI (1.2.0)
+  - WPMediaPicker (1.3.2)
   - wpxmlrpc (0.8.4)
 
 DEPENDENCIES:
@@ -73,6 +74,7 @@ DEPENDENCIES:
   - CocoaLumberjack (= 3.4.2)
   - WordPressAuthenticator (~> 1.1.8)
   - WordPressKit (~> 1.8.0)
+  - WPMediaPicker (= 1.3.2)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -93,6 +95,7 @@ SPEC REPOS:
     - WordPressKit
     - WordPressShared
     - WordPressUI
+    - WPMediaPicker
     - wpxmlrpc
 
 SPEC CHECKSUMS:
@@ -113,8 +116,9 @@ SPEC CHECKSUMS:
   WordPressKit: 23d7de239367cfea9f9eef8aefe1933e47566cf2
   WordPressShared: cfbda56868419842dd7a106a4e807069a0c17aa9
   WordPressUI: 44fe43a9c5c504dfd534286e39e1ce6ebcd69ff5
+  WPMediaPicker: e50edd8f30f5d87288840941ef3ff9cd11860937
   wpxmlrpc: 6ba55c773cfa27083ae4a2173e69b19f46da98e2
 
-PODFILE CHECKSUM: 6e71ab0930ccc8fb58168e30cf87a8b533540d84
+PODFILE CHECKSUM: 55bf211b6e5be2e3d39ca34e3ff20ebbc0e79201
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.6.0
