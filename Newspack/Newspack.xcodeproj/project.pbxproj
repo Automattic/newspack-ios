@@ -369,7 +369,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Newspack/Pods-Newspack-resources.sh",
+				"${SRCROOT}/../Pods/Target Support Files/Pods-Newspack/Pods-Newspack-resources.sh",
 				"${PODS_ROOT}/GoogleSignInRepacked/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
@@ -380,7 +380,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Newspack/Pods-Newspack-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Newspack/Pods-Newspack-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		57A1A1C3189CD84747189849 /* [CP] Embed Pods Frameworks */ = {
@@ -391,7 +391,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Newspack/Pods-Newspack-frameworks.sh",
+				"${SRCROOT}/../Pods/Target Support Files/Pods-Newspack/Pods-Newspack-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/1PasswordExtension/OnePasswordExtension.framework",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
@@ -438,7 +438,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Newspack/Pods-Newspack-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Newspack/Pods-Newspack-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E6E1FA812216134E00119ECE /* ShellScript */ = {
