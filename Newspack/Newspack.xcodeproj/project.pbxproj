@@ -266,6 +266,7 @@
 				57A1A1C3189CD84747189849 /* [CP] Embed Pods Frameworks */,
 				255955E8A0A04FB77360458E /* [CP] Copy Pods Resources */,
 				E6E1FA692216123600119ECE /* Embed App Extensions */,
+				E603CD94222DDD1A005B4127 /* Copy Gutenberg JS */,
 			);
 			buildRules = (
 			);
@@ -462,6 +463,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Newspack/Pods-Newspack-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		E603CD94222DDD1A005B4127 /* Copy Gutenberg JS */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Gutenberg JS";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Print commands before executing them (useful for troubleshooting)\nset -x\nDEST=$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\n\nif [[ \"$CONFIGURATION\" = *Debug* && ! \"$PLATFORM_NAME\" == *simulator ]]; then\nIP=$(ipconfig getifaddr en0)\nif [ -z \"$IP\" ]; then\nIP=$(ifconfig | grep 'inet ' | grep -v ' 127.' | cut -d\\   -f2  | awk 'NR==1{print $1}')\nfi\n\necho \"$IP\" > \"$DEST/ip.txt\"\nfi\n\nBUNDLE_FILE=\"$DEST/main.jsbundle\"\ncp ${PODS_ROOT}/Gutenberg/bundle/ios/App.js \"${BUNDLE_FILE}\"\n\n";
 		};
 		E6E1FA812216134E00119ECE /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
