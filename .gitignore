@@ -1,6 +1,7 @@
 # Project specific
 #
 Newspack/DerivedSources/
+vendor/
 
 # Xcode (Swift template)
 #
