@@ -36,6 +36,8 @@
 		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
 		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
 		E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67F56D42230914800BFD38B /* CoreDataManager.swift */; };
+		E6D022082231AC7D00C601A7 /* Account+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D022062231AC7D00C601A7 /* Account+CoreDataClass.swift */; };
+		E6D022092231AC7D00C601A7 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D022072231AC7D00C601A7 /* Account+CoreDataProperties.swift */; };
 		EA27D6504B828267DD8A28ED /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDB59DB68FD7578F7CF8D30 /* Pods_Newspack.framework */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +95,8 @@
 		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
 		E66B7D4422162754004355D3 /* replace_secrets.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = replace_secrets.rb; sourceTree = "<group>"; };
 		E67F56D42230914800BFD38B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = Newspack/System/CoreDataManager.swift; sourceTree = SOURCE_ROOT; };
+		E6D022062231AC7D00C601A7 /* Account+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E6D022072231AC7D00C601A7 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +214,8 @@
 		E6138FFA22120371004E5B91 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E6D022062231AC7D00C601A7 /* Account+CoreDataClass.swift */,
+				E6D022072231AC7D00C601A7 /* Account+CoreDataProperties.swift */,
 				E6138FD82211FE86004E5B91 /* Newspack.xcdatamodeld */,
 			);
 			path = Models;
@@ -548,7 +554,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6D022092231AC7D00C601A7 /* Account+CoreDataProperties.swift in Sources */,
 				E6138FD42211FE86004E5B91 /* ViewController.swift in Sources */,
+				E6D022082231AC7D00C601A7 /* Account+CoreDataClass.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */,
 				E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */,
