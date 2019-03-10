@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		97ACF26498517D8DBBCBDFEE /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E66E8A0D2235A15100E8DD88 /* Pods_Newspack.framework */; };
 		E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD12211FE86004E5B91 /* AppDelegate.swift */; };
 		E6138FD42211FE86004E5B91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD32211FE86004E5B91 /* ViewController.swift */; };
 		E6138FD72211FE86004E5B91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6138FD52211FE86004E5B91 /* Main.storyboard */; };
@@ -36,8 +37,9 @@
 		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
 		E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A04223596FE00E8DD88 /* CoreDataManagerTests.swift */; };
 		E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A062235979500E8DD88 /* BaseTest.swift */; };
-		E66E8A0E2235A15100E8DD88 /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E66E8A0D2235A15100E8DD88 /* Pods_Newspack.framework */; };
 		E66E8A112235A6D100E8DD88 /* BaseTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A102235A6D100E8DD88 /* BaseTestTests.swift */; };
+		E66E8A1A2235C57800E8DD88 /* Account+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */; };
+		E66E8A1B2235C57800E8DD88 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */; };
 		E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67F56D42230914800BFD38B /* CoreDataManager.swift */; };
 		EA27D6504B828267DD8A28ED /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDB59DB68FD7578F7CF8D30 /* Pods_Newspack.framework */; };
 /* End PBXBuildFile section */
@@ -100,6 +102,8 @@
 		E66E8A0B2235A13400E8DD88 /* Aztec.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Aztec.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E66E8A0D2235A15100E8DD88 /* Pods_Newspack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Newspack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E66E8A102235A6D100E8DD88 /* BaseTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTestTests.swift; sourceTree = "<group>"; };
+		E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E67F56D42230914800BFD38B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = Newspack/System/CoreDataManager.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -112,6 +116,7 @@
 				E625788B222F0B4C00DE6F26 /* ImageIO.framework in Frameworks */,
 				E6257887222F0B2E00DE6F26 /* Photos.framework in Frameworks */,
 				EA27D6504B828267DD8A28ED /* Pods_Newspack.framework in Frameworks */,
+				97ACF26498517D8DBBCBDFEE /* Pods_Newspack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,7 +124,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E66E8A0E2235A15100E8DD88 /* Pods_Newspack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -223,6 +227,8 @@
 		E6138FFA22120371004E5B91 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */,
+				E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */,
 				E6138FD82211FE86004E5B91 /* Newspack.xcdatamodeld */,
 			);
 			path = Models;
@@ -460,6 +466,7 @@
 				"${BUILT_PRODUCTS_DIR}/WPMediaPicker/WPMediaPicker.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPress-Aztec-iOS/Aztec.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPressAuthenticator/WordPressAuthenticator.framework",
+				"${BUILT_PRODUCTS_DIR}/WordPressFlux/WordPressFlux.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPressKit/WordPressKit.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPressShared/WordPressShared.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPressUI/WordPressUI.framework",
@@ -496,6 +503,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WPMediaPicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Aztec.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressAuthenticator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressFlux.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressShared.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressUI.framework",
@@ -578,6 +586,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E66E8A1B2235C57800E8DD88 /* Account+CoreDataProperties.swift in Sources */,
+				E66E8A1A2235C57800E8DD88 /* Account+CoreDataClass.swift in Sources */,
 				E6138FD42211FE86004E5B91 /* ViewController.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */,
