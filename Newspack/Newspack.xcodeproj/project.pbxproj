@@ -214,7 +214,7 @@
 				E66E8A122235ABB300E8DD88 /* Base */,
 				E66E8A03223596B400E8DD88 /* CoreData */,
 				E62C7C672235E729000FEB33 /* Stores */,
-				E62C7C6A2235F042000FEB33 /* System */,
+				E62C7C6A2235F042000FEB33 /* Services */,
 				E6138FEB2211FE88004E5B91 /* Info.plist */,
 			);
 			path = NewspackTests;
@@ -312,12 +312,12 @@
 			path = Stores;
 			sourceTree = "<group>";
 		};
-		E62C7C6A2235F042000FEB33 /* System */ = {
+		E62C7C6A2235F042000FEB33 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */,
 			);
-			path = System;
+			path = Services;
 			sourceTree = "<group>";
 		};
 		E66B7D3E22162754004355D3 /* Credentials */ = {
