@@ -13,7 +13,7 @@ class CoreDataManagerTests: BaseTest {
         XCTAssertTrue(context.concurrencyType == .privateQueueConcurrencyType)
     }
 
-    // CHeck that the context is a private sibling of the public main context.
+    // Check that the context is a private sibling of the public main context.
     //
     func testPrivateContextIsSiblingOfMainContext() {
         let context = CoreDataManager.shared.newPrivateContext()

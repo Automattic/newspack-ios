@@ -60,7 +60,7 @@ class CoreDataManager: PersistentContainerManager {
     // background thread.
     //
     // Parameters:
-    // - block: An anonymous block exectued on a background thread.
+    // - block: An anonymous block executed on a background thread.
     //
     public func performBackgroundTask(_ block: @escaping (NSManagedObjectContext) -> Void) {
         container.performBackgroundTask { context in
@@ -78,7 +78,7 @@ class CoreDataManager: PersistentContainerManager {
         return childContext
     }
 
-    // Returns an NSManagedObjectContext that is a child of the NSPersistentContiner's
+    // Returns an NSManagedObjectContext that is a child of the NSPersistentContainer's
     // private context--a sibling of the public mainContext.
     //
     public func newPrivateContext() -> NSManagedObjectContext {
