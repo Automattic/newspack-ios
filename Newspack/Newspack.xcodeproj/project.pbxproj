@@ -42,7 +42,6 @@
 		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
 		E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A04223596FE00E8DD88 /* CoreDataManagerTests.swift */; };
 		E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A062235979500E8DD88 /* BaseTest.swift */; };
-		E66E8A112235A6D100E8DD88 /* BaseTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A102235A6D100E8DD88 /* BaseTestTests.swift */; };
 		E66E8A1A2235C57800E8DD88 /* Account+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */; };
 		E66E8A1B2235C57800E8DD88 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */; };
 		E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */; };
@@ -113,7 +112,6 @@
 		E66E8A0822359FE200E8DD88 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		E66E8A0B2235A13400E8DD88 /* Aztec.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Aztec.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E66E8A0D2235A15100E8DD88 /* Pods_Newspack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Newspack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E66E8A102235A6D100E8DD88 /* BaseTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTestTests.swift; sourceTree = "<group>"; };
 		E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
@@ -336,7 +334,6 @@
 		E66E8A03223596B400E8DD88 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				E66E8A102235A6D100E8DD88 /* BaseTestTests.swift */,
 				E66E8A04223596FE00E8DD88 /* CoreDataManagerTests.swift */,
 			);
 			path = CoreData;
@@ -673,7 +670,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E66E8A112235A6D100E8DD88 /* BaseTestTests.swift in Sources */,
 				E62C7C6C2235F061000FEB33 /* AuthenticationManagerTests.swift in Sources */,
 				E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */,
 				E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */,
