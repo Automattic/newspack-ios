@@ -16,5 +16,19 @@ class AccountStoreTests: BaseTest {
         XCTAssertTrue(store.numberOfAccounts() == 1)
     }
 
+    /// Test that an authentication token is properly saved.
+    ///
+    func testAuthTokenSaved() {
+        let context = CoreDataManager.shared.mainContext
+        let token = "testToken"
+        let store = AccountStore()
+        store.createAccount(username: "tstuser", authToken: token)
+
+        let accounts = try! context.fetch(Account.accountFetchRequest() as! NSFetchRequest<NSFetchRequestResult>) as! [Account]
+        let account = accounts.first
+        let savedToken = store.authToken(for: account!)
+
+        XCTAssertTrue(savedToken == token)
+    }
 
 }
