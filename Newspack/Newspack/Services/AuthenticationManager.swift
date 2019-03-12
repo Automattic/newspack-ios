@@ -1,7 +1,10 @@
 import Foundation
 import WordPressAuthenticator
+import WordPressFlux
 
 class AuthenticationManager {
+
+    var storeReceipt: Receipt?
 
     /// Initialize the authentication manager.
     /// Only necessary if showing the auth flow. Optional otherwise.
@@ -20,16 +23,17 @@ class AuthenticationManager {
 
     }
 
-
-    ///
+    /// Returns true if authentication is required.
     ///
     func authenticationRequred() -> Bool {
         let store = AccountStore()
         return store.numberOfAccounts() == 0
     }
 
-
+    /// Shows the login flow.  The flow is presented from the specified controller.
     ///
+    /// - Parameteres:
+    ///     - controller: The UI view controller to present the auth flow.
     ///
     func showAuthenticator(controller: UIViewController) {
         guard let _ = WordPressAuthenticator.shared.delegate as? AuthenticationManager else {
@@ -37,6 +41,21 @@ class AuthenticationManager {
             return
         }
         WordPressAuthenticator.showLoginForJustWPCom(from: controller)
+    }
+
+    /// Processes the supplied credentials.
+    ///
+    /// - Parameters:
+    ///     - username: An account's username.
+    ///     - authToken: The REST API bearer token to be used for the acccount.
+    ///
+    func processCredentials(username: String, authToken: String, onCompletion: @escaping () -> Void) {
+        let action = AccountAction.create(username: username, authToken: authToken)
+        let store = StoreContainer.shared.accountStore
+        storeReceipt = store.onChange {
+            onCompletion()
+        }
+        store.actionDispatcher.dispatch(action)
     }
 }
 
@@ -128,7 +147,12 @@ extension AuthenticationManager: WordPressAuthenticatorDelegate {
     ///     - onCompletion: Closure to be executed on completion.
     ///
     func sync(credentials: WordPressCredentials, onCompletion: @escaping () -> Void) {
-
+        switch credentials {
+        case .wpcom(let username, let authToken, _, _):
+            processCredentials(username: username, authToken: authToken, onCompletion: onCompletion)
+        case .wporg(_, _, _, _):
+            break
+        }
     }
 
     /// Signals the Host App that a given Analytics Event has occurred.
