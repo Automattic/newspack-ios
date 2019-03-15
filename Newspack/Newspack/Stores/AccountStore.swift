@@ -3,10 +3,16 @@ import CoreData
 import KeychainAccess
 import WordPressFlux
 
-/// Supported Actions for the AccountStore
+/// Supported Actions for changes to the AccountStore
 ///
 enum AccountAction: Action {
     case create(username: String, authToken: String)
+}
+
+/// Dispatched actions to notifiy subscribers of changes
+///
+enum AccountChange: Action {
+    case accountCreated(account: Account)
 }
 
 /// Responsible for managing account and keychain related things.
@@ -15,6 +21,8 @@ class AccountStore: Store {
 
     private let keychainServiceName = "com.automattic.newspack"
     private let keychain: Keychain
+
+    let accountChangeDispatcher = Dispatcher<AccountChange>()
 
     /// Initializer
     ///
@@ -66,17 +74,13 @@ extension AccountStore {
     ///
     func createAccount(username: String, authToken: String) {
         let context = CoreDataManager.shared.mainContext
-        guard let account = NSEntityDescription.insertNewObject(forEntityName: "Account", into: context) as? Account else {
-            // TODO: Log this
-            return
-        }
-
+        let account = Account(context: context)
         account.username = username
 
         // TODO: Refactor to avoid the try!
         try! context.obtainPermanentIDs(for: [account])
         keychain[account.objectID.uriRepresentation().absoluteString] = authToken
         CoreDataManager.shared.saveContext()
-        emitChange()
+        accountChangeDispatcher.dispatch(.accountCreated(account: account))
     }
 }

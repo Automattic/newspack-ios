@@ -4,7 +4,21 @@ import WordPressFlux
 
 class AuthenticationManager {
 
-    var storeReceipt: Receipt?
+    typealias CompletionBlock = () -> Void
+
+    /// The receipt for a subscription to the account store.
+    ///
+    var accountStoreSubscription: Receipt?
+
+    /// Used to hold the competion call back when syncing.
+    ///
+    var syncCompletionBlock: CompletionBlock?
+
+
+    init() {
+        let store = StoreContainer.shared.accountStore
+        accountStoreSubscription = store.accountChangeDispatcher.subscribe(storeChangeHandler(_:))
+    }
 
     /// Initialize the authentication manager.
     /// Only necessary if showing the auth flow. Optional otherwise.
@@ -23,10 +37,20 @@ class AuthenticationManager {
 
     }
 
+    /// Handles account store change actions.
+    ///
+    func storeChangeHandler(_ accountChange: AccountChange) {
+        switch accountChange {
+        case .accountCreated(account: _):
+            syncCompletionBlock?()
+            syncCompletionBlock = nil
+        }
+    }
+
     /// Returns true if authentication is required.
     ///
     func authenticationRequred() -> Bool {
-        let store = AccountStore()
+        let store = StoreContainer.shared.accountStore
         return store.numberOfAccounts() == 0
     }
 
@@ -50,12 +74,9 @@ class AuthenticationManager {
     ///     - authToken: The REST API bearer token to be used for the acccount.
     ///
     func processCredentials(username: String, authToken: String, onCompletion: @escaping () -> Void) {
+        syncCompletionBlock = onCompletion
         let action = AccountAction.create(username: username, authToken: authToken)
-        let store = StoreContainer.shared.accountStore
-        storeReceipt = store.onChange {
-            onCompletion()
-        }
-        store.actionDispatcher.dispatch(action)
+        ActionDispatcher.global.dispatch(action)
     }
 }
 
