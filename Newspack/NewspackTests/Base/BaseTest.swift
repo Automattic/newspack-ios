@@ -3,9 +3,20 @@ import XCTest
 import CoreData
 @testable import Newspack
 
-extension CoreDataManager {
-    func createContainer() -> NSPersistentContainer {
+class BaseTest: XCTestCase {
 
+    override func setUp() {
+        super.setUp()
+        replaceCoreDataStack()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+    }
+
+    /// Replaces the default core data stack with one that is in-memory.
+    ///
+    func replaceCoreDataStack() {
         let container = NSPersistentContainer(name: "Newspack")
         let description = NSPersistentStoreDescription()
         description.type = NSInMemoryStoreType
@@ -15,18 +26,6 @@ extension CoreDataManager {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
-        return container
+        CoreDataManager.shared.replaceContainer(container)
     }
-}
-
-class BaseTest: XCTestCase {
-
-    override func setUp() {
-
-    }
-
-    override func tearDown() {
-
-    }
-
 }

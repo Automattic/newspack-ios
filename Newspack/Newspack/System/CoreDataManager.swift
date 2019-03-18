@@ -1,53 +1,36 @@
 import Foundation
 import CoreData
 
-// PersistentContainerManager is a protocol specifying a single method for
-// creating and returning an NSPersistentContainer.
-// This protocol, and its default extension, is used to define a default
-// NSPersistentContainer for CoreDataManager that can be overridden by
-// tests that provide their own implementation via an extension to
-// CoreDataManager.
+// CoreDataManager is a singleton wrapper around a NSPersistentContainer.
+// Its responsible for providing NSManagedObjectContexts and saving contexts.
 //
-protocol PersistentContainerManager {
+class CoreDataManager {
 
-    // Create and return an NSPersistentContainer.
+    // The shared singleton instance of the CoreDataManager.
     //
-    func createContainer() -> NSPersistentContainer
-}
+    static let shared = CoreDataManager()
 
-// A protocol extension providing a default implementation of the createContainer
-// method.
-//
-extension PersistentContainerManager {
-    private var name: String {
-        return "Newspack"
-    }
-
-    func createContainer() -> NSPersistentContainer {
-        let container = NSPersistentContainer(name: name)
+    // Private lazy constructor for the default internally managed NSPersistentContainer
+    //
+    private lazy var container: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "Newspack")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
         return container
-    }
-}
-
-// CoreDataManager is a singleton wrapper around a NSPersistentContainer.
-// Its responsible for providing NSManagedObjectContexts and saving contexts.
-//
-class CoreDataManager: PersistentContainerManager {
-
-    // The shared singleton instance of the CoreDataManager.
-    //
-    static let shared = CoreDataManager()
-
-    // Private lazy constructor for the internally managed NSPersistentContainer
-    //
-    private lazy var container: NSPersistentContainer = {
-        return createContainer()
     }()
+
+    /// A convenience method used for tests.
+    /// Replaces the default NSPersistentContainer with the one supplied.
+    ///
+    /// - Parameters:
+    ///     - container: An instance of NSPersistentContainer to use instead of the default one.
+    ///
+    func replaceContainer(_ container: NSPersistentContainer) {
+        self.container = container
+    }
 
     // The main NSManagedObjectContext, Its operations are performed on the UI thread.
     // It is a child context of a private background context performing IO.

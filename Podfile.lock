@@ -126,6 +126,7 @@ PODS:
     - WordPressKit (~> 1.8.0)
     - WordPressShared (~> 1.4)
     - WordPressUI (~> 1.0)
+  - WordPressFlux (1.0.0)
   - WordPressKit (1.8.0):
     - Alamofire (~> 4.7.3)
     - CocoaLumberjack (= 3.4.2)
@@ -154,6 +155,7 @@ DEPENDENCIES:
   - RNSVG (from `https://github.com/wordpress-mobile/react-native-svg.git`, tag `8.0.9-gb.0`)
   - RNTAztecView (from `http://github.com/wordpress-mobile/gutenberg-mobile/`, tag `v1.0.1`)
   - WordPressAuthenticator (~> 1.1.8)
+  - WordPressFlux (= 1.0.0)
   - WordPressKit (~> 1.8.0)
   - WPMediaPicker (= 1.3.2)
   - yoga (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/master/react-native-gutenberg-bridge/third-party-podspecs/yoga.podspec.json`)
@@ -179,6 +181,7 @@ SPEC REPOS:
     - UIDeviceIdentifier
     - WordPress-Aztec-iOS
     - WordPressAuthenticator
+    - WordPressFlux
     - WordPressKit
     - WordPressShared
     - WordPressUI
@@ -248,6 +251,7 @@ SPEC CHECKSUMS:
   UIDeviceIdentifier: 8f8a24b257a4d978c8d40ad1e7355b944ffbfa8c
   WordPress-Aztec-iOS: 0062ba96c3ea77186590c74b761427c461f89a06
   WordPressAuthenticator: edea3f3cb344c97f2381722286c398a027054d4c
+  WordPressFlux: a381542b0a0414ef85fb0b2a0f9dbde78ffe0637
   WordPressKit: 23d7de239367cfea9f9eef8aefe1933e47566cf2
   WordPressShared: 2018257df3fe1de423f31a3ba50ac8d6bd24941c
   WordPressUI: 44fe43a9c5c504dfd534286e39e1ce6ebcd69ff5
@@ -255,6 +259,6 @@ SPEC CHECKSUMS:
   wpxmlrpc: 6ba55c773cfa27083ae4a2173e69b19f46da98e2
   yoga: f37b1edbd68be803f1dc4d57d40d8a5b277d8e2c
 
-PODFILE CHECKSUM: f0900598e3a40fc7b1921a2e698dc8cdd66599d2
+PODFILE CHECKSUM: c853d4a5ff3f90f4dd022ac45eef785ec7403f4f
 
 COCOAPODS: 1.5.3

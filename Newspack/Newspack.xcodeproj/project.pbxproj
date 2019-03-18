@@ -21,23 +21,30 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		53FA9ACF624D704F1C07D5A9 /* Pods_NewspackTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14A3A0B3208C917FD7CE794E /* Pods_NewspackTests.framework */; };
+		97ACF26498517D8DBBCBDFEE /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E66E8A0D2235A15100E8DD88 /* Pods_Newspack.framework */; };
 		E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD12211FE86004E5B91 /* AppDelegate.swift */; };
 		E6138FD42211FE86004E5B91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD32211FE86004E5B91 /* ViewController.swift */; };
 		E6138FD72211FE86004E5B91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6138FD52211FE86004E5B91 /* Main.storyboard */; };
 		E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD82211FE86004E5B91 /* Newspack.xcdatamodeld */; };
 		E6138FDC2211FE88004E5B91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6138FDB2211FE88004E5B91 /* Assets.xcassets */; };
 		E6138FDF2211FE88004E5B91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6138FDD2211FE88004E5B91 /* LaunchScreen.storyboard */; };
+		E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61AE63B2237373E00E6A489 /* StoreContainer.swift */; };
 		E623C6F62220516600F9865C /* ApiCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623C6F52220516600F9865C /* ApiCredentials.swift */; };
 		E6257887222F0B2E00DE6F26 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6257886222F0B2E00DE6F26 /* Photos.framework */; };
 		E6257889222F0B3C00DE6F26 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6257888222F0B3C00DE6F26 /* AVFoundation.framework */; };
 		E625788B222F0B4C00DE6F26 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E625788A222F0B4B00DE6F26 /* ImageIO.framework */; };
+		E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C652235E16E000FEB33 /* AccountStore.swift */; };
+		E62C7C692235E73F000FEB33 /* AccountStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */; };
+		E62C7C6C2235F061000FEB33 /* AuthenticationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */; };
 		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
 		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
 		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
 		E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A04223596FE00E8DD88 /* CoreDataManagerTests.swift */; };
 		E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A062235979500E8DD88 /* BaseTest.swift */; };
-		E66E8A0E2235A15100E8DD88 /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E66E8A0D2235A15100E8DD88 /* Pods_Newspack.framework */; };
-		E66E8A112235A6D100E8DD88 /* BaseTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A102235A6D100E8DD88 /* BaseTestTests.swift */; };
+		E66E8A1A2235C57800E8DD88 /* Account+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */; };
+		E66E8A1B2235C57800E8DD88 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */; };
+		E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */; };
 		E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67F56D42230914800BFD38B /* CoreDataManager.swift */; };
 		EA27D6504B828267DD8A28ED /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDB59DB68FD7578F7CF8D30 /* Pods_Newspack.framework */; };
 /* End PBXBuildFile section */
@@ -73,8 +80,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		14A3A0B3208C917FD7CE794E /* Pods_NewspackTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NewspackTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDB59DB68FD7578F7CF8D30 /* Pods_Newspack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Newspack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C6109B65774AD2159D9E5E /* Pods-Newspack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Newspack.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Newspack/Pods-Newspack.debug.xcconfig"; sourceTree = "<group>"; };
+		D3966851BD08B54434F91358 /* Pods-NewspackTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewspackTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-NewspackTests/Pods-NewspackTests.release.xcconfig"; sourceTree = "<group>"; };
 		DFC0543D82050B0CDC7390DB /* Pods-Newspack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Newspack.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Newspack/Pods-Newspack.release.xcconfig"; sourceTree = "<group>"; };
 		E6138FCE2211FE86004E5B91 /* Newspack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Newspack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6138FD12211FE86004E5B91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,11 +95,15 @@
 		E6138FE02211FE88004E5B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6138FE52211FE88004E5B91 /* NewspackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewspackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6138FEB2211FE88004E5B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E61AE63B2237373E00E6A489 /* StoreContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreContainer.swift; sourceTree = "<group>"; };
 		E623C6F42220516600F9865C /* InfoPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoPlist.h; sourceTree = "<group>"; };
 		E623C6F52220516600F9865C /* ApiCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCredentials.swift; sourceTree = "<group>"; };
 		E6257886222F0B2E00DE6F26 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		E6257888222F0B3C00DE6F26 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E625788A222F0B4B00DE6F26 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		E62C7C652235E16E000FEB33 /* AccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStore.swift; sourceTree = "<group>"; };
+		E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStoreTests.swift; sourceTree = "<group>"; };
+		E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManagerTests.swift; sourceTree = "<group>"; };
 		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
 		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
 		E66B7D4422162754004355D3 /* replace_secrets.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = replace_secrets.rb; sourceTree = "<group>"; };
@@ -99,8 +112,11 @@
 		E66E8A0822359FE200E8DD88 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		E66E8A0B2235A13400E8DD88 /* Aztec.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Aztec.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E66E8A0D2235A15100E8DD88 /* Pods_Newspack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Newspack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E66E8A102235A6D100E8DD88 /* BaseTestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTestTests.swift; sourceTree = "<group>"; };
+		E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		E67F56D42230914800BFD38B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = Newspack/System/CoreDataManager.swift; sourceTree = SOURCE_ROOT; };
+		EDB5819DB11C68775E987AB2 /* Pods-NewspackTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewspackTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-NewspackTests/Pods-NewspackTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +128,7 @@
 				E625788B222F0B4C00DE6F26 /* ImageIO.framework in Frameworks */,
 				E6257887222F0B2E00DE6F26 /* Photos.framework in Frameworks */,
 				EA27D6504B828267DD8A28ED /* Pods_Newspack.framework in Frameworks */,
+				97ACF26498517D8DBBCBDFEE /* Pods_Newspack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,7 +136,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E66E8A0E2235A15100E8DD88 /* Pods_Newspack.framework in Frameworks */,
+				53FA9ACF624D704F1C07D5A9 /* Pods_NewspackTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +153,7 @@
 				E6257888222F0B3C00DE6F26 /* AVFoundation.framework */,
 				E6257886222F0B2E00DE6F26 /* Photos.framework */,
 				8EDB59DB68FD7578F7CF8D30 /* Pods_Newspack.framework */,
+				14A3A0B3208C917FD7CE794E /* Pods_NewspackTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -145,6 +163,8 @@
 			children = (
 				C3C6109B65774AD2159D9E5E /* Pods-Newspack.debug.xcconfig */,
 				DFC0543D82050B0CDC7390DB /* Pods-Newspack.release.xcconfig */,
+				EDB5819DB11C68775E987AB2 /* Pods-NewspackTests.debug.xcconfig */,
+				D3966851BD08B54434F91358 /* Pods-NewspackTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -174,6 +194,7 @@
 		E6138FD02211FE86004E5B91 /* Newspack */ = {
 			isa = PBXGroup;
 			children = (
+				E62C7C632235E0EC000FEB33 /* Stores */,
 				E6138FFE22120467004E5B91 /* Controllers */,
 				E6138FFA22120371004E5B91 /* Models */,
 				E6138FF922120368004E5B91 /* Networking */,
@@ -192,6 +213,8 @@
 			children = (
 				E66E8A122235ABB300E8DD88 /* Base */,
 				E66E8A03223596B400E8DD88 /* CoreData */,
+				E62C7C672235E729000FEB33 /* Stores */,
+				E62C7C6A2235F042000FEB33 /* Services */,
 				E6138FEB2211FE88004E5B91 /* Info.plist */,
 			);
 			path = NewspackTests;
@@ -209,6 +232,7 @@
 		E6138FF822120363004E5B91 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -223,6 +247,8 @@
 		E6138FFA22120371004E5B91 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */,
+				E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */,
 				E6138FD82211FE86004E5B91 /* Newspack.xcdatamodeld */,
 			);
 			path = Models;
@@ -270,6 +296,31 @@
 			path = ../DerivedSources;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		E62C7C632235E0EC000FEB33 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				E61AE63B2237373E00E6A489 /* StoreContainer.swift */,
+				E62C7C652235E16E000FEB33 /* AccountStore.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		E62C7C672235E729000FEB33 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		E62C7C6A2235F042000FEB33 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		E66B7D3E22162754004355D3 /* Credentials */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,7 +334,6 @@
 		E66E8A03223596B400E8DD88 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				E66E8A102235A6D100E8DD88 /* BaseTestTests.swift */,
 				E66E8A04223596FE00E8DD88 /* CoreDataManagerTests.swift */,
 			);
 			path = CoreData;
@@ -327,6 +377,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6138FF12211FE88004E5B91 /* Build configuration list for PBXNativeTarget "NewspackTests" */;
 			buildPhases = (
+				52B9566840F303B5DBE2C09A /* [CP] Check Pods Manifest.lock */,
 				E6138FE12211FE88004E5B91 /* Sources */,
 				E6138FE22211FE88004E5B91 /* Frameworks */,
 				E6138FE32211FE88004E5B91 /* Resources */,
@@ -429,6 +480,28 @@
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-Newspack/Pods-Newspack-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		52B9566840F303B5DBE2C09A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NewspackTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		57A1A1C3189CD84747189849 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -460,6 +533,7 @@
 				"${BUILT_PRODUCTS_DIR}/WPMediaPicker/WPMediaPicker.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPress-Aztec-iOS/Aztec.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPressAuthenticator/WordPressAuthenticator.framework",
+				"${BUILT_PRODUCTS_DIR}/WordPressFlux/WordPressFlux.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPressKit/WordPressKit.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPressShared/WordPressShared.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPressUI/WordPressUI.framework",
@@ -496,6 +570,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WPMediaPicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Aztec.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressAuthenticator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressFlux.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressShared.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressUI.framework",
@@ -578,11 +653,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E66E8A1B2235C57800E8DD88 /* Account+CoreDataProperties.swift in Sources */,
+				E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */,
+				E66E8A1A2235C57800E8DD88 /* Account+CoreDataClass.swift in Sources */,
 				E6138FD42211FE86004E5B91 /* ViewController.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */,
+				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
 				E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */,
 				E623C6F62220516600F9865C /* ApiCredentials.swift in Sources */,
+				E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,9 +670,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E66E8A112235A6D100E8DD88 /* BaseTestTests.swift in Sources */,
+				E62C7C6C2235F061000FEB33 /* AuthenticationManagerTests.swift in Sources */,
 				E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */,
 				E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */,
+				E62C7C692235E73F000FEB33 /* AccountStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -793,12 +874,13 @@
 		};
 		E6138FF22211FE88004E5B91 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EDB5819DB11C68775E987AB2 /* Pods-NewspackTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PZYM8XX95Q;
-				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = NewspackTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -815,12 +897,13 @@
 		};
 		E6138FF32211FE88004E5B91 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D3966851BD08B54434F91358 /* Pods-NewspackTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PZYM8XX95Q;
-				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = NewspackTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

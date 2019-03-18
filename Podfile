@@ -30,9 +30,11 @@ target 'Newspack' do
 
     pod 'CocoaLumberjack', '3.4.2'
 	pod 'KeychainAccess', '3.1.2'
+
     pod 'WordPressAuthenticator', '~> 1.1.8'
     pod 'WordPressKit', '~> 1.8.0'
     pod 'WPMediaPicker', '1.3.2'
+	pod 'WordPressFlux', '1.0.0'
 
     ## Gutenberg
     ##
@@ -43,5 +45,10 @@ target 'Newspack' do
     gutenberg_pod 'react-native-safe-area'
     pod 'RNSVG', :git => 'https://github.com/wordpress-mobile/react-native-svg.git', :tag => '8.0.9-gb.0'
     pod 'react-native-keyboard-aware-scroll-view', :git => 'https://github.com/wordpress-mobile/react-native-keyboard-aware-scroll-view.git', :tag => 'gb-v0.8.5'
+
+
+    target 'NewspackTests' do
+        inherit! :search_paths
+    end
 
 end
