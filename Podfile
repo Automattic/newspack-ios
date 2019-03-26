@@ -12,15 +12,28 @@ def shared_with_networking_pods
     pod 'Alamofire', '4.7.3'
 end
 
-def gutenberg_pod(name, branch=nil)
-    gutenberg_branch=branch || 'master'
-    pod name, :podspec => "https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/#{gutenberg_branch}/react-native-gutenberg-bridge/third-party-podspecs/#{name}.podspec.json"
-end
-
 def gutenberg(options)
+    options[:git] = 'http://github.com/wordpress-mobile/gutenberg-mobile/'
     pod 'Gutenberg', options
     pod 'RNTAztecView', options
+
+    gutenberg_dependencies options
 end
+
+def gutenberg_dependencies(options)
+    dependencies = [
+        'React',
+        'yoga',
+        'Folly',
+        'react-native-safe-area',
+    ]
+    tag_or_commit = options[:tag] || options[:commit]
+
+    for pod_name in dependencies do
+        pod pod_name, :podspec => "https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/#{tag_or_commit}/react-native-gutenberg-bridge/third-party-podspecs/#{pod_name}.podspec.json"
+    end
+end
+
 
 ## Newspack
 ##
@@ -38,13 +51,9 @@ target 'Newspack' do
 
     ## Gutenberg
     ##
-    gutenberg :git => 'http://github.com/wordpress-mobile/gutenberg-mobile/', :tag => 'v1.0.1'
-    gutenberg_pod 'React'
-    gutenberg_pod 'yoga'
-    gutenberg_pod 'Folly'
-    gutenberg_pod 'react-native-safe-area'
-    pod 'RNSVG', :git => 'https://github.com/wordpress-mobile/react-native-svg.git', :tag => '8.0.9-gb.0'
-    pod 'react-native-keyboard-aware-scroll-view', :git => 'https://github.com/wordpress-mobile/react-native-keyboard-aware-scroll-view.git', :tag => 'gb-v0.8.5'
+    gutenberg :tag => 'v1.1.1'
+    pod 'RNSVG', :git => 'https://github.com/wordpress-mobile/react-native-svg.git', :tag => '9.3.3-gb'
+    pod 'react-native-keyboard-aware-scroll-view', :git => 'https://github.com/wordpress-mobile/react-native-keyboard-aware-scroll-view.git', :tag => 'gb-v0.8.7'
 
 
     target 'NewspackTests' do
