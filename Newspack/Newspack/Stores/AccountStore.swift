@@ -18,15 +18,14 @@ enum AccountChange: Action {
 /// Responsible for managing account and keychain related things.
 ///
 class AccountStore: Store {
-
-    private let keychainServiceName = "com.automattic.newspack"
+    private static let keychainServiceName: String = "com.automattic.newspack"
     private let keychain: Keychain
 
     let accountChangeDispatcher = Dispatcher<AccountChange>()
 
     /// Initializer
     ///
-    override init(dispatcher: ActionDispatcher = .global) {
+    init(dispatcher: ActionDispatcher = .global, keychainServiceName: String = AccountStore.keychainServiceName) {
         self.keychain = Keychain(service: keychainServiceName).accessibility(.afterFirstUnlock)
         super.init(dispatcher: dispatcher)
     }
@@ -54,14 +53,6 @@ extension AccountStore {
         return count
     }
 
-    /// Returns the auth token for the specified account.
-    ///
-    /// - Parameters:
-    ///     - account: An Account instance
-    ///
-    func authToken(for account: Account) -> String? {
-        return keychain[account.uuid.uuidString]
-    }
 }
 
 extension AccountStore {
@@ -69,18 +60,56 @@ extension AccountStore {
     /// Creates a new account with the specified username and auth token
     ///
     /// - Parameters:
-    ///     - username: The username for the account.
     ///     - authToken: The REST API auth token for the account.
     ///
     func createAccount(authToken: String) {
         let context = CoreDataManager.shared.mainContext
         let account = Account(context: context)
         account.uuid = UUID()
-
-        // TODO: Refactor to avoid the try!
-        try! context.obtainPermanentIDs(for: [account])
-        keychain[account.uuid.uuidString] = authToken
         CoreDataManager.shared.saveContext()
+
+        setAuthToken(authToken, for: account)
+
         accountChangeDispatcher.dispatch(.accountCreated(account: account))
+    }
+}
+
+
+/// Auth token management
+extension AccountStore {
+
+    /// Get the auth token for the spedified account.
+    ///
+    /// - Parameter:
+    ///   - account: The account.
+    /// - Returns: The auth token.
+    ///
+    func getAuthTokenForAccount(_ account: Account) -> String? {
+        return keychain[account.uuid.uuidString]
+    }
+
+    /// Store the specified auth token for the specified account.
+    ///
+    /// - Parameters:
+    ///   - token: The auth token.
+    ///   - account: The account.
+    ///
+    func setAuthToken(_ token: String, for account: Account) {
+        keychain[account.uuid.uuidString] = token
+    }
+
+    /// Clear the auth token for the specified account.
+    ///
+    /// - Parameters:
+    ///   - account: The account.
+    ///
+    func clearAuthTokenForAccount(_ account: Account) {
+        keychain[account.uuid.uuidString] = nil
+    }
+
+    /// Clear all stored auth tokens.
+    ///
+    func clearAuthTokens() {
+        try? keychain.removeAll()
     }
 }
