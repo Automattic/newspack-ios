@@ -6,7 +6,7 @@ import WordPressFlux
 /// Supported Actions for changes to the AccountStore
 ///
 enum AccountAction: Action {
-    case create(username: String, authToken: String)
+    case create(authToken: String)
 }
 
 /// Dispatched actions to notifiy subscribers of changes
@@ -38,8 +38,8 @@ class AccountStore: Store {
             return
         }
         switch accountAction {
-        case .create(let username, let authToken):
-            createAccount(username: username, authToken: authToken)
+        case .create(let authToken):
+            createAccount(authToken: authToken)
         }
     }
 }
@@ -60,7 +60,7 @@ extension AccountStore {
     ///     - account: An Account instance
     ///
     func authToken(for account: Account) -> String? {
-        return keychain[account.objectID.uriRepresentation().absoluteString]
+        return keychain[account.uuid.uuidString]
     }
 }
 
@@ -72,14 +72,14 @@ extension AccountStore {
     ///     - username: The username for the account.
     ///     - authToken: The REST API auth token for the account.
     ///
-    func createAccount(username: String, authToken: String) {
+    func createAccount(authToken: String) {
         let context = CoreDataManager.shared.mainContext
         let account = Account(context: context)
-        account.username = username
+        account.uuid = UUID()
 
         // TODO: Refactor to avoid the try!
         try! context.obtainPermanentIDs(for: [account])
-        keychain[account.objectID.uriRepresentation().absoluteString] = authToken
+        keychain[account.uuid.uuidString] = authToken
         CoreDataManager.shared.saveContext()
         accountChangeDispatcher.dispatch(.accountCreated(account: account))
     }
