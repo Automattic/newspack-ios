@@ -16,6 +16,7 @@ class CoreDataManager {
         let container = NSPersistentContainer(name: "Newspack")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
+                // TODO: Rebuild the stack anew.
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
