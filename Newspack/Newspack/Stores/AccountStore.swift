@@ -18,6 +18,7 @@ enum AccountChange: Action {
 /// Responsible for managing account and keychain related things.
 ///
 class AccountStore: Store {
+    private let currentAccountUUIDKey: String = "currentAccountUUIDKey"
     private static let keychainServiceName: String = "com.automattic.newspack"
     private let keychain: Keychain
 
@@ -44,7 +45,80 @@ class AccountStore: Store {
 }
 
 extension AccountStore {
-    /// Returns the number of accounts currently in the app.
+
+    /// Get or set the current account.
+    ///
+    var currentAccount: Account? {
+        get {
+            guard
+                let uuidString = UserDefaults.standard.string(forKey: currentAccountUUIDKey),
+                let uuid = UUID(uuidString: uuidString),
+                let account = getAccountByUUID(uuid)
+                else {
+                    // Womp womp.
+                    return nil
+            }
+            return account
+        }
+        set(account) {
+            if account == currentAccount {
+                return
+            }
+
+            let defaults = UserDefaults.standard
+
+            defer {
+                defaults.synchronize()
+                // TODO: dispatch change event
+            }
+
+            guard let account = account else {
+                defaults.removeObject(forKey: currentAccountUUIDKey)
+                return
+            }
+            defaults.set(account.uuid.uuidString, forKey: currentAccountUUIDKey)
+        }
+    }
+
+    /// Get the account for the specified UUID
+    ///
+    /// - Parameter uuid: The account's UUID
+    /// - Returns: The account
+    ///
+    func getAccountByUUID(_ uuid: UUID) -> Account? {
+        let fetchRequest = Account.accountFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "uuid == %@", uuid as CVarArg)
+        let context = CoreDataManager.shared.mainContext
+        do {
+            let accounts = try context.fetch(fetchRequest)
+            return accounts.first
+        } catch {
+            let error = error as NSError
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+
+    /// Get all accounts
+    ///
+    /// - Returns: An array of Accounts. The array may be empty.
+    ///
+    func getAccounts() -> [Account] {
+        let fetchRequest = Account.accountFetchRequest()
+        let context = CoreDataManager.shared.mainContext
+        do {
+            let accounts = try context.fetch(fetchRequest)
+            return accounts
+        } catch {
+            let error = error as NSError
+            print(error.localizedDescription)
+        }
+        return [Account]()
+    }
+
+    /// Get the number of accounts currently in the app.
+    ///
+    /// - Returns: The number of accounts.
     ///
     func numberOfAccounts() -> Int {
         let fetchRequest = Account.accountFetchRequest()
