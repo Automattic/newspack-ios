@@ -13,6 +13,7 @@ enum AccountAction: Action {
 ///
 enum AccountChange: Action {
     case accountCreated(account: Account)
+    case setCurrentAccount
 }
 
 /// Responsible for managing account and keychain related things.
@@ -69,7 +70,7 @@ extension AccountStore {
 
             defer {
                 defaults.synchronize()
-                // TODO: dispatch change event
+                accountChangeDispatcher.dispatch(.setCurrentAccount)
             }
 
             guard let account = account else {
@@ -131,7 +132,8 @@ extension AccountStore {
 
 extension AccountStore {
 
-    /// Creates a new account with the specified username and auth token
+    /// Creates a new account with the specified username and auth token.
+    /// The new account is made the current account.
     ///
     /// - Parameters:
     ///     - authToken: The REST API auth token for the account.
@@ -145,6 +147,8 @@ extension AccountStore {
         setAuthToken(authToken, for: account)
 
         accountChangeDispatcher.dispatch(.accountCreated(account: account))
+
+        currentAccount = account
     }
 }
 

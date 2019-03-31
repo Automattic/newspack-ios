@@ -44,6 +44,8 @@ class AuthenticationManager {
         case .accountCreated(account: _):
             syncCompletionBlock?()
             syncCompletionBlock = nil
+        default:
+            break
         }
     }
 
