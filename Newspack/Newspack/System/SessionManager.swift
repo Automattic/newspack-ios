@@ -8,7 +8,8 @@ struct SessionManager {
     var token: String
 
     init?(account: Account) {
-        guard let token = AccountStore().getAuthTokenForAccount(account) else {
+        let store = StoreContainer.shared.accountStore
+        guard let token = store.getAuthTokenForAccount(account) else {
             return nil
         }
         self.token = token
