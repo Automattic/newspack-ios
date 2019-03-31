@@ -13,10 +13,6 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if authManager.authenticationRequred() {
-            authManager.initialize()
-            authManager.showAuthenticator(controller: self)
-        }
     }
 
 }
