@@ -3,10 +3,22 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var authenticationManager = AuthenticationManager()
     var window: UIWindow?
 
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        UserAgent.configure()
+
+        return true
+    }
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Configure the window which should call makeKeyAndVisible.
+        // Necessary in order to present the authentication flow.
+        configureWindow()
+
+        authenticationManager.authenticationRequred() ? showAuthentication() : configureSession()
+
         return true
     }
 
@@ -30,6 +42,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+
+}
+
+extension AppDelegate {
+
+    func configureWindow() {
+        window?.makeKeyAndVisible()
+    }
+
+    func showAuthentication() {
+        guard let controller = window?.rootViewController else {
+                return
+        }
+        authenticationManager.initialize()
+        authenticationManager.showAuthenticator(controller: controller)
+    }
+
+    func configureSession() {
+        guard let account = StoreContainer.shared.accountStore.currentAccount else {
+            return
+        }
+        SessionManager.shared.initialize(account: account)
     }
 
 }
