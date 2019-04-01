@@ -31,7 +31,7 @@ class AuthenticationManager {
                                                                 googleLoginClientId: "",
                                                                 googleLoginServerClientId: "",
                                                                 googleLoginScheme: "",
-                                                                userAgent: "")
+                                                                userAgent: UserAgent.defaultUserAgent)
         WordPressAuthenticator.initialize(configuration: configuration)
         WordPressAuthenticator.shared.delegate = self
 
