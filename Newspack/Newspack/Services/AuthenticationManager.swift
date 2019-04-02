@@ -77,7 +77,7 @@ class AuthenticationManager {
     ///
     func processCredentials(authToken: String, site: String, onCompletion: @escaping () -> Void) {
         syncCompletionBlock = onCompletion
-        let action = AccountAction.create(authToken: authToken)
+        let action = AccountAction.create(authToken: authToken, site: site)
         ActionDispatcher.global.dispatch(action)
     }
 }
@@ -173,8 +173,8 @@ extension AuthenticationManager: WordPressAuthenticatorDelegate {
         switch credentials {
         case .wpcom(let authToken, _, _):
             // TODO: WordPressAuthenticator needs to be updated to identify the site for the authtoken.
-            // For now, assume WordPress.com vs a self-hosted install.  Update when the pod is updated.
-            processCredentials(authToken: authToken, site: "wordpress.com", onCompletion: onCompletion)
+            // For now, hard code a test site.  Update when the pod is updated.
+            processCredentials(authToken: authToken, site: "aerychtest.wordpress.com", onCompletion: onCompletion)
         case .wporg(_, _, _, _):
             break
         }

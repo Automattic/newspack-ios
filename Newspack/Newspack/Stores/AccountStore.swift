@@ -6,7 +6,7 @@ import WordPressFlux
 /// Supported Actions for changes to the AccountStore
 ///
 enum AccountAction: Action {
-    case create(authToken: String)
+    case create(authToken: String, site: String)
 }
 
 /// Dispatched actions to notifiy subscribers of changes
@@ -39,8 +39,8 @@ class AccountStore: Store {
             return
         }
         switch accountAction {
-        case .create(let authToken):
-            createAccount(authToken: authToken)
+        case .create(let authToken, let site):
+            createAccount(authToken: authToken, for: site)
         }
     }
 }
@@ -138,10 +138,11 @@ extension AccountStore {
     /// - Parameters:
     ///     - authToken: The REST API auth token for the account.
     ///
-    func createAccount(authToken: String) {
+    func createAccount(authToken: String, for site: String) {
         let context = CoreDataManager.shared.mainContext
         let account = Account(context: context)
         account.uuid = UUID()
+
         CoreDataManager.shared.saveContext()
 
         setAuthToken(authToken, for: account)
