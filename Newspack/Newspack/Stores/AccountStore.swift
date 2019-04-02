@@ -143,6 +143,10 @@ extension AccountStore {
         let account = Account(context: context)
         account.uuid = UUID()
 
+        let aSite = Site(context: context)
+        aSite.domain = site
+        account.addToSites(aSite)
+
         CoreDataManager.shared.saveContext()
 
         setAuthToken(authToken, for: account)

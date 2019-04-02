@@ -3,10 +3,15 @@
     <entity name="Account" representedClassName="Account" syncable="YES">
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="sites" toMany="YES" deletionRule="Cascade" destinationEntity="Site" inverseName="account" inverseEntity="Site" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="uuid"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
     <entity name="Site" representedClassName="Site" syncable="YES">
         <attribute name="domain" attributeType="String" syncable="YES"/>
-        <relationship name="account" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="sites" inverseEntity="Account" syncable="YES"/>
+        <relationship name="account" toMany="YES" deletionRule="Nullify" destinationEntity="Account" inverseName="sites" inverseEntity="Account" syncable="YES"/>
     </entity>
     <elements>
         <element name="Account" positionX="-63" positionY="-18" width="128" height="75"/>
