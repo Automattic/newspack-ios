@@ -13,7 +13,7 @@ enum AccountAction: Action {
 ///
 enum AccountChange: Action {
     case accountCreated(account: Account)
-    case setCurrentAccount
+    case currentAccountChanged
 }
 
 /// Responsible for managing account and keychain related things.
@@ -70,7 +70,7 @@ extension AccountStore {
 
             defer {
                 defaults.synchronize()
-                accountChangeDispatcher.dispatch(.setCurrentAccount)
+                accountChangeDispatcher.dispatch(.currentAccountChanged)
             }
 
             guard let account = account else {
