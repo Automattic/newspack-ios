@@ -4,7 +4,7 @@ import CoreData
 
 extension Site {
 
-    @NSManaged public var domain: String?
-    @NSManaged public var account: Account?
+    @NSManaged public var account: Account!
+    @NSManaged public var domain: String!
 
 }
