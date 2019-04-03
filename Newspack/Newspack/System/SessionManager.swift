@@ -14,7 +14,7 @@ class SessionManager {
     /// A readonly reference to the api.
     /// The API is an anonymous API until initialzed with an Account
     ///
-    private(set) var api = WordPressComRestApi(oAuthToken: nil, userAgent: UserAgent.defaultUserAgent)
+    private(set) var api = WordPressCoreRestApi(oAuthToken: nil, userAgent: UserAgent.defaultUserAgent)
 
     private var accountStoreSubscription: Receipt?
 
@@ -31,12 +31,18 @@ class SessionManager {
     ///
     @discardableResult
     func initialize(account: Account?) -> Bool {
-        var token: String?
-        if let account = account {
-            let store = StoreContainer.shared.accountStore
-            token = store.getAuthTokenForAccount(account)
+        guard
+            let account = account,
+            let site = account.currentSite()
+            else {
+                api = WordPressCoreRestApi(oAuthToken: nil, userAgent: UserAgent.defaultUserAgent)
+                return false
         }
-        api = WordPressComRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent)
+
+        let store = StoreContainer.shared.accountStore
+        let token = store.getAuthTokenForAccount(account)
+
+        api = WordPressCoreRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent, baseEndpoint: site.domain)
         return token != nil
     }
 
