@@ -42,12 +42,13 @@ target 'Newspack' do
     shared_with_networking_pods
 
     pod 'CocoaLumberjack', '3.4.2'
-	pod 'KeychainAccess', '3.1.2'
+    pod 'KeychainAccess', '3.1.2'
 
     pod 'WordPressAuthenticator', '~> 1.2.0'
-    pod 'WordPressKit', '~> 3.2.1'
+#    pod 'WordPressKit', '~> 3.2.1'
+    pod 'WordPressKit', :git => 'https://github.com/wordpress-mobile/WordPressKit-iOS.git', :commit => 'ee404347c909b3bc5d50a3cd1b51039b7643936a'
     pod 'WPMediaPicker', '1.3.2'
-	pod 'WordPressFlux', '1.0.0'
+    pod 'WordPressFlux', '1.0.0'
 
     ## Gutenberg
     ##
