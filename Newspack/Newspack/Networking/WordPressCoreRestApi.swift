@@ -9,11 +9,12 @@ import WordPressKit
 class WordPressCoreRestApi: WordPressComRestApi {
 
     // TODO: It would be nice to not have to unwrap this optional.
-    var baseEndpoint: String!
+    let baseEndpoint = "https://public-api.wordpress.com/wp/v2/sites/"
+    var site: String!
 
-    convenience init(oAuthToken: String? = nil, userAgent: String? = nil, baseEndpoint: String) {
+    convenience init(oAuthToken: String? = nil, userAgent: String? = nil, site: String) {
         self.init(oAuthToken: oAuthToken, userAgent: userAgent)
-        self.baseEndpoint = baseEndpoint
+        self.site = site
     }
 
     @available(*, unavailable)
@@ -32,6 +33,7 @@ class WordPressCoreRestApi: WordPressComRestApi {
     /// - Returns: The base endpoint url
     ///
     override func buildBaseURL() -> URL? {
-        return URL(string: baseEndpoint)
+        let path = baseEndpoint + site
+        return URL(string: path)
     }
 }
