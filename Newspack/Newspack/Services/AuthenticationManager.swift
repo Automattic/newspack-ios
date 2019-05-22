@@ -66,7 +66,7 @@ class AuthenticationManager {
             // TODO: Log that we're not initialized.
             return
         }
-        WordPressAuthenticator.showLoginForJustWPCom(from: controller)
+        WordPressAuthenticator.showLoginForSelfHostedSite(controller)
     }
 
     /// Processes the supplied credentials.
@@ -84,6 +84,10 @@ class AuthenticationManager {
 
 
 extension AuthenticationManager: WordPressAuthenticatorDelegate {
+    func shouldPresentUsernamePasswordController(for siteInfo: WordPressComSiteInfo?, onCompletion: @escaping (Error?, Bool) -> Void) {
+        onCompletion(nil, true)
+    }
+
 
     /// Indicates if the active Authenticator can be dismissed, or not.
     ///
@@ -133,13 +137,13 @@ extension AuthenticationManager: WordPressAuthenticatorDelegate {
 
     /// Presents the Login Epilogue, in the specified NavigationController.
     ///
-    func presentLoginEpilogue(in navigationController: UINavigationController, for credentials: WordPressCredentials, onDismiss: @escaping () -> Void) {
+    func presentLoginEpilogue(in navigationController: UINavigationController, for credentials: AuthenticatorCredentials, onDismiss: @escaping () -> Void) {
 
     }
 
     /// Presents the Login Epilogue, in the specified NavigationController.
     ///
-    func presentSignupEpilogue(in navigationController: UINavigationController, for credentials: WordPressCredentials, service: SocialService?) {
+    func presentSignupEpilogue(in navigationController: UINavigationController, for credentials: AuthenticatorCredentials, service: SocialService?) {
 
     }
 
@@ -169,14 +173,11 @@ extension AuthenticationManager: WordPressAuthenticatorDelegate {
     ///     - credentials: WordPress Site Credentials.
     ///     - onCompletion: Closure to be executed on completion.
     ///
-    func sync(credentials: WordPressCredentials, onCompletion: @escaping () -> Void) {
-        switch credentials {
-        case .wpcom(let authToken, _, _):
-            // TODO: WordPressAuthenticator needs to be updated to identify the site for the authtoken.
-            // For now, hard code a test site.  Update when the pod is updated.
-            processCredentials(authToken: authToken, site: "aerychtest.wordpress.com", onCompletion: onCompletion)
-        case .wporg(_, _, _, _):
-            break
+    func sync(credentials: AuthenticatorCredentials, onCompletion: @escaping () -> Void) {
+        if let creds = credentials.wpcom {
+            processCredentials(authToken: creds.authToken, site: creds.siteURL, onCompletion: onCompletion)
+        } else if let _ = credentials.wporg {
+            // TODO: handle this
         }
     }
 

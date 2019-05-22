@@ -8,12 +8,15 @@ plugin 'cocoapods-repo-update'
 workspace 'Newspack.xcworkspace'
 
 def shared_with_networking_pods
-    pod 'AFNetworking', '3.2.1'
     pod 'Alamofire', '4.7.3'
 end
 
 def gutenberg(options)
     options[:git] = 'http://github.com/wordpress-mobile/gutenberg-mobile/'
+    local_gutenberg = ENV['LOCAL_GUTENBERG']
+    if local_gutenberg
+      options = { :path => local_gutenberg.include?('/') ? local_gutenberg : '../gutenberg-mobile' }
+    end
     pod 'Gutenberg', options
     pod 'RNTAztecView', options
 
@@ -26,11 +29,17 @@ def gutenberg_dependencies(options)
         'yoga',
         'Folly',
         'react-native-safe-area',
+        'react-native-video',
     ]
-    tag_or_commit = options[:tag] || options[:commit]
+    if options[:path]
+        podspec_prefix = options[:path]
+    else
+        tag_or_commit = options[:tag] || options[:commit]
+        podspec_prefix = "https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/#{tag_or_commit}"
+    end
 
     for pod_name in dependencies do
-        pod pod_name, :podspec => "https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/#{tag_or_commit}/react-native-gutenberg-bridge/third-party-podspecs/#{pod_name}.podspec.json"
+        pod pod_name, :podspec => "#{podspec_prefix}/react-native-gutenberg-bridge/third-party-podspecs/#{pod_name}.podspec.json"
     end
 end
 
@@ -41,18 +50,19 @@ target 'Newspack' do
     project 'Newspack/Newspack.xcodeproj'
     shared_with_networking_pods
 
-    pod 'CocoaLumberjack', '3.4.2'
-    pod 'KeychainAccess', '3.1.2'
+    pod 'CocoaLumberjack', '3.5.2'
+    pod 'KeychainAccess', '3.2.0'
 
-    pod 'WordPressAuthenticator', '~> 1.2.0'
+    pod 'WordPressAuthenticator', '~> 1.5.0'
+	pod 'WordPressKit', '~> 4.1.1'	
 #    pod 'WordPressKit', '~> 3.2.1'
-    pod 'WordPressKit', :git => 'https://github.com/wordpress-mobile/WordPressKit-iOS.git', :commit => 'ee404347c909b3bc5d50a3cd1b51039b7643936a'
-    pod 'WPMediaPicker', '1.3.2'
+#    pod 'WordPressKit', :git => 'https://github.com/wordpress-mobile/WordPressKit-iOS.git', :commit => 'ee404347c909b3bc5d50a3cd1b51039b7643936a'
+    pod 'WPMediaPicker', '~> 1.4.1'
     pod 'WordPressFlux', '1.0.0'
 
     ## Gutenberg
     ##
-    gutenberg :tag => 'v1.1.1'
+    gutenberg :tag => 'v1.5.1'
     pod 'RNSVG', :git => 'https://github.com/wordpress-mobile/react-native-svg.git', :tag => '9.3.3-gb'
     pod 'react-native-keyboard-aware-scroll-view', :git => 'https://github.com/wordpress-mobile/react-native-keyboard-aware-scroll-view.git', :tag => 'gb-v0.8.7'
 
