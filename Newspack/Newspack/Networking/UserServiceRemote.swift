@@ -40,11 +40,11 @@ struct RemoteUser {
     let locale: String
     let nickname: String
     let slug: String
-    let roles: [Int: String]
+    let roles: [String]
     let registeredDate: Date
     let capabilities: [String: Bool]
     let extraCapabilities: [String: String]
-    let avatarUrls: [Int: String]
+    let avatarUrls: [String: String]
 
     /// Convenience initializer to transform a dictionary into an instance of RemoteUser
     /// Some fields may be empty depending on if the query context was "view" (the default) or "edit".
@@ -54,22 +54,27 @@ struct RemoteUser {
     ///
     init(dict: [String: AnyObject]) {
         id = dict["id"] as? Int ?? 0
-        username = dict["name"] as? String ?? ""
+        username = dict["username"] as? String ?? ""
         name = dict["name"] as? String ?? ""
-        firstName = dict["name"] as? String ?? ""
-        lastName = dict["name"] as? String ?? ""
-        email = dict["name"] as? String ?? ""
+        firstName = dict["first_name"] as? String ?? ""
+        lastName = dict["last_name"] as? String ?? ""
+        email = dict["email"] as? String ?? ""
         url = dict["url"] as? String ?? ""
         description = dict["description"] as? String ?? ""
         link = dict["link"] as? String ?? ""
-        locale = dict["name"] as? String ?? ""
-        nickname = dict["name"] as? String ?? ""
+        locale = dict["locale"] as? String ?? ""
+        nickname = dict["nickname"] as? String ?? ""
         slug = dict["slug"] as? String ?? ""
-        roles = dict["roles"] as? [Int: String] ?? [Int: String]()
-        let date = dict["registered_date"] as? String ?? ""
-        registeredDate = NSDate(wordPressComJSONString: date) as Date
+        roles = dict["roles"] as? [String] ?? [String]()
+
+        if let dateStr = dict["registered_date"] as? String {
+            registeredDate = NSDate(wordPressComJSONString: dateStr) as Date 
+        } else {
+            registeredDate = Date()
+        }
+
         capabilities = dict["capabilities"] as? [String: Bool] ?? [String: Bool]()
         extraCapabilities = dict["extra_capabilities"] as? [String: String] ?? [String: String]()
-        avatarUrls = dict["avatar_urls"] as? [Int: String] ?? [Int: String]()
+        avatarUrls = dict["avatar_urls"] as? [String: String] ?? [String: String]()
     }
 }

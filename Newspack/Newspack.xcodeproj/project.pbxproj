@@ -31,6 +31,12 @@
 		E6138FDC2211FE88004E5B91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6138FDB2211FE88004E5B91 /* Assets.xcassets */; };
 		E6138FDF2211FE88004E5B91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6138FDD2211FE88004E5B91 /* LaunchScreen.storyboard */; };
 		E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61AE63B2237373E00E6A489 /* StoreContainer.swift */; };
+		E61FC603229F2EEE009E1748 /* UserServiceRemoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FC602229F2EEE009E1748 /* UserServiceRemoteTests.swift */; };
+		E61FC605229F2F10009E1748 /* SiteServiceRemoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FC604229F2F10009E1748 /* SiteServiceRemoteTests.swift */; };
+		E61FC609229F329A009E1748 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FC608229F329A009E1748 /* Loader.swift */; };
+		E61FC60C229F3361009E1748 /* remote-site-settings.json in Resources */ = {isa = PBXBuildFile; fileRef = E61FC60B229F3361009E1748 /* remote-site-settings.json */; };
+		E61FC60E229F3377009E1748 /* remote-user-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E61FC60D229F3377009E1748 /* remote-user-edit.json */; };
+		E61FC610229F33C5009E1748 /* remote-user-view.json in Resources */ = {isa = PBXBuildFile; fileRef = E61FC60F229F33C5009E1748 /* remote-user-view.json */; };
 		E623C6F62220516600F9865C /* ApiCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E623C6F52220516600F9865C /* ApiCredentials.swift */; };
 		E6241B96224EC8CD00B578F5 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6241B95224EC8CD00B578F5 /* SessionManager.swift */; };
 		E6257887222F0B2E00DE6F26 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6257886222F0B2E00DE6F26 /* Photos.framework */; };
@@ -105,6 +111,12 @@
 		E6138FE52211FE88004E5B91 /* NewspackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewspackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6138FEB2211FE88004E5B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E61AE63B2237373E00E6A489 /* StoreContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreContainer.swift; sourceTree = "<group>"; };
+		E61FC602229F2EEE009E1748 /* UserServiceRemoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceRemoteTests.swift; sourceTree = "<group>"; };
+		E61FC604229F2F10009E1748 /* SiteServiceRemoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteServiceRemoteTests.swift; sourceTree = "<group>"; };
+		E61FC608229F329A009E1748 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		E61FC60B229F3361009E1748 /* remote-site-settings.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "remote-site-settings.json"; sourceTree = "<group>"; };
+		E61FC60D229F3377009E1748 /* remote-user-edit.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "remote-user-edit.json"; sourceTree = "<group>"; };
+		E61FC60F229F33C5009E1748 /* remote-user-view.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "remote-user-view.json"; sourceTree = "<group>"; };
 		E623C6F42220516600F9865C /* InfoPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoPlist.h; sourceTree = "<group>"; };
 		E623C6F52220516600F9865C /* ApiCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCredentials.swift; sourceTree = "<group>"; };
 		E6241B95224EC8CD00B578F5 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
@@ -227,8 +239,11 @@
 		E6138FE82211FE88004E5B91 /* NewspackTests */ = {
 			isa = PBXGroup;
 			children = (
+				E61FC60A229F330A009E1748 /* TestData */,
+				E61FC607229F3280009E1748 /* TestTools */,
 				E66E8A122235ABB300E8DD88 /* Base */,
 				E66E8A03223596B400E8DD88 /* CoreData */,
+				E61FC601229F2E96009E1748 /* Networking */,
 				E62C7C672235E729000FEB33 /* Stores */,
 				E62C7C6A2235F042000FEB33 /* Services */,
 				E6138FEB2211FE88004E5B91 /* Info.plist */,
@@ -308,6 +323,33 @@
 				E6138FD32211FE86004E5B91 /* ViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		E61FC601229F2E96009E1748 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				E61FC604229F2F10009E1748 /* SiteServiceRemoteTests.swift */,
+				E61FC602229F2EEE009E1748 /* UserServiceRemoteTests.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		E61FC607229F3280009E1748 /* TestTools */ = {
+			isa = PBXGroup;
+			children = (
+				E61FC608229F329A009E1748 /* Loader.swift */,
+			);
+			path = TestTools;
+			sourceTree = "<group>";
+		};
+		E61FC60A229F330A009E1748 /* TestData */ = {
+			isa = PBXGroup;
+			children = (
+				E61FC60B229F3361009E1748 /* remote-site-settings.json */,
+				E61FC60D229F3377009E1748 /* remote-user-edit.json */,
+				E61FC60F229F33C5009E1748 /* remote-user-view.json */,
+			);
+			path = TestData;
 			sourceTree = "<group>";
 		};
 		E623C6F32220516600F9865C /* DerivedSources */ = {
@@ -476,6 +518,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E61FC610229F33C5009E1748 /* remote-user-view.json in Resources */,
+				E61FC60E229F3377009E1748 /* remote-user-edit.json in Resources */,
+				E61FC60C229F3361009E1748 /* remote-site-settings.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -703,6 +748,9 @@
 				E62C7C6C2235F061000FEB33 /* AuthenticationManagerTests.swift in Sources */,
 				E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */,
 				E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */,
+				E61FC603229F2EEE009E1748 /* UserServiceRemoteTests.swift in Sources */,
+				E61FC605229F2F10009E1748 /* SiteServiceRemoteTests.swift in Sources */,
+				E61FC609229F329A009E1748 /* Loader.swift in Sources */,
 				E62C7C692235E73F000FEB33 /* AccountStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

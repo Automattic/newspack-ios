@@ -1,0 +1,26 @@
+{
+    "id": 101,
+    "name": "example",
+    "url": "http://example.com",
+    "description": "Just another WordPress.com site.",
+    "link": "https://example.com/author/example/",
+    "slug": "example",
+    "avatar_urls": {
+        "24": "https://secure.gravatar.com/avatar/101?s=24&d=identicon&r=g",
+        "48": "https://secure.gravatar.com/avatar/101?s=48&d=identicon&r=g",
+        "96": "https://secure.gravatar.com/avatar/101?s=96&d=identicon&r=g"
+    },
+    "meta": [],
+    "_links": {
+        "self": [
+            {
+                "href": "https://public-api.wordpress.com/wp/v2/sites/example.com/users/101"
+            }
+        ],
+        "collection": [
+            {
+                "href": "https://public-api.wordpress.com/wp/v2/sites/example.com/users"
+            }
+        ]
+    }
+}

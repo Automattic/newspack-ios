@@ -1,0 +1,75 @@
+{
+    "id": 101,
+    "username": "example",
+    "name": "example",
+    "first_name": "example",
+    "last_name": "example",
+    "email": "example@example.com",
+    "url": "http://example.com",
+    "description": "Just another WordPress.com site.",
+    "link": "https://example.com/author/example/",
+    "locale": "en",
+    "nickname": "example",
+    "slug": "example",
+    "roles": [
+        "editor"
+    ],
+    "registered_date": "2012-04-10T23:59:13+00:00",
+    "capabilities": {
+        "moderate_comments": true,
+        "manage_categories": true,
+        "manage_links": true,
+        "upload_files": true,
+        "edit_posts": true,
+        "edit_others_posts": true,
+        "edit_published_posts": true,
+        "publish_posts": true,
+        "edit_pages": true,
+        "read": true,
+        "level_7": true,
+        "level_6": true,
+        "level_5": true,
+        "level_4": true,
+        "level_3": true,
+        "level_2": true,
+        "level_1": true,
+        "level_0": true,
+        "edit_others_pages": true,
+        "edit_published_pages": true,
+        "publish_pages": true,
+        "delete_pages": true,
+        "delete_others_pages": true,
+        "delete_published_pages": true,
+        "delete_posts": true,
+        "delete_others_posts": true,
+        "delete_published_posts": true,
+        "delete_private_posts": true,
+        "edit_private_posts": true,
+        "read_private_posts": true,
+        "delete_private_pages": true,
+        "edit_private_pages": true,
+        "read_private_pages": true,
+        "editor": true
+    },
+    "extra_capabilities": {
+        "editor": true
+    },
+    "avatar_urls": {
+        "24": "https://secure.gravatar.com/avatar/101?s=24&d=identicon&r=g",
+        "48": "https://secure.gravatar.com/avatar/101?s=48&d=identicon&r=g",
+        "96": "https://secure.gravatar.com/avatar/101?s=96&d=identicon&r=g"
+    },
+    "meta": [],
+    "_links": {
+        "self": [
+            {
+                "href": "https://public-api.wordpress.com/wp/v2/sites/example.com/users/101"
+            }
+        ],
+        "collection": [
+            {
+                "href": "https://public-api.wordpress.com/wp/v2/sites/example.com/users"
+            }
+        ]
+    }
+}
