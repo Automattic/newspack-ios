@@ -10,7 +10,7 @@ class AuthenticationManager {
     ///
     var accountStoreSubscription: Receipt?
 
-    /// Used to hold the competion call back when syncing.
+    /// Used to hold the competion callback when syncing.
     ///
     var syncCompletionBlock: CompletionBlock?
 

@@ -33,6 +33,8 @@ class UserAgent {
         return version ?? String()
     }
 
+    /// Convenience method for configuring the stored user agent.
+    ///
     class func configure() {
         let ua = UserAgent()
         ua.configureIfNecessary()
