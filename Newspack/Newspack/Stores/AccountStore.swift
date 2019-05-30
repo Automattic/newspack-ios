@@ -40,7 +40,7 @@ class AccountStore: Store {
         }
         switch accountAction {
         case .create(let authToken, let site):
-            createAccount(authToken: authToken, for: site)
+            createAccount(authToken: authToken, forSiteAt: site)
         }
     }
 }
@@ -138,14 +138,11 @@ extension AccountStore {
     /// - Parameters:
     ///     - authToken: The REST API auth token for the account.
     ///
-    func createAccount(authToken: String, for site: String) {
+    func createAccount(authToken: String, forSiteAt url: String) {
         let context = CoreDataManager.shared.mainContext
         let account = Account(context: context)
         account.uuid = UUID()
-
-        let aSite = Site(context: context)
-        aSite.domain = site
-        account.addToSites(aSite)
+        account.networkUrl = url
 
         CoreDataManager.shared.saveContext()
 

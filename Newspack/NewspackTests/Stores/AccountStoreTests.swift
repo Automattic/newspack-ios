@@ -34,7 +34,7 @@ class AccountStoreTests: BaseTest {
         let context = CoreDataManager.shared.mainContext
         let token = "testToken"
         let store = accountStore!
-        store.createAccount(authToken: token, for: "example.com")
+        store.createAccount(authToken: token, forSiteAt: "example.com")
 
         let accounts = try! context.fetch(Account.accountFetchRequest() as! NSFetchRequest<NSFetchRequestResult>) as! [Account]
         let account = accounts.first

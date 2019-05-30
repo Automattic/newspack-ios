@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES">
+        <attribute name="networkUrl" attributeType="String" syncable="YES"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="sites" toMany="YES" deletionRule="Cascade" destinationEntity="Site" inverseName="account" inverseEntity="Site" syncable="YES"/>
     </entity>
     <entity name="Site" representedClassName="Site" syncable="YES">
-        <attribute name="domain" attributeType="String" syncable="YES"/>
+        <attribute name="dateFormat" attributeType="String" syncable="YES"/>
+        <attribute name="defaultCategory" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="defaultCommentStatus" attributeType="String" syncable="YES"/>
+        <attribute name="defaultPingStatus" attributeType="String" syncable="YES"/>
+        <attribute name="defaultPostFormat" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="language" attributeType="String" syncable="YES"/>
+        <attribute name="postsPerPage" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="startOfWeek" attributeType="String" syncable="YES"/>
+        <attribute name="summary" attributeType="String" syncable="YES"/>
+        <attribute name="timeFormat" attributeType="String" syncable="YES"/>
+        <attribute name="timezone" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <attribute name="url" attributeType="String" syncable="YES"/>
+        <attribute name="useSmilies" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="account" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="sites" inverseEntity="Account" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Account" positionX="-63" positionY="-18" width="128" height="75"/>
-        <element name="Site" positionX="-63" positionY="-9" width="128" height="75"/>
+        <element name="Account" positionX="-1300.61328125" positionY="-292.0234375" width="128" height="88"/>
+        <element name="Site" positionX="-1088.36328125" positionY="-291.80078125" width="128" height="28"/>
     </elements>
 </model>
