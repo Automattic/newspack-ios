@@ -42,7 +42,7 @@ class SessionManager {
         let store = StoreContainer.shared.accountStore
         let token = store.getAuthTokenForAccount(account)
 
-        api = WordPressCoreRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent, site: site.domain)
+        api = WordPressCoreRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent, site: site.url)
         return token != nil
     }
 

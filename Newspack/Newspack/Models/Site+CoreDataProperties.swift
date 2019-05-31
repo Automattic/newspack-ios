@@ -4,6 +4,10 @@ import CoreData
 
 extension Site {
 
+    @nonobjc public class func fetchRequest() -> NSFetchRequest<Site> {
+        return NSFetchRequest<Site>(entityName: "Site")
+    }
+
     @NSManaged public var url: String!
     @NSManaged public var title: String!
     @NSManaged public var summary: String!
@@ -19,5 +23,6 @@ extension Site {
     @NSManaged public var defaultPingStatus: String!
     @NSManaged public var defaultCommentStatus: String!
     @NSManaged public var account: Account!
+    @NSManaged public var capabilities: AccountCapabilities?
 
 }

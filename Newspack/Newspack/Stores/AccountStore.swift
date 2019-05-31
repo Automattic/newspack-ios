@@ -87,7 +87,7 @@ extension AccountStore {
     /// - Returns: The account
     ///
     func getAccountByUUID(_ uuid: UUID) -> Account? {
-        let fetchRequest = Account.accountFetchRequest()
+        let fetchRequest = Account.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "uuid == %@", uuid as CVarArg)
         let context = CoreDataManager.shared.mainContext
         do {
@@ -105,7 +105,7 @@ extension AccountStore {
     /// - Returns: An array of Accounts. The array may be empty.
     ///
     func getAccounts() -> [Account] {
-        let fetchRequest = Account.accountFetchRequest()
+        let fetchRequest = Account.defaultFetchRequest()
         let context = CoreDataManager.shared.mainContext
         do {
             let accounts = try context.fetch(fetchRequest)
@@ -122,7 +122,7 @@ extension AccountStore {
     /// - Returns: The number of accounts.
     ///
     func numberOfAccounts() -> Int {
-        let fetchRequest = Account.accountFetchRequest()
+        let fetchRequest = Account.defaultFetchRequest()
         let context = CoreDataManager.shared.mainContext
         let count = (try? context.count(for: fetchRequest)) ?? 0
         return count

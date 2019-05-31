@@ -4,7 +4,7 @@ import CoreData
 @objc(Account)
 public class Account: NSManagedObject {
 
-    @nonobjc public class func accountFetchRequest() -> NSFetchRequest<Account> {
+    @nonobjc public class func defaultFetchRequest() -> NSFetchRequest<Account> {
         return NSFetchRequest<Account>(entityName: "Account")
     }
 
@@ -15,9 +15,9 @@ public class Account: NSManagedObject {
     /// - Returns: A site or nil
     ///
     func currentSite() -> Site? {
-        if let domain = UserDefaults.standard.string(forKey: currentSiteKey) {
+        if let url = UserDefaults.standard.string(forKey: currentSiteKey) {
             let filteredSites = sites.filter { (site) -> Bool in
-                return site.domain == domain
+                return site.url == url
             }
 
             if let site = filteredSites.first {
@@ -40,7 +40,7 @@ public class Account: NSManagedObject {
         guard sites.contains(site) else {
             return
         }
-        UserDefaults.standard.set(site.domain, forKey: currentSiteKey)
+        UserDefaults.standard.set(site.url, forKey: currentSiteKey)
     }
 
     /// Returns the key used for the current site in UserDefaults

@@ -45,6 +45,10 @@
 		E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C652235E16E000FEB33 /* AccountStore.swift */; };
 		E62C7C692235E73F000FEB33 /* AccountStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */; };
 		E62C7C6C2235F061000FEB33 /* AuthenticationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */; };
+		E63CD0AA22A17D7200501C4F /* AccountDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CD0A622A17D7100501C4F /* AccountDetails+CoreDataClass.swift */; };
+		E63CD0AB22A17D7200501C4F /* AccountDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CD0A722A17D7100501C4F /* AccountDetails+CoreDataProperties.swift */; };
+		E63CD0AC22A17D7200501C4F /* AccountCapabilities+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CD0A822A17D7100501C4F /* AccountCapabilities+CoreDataClass.swift */; };
+		E63CD0AD22A17D7200501C4F /* AccountCapabilities+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CD0A922A17D7100501C4F /* AccountCapabilities+CoreDataProperties.swift */; };
 		E64492922252F3A7003B70DF /* Site+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64492902252F3A7003B70DF /* Site+CoreDataProperties.swift */; };
 		E64492932252F3A7003B70DF /* Site+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64492912252F3A7003B70DF /* Site+CoreDataClass.swift */; };
 		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
@@ -126,6 +130,10 @@
 		E62C7C652235E16E000FEB33 /* AccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStore.swift; sourceTree = "<group>"; };
 		E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStoreTests.swift; sourceTree = "<group>"; };
 		E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManagerTests.swift; sourceTree = "<group>"; };
+		E63CD0A622A17D7100501C4F /* AccountDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E63CD0A722A17D7100501C4F /* AccountDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E63CD0A822A17D7100501C4F /* AccountCapabilities+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountCapabilities+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E63CD0A922A17D7100501C4F /* AccountCapabilities+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountCapabilities+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E64492902252F3A7003B70DF /* Site+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Site+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Site+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		E64492912252F3A7003B70DF /* Site+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Site+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Site+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
@@ -284,6 +292,10 @@
 		E6138FFA22120371004E5B91 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E63CD0A822A17D7100501C4F /* AccountCapabilities+CoreDataClass.swift */,
+				E63CD0A922A17D7100501C4F /* AccountCapabilities+CoreDataProperties.swift */,
+				E63CD0A622A17D7100501C4F /* AccountDetails+CoreDataClass.swift */,
+				E63CD0A722A17D7100501C4F /* AccountDetails+CoreDataProperties.swift */,
 				E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */,
 				E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */,
 				E64492912252F3A7003B70DF /* Site+CoreDataClass.swift */,
@@ -727,17 +739,21 @@
 				E6138FD42211FE86004E5B91 /* ViewController.swift in Sources */,
 				E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */,
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
+				E63CD0AD22A17D7200501C4F /* AccountCapabilities+CoreDataProperties.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */,
 				E69E59FD22541ABD00899DE2 /* WordPressCoreRestApi.swift in Sources */,
 				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
+				E63CD0AB22A17D7200501C4F /* AccountDetails+CoreDataProperties.swift in Sources */,
 				E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */,
 				E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */,
 				E64492932252F3A7003B70DF /* Site+CoreDataClass.swift in Sources */,
+				E63CD0AA22A17D7200501C4F /* AccountDetails+CoreDataClass.swift in Sources */,
 				E623C6F62220516600F9865C /* ApiCredentials.swift in Sources */,
 				E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */,
 				E6241B96224EC8CD00B578F5 /* SessionManager.swift in Sources */,
+				E63CD0AC22A17D7200501C4F /* AccountCapabilities+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

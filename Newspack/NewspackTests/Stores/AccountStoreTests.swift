@@ -36,7 +36,7 @@ class AccountStoreTests: BaseTest {
         let store = accountStore!
         store.createAccount(authToken: token, forSiteAt: "example.com")
 
-        let accounts = try! context.fetch(Account.accountFetchRequest() as! NSFetchRequest<NSFetchRequestResult>) as! [Account]
+        let accounts = try! context.fetch(Account.defaultFetchRequest() as! NSFetchRequest<NSFetchRequestResult>) as! [Account]
         let account = accounts.first
         let savedToken = store.getAuthTokenForAccount(account!)
 
