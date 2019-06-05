@@ -10,6 +10,7 @@ extension AccountCapabilities {
 
     @NSManaged public var capabilities: [String: Bool]!
     @NSManaged public var roles: [String]!
+
     @NSManaged public var site: Site!
 
 }

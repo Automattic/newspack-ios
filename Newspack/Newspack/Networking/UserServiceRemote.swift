@@ -28,7 +28,7 @@ class UserServiceRemote: ServiceRemoteCoreRest {
 /// Remote User
 ///
 struct RemoteUser {
-    let id: Int
+    let id: Int64
     let username: String
     let name: String
     let firstName: String
@@ -41,7 +41,7 @@ struct RemoteUser {
     let nickname: String
     let slug: String
     let roles: [String]
-    let registeredDate: Date
+    let registeredDate: String
     let capabilities: [String: Bool]
     let extraCapabilities: [String: String]
     let avatarUrls: [String: String]
@@ -53,7 +53,7 @@ struct RemoteUser {
     /// - Returns: An instance of RemoteSiteSettingsV2 initialized from the supplied dictionary.
     ///
     init(dict: [String: AnyObject]) {
-        id = dict["id"] as? Int ?? 0
+        id = dict["id"] as? Int64 ?? 0
         username = dict["username"] as? String ?? ""
         name = dict["name"] as? String ?? ""
         firstName = dict["first_name"] as? String ?? ""
@@ -66,13 +66,7 @@ struct RemoteUser {
         nickname = dict["nickname"] as? String ?? ""
         slug = dict["slug"] as? String ?? ""
         roles = dict["roles"] as? [String] ?? [String]()
-
-        if let dateStr = dict["registered_date"] as? String {
-            registeredDate = NSDate(wordPressComJSONString: dateStr) as Date 
-        } else {
-            registeredDate = Date()
-        }
-
+        registeredDate = dict["registered_date"] as? String ?? ""
         capabilities = dict["capabilities"] as? [String: Bool] ?? [String: Bool]()
         extraCapabilities = dict["extra_capabilities"] as? [String: String] ?? [String: String]()
         avatarUrls = dict["avatar_urls"] as? [String: String] ?? [String: String]()
