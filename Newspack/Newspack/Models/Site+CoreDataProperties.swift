@@ -22,6 +22,7 @@ extension Site {
     @NSManaged public var postsPerPage: Int64
     @NSManaged public var defaultPingStatus: String!
     @NSManaged public var defaultCommentStatus: String!
+
     @NSManaged public var account: Account!
     @NSManaged public var capabilities: AccountCapabilities?
 

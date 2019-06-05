@@ -35,9 +35,9 @@ struct RemoteSiteSettings {
     let startOfWeek: String
     let language: String
     let useSmilies: Bool
-    let defaultCategory: Int
-    let defaultPostFormat: Int
-    let postsPerPage: Int
+    let defaultCategory: Int64
+    let defaultPostFormat: Int64
+    let postsPerPage: Int64
     let defaultPingStatus: String
     let defaultCommentStatus: String
 
@@ -55,9 +55,9 @@ struct RemoteSiteSettings {
         startOfWeek = dict["start_of_week"] as? String ?? ""
         language = dict["language"] as? String ?? ""
         useSmilies = dict["use_smilies"] as? Bool ?? false
-        defaultCategory = dict["default_category"] as? Int ?? 0
-        defaultPostFormat = dict["default_post_format"] as? Int ?? 0
-        postsPerPage = dict["posts_per_page"] as? Int ?? 0
+        defaultCategory = dict["default_category"] as? Int64 ?? 0
+        defaultPostFormat = dict["default_post_format"] as? Int64 ?? 0
+        postsPerPage = dict["posts_per_page"] as? Int64 ?? 0
         defaultPingStatus = dict["default_ping_status"] as? String ?? ""
         defaultCommentStatus = dict["default_comment_status"] as? String ?? ""
     }
