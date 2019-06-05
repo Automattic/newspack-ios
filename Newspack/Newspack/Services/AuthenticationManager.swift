@@ -75,9 +75,9 @@ class AuthenticationManager {
     ///     - authToken: The REST API bearer token to be used for the acccount.
     ///     - site: The site (or multi-site) for the auth token.
     ///
-    func processCredentials(authToken: String, site: String, onCompletion: @escaping () -> Void) {
+    func processCredentials(authToken: String, url: String, onCompletion: @escaping () -> Void) {
         syncCompletionBlock = onCompletion
-        let action = AccountAction.create(authToken: authToken, site: site)
+        let action = AccountAction.create(authToken: authToken, networkUrl: url)
         ActionDispatcher.global.dispatch(action)
     }
 }
@@ -175,7 +175,7 @@ extension AuthenticationManager: WordPressAuthenticatorDelegate {
     ///
     func sync(credentials: AuthenticatorCredentials, onCompletion: @escaping () -> Void) {
         if let creds = credentials.wpcom {
-            processCredentials(authToken: creds.authToken, site: creds.siteURL, onCompletion: onCompletion)
+            processCredentials(authToken: creds.authToken, url: creds.siteURL, onCompletion: onCompletion)
         } else if let _ = credentials.wporg {
             // TODO: handle this
         }
