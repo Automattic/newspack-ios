@@ -4,18 +4,6 @@ import CoreData
 
 class AccountStoreTests: BaseTest {
 
-    var accountStore: AccountStore?
-
-    override func setUp() {
-        super.setUp()
-        accountStore = AccountStore(dispatcher: .global, keychainServiceName: "com.automattic.newspack.test")
-    }
-
-    override func tearDown() {
-        // Clean up the keychain
-        accountStore?.clearAuthTokens()
-    }
-
     /// Test that numberOfAccounts returns the correct values.
     ///
     func testNumberOfAccountsIsZero() {
@@ -86,5 +74,10 @@ class AccountStoreTests: BaseTest {
         XCTAssertNil(store.getAuthTokenForAccount(account1))
         XCTAssertNil(store.getAuthTokenForAccount(account2))
         XCTAssertNil(store.getAuthTokenForAccount(account3))
+    }
+
+
+    func testMultipleAccountsCannotShareAuthToken() {
+        //TODO
     }
 }

@@ -5,13 +5,20 @@ import CoreData
 
 class BaseTest: XCTestCase {
 
+    var accountStore: AccountStore?
+
     override func setUp() {
         super.setUp()
         replaceCoreDataStack()
+
+        accountStore = AccountStore(dispatcher: .global, keychainServiceName: "com.automattic.newspack.test")
     }
 
     override func tearDown() {
         super.tearDown()
+
+        accountStore?.clearAuthTokens()
+        accountStore = nil
     }
 
     /// Replaces the default core data stack with one that is in-memory.
@@ -27,5 +34,9 @@ class BaseTest: XCTestCase {
             }
         })
         CoreDataManager.shared.replaceContainer(container)
+    }
+
+    func getTestAccount() {
+        
     }
 }
