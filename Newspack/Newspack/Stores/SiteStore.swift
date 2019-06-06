@@ -43,7 +43,8 @@ extension SiteStore {
     ///
     /// - Parameters:
     ///     - url: The url of the site
-    ///     - remoteSiteSettings: The REST API auth token for the account.
+    ///     - settings: The REST API auth token for the account.
+    ///     - accountID: The UUID for the account to which the site belongs.
     ///
     func createSite(url: String, settings: RemoteSiteSettings, accountID: UUID) {
 
