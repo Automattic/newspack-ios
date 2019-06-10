@@ -10,16 +10,14 @@ enum SiteAction: Action {
 
 /// Dispatched actions to notifiy subscribers of changes
 ///
-enum SiteChange: Action {
+enum SiteEvent: Event {
     case siteCreated(site: Site)
     case currentSiteChanged
 }
 
 /// Responsible for managing site related things.
 ///
-class SiteStore: Store {
-
-    let siteChangeDispatcher = Dispatcher<SiteChange>()
+class SiteStore: EventfulStore {
 
     /// Action handler
     ///
@@ -74,6 +72,6 @@ extension SiteStore {
 
         CoreDataManager.shared.saveContext()
 
-        siteChangeDispatcher.dispatch(.siteCreated(site: site))
+        emitChangeEvent(event: SiteEvent.siteCreated(site: site))
     }
 }

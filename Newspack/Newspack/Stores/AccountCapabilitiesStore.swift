@@ -10,15 +10,13 @@ enum AccountCapabilitiesAction: Action {
 
 /// Dispatched actions to notifiy subscribers of changes
 ///
-enum AccountCapabilitiesChange: Action {
+enum AccountCapabilitiesEvent: Event {
     case accountCapabilitiesCreated(capabilities: AccountCapabilities)
 }
 
 /// Responsible for managing site related things.
 ///
-class AccountCapabilitiesStore: Store {
-
-    let accountCapabilitiesChangeDispatcher = Dispatcher<AccountCapabilitiesChange>()
+class AccountCapabilitiesStore: EventfulStore {
 
     /// Action handler
     ///
@@ -67,6 +65,6 @@ extension AccountCapabilitiesStore {
 
         CoreDataManager.shared.saveContext()
 
-        accountCapabilitiesChangeDispatcher.dispatch(.accountCapabilitiesCreated(capabilities: capabilities))
+        emitChangeEvent(event: AccountCapabilitiesEvent.accountCapabilitiesCreated(capabilities: capabilities))
     }
 }

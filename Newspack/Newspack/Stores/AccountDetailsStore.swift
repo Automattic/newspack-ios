@@ -10,15 +10,13 @@ enum AccountDetailsAction: Action {
 
 /// Dispatched actions to notifiy subscribers of changes
 ///
-enum AccountDetailsChange: Action {
+enum AccountDetailsEvent: Event {
     case accountDetailsCreated(details: AccountDetails)
 }
 
 /// Responsible for managing site related things.
 ///
-class AccountDetailsStore: Store {
-
-    let accountDetailsChangeDispatcher = Dispatcher<AccountDetailsChange>()
+class AccountDetailsStore: EventfulStore {
 
     /// Action handler
     ///
@@ -72,6 +70,6 @@ extension AccountDetailsStore {
 
         CoreDataManager.shared.saveContext()
 
-        accountDetailsChangeDispatcher.dispatch(.accountDetailsCreated(details: details))
+        emitChangeEvent(event: AccountDetailsEvent.accountDetailsCreated(details: details))
     }
 }
