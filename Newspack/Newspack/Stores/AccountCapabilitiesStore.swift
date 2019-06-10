@@ -11,7 +11,14 @@ enum AccountCapabilitiesAction: Action {
 /// Dispatched actions to notifiy subscribers of changes
 ///
 enum AccountCapabilitiesEvent: Event {
-    case accountCapabilitiesCreated(capabilities: AccountCapabilities)
+    case accountCapabilitiesCreated(capabilities: AccountCapabilities?, error: Error?)
+}
+
+/// Errors
+///
+enum AccountCapabilitiesError: Error {
+    case createAccountMissing
+    case createSiteMissing
 }
 
 /// Responsible for managing site related things.
@@ -44,16 +51,18 @@ extension AccountCapabilitiesStore {
     ///     - accountID: UUID for the account
     ///
     func createAccountCapabilities(user: RemoteUser, siteUrl: String, accountID: UUID) {
-
+        // Find the account
         let accountStore = StoreContainer.shared.accountStore
         guard let account = accountStore.getAccountByUUID(accountID) else {
+            emitChangeEvent(event: AccountCapabilitiesEvent.accountCapabilitiesCreated(capabilities: nil, error: AccountCapabilitiesError.createAccountMissing))
             return
         }
-
+        // Find the site
         let sites = account.sites.filter { (site) -> Bool in
             return site.url == siteUrl
         }
         guard let site = sites.first else {
+            emitChangeEvent(event: AccountCapabilitiesEvent.accountCapabilitiesCreated(capabilities: nil, error: AccountCapabilitiesError.createSiteMissing))
             return
         }
 
@@ -65,6 +74,6 @@ extension AccountCapabilitiesStore {
 
         CoreDataManager.shared.saveContext()
 
-        emitChangeEvent(event: AccountCapabilitiesEvent.accountCapabilitiesCreated(capabilities: capabilities))
+        emitChangeEvent(event: AccountCapabilitiesEvent.accountCapabilitiesCreated(capabilities: capabilities, error: nil))
     }
 }

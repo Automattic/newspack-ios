@@ -11,8 +11,14 @@ enum SiteAction: Action {
 /// Dispatched actions to notifiy subscribers of changes
 ///
 enum SiteEvent: Event {
-    case siteCreated(site: Site)
+    case siteCreated(site: Site?, error: Error?)
     case currentSiteChanged
+}
+
+/// Errors
+///
+enum SiteError: Error {
+    case createAccountMissing
 }
 
 /// Responsible for managing site related things.
@@ -48,6 +54,7 @@ extension SiteStore {
 
         let accountStore = StoreContainer.shared.accountStore
         guard let account = accountStore.getAccountByUUID(accountID) else {
+            emitChangeEvent(event: SiteEvent.siteCreated(site: nil, error: SiteError.createAccountMissing))
             return
         }
 
@@ -72,6 +79,6 @@ extension SiteStore {
 
         CoreDataManager.shared.saveContext()
 
-        emitChangeEvent(event: SiteEvent.siteCreated(site: site))
+        emitChangeEvent(event: SiteEvent.siteCreated(site: site, error: nil))
     }
 }

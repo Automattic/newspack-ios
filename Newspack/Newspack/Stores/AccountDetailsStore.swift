@@ -11,7 +11,13 @@ enum AccountDetailsAction: Action {
 /// Dispatched actions to notifiy subscribers of changes
 ///
 enum AccountDetailsEvent: Event {
-    case accountDetailsCreated(details: AccountDetails)
+    case accountDetailsCreated(details: AccountDetails?, error: Error?)
+}
+
+/// Errors
+///
+enum AccountDetailsError: Error {
+    case createAccountMissing
 }
 
 /// Responsible for managing site related things.
@@ -46,6 +52,7 @@ extension AccountDetailsStore {
 
         let accountStore = StoreContainer.shared.accountStore
         guard let account = accountStore.getAccountByUUID(accountID) else {
+            emitChangeEvent(event: AccountDetailsEvent.accountDetailsCreated(details: nil, error: AccountDetailsError.createAccountMissing))
             return
         }
 
@@ -70,6 +77,6 @@ extension AccountDetailsStore {
 
         CoreDataManager.shared.saveContext()
 
-        emitChangeEvent(event: AccountDetailsEvent.accountDetailsCreated(details: details))
+        emitChangeEvent(event: AccountDetailsEvent.accountDetailsCreated(details: details, error: nil))
     }
 }
