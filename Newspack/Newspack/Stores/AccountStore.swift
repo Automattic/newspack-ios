@@ -11,19 +11,17 @@ enum AccountAction: Action {
 
 /// Dispatched actions to notifiy subscribers of changes
 ///
-enum AccountChange: Action {
+enum AccountEvent: Event {
     case accountCreated(account: Account)
     case currentAccountChanged
 }
 
 /// Responsible for managing account and keychain related things.
 ///
-class AccountStore: Store {
+class AccountStore: EventfulStore {
     private let currentAccountUUIDKey: String = "currentAccountUUIDKey"
     private static let keychainServiceName: String = "com.automattic.newspack"
     private let keychain: Keychain
-
-    let accountChangeDispatcher = Dispatcher<AccountChange>()
 
     /// Initializer
     ///
@@ -70,7 +68,7 @@ extension AccountStore {
 
             defer {
                 defaults.synchronize()
-                accountChangeDispatcher.dispatch(.currentAccountChanged)
+                emitChangeEvent(event: AccountEvent.currentAccountChanged)
             }
 
             guard let account = account else {
@@ -148,9 +146,9 @@ extension AccountStore {
 
         setAuthToken(authToken, for: account)
 
-        accountChangeDispatcher.dispatch(.accountCreated(account: account))
+        emitChangeEvent(event: AccountEvent.accountCreated(account: account))
 
-        // TODO: Potentially this should be a separate action
+        // Emits change
         currentAccount = account
     }
 }

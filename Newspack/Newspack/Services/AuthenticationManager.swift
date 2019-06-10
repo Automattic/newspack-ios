@@ -17,7 +17,7 @@ class AuthenticationManager {
 
     init() {
         let store = StoreContainer.shared.accountStore
-        accountStoreSubscription = store.accountChangeDispatcher.subscribe(storeChangeHandler(_:))
+        accountStoreSubscription = store.onChangeEvent(storeChangeHandler(_:))
     }
 
     /// Initialize the authentication manager.
@@ -39,9 +39,9 @@ class AuthenticationManager {
 
     /// Handles account store change actions.
     ///
-    func storeChangeHandler(_ accountChange: AccountChange) {
-        switch accountChange {
-        case .accountCreated(account: _):
+    func storeChangeHandler(_ event: Event) {
+        switch event {
+        case AccountEvent.accountCreated(account: _):
             syncCompletionBlock?()
             syncCompletionBlock = nil
         default:
