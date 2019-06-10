@@ -92,6 +92,7 @@ extension AccountStore {
             let accounts = try context.fetch(fetchRequest)
             return accounts.first
         } catch {
+            // TODO: Need to log this
             let error = error as NSError
             print(error.localizedDescription)
         }
@@ -109,6 +110,7 @@ extension AccountStore {
             let accounts = try context.fetch(fetchRequest)
             return accounts
         } catch {
+            // TODO: Need to log this
             let error = error as NSError
             print(error.localizedDescription)
         }
