@@ -5,13 +5,13 @@ import WordPressFlux
 /// Supported Actions for changes to the SiteStore
 ///
 enum AccountDetailsAction: Action {
-    case create(user: RemoteUser, accountID: UUID)
+    case update(user: RemoteUser, accountID: UUID)
 }
 
 /// Dispatched actions to notifiy subscribers of changes
 ///
 enum AccountDetailsEvent: Event {
-    case accountDetailsCreated(details: AccountDetails?, error: Error?)
+    case accountDetailsUpdated(details: AccountDetails?, error: Error?)
 }
 
 /// Errors
@@ -31,8 +31,8 @@ class AccountDetailsStore: EventfulStore {
             return
         }
         switch detailsAction {
-        case .create(let user, let accountID):
-            createAccountDetails(user: user, accountID: accountID)
+        case .update(let user, let accountID):
+            updateAccountDetails(user: user, accountID: accountID)
         }
     }
 
@@ -48,16 +48,17 @@ extension AccountDetailsStore {
     ///     - url: The url of the site
     ///     - remoteSiteSettings: The REST API auth token for the account.
     ///
-    func createAccountDetails(user: RemoteUser, accountID: UUID) {
+    func updateAccountDetails(user: RemoteUser, accountID: UUID) {
 
         let accountStore = StoreContainer.shared.accountStore
         guard let account = accountStore.getAccountByUUID(accountID) else {
-            emitChangeEvent(event: AccountDetailsEvent.accountDetailsCreated(details: nil, error: AccountDetailsError.createAccountMissing))
+            emitChangeEvent(event: AccountDetailsEvent.accountDetailsUpdated(details: nil, error: AccountDetailsError.createAccountMissing))
             return
         }
 
         let context = CoreDataManager.shared.mainContext
-        let details = AccountDetails(context: context)
+        let details = account.details ?? AccountDetails(context: context)
+
         details.userID = user.id
         details.name = user.name
         details.firstName = user.firstName
@@ -77,6 +78,6 @@ extension AccountDetailsStore {
 
         CoreDataManager.shared.saveContext()
 
-        emitChangeEvent(event: AccountDetailsEvent.accountDetailsCreated(details: details, error: nil))
+        emitChangeEvent(event: AccountDetailsEvent.accountDetailsUpdated(details: details, error: nil))
     }
 }
