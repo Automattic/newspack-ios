@@ -8,4 +8,9 @@ public class AccountDetails: NSManagedObject {
         return NSFetchRequest<AccountDetails>(entityName: "AccountDetails")
     }
 
+    public override func willSave() {
+        if account == nil && !isDeleted {
+            managedObjectContext?.delete(self)
+        }
+    }
 }

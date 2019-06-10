@@ -26,7 +26,7 @@
         <attribute name="url" attributeType="String" syncable="YES"/>
         <attribute name="userID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="username" attributeType="String" syncable="YES"/>
-        <relationship name="account" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="details" inverseEntity="Account" syncable="YES"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="details" inverseEntity="Account" syncable="YES"/>
     </entity>
     <entity name="Site" representedClassName="Site" syncable="YES">
         <attribute name="dateFormat" attributeType="String" syncable="YES"/>
@@ -48,8 +48,8 @@
     </entity>
     <elements>
         <element name="Account" positionX="-1478.8671875" positionY="-295.10546875" width="128" height="103"/>
-        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="283"/>
-        <element name="AccountDetails" positionX="-1479.90625" positionY="-91.0390625" width="128" height="268"/>
         <element name="AccountCapabilities" positionX="-1215.9921875" positionY="-44.7890625" width="128" height="90"/>
+        <element name="AccountDetails" positionX="-1479.90625" positionY="-91.0390625" width="128" height="270"/>
+        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="283"/>
     </elements>
 </model>
