@@ -33,7 +33,7 @@ class AccountDetailsStoreTests: BaseTest {
 
     func testUpdateAccountDetailsError() {
         let dispatcher = ActionDispatcher.global
-        var remoteUser = self.remoteUser!
+        let remoteUser = self.remoteUser!
         var details: AccountDetails?
         var error: Error?
 
@@ -60,7 +60,7 @@ class AccountDetailsStoreTests: BaseTest {
     func testUpdateAccountDetailsCreatesDetails() {
         let dispatcher = ActionDispatcher.global
         let account = self.account!
-        var remoteUser = self.remoteUser!
+        let remoteUser = self.remoteUser!
         var details: AccountDetails?
         var error: Error?
 
