@@ -199,7 +199,7 @@ class AccountDetailsStoreTests: BaseTest {
 
         let account2 = Account(context: context)
         account2.uuid = UUID()
-        account2.networkUrl = "http://account1.com"
+        account2.networkUrl = "http://account2.com"
 
         let details1 = AccountDetails(context: context)
         details1.userID = 1
