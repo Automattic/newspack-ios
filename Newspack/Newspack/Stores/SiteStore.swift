@@ -6,13 +6,14 @@ import WordPressFlux
 ///
 enum SiteAction: Action {
     case create(url: String, settings: RemoteSiteSettings, accountID: UUID)
+    case update(site: Site, settings: RemoteSiteSettings)
 }
 
 /// Dispatched actions to notifiy subscribers of changes
 ///
 enum SiteEvent: Event {
     case siteCreated(site: Site?, error: Error?)
-    case currentSiteChanged
+    case siteUpdated(site: Site?, error: Error?)
 }
 
 /// Errors
@@ -34,6 +35,8 @@ class SiteStore: EventfulStore {
         switch siteAction {
         case .create(let url, let settings, let accountID):
             createSite(url: url, settings: settings, accountID: accountID)
+        case .update(let site, let settings):
+            updateSite(site: site, settings: settings)
         }
     }
 
@@ -80,5 +83,26 @@ extension SiteStore {
         CoreDataManager.shared.saveContext()
 
         emitChangeEvent(event: SiteEvent.siteCreated(site: site, error: nil))
+    }
+
+
+    func updateSite(site: Site, settings: RemoteSiteSettings) {
+
+        site.title = settings.title
+        site.summary = settings.description
+        site.timezone = settings.timezone
+        site.dateFormat = settings.dateFormat
+        site.timeFormat = settings.timeFormat
+        site.startOfWeek = settings.startOfWeek
+        site.language = settings.language
+        site.useSmilies = settings.useSmilies
+        site.defaultCategory = settings.defaultCategory
+        site.defaultPostFormat = settings.defaultPostFormat
+        site.postsPerPage = settings.postsPerPage
+        site.defaultPingStatus = settings.defaultPingStatus
+        site.defaultCommentStatus = settings.defaultCommentStatus
+        CoreDataManager.shared.saveContext()
+
+        emitChangeEvent(event: SiteEvent.siteUpdated(site: site, error: nil))
     }
 }
