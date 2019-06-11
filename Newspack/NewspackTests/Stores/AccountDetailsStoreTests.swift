@@ -12,15 +12,15 @@ class AccountDetailsStoreTests: BaseTest {
     override func setUp() {
         super.setUp()
 
-        // Account
+        store = AccountDetailsStore(dispatcher: .global)
+
+        // Test account
         accountStore!.createAccount(authToken: "testToken", forNetworkAt: "example.com")
         account = accountStore!.currentAccount
 
-        store = AccountDetailsStore(dispatcher: .global)
-
-        if let response = Loader.jsonObject(for: "remote-user-edit") as? [String: AnyObject] {
-            remoteUser = RemoteUser(dict: response)
-        }
+        // Test remote user
+        let response = Loader.jsonObject(for: "remote-user-edit") as! [String: AnyObject]
+        remoteUser = RemoteUser(dict: response)
     }
 
     override func tearDown() {
@@ -32,6 +32,8 @@ class AccountDetailsStoreTests: BaseTest {
     }
 
     func testUpdateAccountDetailsError() {
+        let dispatcher = ActionDispatcher.global
+        var remoteUser = self.remoteUser!
         var details: AccountDetails?
         var error: Error?
 
@@ -47,8 +49,7 @@ class AccountDetailsStoreTests: BaseTest {
             }
         })
 
-        let dispatcher = ActionDispatcher.global
-        let action = AccountDetailsAction.update(user: remoteUser!, accountID: UUID())
+        let action = AccountDetailsAction.update(user: remoteUser, accountID: UUID())
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
@@ -57,6 +58,9 @@ class AccountDetailsStoreTests: BaseTest {
     }
 
     func testUpdateAccountDetailsCreatesDetails() {
+        let dispatcher = ActionDispatcher.global
+        let account = self.account!
+        var remoteUser = self.remoteUser!
         var details: AccountDetails?
         var error: Error?
 
@@ -73,9 +77,7 @@ class AccountDetailsStoreTests: BaseTest {
             }
         })
 
-        let dispatcher = ActionDispatcher.global
-        let account = StoreContainer.shared.accountStore.currentAccount!
-        let action = AccountDetailsAction.update(user: remoteUser!, accountID: account.uuid)
+        let action = AccountDetailsAction.update(user: remoteUser, accountID: account.uuid)
 
         XCTAssertNil(account.details)
 
@@ -86,15 +88,17 @@ class AccountDetailsStoreTests: BaseTest {
         XCTAssertNotNil(details)
         XCTAssertNotNil(account.details)
         XCTAssertEqual(account.details!.objectID, details!.objectID)
-        XCTAssertEqual(remoteUser!.email, details!.email)
+        XCTAssertEqual(remoteUser.email, details!.email)
     }
 
     func testUpdateAccountDetailsUpdatesExistingDetails() {
+        let dispatcher = ActionDispatcher.global
+        let account = self.account!
+        var remoteUser = self.remoteUser!
         var details: AccountDetails?
         var error: Error?
 
-        let account = StoreContainer.shared.accountStore.currentAccount!
-        store!.updateAccountDetails(user: remoteUser!, accountID: account.uuid)
+        store?.updateAccountDetails(user: remoteUser, accountID: account.uuid)
         XCTAssertNotNil(account.details)
 
         let receipt = store?.onChangeEvent({ (changeEvent) in
@@ -115,8 +119,7 @@ class AccountDetailsStoreTests: BaseTest {
         dict["email"] = testEmail as AnyObject
         remoteUser = RemoteUser(dict: dict)
 
-        let dispatcher = ActionDispatcher.global
-        let action = AccountDetailsAction.update(user: remoteUser!, accountID: account.uuid)
+        let action = AccountDetailsAction.update(user: remoteUser, accountID: account.uuid)
 
         dispatcher.dispatch(action)
 
@@ -125,7 +128,7 @@ class AccountDetailsStoreTests: BaseTest {
         XCTAssertNotNil(details)
         XCTAssertNotNil(account.details)
         XCTAssertEqual(account.details!.objectID, details!.objectID)
-        XCTAssertEqual(remoteUser!.email, details!.email)
+        XCTAssertEqual(remoteUser.email, details!.email)
     }
 
     func testAccountHasOnlyOneSetOfAccountDetails() {
@@ -225,7 +228,6 @@ class AccountDetailsStoreTests: BaseTest {
 
         XCTAssertNil(account1.details)
         XCTAssertNotNil(account2.details)
-
     }
 
 }
