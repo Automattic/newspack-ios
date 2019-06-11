@@ -5,20 +5,20 @@ import WordPressFlux
 /// Supported Actions for changes to the SiteStore
 ///
 enum AccountCapabilitiesAction: Action {
-    case create(remoteUser: RemoteUser, siteUrl: String, accountID: UUID)
+    case update(remoteUser: RemoteUser, siteUrl: String, accountID: UUID)
 }
 
 /// Dispatched actions to notifiy subscribers of changes
 ///
 enum AccountCapabilitiesEvent: Event {
-    case accountCapabilitiesCreated(capabilities: AccountCapabilities?, error: Error?)
+    case accountCapabilitiesUpdated(capabilities: AccountCapabilities?, error: Error?)
 }
 
 /// Errors
 ///
 enum AccountCapabilitiesError: Error {
-    case createAccountMissing
-    case createSiteMissing
+    case updateAccountMissing
+    case updateSiteMissing
 }
 
 /// Responsible for managing site related things.
@@ -32,8 +32,8 @@ class AccountCapabilitiesStore: EventfulStore {
             return
         }
         switch capabilitiesAction {
-        case .create(let user, let siteUrl, let accountID):
-            createAccountCapabilities(user: user, siteUrl: siteUrl, accountID: accountID)
+        case .update(let user, let siteUrl, let accountID):
+            updateAccountCapabilities(user: user, siteUrl: siteUrl, accountID: accountID)
         }
     }
 
@@ -42,7 +42,7 @@ class AccountCapabilitiesStore: EventfulStore {
 
 extension AccountCapabilitiesStore {
 
-    /// Creates a new site with the specified .
+    /// Update the account capabilities for a site.
     /// The new account is made the current account.
     ///
     /// - Parameters:
@@ -50,11 +50,11 @@ extension AccountCapabilitiesStore {
     ///     - siteUrl: The url of the site
     ///     - accountID: UUID for the account
     ///
-    func createAccountCapabilities(user: RemoteUser, siteUrl: String, accountID: UUID) {
+    func updateAccountCapabilities(user: RemoteUser, siteUrl: String, accountID: UUID) {
         // Find the account
         let accountStore = StoreContainer.shared.accountStore
         guard let account = accountStore.getAccountByUUID(accountID) else {
-            emitChangeEvent(event: AccountCapabilitiesEvent.accountCapabilitiesCreated(capabilities: nil, error: AccountCapabilitiesError.createAccountMissing))
+            emitChangeEvent(event: AccountCapabilitiesEvent.accountCapabilitiesUpdated(capabilities: nil, error: AccountCapabilitiesError.updateAccountMissing))
             return
         }
         // Find the site
@@ -62,7 +62,7 @@ extension AccountCapabilitiesStore {
             return site.url == siteUrl
         }
         guard let site = sites.first else {
-            emitChangeEvent(event: AccountCapabilitiesEvent.accountCapabilitiesCreated(capabilities: nil, error: AccountCapabilitiesError.createSiteMissing))
+            emitChangeEvent(event: AccountCapabilitiesEvent.accountCapabilitiesUpdated(capabilities: nil, error: AccountCapabilitiesError.updateSiteMissing))
             return
         }
 
@@ -74,6 +74,6 @@ extension AccountCapabilitiesStore {
 
         CoreDataManager.shared.saveContext()
 
-        emitChangeEvent(event: AccountCapabilitiesEvent.accountCapabilitiesCreated(capabilities: capabilities, error: nil))
+        emitChangeEvent(event: AccountCapabilitiesEvent.accountCapabilitiesUpdated(capabilities: capabilities, error: nil))
     }
 }
