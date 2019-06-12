@@ -7,13 +7,16 @@ import WordPressFlux
 ///
 enum AccountAction: Action {
     case create(authToken: String, networkUrl: String)
+    case setCurrentAccount(account: Account)
+    case setCurrentSite(site: Site, account: Account)
 }
 
 /// Dispatched actions to notifiy subscribers of changes
 ///
 enum AccountEvent: Event {
     case accountCreated(account: Account)
-    case currentAccountChanged
+    case currentAccountChanged(newAccount: Account?, oldAccount: Account?)
+    case currentSiteChanged(account: Account, oldSite: Site?, newSite: Site?)
 }
 
 /// Responsible for managing account and keychain related things.
@@ -39,6 +42,12 @@ class AccountStore: EventfulStore {
         switch accountAction {
         case .create(let authToken, let networkUrl):
             createAccount(authToken: authToken, forNetworkAt: networkUrl)
+        case .setCurrentAccount(let account):
+            setCurrentAccount(account: account)
+            break
+        case .setCurrentSite(let site, let account):
+            setCurrentSite(site: site, for: account)
+            break
         }
     }
 }
@@ -66,9 +75,11 @@ extension AccountStore {
 
             let defaults = UserDefaults.standard
 
+            let oldValue = currentAccount
+            let newValue = account
             defer {
                 defaults.synchronize()
-                emitChangeEvent(event: AccountEvent.currentAccountChanged)
+                emitChangeEvent(event: AccountEvent.currentAccountChanged(newAccount: newValue, oldAccount: oldValue))
             }
 
             guard let account = account else {
@@ -152,6 +163,27 @@ extension AccountStore {
 
         // Emits change
         currentAccount = account
+    }
+
+    /// Handler for the .setCurrentAccount action.
+    ///
+    /// - Parameter account: The new account or nil.
+    ///
+    func setCurrentAccount(account: Account?) {
+        // Note: The computed property will emit the event.
+        currentAccount = account
+    }
+
+    /// Handler for th .setCurrentSite action.
+    ///
+    func setCurrentSite(site: Site, for account: Account) {
+        let oldSite = account.currentSite
+        account.currentSite = site
+        let newSite = account.currentSite
+
+        if newSite != oldSite {
+            emitChangeEvent(event: AccountEvent.currentSiteChanged(account: account, oldSite: oldSite, newSite: newSite))
+        }
     }
 }
 
