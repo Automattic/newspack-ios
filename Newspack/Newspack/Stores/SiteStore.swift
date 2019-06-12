@@ -85,7 +85,11 @@ extension SiteStore {
         emitChangeEvent(event: SiteEvent.siteCreated(site: site, error: nil))
     }
 
-
+    /// Update the specified site.
+    ///
+    /// - Parameters:
+    ///   - site: the site to update
+    ///   - settings: the remote settings containing the updates
     func updateSite(site: Site, settings: RemoteSiteSettings) {
 
         site.title = settings.title
