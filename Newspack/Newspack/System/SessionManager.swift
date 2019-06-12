@@ -33,7 +33,7 @@ class SessionManager {
     func initialize(account: Account?) -> Bool {
         guard
             let account = account,
-            let site = account.currentSite()
+            let site = account.currentSite
             else {
                 api = WordPressCoreRestApi(oAuthToken: nil, userAgent: UserAgent.defaultUserAgent)
                 return false
