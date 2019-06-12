@@ -138,42 +138,16 @@ class AccountDetailsStoreTests: BaseTest {
         account1.networkUrl = "http://account1.com"
         CoreDataManager.shared.saveContext()
 
-        let details1 = AccountDetails(context: context)
+        let details1 = ModelFactory.getTestAccountDetails(context: context)
         details1.userID = 1
-        details1.name = "name"
-        details1.firstName = "firstName"
-        details1.lastName = "lastName"
-        details1.nickname = "nickname"
-        details1.email = "email"
-        details1.avatarUrls = [String: String]()
-        details1.link = "link"
-        details1.locale = "locale"
-        details1.slug = "slug"
-        details1.summary = "description"
-        details1.url = "url"
-        details1.username = "username"
-        details1.registeredDate = "registeredDate"
 
         account1.details = details1
         CoreDataManager.shared.saveContext()
 
         XCTAssertEqual(account1.details!.userID, 1)
 
-        let details2 = AccountDetails(context: context)
+         let details2 = ModelFactory.getTestAccountDetails(context: context)
         details2.userID = 2
-        details2.name = "name"
-        details2.firstName = "firstName"
-        details2.lastName = "lastName"
-        details2.nickname = "nickname"
-        details2.email = "email"
-        details2.avatarUrls = [String: String]()
-        details2.link = "link"
-        details2.locale = "locale"
-        details2.slug = "slug"
-        details2.summary = "description"
-        details2.url = "url"
-        details2.username = "username"
-        details2.registeredDate = "registeredDate"
 
         account1.details = details2
         CoreDataManager.shared.saveContext()
@@ -201,23 +175,9 @@ class AccountDetailsStoreTests: BaseTest {
         account2.uuid = UUID()
         account2.networkUrl = "http://account2.com"
 
-        let details1 = AccountDetails(context: context)
-        details1.userID = 1
-        details1.name = "name"
-        details1.firstName = "firstName"
-        details1.lastName = "lastName"
-        details1.nickname = "nickname"
-        details1.email = "email"
-        details1.avatarUrls = [String: String]()
-        details1.link = "link"
-        details1.locale = "locale"
-        details1.slug = "slug"
-        details1.summary = "description"
-        details1.url = "url"
-        details1.username = "username"
-        details1.registeredDate = "registeredDate"
+        let details = ModelFactory.getTestAccountDetails(context: context)
 
-        account1.details = details1
+        account1.details = details
         CoreDataManager.shared.saveContext()
 
         XCTAssertNotNil(account1.details)

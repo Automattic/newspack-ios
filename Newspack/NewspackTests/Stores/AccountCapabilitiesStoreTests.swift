@@ -191,38 +191,15 @@ class AccountCapabilitiesStoreTests: BaseTest {
         let context = CoreDataManager.shared.mainContext
         let account = self.account!
 
-        let site1 = Site(context: context)
-        site1.url = "url"
+
+        let site1 = ModelFactory.getTestSite(context: context)
+        site1.url = "url1"
         site1.title = "site1"
-        site1.summary = "description"
-        site1.timezone = "timezone"
-        site1.dateFormat = "dateFormat"
-        site1.timeFormat = "timeFormat"
-        site1.startOfWeek = "startOfWeek"
-        site1.language = "language"
-        site1.useSmilies = true
-        site1.defaultCategory = 1
-        site1.defaultPostFormat = 1
-        site1.postsPerPage = 10
-        site1.defaultPingStatus = "defaultPingStatus"
-        site1.defaultCommentStatus = "defaultCommentStatus"
         site1.account = account
 
-        let site2 = Site(context: context)
-        site2.url = "url"
+        let site2 = ModelFactory.getTestSite(context: context)
+        site2.url = "url2"
         site2.title = "site2"
-        site2.summary = "description"
-        site2.timezone = "timezone"
-        site2.dateFormat = "dateFormat"
-        site2.timeFormat = "timeFormat"
-        site2.startOfWeek = "startOfWeek"
-        site2.language = "language"
-        site2.useSmilies = true
-        site2.defaultCategory = 1
-        site2.defaultPostFormat = 1
-        site2.postsPerPage = 10
-        site2.defaultPingStatus = "defaultPingStatus"
-        site2.defaultCommentStatus = "defaultCommentStatus"
         site2.account = account
 
         let cap1 = AccountCapabilities(context: context)
