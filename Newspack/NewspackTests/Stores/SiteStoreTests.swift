@@ -272,11 +272,6 @@ class SiteStoreTests: BaseTest {
         XCTAssertEqual(count, 1)
     }
 
-
-    func testChangeCurrentSite() {
-        // TODO: Need to update the store.
-    }
-
     func testSingleAccountNoDuplicateSites() {
         // TODO.  This is going to be tricky.
     }
