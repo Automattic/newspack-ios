@@ -13,7 +13,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
     override func setUp() {
         super.setUp()
 
-        store = AccountCapabilitiesStore(dispatcher: .global)
+        store = StoreContainer.shared.accountCapabilitiesStore
 
         // Test account
         accountStore!.createAccount(authToken: "testToken", forNetworkAt: "example.com")
@@ -82,7 +82,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         var error: Error?
         let account = self.account!
         let remoteUser = self.remoteUser!
-        let site = account.currentSite()!
+        let site = account.currentSite!
 
         let receipt = store?.onChangeEvent({ (changeEvent) in
             guard let event = changeEvent as? AccountCapabilitiesEvent else {
@@ -115,7 +115,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         let dispatcher = ActionDispatcher.global
         let account = self.account!
         var remoteUser = self.remoteUser!
-        let site = account.currentSite()!
+        let site = account.currentSite!
         let testRole = "TestRole"
         var capabilities: AccountCapabilities?
         var error: Error?
@@ -154,7 +154,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
     func testSiteHasOnlyOneSetOfAccountCapabilities() {
         let context = CoreDataManager.shared.mainContext
         let account = self.account!
-        let site = account.currentSite()!
+        let site = account.currentSite!
         let role1 = "role1"
         let role2 = "role2"
 
@@ -244,7 +244,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
 
     func testHasCapabilities() {
         let account = self.account!
-        let site = account.currentSite()!
+        let site = account.currentSite!
         let remoteUser = self.remoteUser!
         let dispatcher = ActionDispatcher.global
 
@@ -258,7 +258,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
 
     func testHasRole() {
         let account = self.account!
-        let site = account.currentSite()!
+        let site = account.currentSite!
         let remoteUser = self.remoteUser!
         let dispatcher = ActionDispatcher.global
 

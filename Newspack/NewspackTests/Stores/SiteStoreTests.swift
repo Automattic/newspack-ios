@@ -13,7 +13,7 @@ class SiteStoreTests: BaseTest {
     override func setUp() {
         super.setUp()
 
-        store = SiteStore(dispatcher: .global)
+        store = StoreContainer.shared.siteStore
 
         // Test account
         accountStore!.createAccount(authToken: "testToken", forNetworkAt: "example.com")
@@ -103,7 +103,7 @@ class SiteStoreTests: BaseTest {
         var error: Error?
 
         store?.createSite(url: siteURL, settings: remoteSettings, accountID: account.uuid)
-        site = account.currentSite()!
+        site = account.currentSite!
 
         XCTAssertNotNil(site)
         XCTAssertEqual(site!.title, remoteSettings.title)
@@ -211,14 +211,14 @@ class SiteStoreTests: BaseTest {
 
         CoreDataManager.shared.saveContext()
 
-        XCTAssertNotNil(account1.currentSite())
-        XCTAssertNil(account2.currentSite())
+        XCTAssertNotNil(account1.currentSite)
+        XCTAssertNil(account2.currentSite)
 
         site1.account = account2
         CoreDataManager.shared.saveContext()
 
-        XCTAssertNil(account1.currentSite())
-        XCTAssertNotNil(account2.currentSite())
+        XCTAssertNil(account1.currentSite)
+        XCTAssertNotNil(account2.currentSite)
     }
 
     func testDefaultSiteAfterRemovingCurrentSite() {
@@ -262,13 +262,13 @@ class SiteStoreTests: BaseTest {
         CoreDataManager.shared.saveContext()
         XCTAssertEqual(account.sites.count, 2)
 
-        var currentSite = account.currentSite()!
+        var currentSite = account.currentSite!
         let title = currentSite.title
         context.delete(currentSite)
         CoreDataManager.shared.saveContext()
 
         XCTAssertEqual(account.sites.count, 1)
-        currentSite = account.currentSite()!
+        currentSite = account.currentSite!
         XCTAssertNotNil(currentSite)
         XCTAssertNotEqual(title, currentSite.title)
     }

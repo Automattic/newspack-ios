@@ -12,7 +12,7 @@ class AccountDetailsStoreTests: BaseTest {
     override func setUp() {
         super.setUp()
 
-        store = AccountDetailsStore(dispatcher: .global)
+        store = StoreContainer.shared.accountDetailsStore
 
         // Test account
         accountStore!.createAccount(authToken: "testToken", forNetworkAt: "example.com")
