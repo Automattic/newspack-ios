@@ -6,4 +6,7 @@ class StoreContainer {
     static let shared = StoreContainer()
 
     let accountStore = AccountStore()
+    let accountCapabilitiesStore = AccountCapabilitiesStore()
+    let accountDetailsStore = AccountDetailsStore()
+    let siteStore = SiteStore()
 }
