@@ -306,12 +306,12 @@
 		E6138FFA22120371004E5B91 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */,
+				E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */,
 				E63CD0A822A17D7100501C4F /* AccountCapabilities+CoreDataClass.swift */,
 				E63CD0A922A17D7100501C4F /* AccountCapabilities+CoreDataProperties.swift */,
 				E63CD0A622A17D7100501C4F /* AccountDetails+CoreDataClass.swift */,
 				E63CD0A722A17D7100501C4F /* AccountDetails+CoreDataProperties.swift */,
-				E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */,
-				E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */,
 				E64492912252F3A7003B70DF /* Site+CoreDataClass.swift */,
 				E64492902252F3A7003B70DF /* Site+CoreDataProperties.swift */,
 				E6138FD82211FE86004E5B91 /* Newspack.xcdatamodeld */,
