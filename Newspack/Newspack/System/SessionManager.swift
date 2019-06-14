@@ -31,18 +31,16 @@ class SessionManager {
     ///
     @discardableResult
     func initialize(account: Account?) -> Bool {
-        guard
-            let account = account,
-            let site = account.currentSite
-            else {
-                api = WordPressCoreRestApi(oAuthToken: nil, userAgent: UserAgent.defaultUserAgent)
-                return false
+        guard let account = account else {
+            api = WordPressCoreRestApi(oAuthToken: nil, userAgent: UserAgent.defaultUserAgent)
+            return false
         }
 
         let store = StoreContainer.shared.accountStore
         let token = store.getAuthTokenForAccount(account)
 
-        api = WordPressCoreRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent, site: site.url)
+        api = WordPressCoreRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent, site: account.networkUrl)
+
         return token != nil
     }
 
