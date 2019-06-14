@@ -7,8 +7,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        // Need to configure the user agent as early as possible.
         UserAgent.configure()
-
         return true
     }
 
@@ -54,7 +54,7 @@ extension AppDelegate {
 
     func showAuthentication() {
         guard let controller = window?.rootViewController else {
-                return
+            return
         }
         authenticationManager.initialize()
         authenticationManager.showAuthenticator(controller: controller)
