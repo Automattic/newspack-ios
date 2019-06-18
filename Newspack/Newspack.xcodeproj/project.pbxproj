@@ -76,6 +76,7 @@
 		E6FB520022B967910010FDF8 /* Dictionary+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */; };
 		E6FB520322B9715F0010FDF8 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520122B9715F0010FDF8 /* Post+CoreDataClass.swift */; };
 		E6FB520422B9715F0010FDF8 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520222B9715F0010FDF8 /* Post+CoreDataProperties.swift */; };
+		E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520522B973A60010FDF8 /* PostStore.swift */; };
 		EA27D6504B828267DD8A28ED /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDB59DB68FD7578F7CF8D30 /* Pods_Newspack.framework */; };
 /* End PBXBuildFile section */
 
@@ -176,6 +177,7 @@
 		E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+KeyPath.swift"; sourceTree = "<group>"; };
 		E6FB520122B9715F0010FDF8 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E6FB520222B9715F0010FDF8 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E6FB520522B973A60010FDF8 /* PostStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStore.swift; sourceTree = "<group>"; };
 		EDB5819DB11C68775E987AB2 /* Pods-NewspackTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewspackTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-NewspackTests/Pods-NewspackTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -411,6 +413,7 @@
 				E62C7C652235E16E000FEB33 /* AccountStore.swift */,
 				E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */,
 				E641A66222A7584A008BBD85 /* AccountDetailsStore.swift */,
+				E6FB520522B973A60010FDF8 /* PostStore.swift */,
 				E641A66022A71A83008BBD85 /* SiteStore.swift */,
 			);
 			path = Stores;
@@ -803,6 +806,7 @@
 				E623C6F62220516600F9865C /* ApiCredentials.swift in Sources */,
 				E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */,
 				E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */,
+				E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */,
 				E6241B96224EC8CD00B578F5 /* SessionManager.swift in Sources */,
 				E641A66122A71A83008BBD85 /* SiteStore.swift in Sources */,
 				E63CD0AC22A17D7200501C4F /* AccountCapabilities+CoreDataClass.swift in Sources */,

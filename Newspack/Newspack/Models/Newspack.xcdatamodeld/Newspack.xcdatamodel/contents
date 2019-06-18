@@ -28,7 +28,7 @@
         <attribute name="username" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="details" inverseEntity="Account" syncable="YES"/>
     </entity>
-    <entity name="Post" representedClassName="Post" syncable="YES" codeGenerationType="class">
+    <entity name="Post" representedClassName="Post" syncable="YES">
         <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="categories" attributeType="Transformable" syncable="YES"/>
         <attribute name="commentStatus" attributeType="String" syncable="YES"/>
