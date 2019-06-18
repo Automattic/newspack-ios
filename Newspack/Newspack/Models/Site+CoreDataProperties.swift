@@ -25,5 +25,25 @@ extension Site {
 
     @NSManaged public var account: Account!
     @NSManaged public var capabilities: AccountCapabilities?
+    @NSManaged public var posts: Set<Post>!
+}
+
+
+
+// MARK: Generated accessors for posts
+extension Site {
+
+    @objc(addPostsObject:)
+    @NSManaged public func addToPosts(_ value: Post)
+
+    @objc(removePostsObject:)
+    @NSManaged public func removeFromPosts(_ value: Post)
+
+    @objc(addPosts:)
+    @NSManaged public func addToPosts(_ values: NSSet)
+
+    @objc(removePosts:)
+    @NSManaged public func removeFromPosts(_ values: NSSet)
 
 }
+

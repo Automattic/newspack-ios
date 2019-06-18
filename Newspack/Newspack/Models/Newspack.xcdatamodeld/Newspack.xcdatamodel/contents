@@ -28,6 +28,38 @@
         <attribute name="username" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="details" inverseEntity="Account" syncable="YES"/>
     </entity>
+    <entity name="Post" representedClassName="Post" syncable="YES" codeGenerationType="class">
+        <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="categories" attributeType="Transformable" syncable="YES"/>
+        <attribute name="commentStatus" attributeType="String" syncable="YES"/>
+        <attribute name="content" attributeType="String" syncable="YES"/>
+        <attribute name="contentRendered" attributeType="String" syncable="YES"/>
+        <attribute name="date" attributeType="String" syncable="YES"/>
+        <attribute name="dateGMT" attributeType="String" syncable="YES"/>
+        <attribute name="excerpt" attributeType="String" syncable="YES"/>
+        <attribute name="excerptRendered" attributeType="String" syncable="YES"/>
+        <attribute name="featuredMedia" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="format" attributeType="String" syncable="YES"/>
+        <attribute name="generatedSlug" attributeType="String" syncable="YES"/>
+        <attribute name="guid" attributeType="String" syncable="YES"/>
+        <attribute name="guidRendered" attributeType="String" syncable="YES"/>
+        <attribute name="link" attributeType="String" syncable="YES"/>
+        <attribute name="modified" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedGMT" attributeType="String" syncable="YES"/>
+        <attribute name="password" attributeType="String" syncable="YES"/>
+        <attribute name="permalinkTemplate" attributeType="String" syncable="YES"/>
+        <attribute name="pingStatus" attributeType="String" syncable="YES"/>
+        <attribute name="postID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="slug" attributeType="String" syncable="YES"/>
+        <attribute name="status" attributeType="String" syncable="YES"/>
+        <attribute name="sticky" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tags" attributeType="Transformable" syncable="YES"/>
+        <attribute name="template" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <attribute name="titleRendered" attributeType="String" syncable="YES"/>
+        <attribute name="type" attributeType="String" syncable="YES"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="posts" inverseEntity="Site" syncable="YES"/>
+    </entity>
     <entity name="Site" representedClassName="Site" syncable="YES">
         <attribute name="dateFormat" attributeType="String" syncable="YES"/>
         <attribute name="defaultCategory" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -45,11 +77,13 @@
         <attribute name="useSmilies" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="account" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="sites" inverseEntity="Account" syncable="YES"/>
         <relationship name="capabilities" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AccountCapabilities" inverseName="site" inverseEntity="AccountCapabilities" syncable="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="site" inverseEntity="Post" syncable="YES"/>
     </entity>
     <elements>
         <element name="Account" positionX="-1478.8671875" positionY="-295.10546875" width="128" height="103"/>
         <element name="AccountCapabilities" positionX="-1215.9921875" positionY="-44.7890625" width="128" height="90"/>
         <element name="AccountDetails" positionX="-1479.90625" positionY="-91.0390625" width="128" height="270"/>
-        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="283"/>
+        <element name="Post" positionX="-1359" positionY="-234" width="128" height="495"/>
+        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="300"/>
     </elements>
 </model>
