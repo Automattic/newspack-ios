@@ -10,16 +10,16 @@ class CoreRestApiTests: XCTestCase {
         let four = "somesite.example.com/test/test/test/test.txt?arg1=foo&arg2=bar#anchor"
 
         XCTAssertEqual(WordPressCoreRestApi.baseEndpointForSite(one),
-                       "http://somesite.example.com/")
+                       "https://public-api.wordpress.com/wp/v2/sites/somesite.example.com/")
 
         XCTAssertEqual(WordPressCoreRestApi.baseEndpointForSite(two),
-                       "http://somesite.example.com/")
+                       "https://public-api.wordpress.com/wp/v2/sites/somesite.example.com/")
 
         XCTAssertEqual(WordPressCoreRestApi.baseEndpointForSite(three),
-                       "http://somesite.example.com/fubar/")
+                       "https://public-api.wordpress.com/wp/v2/sites/somesite.example.com/fubar/")
 
         XCTAssertEqual(WordPressCoreRestApi.baseEndpointForSite(four),
-                       "http://somesite.example.com/test/test/test/")
+                       "https://public-api.wordpress.com/wp/v2/sites/somesite.example.com/test/test/test/")
     }
 
 }
