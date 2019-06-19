@@ -39,7 +39,8 @@ class SessionManager {
         let store = StoreContainer.shared.accountStore
         let token = store.getAuthTokenForAccount(account)
 
-        api = WordPressCoreRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent, site: account.networkUrl)
+        let site = (account.currentSite?.url ?? account.networkUrl)!
+        api = WordPressCoreRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent, site: site)
 
         return token != nil
     }
@@ -51,7 +52,7 @@ class SessionManager {
     ///
     func accountStoreChangeHandler(_ event: Event) {
         switch event {
-        case AccountEvent.currentAccountChanged:
+        case AccountEvent.currentAccountChanged, AccountEvent.currentSiteChanged(_, _, _):
             initialize(account: StoreContainer.shared.accountStore.currentAccount)
         default:
             break

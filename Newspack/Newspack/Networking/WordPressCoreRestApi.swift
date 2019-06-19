@@ -38,7 +38,6 @@ class WordPressCoreRestApi: WordPressComRestApi {
         return endpoint
     }
 
-
     /// Convenience constructor.
     ///
     /// - Parameters:
