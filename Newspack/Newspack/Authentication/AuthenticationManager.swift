@@ -4,21 +4,9 @@ import WordPressFlux
 
 class AuthenticationManager {
 
-    typealias CompletionBlock = () -> Void
-
-    /// The receipt for a subscription to the account store.
-    ///
-    var accountStoreSubscription: Receipt?
-
     /// Used to hold the competion callback when syncing.
     ///
-    var syncCompletionBlock: CompletionBlock?
-
-
-    init() {
-        let store = StoreContainer.shared.accountStore
-        accountStoreSubscription = store.onChangeEvent(storeChangeHandler(_:))
-    }
+    var syncCompletionBlock: (() -> Void)?
 
     /// Initialize the authentication manager.
     /// Only necessary if showing the auth flow. Optional otherwise.
@@ -35,18 +23,6 @@ class AuthenticationManager {
         WordPressAuthenticator.initialize(configuration: configuration)
         WordPressAuthenticator.shared.delegate = self
 
-    }
-
-    /// Handles account store change actions.
-    ///
-    func storeChangeHandler(_ event: Event) {
-        switch event {
-        case AccountEvent.accountCreated(account: _):
-            syncCompletionBlock?()
-            syncCompletionBlock = nil
-        default:
-            break
-        }
     }
 
     /// Returns true if authentication is required.
@@ -77,9 +53,26 @@ class AuthenticationManager {
     ///
     func processCredentials(authToken: String, url: String, onCompletion: @escaping () -> Void) {
         syncCompletionBlock = onCompletion
-        let action = AccountAction.create(authToken: authToken, networkUrl: url)
-        ActionDispatcher.global.dispatch(action)
+
+        let accountHelper = AccountSetupHelper(token: authToken, network: url)
+        accountHelper.configure { (error) in
+            if error == nil {
+                self.performSyncCompletion()
+                return
+            }
+
+            // TODO: Handle the error.
+            // Probably we need to restart the flow?
+        }
     }
+
+    /// Fires the sync completion block if it exists
+    ///
+    private func performSyncCompletion() {
+        syncCompletionBlock?()
+        syncCompletionBlock = nil
+    }
+
 }
 
 

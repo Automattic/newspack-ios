@@ -6,7 +6,6 @@ import WordPressFlux
 /// Supported Actions for changes to the AccountStore
 ///
 enum AccountAction: Action {
-    case create(authToken: String, networkUrl: String)
     case setCurrentAccount(account: Account)
     case setCurrentSite(site: Site, account: Account)
 }
@@ -14,7 +13,6 @@ enum AccountAction: Action {
 /// Dispatched actions to notifiy subscribers of changes
 ///
 enum AccountEvent: Event {
-    case accountCreated(account: Account)
     case currentAccountChanged(newAccount: Account?, oldAccount: Account?)
     case currentSiteChanged(account: Account, oldSite: Site?, newSite: Site?)
 }
@@ -40,8 +38,6 @@ class AccountStore: EventfulStore {
             return
         }
         switch accountAction {
-        case .create(let authToken, let networkUrl):
-            createAccount(authToken: authToken, forNetworkAt: networkUrl)
         case .setCurrentAccount(let account):
             setCurrentAccount(account: account)
             break
@@ -149,7 +145,8 @@ extension AccountStore {
     /// - Parameters:
     ///     - authToken: The REST API auth token for the account.
     ///
-    func createAccount(authToken: String, forNetworkAt url: String) {
+    @discardableResult
+    func createAccount(authToken: String, forNetworkAt url: String) -> Account {
         let context = CoreDataManager.shared.mainContext
         let account = Account(context: context)
         account.uuid = UUID()
@@ -159,10 +156,7 @@ extension AccountStore {
 
         setAuthToken(authToken, for: account)
 
-        emitChangeEvent(event: AccountEvent.accountCreated(account: account))
-
-        // Emits change
-        currentAccount = account
+        return account
     }
 
     /// Handler for the .setCurrentAccount action.

@@ -77,6 +77,7 @@
 		E6FB520322B9715F0010FDF8 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520122B9715F0010FDF8 /* Post+CoreDataClass.swift */; };
 		E6FB520422B9715F0010FDF8 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520222B9715F0010FDF8 /* Post+CoreDataProperties.swift */; };
 		E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520522B973A60010FDF8 /* PostStore.swift */; };
+		E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520722B9D2A30010FDF8 /* AccountSetupHelper.swift */; };
 		EA27D6504B828267DD8A28ED /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDB59DB68FD7578F7CF8D30 /* Pods_Newspack.framework */; };
 /* End PBXBuildFile section */
 
@@ -178,6 +179,7 @@
 		E6FB520122B9715F0010FDF8 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E6FB520222B9715F0010FDF8 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E6FB520522B973A60010FDF8 /* PostStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStore.swift; sourceTree = "<group>"; };
+		E6FB520722B9D2A30010FDF8 /* AccountSetupHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSetupHelper.swift; sourceTree = "<group>"; };
 		EDB5819DB11C68775E987AB2 /* Pods-NewspackTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewspackTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-NewspackTests/Pods-NewspackTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -261,7 +263,7 @@
 				E6138FFE22120467004E5B91 /* Controllers */,
 				E6138FFA22120371004E5B91 /* Models */,
 				E6138FF922120368004E5B91 /* Networking */,
-				E6138FF822120363004E5B91 /* Services */,
+				E6138FF822120363004E5B91 /* Authentication */,
 				E6138FFC221203B1004E5B91 /* Resources */,
 				E6138FFB2212037E004E5B91 /* Storyboards */,
 				E6138FF722120346004E5B91 /* System */,
@@ -297,12 +299,13 @@
 			path = System;
 			sourceTree = "<group>";
 		};
-		E6138FF822120363004E5B91 /* Services */ = {
+		E6138FF822120363004E5B91 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
+				E6FB520722B9D2A30010FDF8 /* AccountSetupHelper.swift */,
 				E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */,
 			);
-			path = Services;
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		E6138FF922120368004E5B91 /* Networking */ = {
@@ -807,6 +810,7 @@
 				E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */,
 				E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */,
 				E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */,
+				E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */,
 				E6241B96224EC8CD00B578F5 /* SessionManager.swift in Sources */,
 				E641A66122A71A83008BBD85 /* SiteStore.swift in Sources */,
 				E63CD0AC22A17D7200501C4F /* AccountCapabilities+CoreDataClass.swift in Sources */,
