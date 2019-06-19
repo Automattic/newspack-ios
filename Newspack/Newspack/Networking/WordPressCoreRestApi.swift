@@ -10,22 +10,49 @@ class WordPressCoreRestApi: WordPressComRestApi {
 
     static let baseEndpoint = "https://public-api.wordpress.com/wp/v2/sites/"
 
-    convenience init(oAuthToken: String? = nil, userAgent: String? = nil, site: String) {
-        var asite = WordPressCoreRestApi.baseEndpoint
-        if let url = URL(string: site),
-            let host = url.host {
-            asite = asite + host + url.path
-            if url.pathExtension.count > 0 {
-                asite = "" + asite.dropLast(url.lastPathComponent.count)
-            }
-        }
-        // TODO: Handle the case where the passed site does not resolve to a URL.
+    /// Compose the base api endpoint for a specific site.
+    ///
+    /// - Parameter site: The site for the API
+    /// - Returns: The endpoint for the site.
+    ///
+    static func baseEndpointForSite(_ site: String) -> String {
+        let str = site.hasPrefix("http") ? site : "http://" + site
 
+        guard let url = URL(string: str), let host = url.host else {
+            print(str)
+            return baseEndpoint
+        }
+
+        var endpoint = baseEndpoint
+        endpoint.append(host)
+        endpoint.append(url.path)
+
+        if url.pathExtension.count > 0 {
+            endpoint = String(endpoint.dropLast(url.lastPathComponent.count))
+        }
+
+        if !endpoint.hasSuffix("/") {
+            endpoint.append("/")
+        }
+
+        return endpoint
+    }
+
+
+    /// Convenience constructor.
+    ///
+    /// - Parameters:
+    ///   - oAuthToken: The oauth bearer token for the API
+    ///   - userAgent: The user agent to use when making http requests.
+    ///   - site: The site the API will query
+    ///
+    convenience init(oAuthToken: String? = nil, userAgent: String? = nil, site: String) {
+        let endpoint = WordPressCoreRestApi.baseEndpointForSite(site)
         self.init(oAuthToken: oAuthToken, userAgent: userAgent,
                   backgroundUploads: false,
                   backgroundSessionIdentifier: WordPressComRestApi.defaultBackgroundSessionIdentifier,
                   sharedContainerIdentifier: nil,
                   localeKey: WordPressComRestApi.LocaleKeyDefault,
-                  baseUrlString: asite)
+                  baseUrlString: endpoint)
     }
 }
