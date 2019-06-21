@@ -264,7 +264,7 @@
 				E62C7C632235E0EC000FEB33 /* Stores */,
 				E6138FFE22120467004E5B91 /* Controllers */,
 				E6138FFA22120371004E5B91 /* Models */,
-				E6138FF922120368004E5B91 /* Networking */,
+				E6138FF922120368004E5B91 /* Api */,
 				E6138FF822120363004E5B91 /* Authentication */,
 				E6138FFC221203B1004E5B91 /* Resources */,
 				E6138FFB2212037E004E5B91 /* Storyboards */,
@@ -310,7 +310,7 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
-		E6138FF922120368004E5B91 /* Networking */ = {
+		E6138FF922120368004E5B91 /* Api */ = {
 			isa = PBXGroup;
 			children = (
 				E69E59FA22540D5000899DE2 /* ServiceRemoteCoreRest.swift */,
@@ -319,7 +319,7 @@
 				E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */,
 				E69E59FC22541ABD00899DE2 /* WordPressCoreRestApi.swift */,
 			);
-			path = Networking;
+			path = Api;
 			sourceTree = "<group>";
 		};
 		E6138FFA22120371004E5B91 /* Models */ = {
