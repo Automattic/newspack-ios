@@ -243,14 +243,30 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		E602E68122C15EAB00795CBA /* RemoteModels */ = {
+		E602E68122C15EAB00795CBA /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				E602E68222C15EC100795CBA /* RemoteUser.swift */,
 				E602E68422C15ECC00795CBA /* RemoteSiteSettings.swift */,
 				E602E68622C15ED700795CBA /* RemotePost.swift */,
 			);
-			path = RemoteModels;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E602E68822C1615C00795CBA /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		E602E68922C1617E00795CBA /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				E69E59FA22540D5000899DE2 /* ServiceRemoteCoreRest.swift */,
+				E69E59FC22541ABD00899DE2 /* WordPressCoreRestApi.swift */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		E6138FC52211FE86004E5B91 = {
@@ -331,13 +347,13 @@
 		E6138FF922120368004E5B91 /* Api */ = {
 			isa = PBXGroup;
 			children = (
-				E602E68122C15EAB00795CBA /* RemoteModels */,
-				E69E59FA22540D5000899DE2 /* ServiceRemoteCoreRest.swift */,
 				E602E67F22C1588600795CBA /* ApiService.swift */,
+				E602E68922C1617E00795CBA /* Config */,
+				E602E68822C1615C00795CBA /* Actions */,
+				E602E68122C15EAB00795CBA /* Models */,
 				E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */,
 				E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */,
 				E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */,
-				E69E59FC22541ABD00899DE2 /* WordPressCoreRestApi.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
