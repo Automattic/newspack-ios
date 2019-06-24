@@ -2,11 +2,6 @@ import Foundation
 import CoreData
 import WordPressFlux
 
-/// Supported Actions for changes to the SiteStore
-///
-enum AccountDetailsAction: Action {
-    case update(user: RemoteUser, accountID: UUID)
-}
 
 /// Dispatched actions to notifiy subscribers of changes
 ///

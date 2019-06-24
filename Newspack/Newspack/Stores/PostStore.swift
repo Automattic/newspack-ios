@@ -2,12 +2,6 @@ import Foundation
 import CoreData
 import WordPressFlux
 
-/// Supported Actions for changes to the PostStore
-///
-enum PostAction: Action {
-    case syncPosts(posts: [RemotePost], site: Site)
-}
-
 /// Dispatched actions to notifiy subscribers of changes
 ///
 enum PostEvent: Event {

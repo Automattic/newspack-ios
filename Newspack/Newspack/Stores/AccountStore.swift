@@ -3,13 +3,6 @@ import CoreData
 import KeychainAccess
 import WordPressFlux
 
-/// Supported Actions for changes to the AccountStore
-///
-enum AccountAction: Action {
-    case setCurrentAccount(account: Account)
-    case setCurrentSite(site: Site, account: Account)
-}
-
 /// Dispatched actions to notifiy subscribers of changes
 ///
 enum AccountEvent: Event {
