@@ -21,7 +21,11 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             onComplete(nil, error)
         })
     }
+}
 
+// MARK: - Remote model management.
+//
+extension PostServiceRemote {
     /// Format a posts endpoint response into an array of remote posts.
     ///
     /// - Parameter response: The response from an endpoint.

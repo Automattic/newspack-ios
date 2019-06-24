@@ -22,7 +22,7 @@ class SiteServiceRemote: ServiceRemoteCoreRest {
         })
     }
 
-    /// Description
+    /// Fetches settings for the current account's current site.
     ///
     /// - Parameters:
     ///   - success: success description
