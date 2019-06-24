@@ -1,3 +1,5 @@
+import Foundation
+
 /// Remote site settings
 ///
 struct RemoteSiteSettings {

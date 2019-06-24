@@ -1,3 +1,5 @@
+import Foundation
+
 /// Remote representation of a post object.
 ///
 struct RemotePost {

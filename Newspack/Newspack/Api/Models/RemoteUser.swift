@@ -1,3 +1,5 @@
+import Foundation
+
 /// Remote User
 ///
 struct RemoteUser {
