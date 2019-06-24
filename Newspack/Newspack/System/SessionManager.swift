@@ -3,7 +3,7 @@ import WordPressKit
 import WordPressFlux
 
 /// SessionManager is responsible for defining the current session for the
-/// current account.  It serves to decouple the API and Store layers.
+/// current account and site.  It serves to help decouple the API and Store layers.
 ///
 class SessionManager {
 

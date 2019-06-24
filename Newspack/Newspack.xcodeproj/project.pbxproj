@@ -23,6 +23,7 @@
 /* Begin PBXBuildFile section */
 		53FA9ACF624D704F1C07D5A9 /* Pods_NewspackTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14A3A0B3208C917FD7CE794E /* Pods_NewspackTests.framework */; };
 		97ACF26498517D8DBBCBDFEE /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E66E8A0D2235A15100E8DD88 /* Pods_Newspack.framework */; };
+		E602E68022C1588600795CBA /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E67F22C1588600795CBA /* ApiService.swift */; };
 		E6034B1422529414007DB6DD /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6034B1322529414007DB6DD /* UserAgent.swift */; };
 		E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */; };
 		E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */; };
@@ -118,6 +119,7 @@
 		C3C6109B65774AD2159D9E5E /* Pods-Newspack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Newspack.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Newspack/Pods-Newspack.debug.xcconfig"; sourceTree = "<group>"; };
 		D3966851BD08B54434F91358 /* Pods-NewspackTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewspackTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-NewspackTests/Pods-NewspackTests.release.xcconfig"; sourceTree = "<group>"; };
 		DFC0543D82050B0CDC7390DB /* Pods-Newspack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Newspack.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Newspack/Pods-Newspack.release.xcconfig"; sourceTree = "<group>"; };
+		E602E67F22C1588600795CBA /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		E6034B1322529414007DB6DD /* UserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
 		E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStoreTests.swift; sourceTree = "<group>"; };
 		E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStoreTests.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				E69E59FA22540D5000899DE2 /* ServiceRemoteCoreRest.swift */,
+				E602E67F22C1588600795CBA /* ApiService.swift */,
 				E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */,
 				E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */,
 				E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */,
@@ -802,6 +805,7 @@
 				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
 				E63CD0AB22A17D7200501C4F /* AccountDetails+CoreDataProperties.swift in Sources */,
+				E602E68022C1588600795CBA /* ApiService.swift in Sources */,
 				E6FB520322B9715F0010FDF8 /* Post+CoreDataClass.swift in Sources */,
 				E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */,
 				E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */,
