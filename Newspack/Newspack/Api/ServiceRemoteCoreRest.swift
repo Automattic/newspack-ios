@@ -1,7 +1,6 @@
 import Foundation
 import WordPressKit
 
-
 /// Base class for core rest api service remotes.
 ///
 class ServiceRemoteCoreRest {

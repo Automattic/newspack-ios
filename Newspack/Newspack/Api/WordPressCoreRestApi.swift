@@ -1,7 +1,6 @@
 import Foundation
 import WordPressKit
 
-
 /// WordPressCoreRestApi is a wp/v2 endpoint focused API client.
 /// All calls will target the v2 endpoints so it does away with the need
 /// to specifiy an api version when constructing an endpoint URL.
