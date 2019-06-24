@@ -1,5 +1,7 @@
 import Foundation
 
+/// Convenience methods for unwrapping optionals and returning default values.
+///
 extension Dictionary where Key == String {
 
     subscript(stringAtKeyPath keyPath: String) -> String {

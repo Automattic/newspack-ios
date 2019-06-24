@@ -1,5 +1,6 @@
 import Foundation
 import WordPressKit
+import WordPressFlux
 
 /// Base class for core rest api service remotes.
 ///
@@ -11,4 +12,7 @@ class ServiceRemoteCoreRest {
         self.api = api
     }
 
+    func dispach(action: Action) {
+        ActionDispatcher.global.dispatch(action)
+    }
 }

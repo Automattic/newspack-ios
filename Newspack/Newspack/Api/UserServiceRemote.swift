@@ -10,16 +10,16 @@ class UserServiceRemote: ServiceRemoteCoreRest {
     ///   - success: success description
     ///   - failure: failure description
     ///
-    func fetchMe(success: @escaping ((RemoteUser) -> Void), failure: @escaping ((NSError) -> Void)) {
+    func fetchMe() {
         let parameters = ["context": "edit"] as [String : AnyObject]
         api.GET("users/me", parameters: parameters, success: { (response: AnyObject!, httpResponse: HTTPURLResponse?) in
 
             let dict = response as! [String: AnyObject]
             let user = RemoteUser(dict: dict)
-            success(user)
+            self.dispach(action: UserApiAction.accountFetched(user: user, error: nil))
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) -> Void in
-            failure(error)
+            self.dispach(action: UserApiAction.accountFetched(user: nil, error: error))
         })
     }
 
