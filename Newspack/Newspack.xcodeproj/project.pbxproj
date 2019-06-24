@@ -27,6 +27,9 @@
 		E602E68322C15EC100795CBA /* RemoteUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68222C15EC100795CBA /* RemoteUser.swift */; };
 		E602E68522C15ECC00795CBA /* RemoteSiteSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68422C15ECC00795CBA /* RemoteSiteSettings.swift */; };
 		E602E68722C15ED700795CBA /* RemotePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68622C15ED700795CBA /* RemotePost.swift */; };
+		E602E68B22C1632C00795CBA /* UserApiAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68A22C1632C00795CBA /* UserApiAction.swift */; };
+		E602E68D22C1634900795CBA /* SiteApiAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68C22C1634900795CBA /* SiteApiAction.swift */; };
+		E602E68F22C1637800795CBA /* PostApiAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68E22C1637800795CBA /* PostApiAction.swift */; };
 		E6034B1422529414007DB6DD /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6034B1322529414007DB6DD /* UserAgent.swift */; };
 		E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */; };
 		E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */; };
@@ -126,6 +129,9 @@
 		E602E68222C15EC100795CBA /* RemoteUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUser.swift; sourceTree = "<group>"; };
 		E602E68422C15ECC00795CBA /* RemoteSiteSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSiteSettings.swift; sourceTree = "<group>"; };
 		E602E68622C15ED700795CBA /* RemotePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePost.swift; sourceTree = "<group>"; };
+		E602E68A22C1632C00795CBA /* UserApiAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiAction.swift; sourceTree = "<group>"; };
+		E602E68C22C1634900795CBA /* SiteApiAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteApiAction.swift; sourceTree = "<group>"; };
+		E602E68E22C1637800795CBA /* PostApiAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostApiAction.swift; sourceTree = "<group>"; };
 		E6034B1322529414007DB6DD /* UserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
 		E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStoreTests.swift; sourceTree = "<group>"; };
 		E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStoreTests.swift; sourceTree = "<group>"; };
@@ -256,6 +262,9 @@
 		E602E68822C1615C00795CBA /* Actions */ = {
 			isa = PBXGroup;
 			children = (
+				E602E68E22C1637800795CBA /* PostApiAction.swift */,
+				E602E68C22C1634900795CBA /* SiteApiAction.swift */,
+				E602E68A22C1632C00795CBA /* UserApiAction.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -848,9 +857,12 @@
 				E63CD0AA22A17D7200501C4F /* AccountDetails+CoreDataClass.swift in Sources */,
 				E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */,
 				E6FB520422B9715F0010FDF8 /* Post+CoreDataProperties.swift in Sources */,
+				E602E68D22C1634900795CBA /* SiteApiAction.swift in Sources */,
 				E623C6F62220516600F9865C /* ApiCredentials.swift in Sources */,
 				E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */,
 				E602E68722C15ED700795CBA /* RemotePost.swift in Sources */,
+				E602E68B22C1632C00795CBA /* UserApiAction.swift in Sources */,
+				E602E68F22C1637800795CBA /* PostApiAction.swift in Sources */,
 				E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */,
 				E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */,
 				E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */,
