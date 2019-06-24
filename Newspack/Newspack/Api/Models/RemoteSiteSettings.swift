@@ -22,18 +22,18 @@ struct RemoteSiteSettings {
     /// - Parameter dict: The source dictionary
     ///
     init(dict: [String: AnyObject]) {
-        title = dict["title"] as? String ?? ""
-        description = dict["description"] as? String ?? ""
-        timezone = dict["timezone"] as? String ?? ""
-        dateFormat = dict["date_format"] as? String ?? ""
-        timeFormat = dict["time_format"] as? String ?? ""
-        startOfWeek = dict["start_of_week"] as? String ?? ""
-        language = dict["language"] as? String ?? ""
-        useSmilies = dict["use_smilies"] as? Bool ?? false
-        defaultCategory = dict["default_category"] as? Int64 ?? 0
-        defaultPostFormat = dict["default_post_format"] as? Int64 ?? 0
-        postsPerPage = dict["posts_per_page"] as? Int64 ?? 0
-        defaultPingStatus = dict["default_ping_status"] as? String ?? ""
-        defaultCommentStatus = dict["default_comment_status"] as? String ?? ""
+        title = dict[stringForKey: "title"]
+        description = dict[stringForKey: "description"]
+        timezone = dict[stringForKey: "timezone"]
+        dateFormat = dict[stringForKey: "date_format"]
+        timeFormat = dict[stringForKey: "time_format"]
+        startOfWeek = dict[stringForKey: "start_of_week"]
+        language = dict[stringForKey: "language"]
+        useSmilies = dict[boolForKey: "use_smilies"]
+        defaultCategory = dict[intForKey: "default_category"]
+        defaultPostFormat = dict[intForKey: "default_post_format"]
+        postsPerPage = dict[intForKey: "posts_per_page"]
+        defaultPingStatus = dict[stringForKey: "default_ping_status"]
+        defaultCommentStatus = dict[stringForKey: "default_comment_status"]
     }
 }

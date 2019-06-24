@@ -27,20 +27,20 @@ struct RemoteUser {
     /// - Parameter dict: The source dictionary
     ///
     init(dict: [String: AnyObject]) {
-        id = dict["id"] as? Int64 ?? 0
-        username = dict["username"] as? String ?? ""
-        name = dict["name"] as? String ?? ""
-        firstName = dict["first_name"] as? String ?? ""
-        lastName = dict["last_name"] as? String ?? ""
-        email = dict["email"] as? String ?? ""
-        url = dict["url"] as? String ?? ""
-        description = dict["description"] as? String ?? ""
-        link = dict["link"] as? String ?? ""
-        locale = dict["locale"] as? String ?? ""
-        nickname = dict["nickname"] as? String ?? ""
-        slug = dict["slug"] as? String ?? ""
+        id = dict[intForKey: "id"]
+        username = dict[stringForKey: "username"]
+        name = dict[stringForKey: "name"]
+        firstName = dict[stringForKey: "first_name"]
+        lastName = dict[stringForKey: "last_name"]
+        email = dict[stringForKey: "email"]
+        url = dict[stringForKey: "url"]
+        description = dict[stringForKey: "description"]
+        link = dict[stringForKey: "link"]
+        locale = dict[stringForKey: "locale"]
+        nickname = dict[stringForKey: "nickname"]
+        slug = dict[stringForKey: "slug"]
         roles = dict["roles"] as? [String] ?? [String]()
-        registeredDate = dict["registered_date"] as? String ?? ""
+        registeredDate = dict[stringForKey: "registered_date"]
         capabilities = dict["capabilities"] as? [String: Bool] ?? [String: Bool]()
         extraCapabilities = dict["extra_capabilities"] as? [String: String] ?? [String: String]()
         avatarUrls = dict["avatar_urls"] as? [String: String] ?? [String: String]()

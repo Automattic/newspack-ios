@@ -38,34 +38,34 @@ struct RemotePost {
     /// - Parameter dict: The source dictionary
     ///
     init(dict: [String: AnyObject]) {
-        postID = dict["id"] as? Int64 ?? 0
-        authorID = dict["author"] as? Int64 ?? 0
+        postID = dict[intForKey: "id"]
+        authorID = dict[intForKey: "author"]
         categories = dict["categories"] as? [Int64] ?? [Int64]()
-        commentStatus = dict["comment_status"] as? String ?? ""
-        content = dict[keyPath: "content.raw"] as? String ?? ""
-        contentRendered = dict[keyPath: "content.rendered"] as? String ?? ""
-        date = dict["date"] as? String ?? ""
-        dateGMT = dict["date_gmt"] as? String ?? ""
-        excerpt = dict[keyPath: "excerpt.raw"] as? String ?? ""
-        excerptRendered = dict[keyPath: "excerpt.rendered"] as? String ?? ""
-        featuredMedia = dict["featured_media"] as? Int64 ?? 0
-        format = dict["format"] as? String ?? ""
-        generatedSlug = dict["generated_slug"] as? String ?? ""
-        guid = dict[keyPath: "guid.raw"] as? String ?? ""
-        guidRendered = dict[keyPath: "guid.rendered"] as? String ?? ""
-        link = dict["link"] as? String ?? ""
-        modified = dict["modified"] as? String ?? ""
-        modifiedGMT = dict["modified_gmt"] as? String ?? ""
-        password = dict["password"] as? String ?? ""
-        permalinkTemplate = dict["permalink_template"] as? String ?? ""
-        pingStatus = dict["ping_status"] as? String ?? ""
-        slug = dict["slug"] as? String ?? ""
-        status = dict["status"] as? String ?? ""
-        sticky = dict["sticky"] as? Bool ?? false
+        commentStatus = dict[stringForKey: "comment_status"]
+        content = dict[stringAtKeyPath: "content.raw"]
+        contentRendered = dict[stringAtKeyPath: "content.rendered"]
+        date = dict[stringForKey: "date"]
+        dateGMT = dict[stringForKey: "date_gmt"]
+        excerpt = dict[stringAtKeyPath: "excerpt.raw"]
+        excerptRendered = dict[stringAtKeyPath: "excerpt.rendered"]
+        featuredMedia = dict[intForKey: "featured_media"]
+        format = dict[stringForKey: "format"]
+        generatedSlug = dict[stringForKey: "generated_slug"]
+        guid = dict[stringAtKeyPath: "guid.raw"]
+        guidRendered = dict[stringAtKeyPath: "guid.rendered"]
+        link = dict[stringForKey: "link"]
+        modified = dict[stringForKey: "modified"]
+        modifiedGMT = dict[stringForKey: "modified_gmt"]
+        password = dict[stringForKey: "password"]
+        permalinkTemplate = dict[stringForKey: "permalink_template"]
+        pingStatus = dict[stringForKey: "ping_status"]
+        slug = dict[stringForKey: "slug"]
+        status = dict[stringForKey: "status"]
+        sticky = dict[boolForKey: "sticky"]
         tags = dict["tags"] as? [Int64] ?? [Int64]()
-        template = dict["template"] as? String ?? ""
-        title = dict[keyPath: "title.raw"] as? String ?? ""
-        titleRendered = dict[keyPath: "title.rendered"] as? String ?? ""
-        type = dict["type"] as? String ?? ""
+        template = dict[stringForKey: "template"]
+        title = dict[stringAtKeyPath: "title.raw"]
+        titleRendered = dict[stringAtKeyPath: "title.rendered"]
+        type = dict[stringForKey: "type"]
     }
 }
