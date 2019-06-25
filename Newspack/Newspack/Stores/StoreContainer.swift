@@ -9,4 +9,5 @@ class StoreContainer {
     let accountCapabilitiesStore = AccountCapabilitiesStore()
     let accountDetailsStore = AccountDetailsStore()
     let siteStore = SiteStore()
+    let postStore = PostStore()
 }
