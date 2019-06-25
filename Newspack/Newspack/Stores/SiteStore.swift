@@ -79,6 +79,7 @@ extension SiteStore {
         } else {
             site = Site(context: context)
             site.account = account
+            site.uuid = UUID()
         }
 
 //        site.url = url
@@ -103,6 +104,7 @@ extension SiteStore {
         let context = CoreDataManager.shared.mainContext
         let site = Site(context: context)
         site.account = account
+        site.uuid = UUID()
         site.url = url
 
         updateSite(site: site, withSettings: settings)
