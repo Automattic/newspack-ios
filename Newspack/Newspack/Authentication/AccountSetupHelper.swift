@@ -33,16 +33,16 @@ class AccountSetupHelper {
         completionHandler = onComplete
 
         let api = WordPressCoreRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent, site: network)
+        // Manual setup because we're not initializing a session yet.
         let remote = SiteServiceRemote(wordPressComRestApi: api)
-// TODO: Refactor
-//        remote.fetchSiteSettings(success: { (settings) in
-//
-//            self.validateNewspackSites([settings])
-//
-//        }, failure: { (error) in
-//            // TODO: Custom errors?  Regardless, need to log the ones from the network.
-//            self.completionHandler?(error)
-//        })
+        remote.fetchSiteSettings { (settings, error) in
+            guard let settings = settings else {
+                // TODO: Custom errors?  Regardless, need to log the ones from the network.
+                self.completionHandler?(error as NSError?)
+                return
+            }
+            self.validateNewspackSites([settings])
+        }
     }
 
     /// Check sites to see if they are newspack sites.
@@ -104,8 +104,7 @@ class AccountSetupHelper {
         for site in sites {
             // TODO: URL should come from settings when we have actual multisite support.
             // For now just use network.
-// TODO: Refactor
-//            siteStore.createSite(url: network, settings: site, accountID: account.uuid)
+            siteStore.createSite(url: network, settings: site, accountID: account.uuid)
         }
         accountStore.setCurrentAccount(account: account)
 

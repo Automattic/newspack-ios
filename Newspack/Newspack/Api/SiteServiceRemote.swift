@@ -46,7 +46,7 @@ extension SiteServiceRemote {
     ///   - success: success description
     ///   - failure: failure description
     ///
-    private func fetchSiteSettings(onComplete: @escaping ((RemoteSiteSettings? , Error?) -> Void)) {
+    func fetchSiteSettings(onComplete: @escaping ((RemoteSiteSettings? , Error?) -> Void)) {
         api.GET("settings", parameters: nil, success: { (response: AnyObject!, httpResponse: HTTPURLResponse?) in
 
             let dict = response as! [String: AnyObject]

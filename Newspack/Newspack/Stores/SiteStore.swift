@@ -83,6 +83,35 @@ extension SiteStore {
 
 //        site.url = url
         site.url = account.networkUrl // TODO: fix this.
+
+        updateSite(site: site, withSettings: settings)
+
+        CoreDataManager.shared.saveContext()
+
+        emitChange()
+    }
+
+    // TODO: It would be nice to not need a special method to handle site creation
+    // during the intial set up process. There should be a way to rely on
+    // flux instead.
+    func createSite(url: String, settings: RemoteSiteSettings, accountID: UUID) {
+        let accountStore = StoreContainer.shared.accountStore
+        guard let account = accountStore.getAccountByUUID(accountID) else {
+            return
+        }
+
+        let context = CoreDataManager.shared.mainContext
+        let site = Site(context: context)
+        site.account = account
+        site.url = url
+
+        updateSite(site: site, withSettings: settings)
+
+        CoreDataManager.shared.saveContext()
+    }
+
+
+    func updateSite(site: Site, withSettings settings: RemoteSiteSettings) {
         site.title = settings.title
         site.summary = settings.description
         site.timezone = settings.timezone
@@ -96,10 +125,5 @@ extension SiteStore {
         site.postsPerPage = settings.postsPerPage
         site.defaultPingStatus = settings.defaultPingStatus
         site.defaultCommentStatus = settings.defaultCommentStatus
-
-        CoreDataManager.shared.saveContext()
-
-        emitChange()
     }
-
 }
