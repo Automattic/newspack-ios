@@ -10,11 +10,8 @@ class AccountCapabilitiesStore: Store {
     ///
     override func onDispatch(_ action: Action) {
 
-        if let apiAction = action as? UserApiAction {
-            switch apiAction {
-            case .accountFetched(let user, let error):
-                handleAccountFetched(user: user, error: error)
-            }
+        if let apiAction = action as? AccountFetchedApiAction {
+            handleAccountFetched(action: apiAction)
         }
 
     }
@@ -25,25 +22,22 @@ extension AccountCapabilitiesStore {
 
     /// Handles the accountFetched action.
     ///
-    /// - Parameters:
-    ///     - user: The remote user
-    ///     - error: Any error.
+    /// - Parameter action
     ///
-    func handleAccountFetched(user: RemoteUser?, error: Error?) {
-        guard let user = user else {
-            if let _ = error {
-                // TODO: Handle error
-            }
-            return
+    func handleAccountFetched(action: AccountFetchedApiAction) {
+        if action.isError() {
+            // TODO: Handle error
         }
 
-        // TODO: This is tightly coupled to the current account and current site.
-        // Need to find a way to inject the account and site.
         let accountStore = StoreContainer.shared.accountStore
+        // TODO: get site by siteUUID
         guard
-            let account = accountStore.currentAccount,
-            let site = account.currentSite else {
-                return
+            let user = action.payload,
+            let account = accountStore.getAccountByUUID(action.accountUUID),
+            let site = account.currentSite
+            else {
+                //TODO:
+            return
         }
 
         let context = CoreDataManager.shared.mainContext

@@ -10,11 +10,8 @@ class AccountDetailsStore: Store {
     ///
     override func onDispatch(_ action: Action) {
 
-        if let apiAction = action as? UserApiAction {
-            switch apiAction {
-            case .accountFetched(let user, let error):
-                handleAccountFetched(user: user, error: error)
-            }
+        if let apiAction = action as? AccountFetchedApiAction {
+            handleAccountFetched(action: apiAction)
         }
 
     }
@@ -29,9 +26,9 @@ extension AccountDetailsStore {
     ///     - user: The remote user
     ///     - error: Any error.
     ///
-    func handleAccountFetched(user: RemoteUser?, error: Error?) {
-        guard let user = user else {
-            if let _ = error {
+    func handleAccountFetched(action: AccountFetchedApiAction) {
+        guard let user = action.payload else {
+            if let _ = action.error {
                 // TODO: Handle error
             }
             return
@@ -40,7 +37,7 @@ extension AccountDetailsStore {
         // TODO: This is tightly coupled to the current account
         // Need to find a way to inject the account.
         let accountStore = StoreContainer.shared.accountStore
-        guard let account = accountStore.currentAccount else {
+        guard let account = accountStore.getAccountByUUID(action.accountUUID) else {
                 return
         }
 

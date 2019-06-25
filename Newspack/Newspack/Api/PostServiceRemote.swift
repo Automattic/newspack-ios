@@ -8,16 +8,16 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     ///
     /// - Parameter onComplete: Completion handler. Has parameteres for an array of remote posts and an error.
     ///
-    func fetchPosts() {
+    func fetchPosts(siteUUID: UUID) {
         api.GET("posts", parameters: nil, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
 
             let array = response as! [[String: AnyObject]]
             let posts = self.remotePostsFromResponse(response: array)
 
-            self.dispach(action: PostApiAction.postsFetched(posts: posts, error: nil))
+            self.dispatch(action: PostsFetchedApiAction(payload: posts, error: nil, siteUUID: siteUUID))
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
-            self.dispach(action: PostApiAction.postsFetched(posts: nil, error: error))
+            self.dispatch(action: PostsFetchedApiAction(payload: nil, error: error, siteUUID: siteUUID))
         })
     }
 }

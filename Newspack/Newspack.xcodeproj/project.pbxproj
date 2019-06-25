@@ -27,9 +27,9 @@
 		E602E68322C15EC100795CBA /* RemoteUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68222C15EC100795CBA /* RemoteUser.swift */; };
 		E602E68522C15ECC00795CBA /* RemoteSiteSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68422C15ECC00795CBA /* RemoteSiteSettings.swift */; };
 		E602E68722C15ED700795CBA /* RemotePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68622C15ED700795CBA /* RemotePost.swift */; };
-		E602E68B22C1632C00795CBA /* UserApiAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68A22C1632C00795CBA /* UserApiAction.swift */; };
-		E602E68D22C1634900795CBA /* SiteApiAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68C22C1634900795CBA /* SiteApiAction.swift */; };
-		E602E68F22C1637800795CBA /* PostApiAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68E22C1637800795CBA /* PostApiAction.swift */; };
+		E602E68B22C1632C00795CBA /* UserApiActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68A22C1632C00795CBA /* UserApiActions.swift */; };
+		E602E68D22C1634900795CBA /* SiteApiActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68C22C1634900795CBA /* SiteApiActions.swift */; };
+		E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68E22C1637800795CBA /* PostApiActions.swift */; };
 		E602E69222C1666C00795CBA /* AccountAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69122C1666C00795CBA /* AccountAction.swift */; };
 		E602E69422C1669B00795CBA /* AccountCapabilitiesAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69322C1669B00795CBA /* AccountCapabilitiesAction.swift */; };
 		E602E69622C166C700795CBA /* AccountDetailsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69522C166C700795CBA /* AccountDetailsAction.swift */; };
@@ -87,6 +87,7 @@
 		E69EB27E22BAE2E2004A92FA /* CoreRestApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69EB27D22BAE2E2004A92FA /* CoreRestApiTests.swift */; };
 		E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */; };
 		E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE56AE22B19001004895E5 /* ModelFactory.swift */; };
+		E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F1C52422C2A48600334003 /* ApiAction.swift */; };
 		E6FB520022B967910010FDF8 /* Dictionary+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */; };
 		E6FB520322B9715F0010FDF8 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520122B9715F0010FDF8 /* Post+CoreDataClass.swift */; };
 		E6FB520422B9715F0010FDF8 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520222B9715F0010FDF8 /* Post+CoreDataProperties.swift */; };
@@ -135,9 +136,9 @@
 		E602E68222C15EC100795CBA /* RemoteUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUser.swift; sourceTree = "<group>"; };
 		E602E68422C15ECC00795CBA /* RemoteSiteSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSiteSettings.swift; sourceTree = "<group>"; };
 		E602E68622C15ED700795CBA /* RemotePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemotePost.swift; sourceTree = "<group>"; };
-		E602E68A22C1632C00795CBA /* UserApiAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiAction.swift; sourceTree = "<group>"; };
-		E602E68C22C1634900795CBA /* SiteApiAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteApiAction.swift; sourceTree = "<group>"; };
-		E602E68E22C1637800795CBA /* PostApiAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostApiAction.swift; sourceTree = "<group>"; };
+		E602E68A22C1632C00795CBA /* UserApiActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiActions.swift; sourceTree = "<group>"; };
+		E602E68C22C1634900795CBA /* SiteApiActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteApiActions.swift; sourceTree = "<group>"; };
+		E602E68E22C1637800795CBA /* PostApiActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostApiActions.swift; sourceTree = "<group>"; };
 		E602E69122C1666C00795CBA /* AccountAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAction.swift; sourceTree = "<group>"; };
 		E602E69322C1669B00795CBA /* AccountCapabilitiesAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesAction.swift; sourceTree = "<group>"; };
 		E602E69522C166C700795CBA /* AccountDetailsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsAction.swift; sourceTree = "<group>"; };
@@ -203,6 +204,7 @@
 		E69EB27D22BAE2E2004A92FA /* CoreRestApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRestApiTests.swift; sourceTree = "<group>"; };
 		E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceRemote.swift; sourceTree = "<group>"; };
 		E6CE56AE22B19001004895E5 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
+		E6F1C52422C2A48600334003 /* ApiAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiAction.swift; sourceTree = "<group>"; };
 		E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+KeyPath.swift"; sourceTree = "<group>"; };
 		E6FB520122B9715F0010FDF8 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E6FB520222B9715F0010FDF8 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -274,9 +276,10 @@
 		E602E68822C1615C00795CBA /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				E602E68E22C1637800795CBA /* PostApiAction.swift */,
-				E602E68C22C1634900795CBA /* SiteApiAction.swift */,
-				E602E68A22C1632C00795CBA /* UserApiAction.swift */,
+				E6F1C52422C2A48600334003 /* ApiAction.swift */,
+				E602E68E22C1637800795CBA /* PostApiActions.swift */,
+				E602E68C22C1634900795CBA /* SiteApiActions.swift */,
+				E602E68A22C1632C00795CBA /* UserApiActions.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -880,6 +883,7 @@
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
 				E63CD0AB22A17D7200501C4F /* AccountDetails+CoreDataProperties.swift in Sources */,
 				E602E68022C1588600795CBA /* ApiService.swift in Sources */,
+				E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */,
 				E6FB520322B9715F0010FDF8 /* Post+CoreDataClass.swift in Sources */,
 				E602E68522C15ECC00795CBA /* RemoteSiteSettings.swift in Sources */,
 				E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */,
@@ -889,12 +893,12 @@
 				E63CD0AA22A17D7200501C4F /* AccountDetails+CoreDataClass.swift in Sources */,
 				E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */,
 				E6FB520422B9715F0010FDF8 /* Post+CoreDataProperties.swift in Sources */,
-				E602E68D22C1634900795CBA /* SiteApiAction.swift in Sources */,
+				E602E68D22C1634900795CBA /* SiteApiActions.swift in Sources */,
 				E623C6F62220516600F9865C /* ApiCredentials.swift in Sources */,
 				E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */,
 				E602E68722C15ED700795CBA /* RemotePost.swift in Sources */,
-				E602E68B22C1632C00795CBA /* UserApiAction.swift in Sources */,
-				E602E68F22C1637800795CBA /* PostApiAction.swift in Sources */,
+				E602E68B22C1632C00795CBA /* UserApiActions.swift in Sources */,
+				E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */,
 				E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */,
 				E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */,
 				E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */,

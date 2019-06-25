@@ -10,11 +10,8 @@ class PostStore: EventfulStore {
     ///
     override func onDispatch(_ action: Action) {
 
-        if let apiAction = action as? PostApiAction {
-            switch apiAction {
-            case .postsFetched(let posts, let error):
-                handlePostsFetched(remotePosts: posts, error: error)
-            }
+        if let apiAction = action as? PostsFetchedApiAction {
+            handlePostsFetched(action: apiAction)
         }
 
     }
@@ -29,9 +26,9 @@ extension PostStore {
     ///     - remotePosts: The returned remote posts
     ///     - error: Any error.
     ///
-    func handlePostsFetched(remotePosts: [RemotePost]?, error: Error?) {
-        guard let remotePosts = remotePosts else {
-            if let _ = error {
+    func handlePostsFetched(action: PostsFetchedApiAction) {
+        guard let remotePosts = action.payload else {
+            if let _ = action.error {
                 // TODO: Handle error
             }
             return

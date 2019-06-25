@@ -12,7 +12,7 @@ class ServiceRemoteCoreRest {
         self.api = api
     }
 
-    func dispach(action: Action) {
+    func dispatch(action: Action) {
         ActionDispatcher.global.dispatch(action)
     }
 }

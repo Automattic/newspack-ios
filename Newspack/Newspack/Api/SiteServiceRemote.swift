@@ -8,7 +8,7 @@ class SiteServiceRemote: ServiceRemoteCoreRest {
     /// There is not currently API to support a multisite install.
     /// This anticipates a time when there is.
     ///
-    func fetchSitesForNetwork() {
+    func fetchSitesForNetwork(accountUUID: UUID) {
         // When multisite is supported, we'll sync all sites and then filter
         // the ones that support Newspack.
         // For now, assume the network's URL is a single site and that it is a
@@ -19,7 +19,7 @@ class SiteServiceRemote: ServiceRemoteCoreRest {
             if let site = settings {
                 sites = [site]
             }
-            self.dispach(action: SiteApiAction.networkSitesFetched(sites: sites, error: error))
+            self.dispatch(action: NetworkSitesFetchedApiAction(payload: sites, error: error, accountUUID: accountUUID))
         }
     }
 
@@ -29,13 +29,9 @@ class SiteServiceRemote: ServiceRemoteCoreRest {
     ///   - success: success description
     ///   - failure: failure description
     ///
-    func fetchSiteSettings() {
+    func fetchSiteSettings(accountUUID: UUID, siteUUID: UUID?) {
         fetchSiteSettings { (settings, error) in
-            var sites: [RemoteSiteSettings]?
-            if let site = settings {
-                sites = [site]
-            }
-            self.dispach(action: SiteApiAction.networkSitesFetched(sites: sites, error: error))
+            self.dispatch(action: SiteFetchedApiAction(payload: settings, error: error, accountUUID: accountUUID, siteUUID: siteUUID))
         }
     }
 

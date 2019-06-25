@@ -10,13 +10,10 @@ class SiteStore: EventfulStore {
     ///
     override func onDispatch(_ action: Action) {
 
-        if let siteAction = action as? SiteApiAction {
-            switch siteAction {
-            case .networkSitesFetched(let sites, let error):
-                handleNetworkSitesFetched(sites: sites, error: error)
-            case .siteFetched(let site, let error):
-                handleSiteFetched(settings: site, error: error)
-            }
+        if let apiAction = action as? NetworkSitesFetchedApiAction {
+            handleNetworkSitesFetched(action: apiAction)
+        } else if let apiAction = action as? SiteFetchedApiAction {
+            handleSiteFetched(action: apiAction)
         }
 
     }
@@ -25,7 +22,7 @@ class SiteStore: EventfulStore {
 
 extension SiteStore {
 
-    func handleNetworkSitesFetched(sites: [RemoteSiteSettings]?, error: Error?) {
+    func handleNetworkSitesFetched(action: NetworkSitesFetchedApiAction) {
         // noop for now, pending other changes
     }
 
@@ -36,9 +33,9 @@ extension SiteStore {
     ///     - settings: The remote site settings
     ///     - error: Any error.
     ///
-    func handleSiteFetched(settings: RemoteSiteSettings?, error: Error?) {
-        guard let settings = settings else {
-            if let _ = error {
+    func handleSiteFetched(action: SiteFetchedApiAction) {
+        guard let settings = action.payload else {
+            if let _ = action.error {
                 // TODO: Handle error
             }
             return
@@ -47,12 +44,13 @@ extension SiteStore {
         // TODO: This is tightly coupled to the current account and current site.
         // Need to find a way to inject the account and site.
         let accountStore = StoreContainer.shared.accountStore
-        guard let account = accountStore.currentAccount else {
-                return
+        guard let account = accountStore.getAccountByUUID(action.accountUUID) else {
+            return
         }
 
         let context = CoreDataManager.shared.mainContext
 
+        // TODO rely on UUID to fetch existing site and assign UUID to new site
         let site = account.currentSite ?? Site(context: context)
 //        site.url = url
         site.url = account.networkUrl // TODO: fix this.

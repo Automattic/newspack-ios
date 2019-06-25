@@ -7,19 +7,20 @@ class UserServiceRemote: ServiceRemoteCoreRest {
     /// Queries the users/me endpoint to get information about the current account.
     ///
     /// - Parameters:
-    ///   - success: success description
-    ///   - failure: failure description
+    ///   - accountUUID: The UUID of the account, for details.
+    ///   - siteUUID: The UUID of the site, for capabilities.
     ///
-    func fetchMe() {
+    func fetchMe(accountUUID: UUID, siteUUID: UUID) {
         let parameters = ["context": "edit"] as [String : AnyObject]
         api.GET("users/me", parameters: parameters, success: { (response: AnyObject!, httpResponse: HTTPURLResponse?) in
 
             let dict = response as! [String: AnyObject]
             let user = RemoteUser(dict: dict)
-            self.dispach(action: UserApiAction.accountFetched(user: user, error: nil))
+
+            self.dispatch(action: AccountFetchedApiAction(payload: user, error: nil, accountUUID: accountUUID, siteUUID: siteUUID))
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) -> Void in
-            self.dispach(action: UserApiAction.accountFetched(user: nil, error: error))
+            self.dispatch(action: AccountFetchedApiAction(payload: nil, error: error, accountUUID: accountUUID, siteUUID: siteUUID))
         })
     }
 
