@@ -5,7 +5,7 @@ import WordPressFlux
 
 /// Responsible for managing account and keychain related things.
 ///
-class AccountStore: EventfulStore {
+class AccountStore: Store {
     private let currentAccountUUIDKey: String = "currentAccountUUIDKey"
     private static let keychainServiceName: String = "com.automattic.newspack"
     private let keychain: Keychain

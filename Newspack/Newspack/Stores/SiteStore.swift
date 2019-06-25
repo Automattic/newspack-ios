@@ -4,7 +4,7 @@ import WordPressFlux
 
 /// Responsible for managing site related things.
 ///
-class SiteStore: EventfulStore {
+class SiteStore: Store {
 
     /// Action handler
     ///

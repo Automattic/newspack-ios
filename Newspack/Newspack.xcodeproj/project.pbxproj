@@ -40,7 +40,6 @@
 		E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */; };
 		E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */; };
 		E607386122A9A5EF00504EA4 /* AccountDetailsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */; };
-		E60BFC9322AEC6640018462F /* EventfulStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60BFC9222AEC6640018462F /* EventfulStore.swift */; };
 		E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD12211FE86004E5B91 /* AppDelegate.swift */; };
 		E6138FD42211FE86004E5B91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD32211FE86004E5B91 /* ViewController.swift */; };
 		E6138FD72211FE86004E5B91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6138FD52211FE86004E5B91 /* Main.storyboard */; };
@@ -149,7 +148,6 @@
 		E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStoreTests.swift; sourceTree = "<group>"; };
 		E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStoreTests.swift; sourceTree = "<group>"; };
 		E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsStoreTests.swift; sourceTree = "<group>"; };
-		E60BFC9222AEC6640018462F /* EventfulStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventfulStore.swift; sourceTree = "<group>"; };
 		E6138FCE2211FE86004E5B91 /* Newspack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Newspack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6138FD12211FE86004E5B91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6138FD32211FE86004E5B91 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -487,7 +485,6 @@
 			isa = PBXGroup;
 			children = (
 				E602E69022C1665500795CBA /* Actions */,
-				E60BFC9222AEC6640018462F /* EventfulStore.swift */,
 				E61AE63B2237373E00E6A489 /* StoreContainer.swift */,
 				E62C7C652235E16E000FEB33 /* AccountStore.swift */,
 				E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */,
@@ -877,7 +874,6 @@
 				E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */,
 				E64594A122B448C2003BF6C0 /* PostServiceRemote.swift in Sources */,
 				E69E59FD22541ABD00899DE2 /* WordPressCoreRestApi.swift in Sources */,
-				E60BFC9322AEC6640018462F /* EventfulStore.swift in Sources */,
 				E602E68322C15EC100795CBA /* RemoteUser.swift in Sources */,
 				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
