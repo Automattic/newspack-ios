@@ -27,19 +27,18 @@ extension PostStore {
     ///     - error: Any error.
     ///
     func handlePostsFetched(action: PostsFetchedApiAction) {
-        guard let remotePosts = action.payload else {
-            if let _ = action.error {
-                // TODO: Handle error
-            }
+        guard !action.isError() else {
+            // TODO: Handle error.
             return
         }
 
-        // TODO: This is tightly coupled to the current account and current site.
-        // Need to find a way to inject the account and site.
-        let accountStore = StoreContainer.shared.accountStore
+        let siteStore = StoreContainer.shared.siteStore
+
         guard
-            let account = accountStore.currentAccount,
-            let site = account.currentSite else {
+            let site = siteStore.getSiteByUUID(action.siteUUID),
+            let remotePosts = action.payload
+            else {
+                // TODO: Unknown error?
                 return
         }
 
@@ -63,6 +62,8 @@ extension PostStore {
         }
 
         CoreDataManager.shared.saveContext()
+
+        emitChange()
     }
 
 

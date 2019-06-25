@@ -81,8 +81,8 @@ extension AccountStore {
         fetchRequest.predicate = NSPredicate(format: "uuid == %@", uuid as CVarArg)
         let context = CoreDataManager.shared.mainContext
         do {
-            let accounts = try context.fetch(fetchRequest)
-            return accounts.first
+            let results = try context.fetch(fetchRequest)
+            return results.first
         } catch {
             // TODO: Need to log this
             let error = error as NSError

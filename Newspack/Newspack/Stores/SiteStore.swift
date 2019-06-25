@@ -18,6 +18,26 @@ class SiteStore: EventfulStore {
 
     }
 
+    /// Get the site for the specified UUID
+    ///
+    /// - Parameter uuid: The site's UUID
+    /// - Returns: The site
+    ///
+    func getSiteByUUID(_ uuid: UUID) -> Site? {
+        let fetchRequest = Site.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "uuid == %@", uuid as CVarArg)
+        let context = CoreDataManager.shared.mainContext
+        do {
+            let results = try context.fetch(fetchRequest)
+            return results.first
+        } catch {
+            // TODO: Need to log this
+            let error = error as NSError
+            print(error.localizedDescription)
+        }
+        return nil
+    }
+
 }
 
 extension SiteStore {
@@ -34,24 +54,33 @@ extension SiteStore {
     ///     - error: Any error.
     ///
     func handleSiteFetched(action: SiteFetchedApiAction) {
-        guard let settings = action.payload else {
-            if let _ = action.error {
-                // TODO: Handle error
-            }
+        guard !action.isError() else {
+            // TODO: Handle error.
             return
         }
 
-        // TODO: This is tightly coupled to the current account and current site.
-        // Need to find a way to inject the account and site.
         let accountStore = StoreContainer.shared.accountStore
-        guard let account = accountStore.getAccountByUUID(action.accountUUID) else {
-            return
+
+        guard
+            let account = accountStore.getAccountByUUID(action.accountUUID),
+            let settings = action.payload
+            else {
+                // TODO: Unknown error?
+                return
         }
 
         let context = CoreDataManager.shared.mainContext
 
-        // TODO rely on UUID to fetch existing site and assign UUID to new site
-        let site = account.currentSite ?? Site(context: context)
+        let site: Site
+        if  let siteUUID = action.siteUUID,
+            let maybeSite = getSiteByUUID(siteUUID),
+            account.sites.contains(maybeSite) {
+                site = maybeSite
+        } else {
+            site = Site(context: context)
+            site.account = account
+        }
+
 //        site.url = url
         site.url = account.networkUrl // TODO: fix this.
         site.title = settings.title
@@ -67,8 +96,6 @@ extension SiteStore {
         site.postsPerPage = settings.postsPerPage
         site.defaultPingStatus = settings.defaultPingStatus
         site.defaultCommentStatus = settings.defaultCommentStatus
-
-        site.account = account
 
         CoreDataManager.shared.saveContext()
 

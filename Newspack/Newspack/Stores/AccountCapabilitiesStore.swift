@@ -25,19 +25,22 @@ extension AccountCapabilitiesStore {
     /// - Parameter action
     ///
     func handleAccountFetched(action: AccountFetchedApiAction) {
-        if action.isError() {
-            // TODO: Handle error
+        guard !action.isError() else {
+            // TODO: Handle error.
+            return
         }
 
         let accountStore = StoreContainer.shared.accountStore
-        // TODO: get site by siteUUID
+        let siteStore = StoreContainer.shared.siteStore
+
         guard
             let user = action.payload,
             let account = accountStore.getAccountByUUID(action.accountUUID),
-            let site = account.currentSite
+            let site =  siteStore.getSiteByUUID(action.siteUUID),
+            account.sites.contains(site)
             else {
-                //TODO:
-            return
+                //TODO: Unknown error?
+                return
         }
 
         let context = CoreDataManager.shared.mainContext

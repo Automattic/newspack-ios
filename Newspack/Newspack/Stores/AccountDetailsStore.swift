@@ -27,17 +27,16 @@ extension AccountDetailsStore {
     ///     - error: Any error.
     ///
     func handleAccountFetched(action: AccountFetchedApiAction) {
-        guard let user = action.payload else {
-            if let _ = action.error {
-                // TODO: Handle error
-            }
+        guard !action.isError() else {
+            // TODO: Handle error.
             return
         }
 
-        // TODO: This is tightly coupled to the current account
-        // Need to find a way to inject the account.
         let accountStore = StoreContainer.shared.accountStore
-        guard let account = accountStore.getAccountByUUID(action.accountUUID) else {
+        guard
+            let user = action.payload,
+            let account = accountStore.getAccountByUUID(action.accountUUID) else {
+                // TODO: Unknown Error?
                 return
         }
 
