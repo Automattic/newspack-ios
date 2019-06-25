@@ -8,6 +8,7 @@ extension Site {
         return NSFetchRequest<Site>(entityName: "Site")
     }
 
+    @NSManaged public var uuid: UUID!
     @NSManaged public var url: String!
     @NSManaged public var title: String!
     @NSManaged public var summary: String!
