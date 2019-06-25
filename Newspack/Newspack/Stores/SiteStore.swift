@@ -2,19 +2,6 @@ import Foundation
 import CoreData
 import WordPressFlux
 
-/// Dispatched actions to notifiy subscribers of changes
-///
-enum SiteEvent: Event {
-    case siteCreated(site: Site?, error: Error?)
-    case siteUpdated(site: Site?, error: Error?)
-}
-
-/// Errors
-///
-enum SiteError: Error {
-    case createAccountMissing
-}
-
 /// Responsible for managing site related things.
 ///
 class SiteStore: EventfulStore {
@@ -22,41 +9,53 @@ class SiteStore: EventfulStore {
     /// Action handler
     ///
     override func onDispatch(_ action: Action) {
-        guard let siteAction = action as? SiteAction else {
-            return
+
+        if let siteAction = action as? SiteApiAction {
+            switch siteAction {
+            case .networkSitesFetched(let sites, let error):
+                handleNetworkSitesFetched(sites: sites, error: error)
+            case .siteFetched(let site, let error):
+                handleSiteFetched(settings: site, error: error)
+            }
         }
-        switch siteAction {
-        case .create(let url, let settings, let accountID):
-            createSite(url: url, settings: settings, accountID: accountID)
-        case .update(let site, let settings):
-            updateSite(site: site, settings: settings)
-        }
+
     }
 
 }
 
-
 extension SiteStore {
 
-    /// Creates a new site with the specified .
-    /// The new account is made the current account.
+    func handleNetworkSitesFetched(sites: [RemoteSiteSettings]?, error: Error?) {
+        // noop for now, pending other changes
+    }
+
+
+    /// Handles the siteFetched action.
     ///
     /// - Parameters:
-    ///     - url: The url of the site
-    ///     - settings: The REST API auth token for the account.
-    ///     - accountID: The UUID for the account to which the site belongs.
+    ///     - settings: The remote site settings
+    ///     - error: Any error.
     ///
-    func createSite(url: String, settings: RemoteSiteSettings, accountID: UUID) {
-
-        let accountStore = StoreContainer.shared.accountStore
-        guard let account = accountStore.getAccountByUUID(accountID) else {
-            emitChangeEvent(event: SiteEvent.siteCreated(site: nil, error: SiteError.createAccountMissing))
+    func handleSiteFetched(settings: RemoteSiteSettings?, error: Error?) {
+        guard let settings = settings else {
+            if let _ = error {
+                // TODO: Handle error
+            }
             return
         }
 
+        // TODO: This is tightly coupled to the current account and current site.
+        // Need to find a way to inject the account and site.
+        let accountStore = StoreContainer.shared.accountStore
+        guard let account = accountStore.currentAccount else {
+                return
+        }
+
         let context = CoreDataManager.shared.mainContext
-        let site = Site(context: context)
-        site.url = url
+
+        let site = account.currentSite ?? Site(context: context)
+//        site.url = url
+        site.url = account.networkUrl // TODO: fix this.
         site.title = settings.title
         site.summary = settings.description
         site.timezone = settings.timezone
@@ -75,31 +74,7 @@ extension SiteStore {
 
         CoreDataManager.shared.saveContext()
 
-        emitChangeEvent(event: SiteEvent.siteCreated(site: site, error: nil))
+        emitChange()
     }
 
-    /// Update the specified site.
-    ///
-    /// - Parameters:
-    ///   - site: the site to update
-    ///   - settings: the remote settings containing the updates
-    func updateSite(site: Site, settings: RemoteSiteSettings) {
-
-        site.title = settings.title
-        site.summary = settings.description
-        site.timezone = settings.timezone
-        site.dateFormat = settings.dateFormat
-        site.timeFormat = settings.timeFormat
-        site.startOfWeek = settings.startOfWeek
-        site.language = settings.language
-        site.useSmilies = settings.useSmilies
-        site.defaultCategory = settings.defaultCategory
-        site.defaultPostFormat = settings.defaultPostFormat
-        site.postsPerPage = settings.postsPerPage
-        site.defaultPingStatus = settings.defaultPingStatus
-        site.defaultCommentStatus = settings.defaultCommentStatus
-        CoreDataManager.shared.saveContext()
-
-        emitChangeEvent(event: SiteEvent.siteUpdated(site: site, error: nil))
-    }
 }

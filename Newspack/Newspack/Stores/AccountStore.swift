@@ -3,13 +3,6 @@ import CoreData
 import KeychainAccess
 import WordPressFlux
 
-/// Dispatched actions to notifiy subscribers of changes
-///
-enum AccountEvent: Event {
-    case currentAccountChanged(newAccount: Account?, oldAccount: Account?)
-    case currentSiteChanged(account: Account, oldSite: Site?, newSite: Site?)
-}
-
 /// Responsible for managing account and keychain related things.
 ///
 class AccountStore: EventfulStore {
@@ -30,6 +23,7 @@ class AccountStore: EventfulStore {
         guard let accountAction = action as? AccountAction else {
             return
         }
+        
         switch accountAction {
         case .setCurrentAccount(let account):
             setCurrentAccount(account: account)
@@ -64,11 +58,9 @@ extension AccountStore {
 
             let defaults = UserDefaults.standard
 
-            let oldValue = currentAccount
-            let newValue = account
             defer {
                 defaults.synchronize()
-                emitChangeEvent(event: AccountEvent.currentAccountChanged(newAccount: newValue, oldAccount: oldValue))
+                emitChange()
             }
 
             guard let account = account else {
@@ -161,16 +153,19 @@ extension AccountStore {
         currentAccount = account
     }
 
-    /// Handler for th .setCurrentSite action.
+    /// Handler for the .setCurrentSite action.
     ///
     func setCurrentSite(site: Site, for account: Account) {
-        let oldSite = account.currentSite
-        account.currentSite = site
-        let newSite = account.currentSite
-
-        if newSite != oldSite {
-            emitChangeEvent(event: AccountEvent.currentSiteChanged(account: account, oldSite: oldSite, newSite: newSite))
+        guard account.sites.contains(site) else {
+            return
         }
+        guard site != account.currentSite else {
+            return
+        }
+
+        account.currentSite = site
+
+        emitChange()
     }
 }
 

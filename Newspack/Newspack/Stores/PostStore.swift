@@ -2,19 +2,6 @@ import Foundation
 import CoreData
 import WordPressFlux
 
-/// Dispatched actions to notifiy subscribers of changes
-///
-enum PostEvent: Event {
-    case postsSynced(error: Error?)
-}
-
-/// Errors
-///
-enum PostError: Error {
-    case createPostsSiteMissing
-}
-
-
 /// Responsible for managing post related things
 ///
 class PostStore: EventfulStore {
@@ -22,21 +9,43 @@ class PostStore: EventfulStore {
     /// Action handler
     ///
     override func onDispatch(_ action: Action) {
-        guard let postAction = action as? PostAction else {
-            return
+
+        if let apiAction = action as? PostApiAction {
+            switch apiAction {
+            case .postsFetched(let posts, let error):
+                handlePostsFetched(remotePosts: posts, error: error)
+            }
         }
-        switch postAction {
-        case .syncPosts(let posts, let site):
-            syncPosts(remotePosts: posts, site: site)
-        }
+
     }
 
 }
 
-
 extension PostStore {
 
-    func syncPosts(remotePosts: [RemotePost], site: Site) {
+    /// Handles the postsFetched action.
+    ///
+    /// - Parameters:
+    ///     - remotePosts: The returned remote posts
+    ///     - error: Any error.
+    ///
+    func handlePostsFetched(remotePosts: [RemotePost]?, error: Error?) {
+        guard let remotePosts = remotePosts else {
+            if let _ = error {
+                // TODO: Handle error
+            }
+            return
+        }
+
+        // TODO: This is tightly coupled to the current account and current site.
+        // Need to find a way to inject the account and site.
+        let accountStore = StoreContainer.shared.accountStore
+        guard
+            let account = accountStore.currentAccount,
+            let site = account.currentSite else {
+                return
+        }
+
         let context = CoreDataManager.shared.mainContext
 
         for remotePost in remotePosts {
@@ -57,11 +66,14 @@ extension PostStore {
         }
 
         CoreDataManager.shared.saveContext()
-
-        emitChangeEvent(event: PostEvent.postsSynced(error: nil))
     }
 
 
+    /// Update a post with a corresponding remote post
+    ///
+    /// - Parameters:
+    ///   - post: the post to update
+    ///   - remotePost: the remote post
     func updatePost(_ post: Post, with remotePost: RemotePost) {
         post.postID = remotePost.postID
         post.authorID = remotePost.authorID

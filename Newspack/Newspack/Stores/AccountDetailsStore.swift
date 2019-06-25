@@ -2,53 +2,46 @@ import Foundation
 import CoreData
 import WordPressFlux
 
-
-/// Dispatched actions to notifiy subscribers of changes
-///
-enum AccountDetailsEvent: Event {
-    case accountDetailsUpdated(details: AccountDetails?, error: Error?)
-}
-
-/// Errors
-///
-enum AccountDetailsError: Error {
-    case createAccountMissing
-}
-
 /// Responsible for managing site related things.
 ///
-class AccountDetailsStore: EventfulStore {
+class AccountDetailsStore: Store {
 
     /// Action handler
     ///
     override func onDispatch(_ action: Action) {
-        guard let detailsAction = action as? AccountDetailsAction else {
-            return
+
+        if let apiAction = action as? UserApiAction {
+            switch apiAction {
+            case .accountFetched(let user, let error):
+                handleAccountFetched(user: user, error: error)
+            }
         }
-        switch detailsAction {
-        case .update(let user, let accountID):
-            updateAccountDetails(user: user, accountID: accountID)
-        }
+
     }
 
 }
 
-
 extension AccountDetailsStore {
 
-    /// Creates a new site with the specified .
-    /// The new account is made the current account.
+    /// Handles the accountFetched action.
     ///
     /// - Parameters:
-    ///     - url: The url of the site
-    ///     - remoteSiteSettings: The REST API auth token for the account.
+    ///     - user: The remote user
+    ///     - error: Any error.
     ///
-    func updateAccountDetails(user: RemoteUser, accountID: UUID) {
-
-        let accountStore = StoreContainer.shared.accountStore
-        guard let account = accountStore.getAccountByUUID(accountID) else {
-            emitChangeEvent(event: AccountDetailsEvent.accountDetailsUpdated(details: nil, error: AccountDetailsError.createAccountMissing))
+    func handleAccountFetched(user: RemoteUser?, error: Error?) {
+        guard let user = user else {
+            if let _ = error {
+                // TODO: Handle error
+            }
             return
+        }
+
+        // TODO: This is tightly coupled to the current account
+        // Need to find a way to inject the account.
+        let accountStore = StoreContainer.shared.accountStore
+        guard let account = accountStore.currentAccount else {
+                return
         }
 
         let context = CoreDataManager.shared.mainContext
@@ -73,6 +66,7 @@ extension AccountDetailsStore {
 
         CoreDataManager.shared.saveContext()
 
-        emitChangeEvent(event: AccountDetailsEvent.accountDetailsUpdated(details: details, error: nil))
+        emitChange()
     }
+
 }

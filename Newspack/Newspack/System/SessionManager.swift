@@ -20,7 +20,7 @@ class SessionManager {
 
     private init() {
         let store = StoreContainer.shared.accountStore
-        accountStoreSubscription = store.onChangeEvent( accountStoreChangeHandler(_:) )
+        accountStoreSubscription = store.onChange( accountStoreChangeHandler )
     }
 
     /// Initialize the session with the specified account.  Typically this will
@@ -48,14 +48,7 @@ class SessionManager {
     /// Handle changes broacast by the account store.  Primarily used to re-initialize
     /// the api in the event the current account changes.
     ///
-    /// - Parameter accountChange: An AccountChange enum.
-    ///
-    func accountStoreChangeHandler(_ event: Event) {
-        switch event {
-        case AccountEvent.currentAccountChanged, AccountEvent.currentSiteChanged(_, _, _):
-            initialize(account: StoreContainer.shared.accountStore.currentAccount)
-        default:
-            break
-        }
+    func accountStoreChangeHandler() {
+        initialize(account: StoreContainer.shared.accountStore.currentAccount)
     }
 }
