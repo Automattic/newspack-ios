@@ -2,10 +2,15 @@ import Foundation
 import WordPressKit
 import WordPressFlux
 
+enum SessionState {
+    case uninitialized
+    case initialized
+}
+
 /// SessionManager is responsible for defining the current session for the
 /// current account and site.  It serves to help decouple the API and Store layers.
 ///
-class SessionManager {
+class SessionManager: StatefulStore<SessionState> {
 
     /// Singleon reference
     ///
@@ -19,6 +24,8 @@ class SessionManager {
     private var accountStoreSubscription: Receipt?
 
     private init() {
+        super.init(initialState: .uninitialized)
+
         let store = StoreContainer.shared.accountStore
         accountStoreSubscription = store.onChange( accountStoreChangeHandler )
     }
@@ -33,6 +40,7 @@ class SessionManager {
     func initialize(account: Account?) -> Bool {
         guard let account = account else {
             api = WordPressCoreRestApi(oAuthToken: nil, userAgent: UserAgent.defaultUserAgent)
+            state = .uninitialized
             return false
         }
 
@@ -41,6 +49,8 @@ class SessionManager {
 
         let site = (account.currentSite?.url ?? account.networkUrl)!
         api = WordPressCoreRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent, site: site)
+
+        state = .initialized
 
         return token != nil
     }
