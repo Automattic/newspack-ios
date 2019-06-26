@@ -80,6 +80,8 @@
 		E66E8A1B2235C57800E8DD88 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */; };
 		E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */; };
 		E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67F56D42230914800BFD38B /* CoreDataManager.swift */; };
+		E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */; };
+		E6871F1B22C3FDE7008D3D46 /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */; };
 		E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */; };
 		E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E59FA22540D5000899DE2 /* ServiceRemoteCoreRest.swift */; };
 		E69E59FD22541ABD00899DE2 /* WordPressCoreRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E59FC22541ABD00899DE2 /* WordPressCoreRestApi.swift */; };
@@ -196,6 +198,8 @@
 		E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		E67F56D42230914800BFD38B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = Newspack/System/CoreDataManager.swift; sourceTree = SOURCE_ROOT; };
+		E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMenuViewController.swift; sourceTree = "<group>"; };
+		E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
 		E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteServiceRemote.swift; sourceTree = "<group>"; };
 		E69E59FA22540D5000899DE2 /* ServiceRemoteCoreRest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRemoteCoreRest.swift; sourceTree = "<group>"; };
 		E69E59FC22541ABD00899DE2 /* WordPressCoreRestApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPressCoreRestApi.swift; sourceTree = "<group>"; };
@@ -438,6 +442,8 @@
 			isa = PBXGroup;
 			children = (
 				E6138FD32211FE86004E5B91 /* ViewController.swift */,
+				E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */,
+				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -875,6 +881,7 @@
 				E64594A122B448C2003BF6C0 /* PostServiceRemote.swift in Sources */,
 				E69E59FD22541ABD00899DE2 /* WordPressCoreRestApi.swift in Sources */,
 				E602E68322C15EC100795CBA /* RemoteUser.swift in Sources */,
+				E6871F1B22C3FDE7008D3D46 /* PostListViewController.swift in Sources */,
 				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
 				E63CD0AB22A17D7200501C4F /* AccountDetails+CoreDataProperties.swift in Sources */,
@@ -898,6 +905,7 @@
 				E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */,
 				E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */,
 				E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */,
+				E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */,
 				E6241B96224EC8CD00B578F5 /* SessionManager.swift in Sources */,
 				E641A66122A71A83008BBD85 /* SiteStore.swift in Sources */,
 				E63CD0AC22A17D7200501C4F /* AccountCapabilities+CoreDataClass.swift in Sources */,
