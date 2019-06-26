@@ -7,6 +7,7 @@ class ModelFactory {
     class func getTestSite(context: NSManagedObjectContext) -> Site {
         let site = Site(context: context)
 
+        site.uuid = UUID()
         site.url = "url"
         site.title = "site"
         site.summary = "description"

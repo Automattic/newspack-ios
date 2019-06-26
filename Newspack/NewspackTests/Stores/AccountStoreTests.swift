@@ -82,7 +82,7 @@ class AccountStoreTests: BaseTest {
         let store = accountStore!
         let dispatcher = ActionDispatcher.global
 
-        store.createAccount(authToken: "testToken1", forNetworkAt: "example.com")
+        store.currentAccount = store.createAccount(authToken: "testToken1", forNetworkAt: "example.com")
         XCTAssertNotNil(store.currentAccount)
 
         let account = Account(context: context)
@@ -102,8 +102,8 @@ class AccountStoreTests: BaseTest {
         let store = accountStore!
         let dispatcher = ActionDispatcher.global
 
-        store.createAccount(authToken: "testToken1", forNetworkAt: "example.com")
-        let account = store.currentAccount!
+        let account = store.createAccount(authToken: "testToken1", forNetworkAt: "example.com")
+        store.currentAccount = account
 
         let site1 = ModelFactory.getTestSite(context: context)
         site1.title = "site1"
@@ -115,9 +115,11 @@ class AccountStoreTests: BaseTest {
         site2.title = "site2"
         site2.account = account
 
+        XCTAssertEqual(site1, account.currentSite!)
+
         dispatcher.dispatch(AccountAction.setCurrentSite(site: site2, account: account))
 
-        XCTAssertEqual(site2, account.currentSite)
+        XCTAssertEqual(site2, account.currentSite!)
     }
 
     func testMultipleAccountsCannotShareAuthToken() {

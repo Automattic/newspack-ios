@@ -16,8 +16,8 @@ class SiteStoreTests: BaseTest {
         store = StoreContainer.shared.siteStore
 
         // Test account
-        accountStore!.createAccount(authToken: "testToken", forNetworkAt: "example.com")
-        account = accountStore!.currentAccount
+        account = accountStore!.createAccount(authToken: "testToken", forNetworkAt: siteURL)
+        accountStore!.currentAccount = account
 
         // Test settings
         let response = Loader.jsonObject(for: "remote-site-settings") as! [String: AnyObject]
@@ -32,63 +32,20 @@ class SiteStoreTests: BaseTest {
         remoteSettings = nil
     }
 
-    func testCreateSiteError() {
-        let remoteSettings = self.remoteSettings!
-        let dispatcher = ActionDispatcher.global
-        var site: Site?
-        var error: Error?
-
-        let receipt = store?.onChangeEvent({ (changeEvent) in
-            guard let event = changeEvent as? SiteEvent else {
-                XCTFail("Wrong event type")
-                return
-            }
-            switch event {
-            case SiteEvent.siteCreated(let s, let e) :
-                site = s
-                error = e
-            default:
-                break
-            }
-        })
-
-        let action = SiteAction.create(url: siteURL, settings: remoteSettings, accountID: UUID())
-        dispatcher.dispatch(action)
-
-        XCTAssertNotNil(receipt)
-        XCTAssertNotNil(error)
-        XCTAssertNil(site)
-        let siteError = error as! SiteError
-        XCTAssertEqual(siteError, SiteError.createAccountMissing)
-    }
-
     func testCreateSite() {
         let account = self.account!
         let remoteSettings = self.remoteSettings!
         let dispatcher = ActionDispatcher.global
-        var site: Site?
-        var error: Error?
 
-        let receipt = store?.onChangeEvent({ (changeEvent) in
-            guard let event = changeEvent as? SiteEvent else {
-                XCTFail("Wrong event type")
-                return
-            }
-            switch event {
-            case SiteEvent.siteCreated(let s, let e) :
-                site = s
-                error = e
-            default:
-                break
-            }
-        })
+        let receipt = store?.onChange {}
 
         // Error when missing account
-        let action = SiteAction.create(url: siteURL, settings: remoteSettings, accountID: account.uuid)
+        let action = SiteFetchedApiAction(payload: remoteSettings, error: nil, accountUUID: account.uuid, siteUUID: nil)
         dispatcher.dispatch(action)
 
+        let site = account.currentSite
+
         XCTAssertNotNil(receipt)
-        XCTAssertNil(error)
         XCTAssertNotNil(site)
         XCTAssertEqual(site!.url, siteURL)
         XCTAssertEqual(site!.title, remoteSettings.title)
@@ -100,7 +57,6 @@ class SiteStoreTests: BaseTest {
         let dispatcher = ActionDispatcher.global
         let testTitle = "Test Title"
         var site: Site?
-        var error: Error?
 
         store?.createSite(url: siteURL, settings: remoteSettings, accountID: account.uuid)
         site = account.currentSite!
@@ -109,30 +65,17 @@ class SiteStoreTests: BaseTest {
         XCTAssertEqual(site!.title, remoteSettings.title)
         XCTAssertNotEqual(site!.title, testTitle)
 
-        let receipt = store?.onChangeEvent({ (changeEvent) in
-            guard let event = changeEvent as? SiteEvent else {
-                XCTFail("Wrong event type")
-                return
-            }
-            switch event {
-            case SiteEvent.siteCreated(let s, let e) :
-                site = s
-                error = e
-            default:
-                break
-            }
-        })
+        let receipt = store?.onChange {}
 
         var dict = Loader.jsonObject(for: "remote-site-settings") as! [String: AnyObject]
         dict["title"] = testTitle as AnyObject
         remoteSettings = RemoteSiteSettings(dict: dict)
 
         // Error when missing account
-        let action = SiteAction.update(site: site!, settings: remoteSettings)
+        let action = SiteFetchedApiAction(payload: remoteSettings, error: nil, accountUUID: account.uuid, siteUUID: site!.uuid)
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
-        XCTAssertNil(error)
         XCTAssertNotNil(site)
         XCTAssertEqual(site!.url, siteURL)
         XCTAssertEqual(site!.title, testTitle)

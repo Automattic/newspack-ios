@@ -15,8 +15,8 @@ class AccountDetailsStoreTests: BaseTest {
         store = StoreContainer.shared.accountDetailsStore
 
         // Test account
-        accountStore!.createAccount(authToken: "testToken", forNetworkAt: "example.com")
-        account = accountStore!.currentAccount
+        account = accountStore!.createAccount(authToken: "testToken", forNetworkAt: "example.com")
+        accountStore!.currentAccount = account
 
         // Test remote user
         let response = Loader.jsonObject(for: "remote-user-edit") as! [String: AnyObject]
@@ -31,104 +31,45 @@ class AccountDetailsStoreTests: BaseTest {
         account = nil;
     }
 
-    func testUpdateAccountDetailsError() {
-        let dispatcher = ActionDispatcher.global
-        let remoteUser = self.remoteUser!
-        var details: AccountDetails?
-        var error: Error?
-
-        let receipt = store?.onChangeEvent({ (changeEvent) in
-            guard let event = changeEvent as? AccountDetailsEvent else {
-                XCTFail("Wrong event type")
-                return
-            }
-            switch event {
-            case AccountDetailsEvent.accountDetailsUpdated(let d, let e) :
-                details = d
-                error = e
-            }
-        })
-
-        let action = AccountDetailsAction.update(user: remoteUser, accountID: UUID())
-        dispatcher.dispatch(action)
-
-        XCTAssertNotNil(receipt)
-        XCTAssertNotNil(error)
-        XCTAssertNil(details)
-    }
-
     func testUpdateAccountDetailsCreatesDetails() {
         let dispatcher = ActionDispatcher.global
         let account = self.account!
         let remoteUser = self.remoteUser!
-        var details: AccountDetails?
-        var error: Error?
-
-        let receipt = store?.onChangeEvent({ (changeEvent) in
-            guard let event = changeEvent as? AccountDetailsEvent else {
-                XCTFail("Wrong event type")
-                return
-            }
-
-            switch event {
-            case AccountDetailsEvent.accountDetailsUpdated(let d, let e) :
-                details = d
-                error = e
-            }
-        })
-
-        let action = AccountDetailsAction.update(user: remoteUser, accountID: account.uuid)
 
         XCTAssertNil(account.details)
 
+        let receipt = store?.onChange{}
+        let action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: UUID())
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
-        XCTAssertNil(error)
-        XCTAssertNotNil(details)
         XCTAssertNotNil(account.details)
-        XCTAssertEqual(account.details!.objectID, details!.objectID)
-        XCTAssertEqual(remoteUser.email, details!.email)
+        XCTAssertEqual(remoteUser.email, account.details!.email)
     }
 
     func testUpdateAccountDetailsUpdatesExistingDetails() {
         let dispatcher = ActionDispatcher.global
         let account = self.account!
         var remoteUser = self.remoteUser!
-        var details: AccountDetails?
-        var error: Error?
 
-        store?.updateAccountDetails(user: remoteUser, accountID: account.uuid)
+        let receipt = store?.onChange{}
+        var action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: UUID())
+        dispatcher.dispatch(action)
+
+        XCTAssertNotNil(receipt)
         XCTAssertNotNil(account.details)
-
-        let receipt = store?.onChangeEvent({ (changeEvent) in
-            guard let event = changeEvent as? AccountDetailsEvent else {
-                XCTFail("Wrong event type")
-                return
-            }
-
-            switch event {
-            case AccountDetailsEvent.accountDetailsUpdated(let d, let e) :
-                details = d
-                error = e
-            }
-        })
+        XCTAssertEqual(remoteUser.email, account.details!.email)
 
         let testEmail = "test@test.com"
         var dict = Loader.jsonObject(for: "remote-user-edit") as! [String: AnyObject]
         dict["email"] = testEmail as AnyObject
         remoteUser = RemoteUser(dict: dict)
 
-        let action = AccountDetailsAction.update(user: remoteUser, accountID: account.uuid)
-
+        action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: UUID())
         dispatcher.dispatch(action)
 
-        XCTAssertNotNil(receipt)
-        XCTAssertNil(error)
-        XCTAssertNotNil(details)
         XCTAssertNotNil(account.details)
-        XCTAssertEqual(account.details!.objectID, details!.objectID)
-        XCTAssertEqual(remoteUser.email, details!.email)
+        XCTAssertEqual(remoteUser.email, account.details!.email)
     }
 
     func testAccountHasOnlyOneSetOfAccountDetails() {

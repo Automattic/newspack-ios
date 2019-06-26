@@ -350,7 +350,7 @@
 				E61FC607229F3280009E1748 /* TestTools */,
 				E66E8A122235ABB300E8DD88 /* Base */,
 				E66E8A03223596B400E8DD88 /* CoreData */,
-				E61FC601229F2E96009E1748 /* Networking */,
+				E61FC601229F2E96009E1748 /* Api */,
 				E62C7C672235E729000FEB33 /* Stores */,
 				E62C7C6A2235F042000FEB33 /* Services */,
 				E6138FEB2211FE88004E5B91 /* Info.plist */,
@@ -442,14 +442,14 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		E61FC601229F2E96009E1748 /* Networking */ = {
+		E61FC601229F2E96009E1748 /* Api */ = {
 			isa = PBXGroup;
 			children = (
 				E69EB27D22BAE2E2004A92FA /* CoreRestApiTests.swift */,
 				E61FC604229F2F10009E1748 /* SiteServiceRemoteTests.swift */,
 				E61FC602229F2EEE009E1748 /* UserServiceRemoteTests.swift */,
 			);
-			path = Networking;
+			path = Api;
 			sourceTree = "<group>";
 		};
 		E61FC607229F3280009E1748 /* TestTools */ = {

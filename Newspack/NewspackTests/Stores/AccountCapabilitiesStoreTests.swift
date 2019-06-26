@@ -16,8 +16,8 @@ class AccountCapabilitiesStoreTests: BaseTest {
         store = StoreContainer.shared.accountCapabilitiesStore
 
         // Test account
-        accountStore!.createAccount(authToken: "testToken", forNetworkAt: "example.com")
-        account = accountStore!.currentAccount
+        account = accountStore!.createAccount(authToken: "testToken", forNetworkAt: "example.com")
+        accountStore!.currentAccount = account
 
         // Test site
         var response = Loader.jsonObject(for: "remote-site-settings") as! [String: AnyObject]
@@ -38,77 +38,23 @@ class AccountCapabilitiesStoreTests: BaseTest {
         account = nil;
     }
 
-    func testCreateAccountCapabilitiesError() {
-        let account = self.account!
-        let remoteUser = self.remoteUser!
-        var capabilities: AccountCapabilities?
-        var error: Error?
-
-        let receipt = store?.onChangeEvent({ (changeEvent) in
-            guard let event = changeEvent as? AccountCapabilitiesEvent else {
-                XCTFail("Wrong event type")
-                return
-            }
-            switch event {
-            case AccountCapabilitiesEvent.accountCapabilitiesUpdated(let c, let e) :
-                capabilities = c
-                error = e
-            }
-        })
-
-        let dispatcher = ActionDispatcher.global
-
-        // Error when missing account
-        var action = AccountCapabilitiesAction.update(user: remoteUser, siteUrl: siteURL, accountID: UUID())
-        dispatcher.dispatch(action)
-
-        XCTAssertNotNil(receipt)
-        XCTAssertNotNil(error)
-        XCTAssertNil(capabilities)
-        var capabilitiesError = error as! AccountCapabilitiesError
-        XCTAssertEqual(capabilitiesError, AccountCapabilitiesError.updateAccountMissing)
-
-        action = AccountCapabilitiesAction.update(user: remoteUser, siteUrl: "http://foo.bar", accountID: account.uuid)
-        dispatcher.dispatch(action)
-        XCTAssertNotNil(receipt)
-        XCTAssertNotNil(error)
-        XCTAssertNil(capabilities)
-        capabilitiesError = error as! AccountCapabilitiesError
-        XCTAssertEqual(capabilitiesError, AccountCapabilitiesError.updateSiteMissing)
-    }
-
     func testUpdateAccountCapabilitiesCreatesCapabilities() {
-        var capabilities: AccountCapabilities?
-        var error: Error?
         let account = self.account!
         let remoteUser = self.remoteUser!
         let site = account.currentSite!
 
-        let receipt = store?.onChangeEvent({ (changeEvent) in
-            guard let event = changeEvent as? AccountCapabilitiesEvent else {
-                XCTFail("Wrong event type")
-                return
-            }
-            switch event {
-            case AccountCapabilitiesEvent.accountCapabilitiesUpdated(let c, let e) :
-                capabilities = c
-                error = e
-            }
-        })
+        let receipt = store?.onChange{}
 
         XCTAssertNotNil(site)
         XCTAssertNil(site.capabilities)
 
-        let action = AccountCapabilitiesAction.update(user: remoteUser, siteUrl: site.url, accountID: account.uuid)
+        let action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: site.uuid)
         let dispatcher = ActionDispatcher.global
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
-        XCTAssertNil(error)
-        XCTAssertNotNil(capabilities)
         XCTAssertNotNil(site.capabilities)
-        XCTAssertEqual(site.capabilities!.objectID, capabilities!.objectID)
-        XCTAssertEqual(remoteUser.roles.first, capabilities!.roles.first)
+        XCTAssertEqual(remoteUser.roles.first, site.capabilities!.roles.first)
     }
 
     func testUpdateAccountCapabilitiesUpdatesExistingCapabilities() {
@@ -117,38 +63,24 @@ class AccountCapabilitiesStoreTests: BaseTest {
         var remoteUser = self.remoteUser!
         let site = account.currentSite!
         let testRole = "TestRole"
-        var capabilities: AccountCapabilities?
-        var error: Error?
 
-        store?.updateAccountCapabilities(user: remoteUser, siteUrl: site.url, accountID: account.uuid)
+        let receipt = store?.onChange{}
+        var action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: site.uuid)
+        dispatcher.dispatch(action)
+
         XCTAssertNotNil(site.capabilities)
-        XCTAssertNotEqual(remoteUser.roles.first, testRole)
-
-        let receipt = store?.onChangeEvent({ (changeEvent) in
-            guard let event = changeEvent as? AccountCapabilitiesEvent else {
-                XCTFail("Wrong event type")
-                return
-            }
-            switch event {
-            case AccountCapabilitiesEvent.accountCapabilitiesUpdated(let c, let e) :
-                capabilities = c
-                error = e
-            }
-        })
+        XCTAssertNotEqual(site.capabilities!.roles.first, testRole)
 
         var dict = Loader.jsonObject(for: "remote-user-edit") as! [String: AnyObject]
         dict["roles"] = [testRole] as AnyObject
         remoteUser = RemoteUser(dict: dict)
 
-        let action = AccountCapabilitiesAction.update(user: remoteUser, siteUrl: site.url, accountID: account.uuid)
+        action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: site.uuid)
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
-        XCTAssertNil(error)
-        XCTAssertNotNil(capabilities)
         XCTAssertNotNil(site.capabilities)
-        XCTAssertEqual(site.capabilities!.objectID, capabilities!.objectID)
-        XCTAssertEqual(remoteUser.roles.first, testRole)
+        XCTAssertEqual(site.capabilities!.roles.first, testRole)
     }
 
     func testSiteHasOnlyOneSetOfAccountCapabilities() {
@@ -225,7 +157,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         let remoteUser = self.remoteUser!
         let dispatcher = ActionDispatcher.global
 
-        let action = AccountCapabilitiesAction.update(user: remoteUser, siteUrl: site.url, accountID: account.uuid)
+        let action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: site.uuid)
         dispatcher.dispatch(action)
 
         XCTAssertTrue(site.hasCapability(string: "moderate_comments"))
@@ -239,7 +171,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         let remoteUser = self.remoteUser!
         let dispatcher = ActionDispatcher.global
 
-        let action = AccountCapabilitiesAction.update(user: remoteUser, siteUrl: site.url, accountID: account.uuid)
+        let action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: site.uuid)
         dispatcher.dispatch(action)
 
         XCTAssertTrue(site.hasRole(string: "editor"))
