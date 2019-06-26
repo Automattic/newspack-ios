@@ -1,6 +1,53 @@
 import UIKit
 
+struct SiteMenuRow {
+    let title: String
+    let callback: () -> Void
+}
+
+struct SiteMenuSection {
+    let rows: [SiteMenuRow]
+}
+
+struct SiteMenuViewModel {
+    let sections: [SiteMenuSection]
+    init(presenter: UIViewController) {
+        let postRow = SiteMenuRow(title: "Posts") {
+            let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostListViewController")
+            presenter.navigationController?.pushViewController(controller, animated: true)
+        }
+        let mediaRow = SiteMenuRow(title: "Media") {
+            print( "TODO:")
+        }
+        let logoutRow = SiteMenuRow(title: "Log out") {
+            print( "TODO:")
+        }
+
+        let rows = [
+            postRow,
+            mediaRow,
+            logoutRow
+        ]
+
+        let section = SiteMenuSection(rows: rows)
+        sections = [section]
+    }
+
+    func section(indexPath: IndexPath) -> SiteMenuSection? {
+        return sections[indexPath.section]
+    }
+
+    func row(indexPath: IndexPath) -> SiteMenuRow? {
+        return sections[indexPath.section].rows[indexPath.row]
+    }
+}
+
+
 class SiteMenuViewController: UITableViewController {
+
+    lazy var viewModel: SiteMenuViewModel = {
+        return SiteMenuViewModel(presenter: self)
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -11,59 +58,29 @@ class SiteMenuViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return viewModel.sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return viewModel.sections[section].rows.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SiteMenuCell", for: indexPath)
 
-        // Configure the cell...
+        if let row = viewModel.row(indexPath: indexPath) {
+            cell.textLabel?.text = row.title
+        }
 
         return cell
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let row = viewModel.row(indexPath: indexPath) else {
+            return
+        }
+        row.callback()
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 
     /*
     // MARK: - Navigation
