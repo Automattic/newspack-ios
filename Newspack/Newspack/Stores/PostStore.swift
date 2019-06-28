@@ -20,6 +20,14 @@ class PostStore: Store {
 
 extension PostStore {
 
+    func syncPosts() {
+        guard let uuid = StoreContainer.shared.accountStore.currentAccount?.currentSite?.uuid else {
+            return
+        }
+        let remote = ApiService.shared.postServiceRemote()
+        remote.fetchPosts(siteUUID: uuid)
+    }
+
     /// Handles the postsFetched action.
     ///
     /// - Parameters:
@@ -47,7 +55,7 @@ extension PostStore {
         for remotePost in remotePosts {
             let post: Post
             let fetchRequest = Post.defaultFetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "site = %@, postID = %@", site, remotePost.postID)
+            fetchRequest.predicate = NSPredicate(format: "site = %@ AND postID = %ld", site, remotePost.postID)
 
             do {
                 post = try context.fetch(fetchRequest).first ?? Post(context: context)
