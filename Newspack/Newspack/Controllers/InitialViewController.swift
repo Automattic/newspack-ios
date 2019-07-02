@@ -2,6 +2,8 @@ import UIKit
 
 class InitialViewController: UIViewController {
 
+    lazy var authenticationManager = AuthenticationManager()
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkSession()
@@ -19,14 +21,11 @@ class InitialViewController: UIViewController {
     }
 
     func presentAuthenticator() {
-        guard
-            let navController = navigationController,
-            let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        else {
+        guard let navController = navigationController else {
             return
         }
 
-        appDelegate.authenticationManager.showAuthenticator(controller: navController)
+        authenticationManager.showAuthenticator(controller: navController)
     }
 
     func navigateToMenu() {

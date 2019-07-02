@@ -4,7 +4,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var sessionReceipt: Any?
-    var authenticationManager = AuthenticationManager()
     var window: UIWindow?
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
@@ -17,7 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure the window which should call makeKeyAndVisible.
         // Necessary in order to present the authentication flow.
         configureWindow()
-        configureAuthenticator()
         configureSession()
 
         return true
@@ -51,10 +49,6 @@ extension AppDelegate {
 
     func configureWindow() {
         window?.makeKeyAndVisible()
-    }
-
-    func configureAuthenticator() {
-        authenticationManager.initialize()
     }
 
     func configureSession() {

@@ -8,10 +8,16 @@ class AuthenticationManager {
     ///
     var syncCompletionBlock: (() -> Void)?
 
-    /// Initialize the authentication manager.
-    /// Only necessary if showing the auth flow. Optional otherwise.
+    /// Configure the WordPressAuthenticator
+    /// The authenticator is a singleton instance and should only be initialized once.
+    /// Otherwise it yields a fatal error.
     ///
-    func initialize() {
+    static private var initialized = false
+    static func configure() {
+        guard !initialized else {
+            return
+        }
+
         let configuration = WordPressAuthenticatorConfiguration(wpcomClientId: ApiCredentials.dotcomAppId,
                                                                 wpcomSecret: ApiCredentials.dotcomSecret,
                                                                 wpcomScheme: ApiCredentials.dotcomAuthScheme,
@@ -21,8 +27,12 @@ class AuthenticationManager {
                                                                 googleLoginScheme: "",
                                                                 userAgent: UserAgent.defaultUserAgent)
         WordPressAuthenticator.initialize(configuration: configuration)
-        WordPressAuthenticator.shared.delegate = self
+        initialized = true
+    }
 
+    init() {
+        AuthenticationManager.configure()
+        WordPressAuthenticator.shared.delegate = self
     }
 
     /// Returns true if authentication is required.
