@@ -27,10 +27,12 @@ class AccountStore: Store {
         switch accountAction {
         case .setCurrentAccount(let account):
             setCurrentAccount(account: account)
-            break
+
         case .setCurrentSite(let site, let account):
             setCurrentSite(site: site, for: account)
-            break
+
+        case . removeAccount(let uuid):
+            removeAccount(uuid: uuid)
         }
     }
 }
@@ -52,11 +54,18 @@ extension AccountStore {
             return account
         }
         set(account) {
-            if account == currentAccount {
+            let defaults = UserDefaults.standard
+            let uuidString = UserDefaults.standard.string(forKey: currentAccountUUIDKey)
+
+            // If everything is nil.
+            if account == nil && uuidString == nil {
                 return
             }
 
-            let defaults = UserDefaults.standard
+            // If managed objects are equal.
+            if account != nil && account == currentAccount {
+                return
+            }
 
             defer {
                 defaults.synchronize()
@@ -167,6 +176,25 @@ extension AccountStore {
 
         emitChange()
     }
+
+    /// Handles the .removeAccount action. Sets currentAccount to a remaining account or nil.
+    ///
+    /// - Parameter uuid: The uuid of the account to remove.
+    ///
+    func removeAccount(uuid: UUID) {
+        guard let account = getAccountByUUID(uuid) else {
+            // TODO: Log this.
+            return
+        }
+        let context = CoreDataManager.shared.mainContext
+        context.delete(account)
+        CoreDataManager.shared.saveContext(context: context)
+
+        let fetchRequest = Account.defaultFetchRequest()
+        let accounts = try? context.fetch(fetchRequest)
+        setCurrentAccount(account: accounts?.first)
+    }
+
 }
 
 

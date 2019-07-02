@@ -6,4 +6,5 @@ import WordPressFlux
 enum AccountAction: Action {
     case setCurrentAccount(account: Account)
     case setCurrentSite(site: Site, account: Account)
+    case removeAccount(uuid: UUID)
 }
