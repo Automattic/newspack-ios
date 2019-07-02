@@ -1,9 +1,6 @@
 import UIKit
-import WordPressFlux
 
 class ViewController: UIViewController {
-
-    var receipt: Receipt?
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -11,18 +8,30 @@ class ViewController: UIViewController {
     }
 
     func checkSession() {
-        guard SessionManager.shared.state == .initialized else {
-            receipt = SessionManager.shared.onChange({
-                self.checkSession()
-            })
+        let state = SessionManager.shared.state
+
+        if state == .initialized {
+            navigateToMenu()
+        } else if state == .uninitialized {
+            presentAuthenticator()
+        }
+
+    }
+
+    func presentAuthenticator() {
+        guard
+            let navController = navigationController,
+            let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        else {
             return
         }
 
-        receipt = nil
+        appDelegate.authenticationManager.showAuthenticator(controller: navController)
+    }
 
+    func navigateToMenu() {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SiteMenuViewController")
         controller.modalTransitionStyle = .crossDissolve
         navigationController?.setViewControllers([controller], animated: true)
     }
-
 }

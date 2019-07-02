@@ -3,6 +3,7 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var sessionReceipt: Any?
     var authenticationManager = AuthenticationManager()
     var window: UIWindow?
 
@@ -16,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure the window which should call makeKeyAndVisible.
         // Necessary in order to present the authentication flow.
         configureWindow()
-
-        authenticationManager.authenticationRequred() ? showAuthentication() : configureSession()
+        configureAuthenticator()
+        configureSession()
 
         return true
     }
@@ -52,19 +53,43 @@ extension AppDelegate {
         window?.makeKeyAndVisible()
     }
 
-    func showAuthentication() {
-        guard let controller = window?.rootViewController else {
-            return
-        }
+    func configureAuthenticator() {
         authenticationManager.initialize()
-        authenticationManager.showAuthenticator(controller: controller)
     }
 
     func configureSession() {
-        guard let account = StoreContainer.shared.accountStore.currentAccount else {
+        sessionReceipt = SessionManager.shared.onChange {
+            self.handleSessionChange()
+        }
+
+        SessionManager.shared.initialize(account: StoreContainer.shared.accountStore.currentAccount)
+    }
+
+    func handleSessionChange() {
+        guard let navController = window?.rootViewController as? UINavigationController else {
             return
         }
-        SessionManager.shared.initialize(account: account)
+        defer {
+            navController.popToRootViewController(animated: true)
+        }
+        if SessionManager.shared.state == .uninitialized {
+            handleUnauthenticatedSession()
+        }
+    }
+
+    func handleUnauthenticatedSession() {
+        guard let navController = window?.rootViewController as? UINavigationController else {
+            return
+        }
+
+        if navController.viewControllers.first is ViewController {
+            return
+        }
+
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController")
+        var controllers = navController.viewControllers
+        controllers.insert(controller, at: 0)
+        navController.setViewControllers(controllers, animated: false)
     }
 
 }
