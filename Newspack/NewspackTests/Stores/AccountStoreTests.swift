@@ -108,18 +108,20 @@ class AccountStoreTests: BaseTest {
         let site1 = ModelFactory.getTestSite(context: context)
         site1.title = "site1"
         site1.account = account
+        site1.url = "http://example1.com"
 
         XCTAssertEqual(site1, account.currentSite)
 
         let site2 = ModelFactory.getTestSite(context: context)
         site2.title = "site2"
         site2.account = account
+        site2.url = "http://example2.com"
 
-        XCTAssertEqual(site1, account.currentSite!)
+        XCTAssertEqual(site1, account.currentSite)
 
         dispatcher.dispatch(AccountAction.setCurrentSite(site: site2, account: account))
 
-        XCTAssertEqual(site2, account.currentSite!)
+        XCTAssertEqual(site2, account.currentSite)
     }
 
     func testMultipleAccountsCannotShareAuthToken() {
