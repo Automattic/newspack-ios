@@ -3,6 +3,7 @@ import WordPressKit
 import WordPressFlux
 
 enum SessionState {
+    case pending
     case uninitialized
     case initialized
 }
@@ -24,7 +25,7 @@ class SessionManager: StatefulStore<SessionState> {
     private var accountStoreSubscription: Receipt?
 
     private init() {
-        super.init(initialState: .uninitialized)
+        super.init(initialState: .pending)
 
         let store = StoreContainer.shared.accountStore
         accountStoreSubscription = store.onChange( accountStoreChangeHandler )
