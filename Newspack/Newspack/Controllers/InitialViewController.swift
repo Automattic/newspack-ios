@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController {
+class InitialViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

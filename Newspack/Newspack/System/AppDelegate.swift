@@ -82,11 +82,11 @@ extension AppDelegate {
             return
         }
 
-        if navController.viewControllers.first is ViewController {
+        if navController.viewControllers.first is InitialViewController {
             return
         }
 
-        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewController")
+        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InitialViewController")
         var controllers = navController.viewControllers
         controllers.insert(controller, at: 0)
         navController.setViewControllers(controllers, animated: false)
