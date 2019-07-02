@@ -1,4 +1,5 @@
 import UIKit
+import WordPressFlux
 
 struct SiteMenuRow {
     let title: String
@@ -16,11 +17,18 @@ struct SiteMenuViewModel {
             let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostListViewController")
             presenter.navigationController?.pushViewController(controller, animated: true)
         }
+
         let mediaRow = SiteMenuRow(title: "Media") {
             print( "TODO:")
         }
+
         let logoutRow = SiteMenuRow(title: "Log out") {
-            print( "TODO:")
+            guard let account = StoreContainer.shared.accountStore.currentAccount else {
+                //TODO: Handle no account.
+                return
+            }
+            let action = AccountAction.removeAccount(uuid: account.uuid)
+            ActionDispatcher.global.dispatch(action)
         }
 
         let rows = [
