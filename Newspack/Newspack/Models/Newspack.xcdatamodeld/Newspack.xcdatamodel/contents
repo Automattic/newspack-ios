@@ -78,7 +78,7 @@
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="account" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="sites" inverseEntity="Account" syncable="YES"/>
         <relationship name="capabilities" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AccountCapabilities" inverseName="site" inverseEntity="AccountCapabilities" syncable="YES"/>
-        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Post" inverseName="site" inverseEntity="Post" syncable="YES"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Post" inverseName="site" inverseEntity="Post" syncable="YES"/>
     </entity>
     <elements>
         <element name="Account" positionX="-1478.8671875" positionY="-295.10546875" width="128" height="103"/>
