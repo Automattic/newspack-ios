@@ -88,6 +88,20 @@
 		E69EB27E22BAE2E2004A92FA /* CoreRestApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69EB27D22BAE2E2004A92FA /* CoreRestApiTests.swift */; };
 		E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */; };
 		E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE56AE22B19001004895E5 /* ModelFactory.swift */; };
+		E6E60A2622CCFCCB0000B6DE /* Revision+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2422CCFCCA0000B6DE /* Revision+CoreDataProperties.swift */; };
+		E6E60A2722CCFCCB0000B6DE /* Category+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2322CCFCCA0000B6DE /* Category+CoreDataProperties.swift */; };
+		E6E60A2822CCFCCB0000B6DE /* Page+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1C22CCFCC90000B6DE /* Page+CoreDataProperties.swift */; };
+		E6E60A2922CCFCCB0000B6DE /* Status+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2522CCFCCB0000B6DE /* Status+CoreDataProperties.swift */; };
+		E6E60A2B22CCFCCB0000B6DE /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1822CCFCC80000B6DE /* Tag+CoreDataProperties.swift */; };
+		E6E60A2C22CCFCCB0000B6DE /* Media+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2022CCFCCA0000B6DE /* Media+CoreDataClass.swift */; };
+		E6E60A2D22CCFCCB0000B6DE /* Category+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1A22CCFCC90000B6DE /* Category+CoreDataClass.swift */; };
+		E6E60A2E22CCFCCB0000B6DE /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1E22CCFCCA0000B6DE /* Tag+CoreDataClass.swift */; };
+		E6E60A2F22CCFCCB0000B6DE /* Media+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1B22CCFCC90000B6DE /* Media+CoreDataProperties.swift */; };
+		E6E60A3022CCFCCB0000B6DE /* Revision+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1622CCFCC80000B6DE /* Revision+CoreDataClass.swift */; };
+		E6E60A3122CCFCCB0000B6DE /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1F22CCFCCA0000B6DE /* User+CoreDataClass.swift */; };
+		E6E60A3222CCFCCB0000B6DE /* Page+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1722CCFCC80000B6DE /* Page+CoreDataClass.swift */; };
+		E6E60A3422CCFCCB0000B6DE /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2122CCFCCA0000B6DE /* User+CoreDataProperties.swift */; };
+		E6E60A3522CCFCCB0000B6DE /* Status+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1D22CCFCC90000B6DE /* Status+CoreDataClass.swift */; };
 		E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F1C52422C2A48600334003 /* ApiAction.swift */; };
 		E6FB520022B967910010FDF8 /* Dictionary+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */; };
 		E6FB520322B9715F0010FDF8 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520122B9715F0010FDF8 /* Post+CoreDataClass.swift */; };
@@ -206,6 +220,20 @@
 		E69EB27D22BAE2E2004A92FA /* CoreRestApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRestApiTests.swift; sourceTree = "<group>"; };
 		E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceRemote.swift; sourceTree = "<group>"; };
 		E6CE56AE22B19001004895E5 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
+		E6E60A1622CCFCC80000B6DE /* Revision+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Revision+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Revision+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		E6E60A1722CCFCC80000B6DE /* Page+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Page+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Page+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		E6E60A1822CCFCC80000B6DE /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Tag+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Tag+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		E6E60A1A22CCFCC90000B6DE /* Category+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Category+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Category+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		E6E60A1B22CCFCC90000B6DE /* Media+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Media+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Media+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		E6E60A1C22CCFCC90000B6DE /* Page+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Page+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Page+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		E6E60A1D22CCFCC90000B6DE /* Status+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Status+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Status+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		E6E60A1E22CCFCCA0000B6DE /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Tag+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Tag+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		E6E60A1F22CCFCCA0000B6DE /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/User+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		E6E60A2022CCFCCA0000B6DE /* Media+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Media+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Media+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		E6E60A2122CCFCCA0000B6DE /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/User+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		E6E60A2322CCFCCA0000B6DE /* Category+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Category+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Category+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		E6E60A2422CCFCCA0000B6DE /* Revision+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Revision+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Revision+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		E6E60A2522CCFCCB0000B6DE /* Status+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Status+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Status+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		E6F1C52422C2A48600334003 /* ApiAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiAction.swift; sourceTree = "<group>"; };
 		E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+KeyPath.swift"; sourceTree = "<group>"; };
 		E6FB520122B9715F0010FDF8 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -405,10 +433,24 @@
 				E63CD0A922A17D7100501C4F /* AccountCapabilities+CoreDataProperties.swift */,
 				E63CD0A622A17D7100501C4F /* AccountDetails+CoreDataClass.swift */,
 				E63CD0A722A17D7100501C4F /* AccountDetails+CoreDataProperties.swift */,
+				E6E60A1A22CCFCC90000B6DE /* Category+CoreDataClass.swift */,
+				E6E60A2322CCFCCA0000B6DE /* Category+CoreDataProperties.swift */,
+				E6E60A2022CCFCCA0000B6DE /* Media+CoreDataClass.swift */,
+				E6E60A1B22CCFCC90000B6DE /* Media+CoreDataProperties.swift */,
+				E6E60A1722CCFCC80000B6DE /* Page+CoreDataClass.swift */,
+				E6E60A1C22CCFCC90000B6DE /* Page+CoreDataProperties.swift */,
 				E6FB520122B9715F0010FDF8 /* Post+CoreDataClass.swift */,
 				E6FB520222B9715F0010FDF8 /* Post+CoreDataProperties.swift */,
+				E6E60A1622CCFCC80000B6DE /* Revision+CoreDataClass.swift */,
+				E6E60A2422CCFCCA0000B6DE /* Revision+CoreDataProperties.swift */,
 				E64492912252F3A7003B70DF /* Site+CoreDataClass.swift */,
 				E64492902252F3A7003B70DF /* Site+CoreDataProperties.swift */,
+				E6E60A1D22CCFCC90000B6DE /* Status+CoreDataClass.swift */,
+				E6E60A2522CCFCCB0000B6DE /* Status+CoreDataProperties.swift */,
+				E6E60A1E22CCFCCA0000B6DE /* Tag+CoreDataClass.swift */,
+				E6E60A1822CCFCC80000B6DE /* Tag+CoreDataProperties.swift */,
+				E6E60A1F22CCFCCA0000B6DE /* User+CoreDataClass.swift */,
+				E6E60A2122CCFCCA0000B6DE /* User+CoreDataProperties.swift */,
 				E6138FD82211FE86004E5B91 /* Newspack.xcdatamodeld */,
 			);
 			path = Models;
@@ -864,38 +906,51 @@
 			files = (
 				E66E8A1B2235C57800E8DD88 /* Account+CoreDataProperties.swift in Sources */,
 				E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */,
+				E6E60A3022CCFCCB0000B6DE /* Revision+CoreDataClass.swift in Sources */,
 				E6FB520022B967910010FDF8 /* Dictionary+KeyPath.swift in Sources */,
+				E6E60A3222CCFCCB0000B6DE /* Page+CoreDataClass.swift in Sources */,
 				E64492922252F3A7003B70DF /* Site+CoreDataProperties.swift in Sources */,
 				E602E69422C1669B00795CBA /* AccountCapabilitiesAction.swift in Sources */,
+				E6E60A3522CCFCCB0000B6DE /* Status+CoreDataClass.swift in Sources */,
+				E6E60A2F22CCFCCB0000B6DE /* Media+CoreDataProperties.swift in Sources */,
 				E602E69822C1670800795CBA /* PostAction.swift in Sources */,
 				E66E8A1A2235C57800E8DD88 /* Account+CoreDataClass.swift in Sources */,
 				E6138FD42211FE86004E5B91 /* InitialViewController.swift in Sources */,
+				E6E60A3122CCFCCB0000B6DE /* User+CoreDataClass.swift in Sources */,
 				E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */,
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
 				E63CD0AD22A17D7200501C4F /* AccountCapabilities+CoreDataProperties.swift in Sources */,
 				E602E69222C1666C00795CBA /* AccountAction.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
+				E6E60A2D22CCFCCB0000B6DE /* Category+CoreDataClass.swift in Sources */,
 				E602E69622C166C700795CBA /* AccountDetailsAction.swift in Sources */,
+				E6E60A2722CCFCCB0000B6DE /* Category+CoreDataProperties.swift in Sources */,
 				E602E69A22C1676500795CBA /* SiteAction.swift in Sources */,
 				E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */,
 				E64594A122B448C2003BF6C0 /* PostServiceRemote.swift in Sources */,
 				E69E59FD22541ABD00899DE2 /* WordPressCoreRestApi.swift in Sources */,
 				E602E68322C15EC100795CBA /* RemoteUser.swift in Sources */,
 				E6871F1B22C3FDE7008D3D46 /* PostListViewController.swift in Sources */,
+				E6E60A2922CCFCCB0000B6DE /* Status+CoreDataProperties.swift in Sources */,
 				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
+				E6E60A2C22CCFCCB0000B6DE /* Media+CoreDataClass.swift in Sources */,
 				E63CD0AB22A17D7200501C4F /* AccountDetails+CoreDataProperties.swift in Sources */,
 				E602E68022C1588600795CBA /* ApiService.swift in Sources */,
+				E6E60A2B22CCFCCB0000B6DE /* Tag+CoreDataProperties.swift in Sources */,
 				E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */,
 				E6FB520322B9715F0010FDF8 /* Post+CoreDataClass.swift in Sources */,
 				E602E68522C15ECC00795CBA /* RemoteSiteSettings.swift in Sources */,
 				E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */,
+				E6E60A2E22CCFCCB0000B6DE /* Tag+CoreDataClass.swift in Sources */,
 				E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */,
 				E602E69F22C1747D00795CBA /* Dictionary+Unwrappers.swift in Sources */,
 				E64492932252F3A7003B70DF /* Site+CoreDataClass.swift in Sources */,
 				E63CD0AA22A17D7200501C4F /* AccountDetails+CoreDataClass.swift in Sources */,
 				E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */,
 				E6FB520422B9715F0010FDF8 /* Post+CoreDataProperties.swift in Sources */,
+				E6E60A3422CCFCCB0000B6DE /* User+CoreDataProperties.swift in Sources */,
+				E6E60A2622CCFCCB0000B6DE /* Revision+CoreDataProperties.swift in Sources */,
 				E602E68D22C1634900795CBA /* SiteApiActions.swift in Sources */,
 				E623C6F62220516600F9865C /* ApiCredentials.swift in Sources */,
 				E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */,
@@ -906,6 +961,7 @@
 				E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */,
 				E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */,
 				E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */,
+				E6E60A2822CCFCCB0000B6DE /* Page+CoreDataProperties.swift in Sources */,
 				E6241B96224EC8CD00B578F5 /* SessionManager.swift in Sources */,
 				E641A66122A71A83008BBD85 /* SiteStore.swift in Sources */,
 				E63CD0AC22A17D7200501C4F /* AccountCapabilities+CoreDataClass.swift in Sources */,

@@ -131,7 +131,7 @@
         <attribute name="title" attributeType="String" syncable="YES"/>
         <attribute name="titleRendered" attributeType="String" syncable="YES"/>
         <attribute name="type" attributeType="String" syncable="YES"/>
-        <relationship name="revisions" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Revision" inverseName="post" inverseEntity="Revision" syncable="YES"/>
+        <relationship name="revisions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Revision" inverseName="post" inverseEntity="Revision" syncable="YES"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="posts" inverseEntity="Site" syncable="YES"/>
     </entity>
     <entity name="Revision" representedClassName="Revision" syncable="YES">
@@ -178,11 +178,11 @@
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="User" inverseName="site" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Status" representedClassName="Status" syncable="YES">
+        <attribute name="isPrivate" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isProtected" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isPublic" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isQueryable" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="private" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="protected" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="public" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="queryable" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="show" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="slug" attributeType="String" syncable="YES"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="statuses" inverseEntity="Site" syncable="YES"/>
