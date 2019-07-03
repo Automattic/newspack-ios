@@ -28,7 +28,7 @@
         <attribute name="username" attributeType="String" syncable="YES"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="details" inverseEntity="Account" syncable="YES"/>
     </entity>
-    <entity name="Category" representedClassName="Category" syncable="YES" codeGenerationType="class">
+    <entity name="Category" representedClassName="Category" syncable="YES">
         <attribute name="categoryID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="count" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="descript" attributeType="String" syncable="YES"/>
@@ -39,7 +39,7 @@
         <attribute name="taxonomy" attributeType="String" syncable="YES"/>
         <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="categories" inverseEntity="Site" syncable="YES"/>
     </entity>
-    <entity name="Media" representedClassName="Media" syncable="YES" codeGenerationType="class">
+    <entity name="Media" representedClassName="Media" syncable="YES">
         <attribute name="altText" attributeType="String" syncable="YES"/>
         <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="caption" attributeType="String" syncable="YES"/>
@@ -71,7 +71,7 @@
         <attribute name="type" attributeType="String" syncable="YES"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="media" inverseEntity="Site" syncable="YES"/>
     </entity>
-    <entity name="Page" representedClassName="Page" syncable="YES" codeGenerationType="class">
+    <entity name="Page" representedClassName="Page" syncable="YES">
         <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="commentStatus" attributeType="String" syncable="YES"/>
         <attribute name="content" attributeType="String" syncable="YES"/>
@@ -134,7 +134,7 @@
         <relationship name="revisions" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Revision" inverseName="post" inverseEntity="Revision" syncable="YES"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="posts" inverseEntity="Site" syncable="YES"/>
     </entity>
-    <entity name="Revision" representedClassName="Revision" syncable="YES" codeGenerationType="class">
+    <entity name="Revision" representedClassName="Revision" syncable="YES">
         <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="content" attributeType="String" syncable="YES"/>
         <attribute name="contentRendered" attributeType="String" syncable="YES"/>
@@ -177,7 +177,7 @@
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Tag" inverseName="site" inverseEntity="Tag" syncable="YES"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="User" inverseName="site" inverseEntity="User" syncable="YES"/>
     </entity>
-    <entity name="Status" representedClassName="Status" syncable="YES" codeGenerationType="class">
+    <entity name="Status" representedClassName="Status" syncable="YES">
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="private" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="protected" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
@@ -187,7 +187,7 @@
         <attribute name="slug" attributeType="String" syncable="YES"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="statuses" inverseEntity="Site" syncable="YES"/>
     </entity>
-    <entity name="Tag" representedClassName="Tag" syncable="YES" codeGenerationType="class">
+    <entity name="Tag" representedClassName="Tag" syncable="YES">
         <attribute name="count" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="descript" attributeType="String" syncable="YES"/>
         <attribute name="link" attributeType="String" syncable="YES"/>
@@ -197,7 +197,7 @@
         <attribute name="taxonomy" attributeType="String" syncable="YES"/>
         <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="tags" inverseEntity="Site" syncable="YES"/>
     </entity>
-    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+    <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="avatarUrls" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="descript" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
@@ -211,14 +211,14 @@
         <element name="Account" positionX="-1478.8671875" positionY="-295.10546875" width="128" height="103"/>
         <element name="AccountCapabilities" positionX="-1215.9921875" positionY="-44.7890625" width="128" height="90"/>
         <element name="AccountDetails" positionX="-1479.90625" positionY="-91.0390625" width="128" height="270"/>
-        <element name="Post" positionX="-1359" positionY="-234" width="128" height="510"/>
-        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="405"/>
-        <element name="Revision" positionX="-1350" positionY="-225" width="128" height="270"/>
         <element name="Category" positionX="-1341" positionY="-216" width="128" height="180"/>
-        <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>
-        <element name="Page" positionX="-1323" positionY="-198" width="128" height="465"/>
         <element name="Media" positionX="-1314" positionY="-189" width="128" height="495"/>
-        <element name="User" positionX="-1305" positionY="-180" width="128" height="165"/>
+        <element name="Page" positionX="-1323" positionY="-198" width="128" height="465"/>
+        <element name="Post" positionX="-1359" positionY="-234" width="128" height="510"/>
+        <element name="Revision" positionX="-1350" positionY="-225" width="128" height="270"/>
+        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="405"/>
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
+        <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>
+        <element name="User" positionX="-1305" positionY="-180" width="128" height="165"/>
     </elements>
 </model>
