@@ -7,6 +7,7 @@ class InitialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Required during app launch to set up the custom transition.
         navigationController?.delegate = self
     }
 
@@ -17,6 +18,8 @@ class InitialViewController: UIViewController {
             return
         }
 
+        // Required when returning to the initial view controller
+        // in order to set up the custom transition.
         navController.delegate = self
     }
 
