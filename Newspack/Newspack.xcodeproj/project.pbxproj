@@ -79,6 +79,7 @@
 		E66E8A1A2235C57800E8DD88 /* Account+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */; };
 		E66E8A1B2235C57800E8DD88 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */; };
 		E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */; };
+		E6710A1722CE9F040036156E /* FadeTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6710A1622CE9F040036156E /* FadeTransitionController.swift */; };
 		E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67F56D42230914800BFD38B /* CoreDataManager.swift */; };
 		E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */; };
 		E6871F1B22C3FDE7008D3D46 /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */; };
@@ -211,6 +212,7 @@
 		E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		E6710A1622CE9F040036156E /* FadeTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeTransitionController.swift; sourceTree = "<group>"; };
 		E67F56D42230914800BFD38B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = Newspack/System/CoreDataManager.swift; sourceTree = SOURCE_ROOT; };
 		E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMenuViewController.swift; sourceTree = "<group>"; };
 		E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
@@ -483,6 +485,7 @@
 		E6138FFE22120467004E5B91 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E6710A1522CE9ED00036156E /* Transitions */,
 				E6138FD32211FE86004E5B91 /* InitialViewController.swift */,
 				E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */,
 				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
@@ -586,6 +589,14 @@
 				E66E8A062235979500E8DD88 /* BaseTest.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		E6710A1522CE9ED00036156E /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				E6710A1622CE9F040036156E /* FadeTransitionController.swift */,
+			);
+			path = Transitions;
 			sourceTree = "<group>";
 		};
 		E6FB51FE22B9677A0010FDF8 /* Extensions */ = {
@@ -904,6 +915,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6710A1722CE9F040036156E /* FadeTransitionController.swift in Sources */,
 				E66E8A1B2235C57800E8DD88 /* Account+CoreDataProperties.swift in Sources */,
 				E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */,
 				E6E60A3022CCFCCB0000B6DE /* Revision+CoreDataClass.swift in Sources */,
