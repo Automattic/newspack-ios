@@ -9,7 +9,8 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     /// - Parameter onComplete: Completion handler. Has parameteres for an array of remote posts and an error.
     ///
     func fetchPosts(siteUUID: UUID) {
-        api.GET("posts", parameters: nil, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
+        let parameters = ["context": "edit"] as [String: AnyObject]
+        api.GET("posts", parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
 
             let array = response as! [[String: AnyObject]]
             let posts = self.remotePostsFromResponse(response: array)
@@ -18,6 +19,28 @@ class PostServiceRemote: ServiceRemoteCoreRest {
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
             self.dispatch(action: PostsFetchedApiAction(payload: nil, error: error, siteUUID: siteUUID))
+        })
+    }
+
+
+    /// Fetch the specified post from the specified site
+    ///
+    /// - Parameters:
+    ///   - postID: The ID of the post to fetch
+    ///   - siteUUID: The UUID of the site.
+    ///
+    func fetchPost(postID: Int64, fromSite siteUUID: UUID) {
+        let parameters = ["context": "edit"] as [String: AnyObject]
+        let path = "posts/\(postID)"
+        api.GET(path, parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
+
+            let dict = response as! [String: AnyObject]
+            let post = RemotePost(dict: dict)
+
+            self.dispatch(action: PostFetchedApiAction(payload: post, error: nil, siteUUID: siteUUID))
+
+        }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
+            self.dispatch(action: PostFetchedApiAction(payload: nil, error: error, siteUUID: siteUUID))
         })
     }
 }
