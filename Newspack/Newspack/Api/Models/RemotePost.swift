@@ -69,3 +69,17 @@ struct RemotePost {
         type = dict[stringForKey: "type"]
     }
 }
+
+/// Represent idntifying information about a post.
+///
+struct RemotePostID {
+    let postID: Int64
+    let date: String
+    let modified: String
+
+    init(dict: [String: AnyObject]) {
+        postID = dict[intForKey: "id"]
+        date = dict[stringForKey: "date"]
+        modified = dict[stringForKey: "modified"]
+    }
+}

@@ -13,3 +13,12 @@ struct PostFetchedApiAction: ApiAction {
     var error: Error?
     var siteUUID: UUID
 }
+
+struct PostIDsFetchedApiAction: ApiAction {
+    var payload: Any?
+    var error: Error?
+    var siteUUID: UUID
+    var count: Int
+    var page: Int
+    var hasMore: Bool
+}

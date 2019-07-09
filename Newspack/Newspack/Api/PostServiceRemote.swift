@@ -22,6 +22,40 @@ class PostServiceRemote: ServiceRemoteCoreRest {
         })
     }
 
+    /// Fetch post IDs for the specified page.
+    ///
+    /// - Parameters:
+    ///   - siteUUID: The UUID of the site.
+    ///   - page: The page to fetch.
+    ///
+    func fetchPostIDs(siteUUID: UUID, page: Int) {
+        let perPage = 100
+        let parameters = [
+            "_fields": "id,date,modified",
+            "page": page,
+            "per_page": perPage
+        ] as [String: AnyObject]
+
+        api.GET("posts", parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
+
+            let array = response as! [[String: AnyObject]]
+            let postIDs = self.remotePostIDsFromResponse(response: array)
+            self.dispatch(action: PostIDsFetchedApiAction(payload: postIDs,
+                                                          error: nil,
+                                                          siteUUID: siteUUID,
+                                                          count: postIDs.count,
+                                                          page: page,
+                                                          hasMore: postIDs.count == perPage))
+
+        }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
+            self.dispatch(action: PostIDsFetchedApiAction(payload: nil,
+                                                          error: error,
+                                                          siteUUID: siteUUID,
+                                                          count: 0,
+                                                          page: page,
+                                                          hasMore: false))
+        })
+    }
 
     /// Fetch the specified post from the specified site
     ///
@@ -48,6 +82,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
 // MARK: - Remote model management.
 //
 extension PostServiceRemote {
+
     /// Format a posts endpoint response into an array of remote posts.
     ///
     /// - Parameter response: The response from an endpoint.
@@ -59,6 +94,19 @@ extension PostServiceRemote {
             posts.append(RemotePost(dict: dict))
         }
         return posts
+    }
+
+    /// Formats the response from fetching posts with fields limited to identifying information.
+    ///
+    /// - Parameter response: The response from the posts endpoint
+    /// - Returns: An array of RemotePostID objects.
+    ///
+    func remotePostIDsFromResponse(response: [[String: AnyObject]]) -> [RemotePostID] {
+        var postIDs = [RemotePostID]()
+        for dict in response {
+            postIDs.append(RemotePostID(dict: dict))
+        }
+        return postIDs
     }
 
 }
