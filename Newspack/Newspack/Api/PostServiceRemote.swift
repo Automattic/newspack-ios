@@ -69,7 +69,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
         api.GET(path, parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
 
             let dict = response as! [String: AnyObject]
-            let post = RemotePost(dict: dict)
+            let post = self.remotePostFromResponse(response: dict)
 
             self.dispatch(action: PostFetchedApiAction(payload: post, error: nil, siteUUID: siteUUID))
 
@@ -91,7 +91,7 @@ extension PostServiceRemote {
     func remotePostsFromResponse(response: [[String: AnyObject]]) -> [RemotePost] {
         var posts = [RemotePost]()
         for dict in response {
-            posts.append(RemotePost(dict: dict))
+            posts.append(remotePostFromResponse(response: dict))
         }
         return posts
     }
@@ -107,6 +107,15 @@ extension PostServiceRemote {
             postIDs.append(RemotePostID(dict: dict))
         }
         return postIDs
+    }
+
+    /// Formats a remote post from an api response.
+    ///
+    /// - Parameter response: The API response for a post object
+    /// - Returns: A RemotePost instance
+    ///
+    func remotePostFromResponse(response: [String: AnyObject]) -> RemotePost {
+        return RemotePost(dict: response)
     }
 
 }
