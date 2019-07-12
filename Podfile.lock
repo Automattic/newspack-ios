@@ -45,6 +45,19 @@ PODS:
   - lottie-ios (2.5.2)
   - NSObject-SafeExpectations (0.0.3)
   - "NSURL+IDN (0.3)"
+  - OHHTTPStubs/Core (6.1.0)
+  - OHHTTPStubs/Default (6.1.0):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (6.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (6.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (6.1.0)
+  - OHHTTPStubs/Swift (6.1.0):
+    - OHHTTPStubs/Default
   - React (0.59.3):
     - React/Core (= 0.59.3)
   - react-native-keyboard-aware-scroll-view (0.8.7):
@@ -145,6 +158,7 @@ DEPENDENCIES:
   - Folly (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.5.1/react-native-gutenberg-bridge/third-party-podspecs/Folly.podspec.json`)
   - Gutenberg (from `http://github.com/wordpress-mobile/gutenberg-mobile/`, tag `v1.5.1`)
   - KeychainAccess (= 3.2.0)
+  - OHHTTPStubs/Swift (= 6.1.0)
   - React (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.5.1/react-native-gutenberg-bridge/third-party-podspecs/React.podspec.json`)
   - react-native-keyboard-aware-scroll-view (from `https://github.com/wordpress-mobile/react-native-keyboard-aware-scroll-view.git`, tag `gb-v0.8.7`)
   - react-native-safe-area (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.5.1/react-native-gutenberg-bridge/third-party-podspecs/react-native-safe-area.podspec.json`)
@@ -174,6 +188,7 @@ SPEC REPOS:
     - lottie-ios
     - NSObject-SafeExpectations
     - "NSURL+IDN"
+    - OHHTTPStubs
     - SVProgressHUD
     - UIDeviceIdentifier
     - WordPress-Aztec-iOS
@@ -241,6 +256,7 @@ SPEC CHECKSUMS:
   lottie-ios: 3fef45d3fabe63e3c7c2eb603dd64ddfffc73062
   NSObject-SafeExpectations: b989b68a8a9b7b9f2b264a8b52ba9d7aab8f3129
   "NSURL+IDN": 82355a0afd532fe1de08f6417c134b49b1a1c4b3
+  OHHTTPStubs: 1e21c7d2c084b8153fc53d48400d8919d2d432d0
   React: b52fdb80565505b7e4592b313a38868f5df51641
   react-native-keyboard-aware-scroll-view: 01c4b2303c4ef1c49c4d239c9c5856f0393104df
   react-native-safe-area: 7dc92953fce43bf36ab5ecae2fb4ffa2bda9a203
@@ -259,6 +275,6 @@ SPEC CHECKSUMS:
   wpxmlrpc: 6ba55c773cfa27083ae4a2173e69b19f46da98e2
   yoga: 0cb6e1c4f763ba12d1c825f2d6f863da6614a2a4
 
-PODFILE CHECKSUM: 933fc159d91823a3d82f83cab8b6768e80d3bcc7
+PODFILE CHECKSUM: 9bbea06c464c6bf43ee86dca16085b6471b85b34
 
 COCOAPODS: 1.5.3

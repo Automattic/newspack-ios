@@ -54,9 +54,7 @@ target 'Newspack' do
     pod 'KeychainAccess', '3.2.0'
 
     pod 'WordPressAuthenticator', '~> 1.5.0'
-	pod 'WordPressKit', '~> 4.1.1'	
-#    pod 'WordPressKit', '~> 3.2.1'
-#    pod 'WordPressKit', :git => 'https://github.com/wordpress-mobile/WordPressKit-iOS.git', :commit => 'ee404347c909b3bc5d50a3cd1b51039b7643936a'
+    pod 'WordPressKit', '~> 4.1.1'
     pod 'WPMediaPicker', '~> 1.4.1'
     pod 'WordPressFlux', '1.0.0'
 
@@ -66,9 +64,11 @@ target 'Newspack' do
     pod 'RNSVG', :git => 'https://github.com/wordpress-mobile/react-native-svg.git', :tag => '9.3.3-gb'
     pod 'react-native-keyboard-aware-scroll-view', :git => 'https://github.com/wordpress-mobile/react-native-keyboard-aware-scroll-view.git', :tag => 'gb-v0.8.7'
 
-
     target 'NewspackTests' do
         inherit! :search_paths
+
+        pod 'OHHTTPStubs/Swift', '6.1.0'
     end
 
 end
+
