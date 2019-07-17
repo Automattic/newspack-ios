@@ -37,9 +37,11 @@ extension Post {
     @NSManaged public var title: String!
     @NSManaged public var titleRendered: String!
     @NSManaged public var type: String!
+    @NSManaged public var versionCount: Int16
 
     @NSManaged public var revisions: Set<Revision>?
     @NSManaged public var site: Site!
+    @NSManaged public var items: Set<PostListItem>!
 
 }
 
@@ -57,5 +59,22 @@ extension Post {
 
     @objc(removeRevisions:)
     @NSManaged public func removeFromRevisions(_ values: Set<Revision>)
+
+}
+
+// MARK: Generated accessors for items
+extension Post {
+
+    @objc(addItemsObject:)
+    @NSManaged public func addToItems(_ value: PostListItem)
+
+    @objc(removeItemsObject:)
+    @NSManaged public func removeFromItems(_ value: PostListItem)
+
+    @objc(addItems:)
+    @NSManaged public func addToItems(_ values: Set<PostListItem>)
+
+    @objc(removeItems:)
+    @NSManaged public func removeFromItems(_ values: Set<PostListItem>)
 
 }

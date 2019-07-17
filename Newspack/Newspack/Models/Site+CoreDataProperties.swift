@@ -33,6 +33,7 @@ extension Site {
     @NSManaged public var statuses: Set<Status>!
     @NSManaged public var tags: Set<Tag>!
     @NSManaged public var users: Set<User>!
+    @NSManaged public var postLists: Set<PostList>!
 
 }
 
@@ -152,5 +153,22 @@ extension Site {
 
     @objc(removeUsers:)
     @NSManaged public func removeFromUsers(_ values: Set<User>)
+
+}
+
+// MARK: Generated accessors for postLists
+extension Site {
+
+    @objc(addPostListsObject:)
+    @NSManaged public func addToPostLists(_ value: PostList)
+
+    @objc(removePostListsObject:)
+    @NSManaged public func removeFromPostLists(_ value: PostList)
+
+    @objc(addPostLists:)
+    @NSManaged public func addToPostLists(_ values: Set<PostList>)
+
+    @objc(removePostLists:)
+    @NSManaged public func removeFromPostLists(_ values: Set<PostList>)
 
 }
