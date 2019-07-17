@@ -141,7 +141,7 @@
         <attribute name="lastSync" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="syncing" transient="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="postList" inverseEntity="PostListItem" syncable="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="postLists" inverseEntity="PostListItem" syncable="YES"/>
         <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postLists" inverseEntity="Site" syncable="YES"/>
     </entity>
     <entity name="PostListItem" representedClassName="PostListItem" syncable="YES">
@@ -151,7 +151,7 @@
         <attribute name="syncing" transient="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="versionCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="post" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="items" inverseEntity="Post" syncable="YES"/>
-        <relationship name="postList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostList" inverseName="items" inverseEntity="PostList" syncable="YES"/>
+        <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostList" inverseName="items" inverseEntity="PostList" syncable="YES"/>
     </entity>
     <entity name="Revision" representedClassName="Revision" syncable="YES">
         <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -191,7 +191,7 @@
         <relationship name="categories" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Category" inverseName="site" inverseEntity="Category" syncable="YES"/>
         <relationship name="media" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Media" inverseName="site" inverseEntity="Media" syncable="YES"/>
         <relationship name="pages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Page" inverseName="site" inverseEntity="Page" syncable="YES"/>
-        <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostList" inverseName="site" inverseEntity="PostList" syncable="YES"/>
+        <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostList" inverseName="site" inverseEntity="PostList" syncable="YES"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Post" inverseName="site" inverseEntity="Post" syncable="YES"/>
         <relationship name="statuses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Status" inverseName="site" inverseEntity="Status" syncable="YES"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Tag" inverseName="site" inverseEntity="Tag" syncable="YES"/>

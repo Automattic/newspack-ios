@@ -15,7 +15,7 @@ extension PostListItem {
     @NSManaged public var syncing: Bool
 
     @NSManaged public var post: Post!
-    @NSManaged public var postList: Set<PostList>!
+    @NSManaged public var postLists: Set<PostList>!
 
 }
 
@@ -23,15 +23,15 @@ extension PostListItem {
 extension PostListItem {
 
     @objc(addPostListObject:)
-    @NSManaged public func addToPostList(_ value: PostList)
+    @NSManaged public func addToPostLists(_ value: PostList)
 
     @objc(removePostListObject:)
-    @NSManaged public func removeFromPostList(_ value: PostList)
+    @NSManaged public func removeFromPostLists(_ value: PostList)
 
     @objc(addPostList:)
-    @NSManaged public func addToPostList(_ values: Set<PostList>)
+    @NSManaged public func addToPostLists(_ values: Set<PostList>)
 
     @objc(removePostList:)
-    @NSManaged public func removeFromPostList(_ values: Set<PostList>)
+    @NSManaged public func removeFromPostLists(_ values: Set<PostList>)
 
 }
