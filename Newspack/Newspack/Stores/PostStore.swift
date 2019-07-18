@@ -31,8 +31,7 @@ extension PostStore {
     /// Handles the postsFetched action.
     ///
     /// - Parameters:
-    ///     - remotePosts: The returned remote posts
-    ///     - error: Any error.
+    ///     - action: Instance of the action to handle.
     ///
     func handlePostsFetched(action: PostsFetchedApiAction) {
         guard !action.isError() else {
