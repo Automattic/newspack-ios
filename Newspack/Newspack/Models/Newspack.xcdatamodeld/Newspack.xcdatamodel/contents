@@ -137,8 +137,8 @@
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="posts" inverseEntity="Site" syncable="YES"/>
     </entity>
     <entity name="PostList" representedClassName="PostList" syncable="YES">
-        <attribute name="filter" attributeType="String" syncable="YES"/>
-        <attribute name="lastSync" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="filter" attributeType="Transformable" syncable="YES"/>
+        <attribute name="lastSync" attributeType="Date" defaultDateTimeInterval="568015200" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <attribute name="syncing" transient="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="postLists" inverseEntity="PostListItem" syncable="YES"/>

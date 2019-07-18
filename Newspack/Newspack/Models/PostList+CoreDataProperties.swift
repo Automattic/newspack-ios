@@ -11,7 +11,7 @@ extension PostList {
     @NSManaged public var name: String!
     @NSManaged public var syncing: Bool
     @NSManaged public var lastSync: NSDate!
-    @NSManaged public var filter: String!
+    @NSManaged public var filter: [String: AnyObject]!
 
     @NSManaged public var items: Set<PostListItem>!
     @NSManaged public var site: Site!

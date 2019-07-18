@@ -10,4 +10,5 @@ class StoreContainer {
     let accountDetailsStore = AccountDetailsStore()
     let siteStore = SiteStore()
     let postStore = PostStore()
+    let postListStore = PostListStore()
 }
