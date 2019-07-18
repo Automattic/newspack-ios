@@ -100,6 +100,7 @@
 		E6E1834D22D6D44D009C2D0A /* remote-post-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */; };
 		E6E1834E22D6D44D009C2D0A /* remote-post-id-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834C22D6D44D009C2D0A /* remote-post-id-edit.json */; };
 		E6E1835022D79473009C2D0A /* RemoteTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E1834F22D79473009C2D0A /* RemoteTestCase.swift */; };
+		E6E2ACF722E10F3400A8E85D /* MainStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E2ACF622E10F3400A8E85D /* MainStoryboard.swift */; };
 		E6E60A2622CCFCCB0000B6DE /* Revision+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2422CCFCCA0000B6DE /* Revision+CoreDataProperties.swift */; };
 		E6E60A2722CCFCCB0000B6DE /* Category+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2322CCFCCA0000B6DE /* Category+CoreDataProperties.swift */; };
 		E6E60A2822CCFCCB0000B6DE /* Page+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1C22CCFCC90000B6DE /* Page+CoreDataProperties.swift */; };
@@ -244,6 +245,7 @@
 		E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-post-edit.json"; sourceTree = "<group>"; };
 		E6E1834C22D6D44D009C2D0A /* remote-post-id-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-post-id-edit.json"; sourceTree = "<group>"; };
 		E6E1834F22D79473009C2D0A /* RemoteTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTestCase.swift; sourceTree = "<group>"; };
+		E6E2ACF622E10F3400A8E85D /* MainStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStoryboard.swift; sourceTree = "<group>"; };
 		E6E60A1622CCFCC80000B6DE /* Revision+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Revision+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Revision+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		E6E60A1722CCFCC80000B6DE /* Page+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Page+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Page+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		E6E60A1822CCFCC80000B6DE /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Tag+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Tag+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
@@ -489,6 +491,7 @@
 			children = (
 				E6138FDD2211FE88004E5B91 /* LaunchScreen.storyboard */,
 				E6138FD52211FE86004E5B91 /* Main.storyboard */,
+				E6E2ACF622E10F3400A8E85D /* MainStoryboard.swift */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -1017,6 +1020,7 @@
 				E6FB520322B9715F0010FDF8 /* Post+CoreDataClass.swift in Sources */,
 				E602E68522C15ECC00795CBA /* RemoteSiteSettings.swift in Sources */,
 				E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */,
+				E6E2ACF722E10F3400A8E85D /* MainStoryboard.swift in Sources */,
 				E6E60A2E22CCFCCB0000B6DE /* Tag+CoreDataClass.swift in Sources */,
 				E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */,
 				E602E69F22C1747D00795CBA /* Dictionary+Unwrappers.swift in Sources */,
