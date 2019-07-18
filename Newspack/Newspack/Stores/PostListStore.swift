@@ -2,26 +2,16 @@ import Foundation
 import CoreData
 import WordPressFlux
 
-
-struct PostListQuery {
-    let name: String
-    let filter: [String: AnyObject]
-}
-
+/// Responsible for wrangling post list data.
+///
 class PostListStore: Store {
 
     var sessionReceipt: Receipt?
 
-    static func defaultPostLists() -> Array<PostListQuery> {
-        return [
-            PostListQuery(name: "all", filter: ["status": ["publish","draft","pending","private","future"] as AnyObject])
-        ]
-    }
-
     override init(dispatcher: ActionDispatcher = .global) {
         super .init(dispatcher: dispatcher)
 
-        // Listen for session changes
+        // Listen for session changes in order to seed default lists if necessary.
         // Weak self to avoid strong retains.
         DispatchQueue.main.async { [weak self] in
             self?.sessionReceipt = SessionManager.shared.onChange {
@@ -30,27 +20,15 @@ class PostListStore: Store {
         }
     }
 
-
     override func onDispatch(_ action: Action) {
 
     }
 
-
-    func handleSessionChanged() {
-        guard SessionManager.shared.state == .initialized else {
-            return
-        }
-        guard let site = StoreContainer.shared.accountStore.currentAccount?.currentSite else {
-            // TODO: Handle missing site error
-            return
-        }
-        setupDefaultPostListsIfNeeded(siteUUID: site.uuid)
-    }
-
 }
 
+/// Extension for wrangling API queries.
+///
 extension PostListStore {
-
 
     /// Retrieve remote post items for the list with the specified name.
     ///
@@ -65,13 +43,39 @@ extension PostListStore {
         }
         let remote = ApiService.shared.postServiceRemote()
         remote.fetchPosts(siteUUID: uuid)
-
     }
 
 }
 
 
+/// Extension for grouping default post list related things.
+///
 extension PostListStore {
+
+    /// Returns a default list of post lists for the app.
+    ///
+    /// - Returns: An array of PostListQuery instances.
+    ///
+    static func defaultPostLists() -> Array<PostListQuery> {
+        return [
+            PostListQuery(name: "all", filter: ["status": ["publish","draft","pending","private","future"] as AnyObject])
+        ]
+    }
+
+    /// Handles session changed events.
+    /// Makes to the call to set up default post lists when
+    /// a new session is initialized.
+    ///
+    func handleSessionChanged() {
+        guard SessionManager.shared.state == .initialized else {
+            return
+        }
+        guard let site = StoreContainer.shared.accountStore.currentAccount?.currentSite else {
+            // TODO: Handle missing site error
+            return
+        }
+        setupDefaultPostListsIfNeeded(siteUUID: site.uuid)
+    }
 
     /// Checks for the presense of default lists.
     /// Creates any that are missing.
@@ -105,5 +109,10 @@ extension PostListStore {
 
         CoreDataManager.shared.saveContext(context: context)
     }
+}
+
+struct PostListQuery {
+    let name: String
+    let filter: [String: AnyObject]
 }
 
