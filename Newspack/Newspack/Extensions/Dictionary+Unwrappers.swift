@@ -12,8 +12,12 @@ extension Dictionary where Key == String {
         return self[key] as? String ?? ""
     }
 
+    subscript(intAtKeyPath keyPath: String) -> Int64 {
+        return self[keyPath: keyPath] as? Int64 ?? 0
+    }
+
     subscript(intForKey key: String) -> Int64 {
-        return Int64(self[key] as? Int ?? 0)
+        return self[key] as? Int64 ?? 0
     }
 
     subscript(boolForKey key: String) -> Bool {
