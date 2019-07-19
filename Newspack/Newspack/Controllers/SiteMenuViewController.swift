@@ -14,7 +14,7 @@ struct SiteMenuViewModel {
     let sections: [SiteMenuSection]
     init(presenter: UIViewController) {
         let postRow = SiteMenuRow(title: "Posts") {
-            let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PostListViewController")
+            let controller = MainStoryboard.instantiateViewController(withIdentifier: "PostListViewController")
             presenter.navigationController?.pushViewController(controller, animated: true)
         }
 
