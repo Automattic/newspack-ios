@@ -29,6 +29,7 @@ extension Post {
     @NSManaged public var permalinkTemplate: String!
     @NSManaged public var pingStatus: String!
     @NSManaged public var postID: Int64
+    @NSManaged public var revisionCount: Int16
     @NSManaged public var slug: String!
     @NSManaged public var status: String!
     @NSManaged public var sticky: Bool
@@ -37,7 +38,6 @@ extension Post {
     @NSManaged public var title: String!
     @NSManaged public var titleRendered: String!
     @NSManaged public var type: String!
-    @NSManaged public var versionCount: Int16
 
     @NSManaged public var revisions: Set<Revision>?
     @NSManaged public var site: Site!
