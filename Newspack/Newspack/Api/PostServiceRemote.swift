@@ -25,24 +25,29 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     /// Fetch post IDs for the specified page.
     ///
     /// - Parameters:
-    ///   - siteUUID: The UUID of the site.
+    ///   - filter: A dictionary that identifies a subset of ids to fetch.
     ///   - page: The page to fetch.
+    ///   - siteUUID: Meta. The UUID of the site.
+    ///   - listName: Meta. The name of the list.
     ///
-    func fetchPostIDs(siteUUID: UUID, page: Int) {
+    func fetchPostIDs(filter:[String: AnyObject], page: Int, siteUUID: UUID, listName: String) {
         let perPage = 100
-        let parameters = [
-            "_fields": "id,date,modified",
+        let params = [
+            "_fields": "id,date,modified,_links",
             "page": page,
             "per_page": perPage
         ] as [String: AnyObject]
+        let parameters = params.merging(filter) { (current, _) in current }
 
         api.GET("posts", parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
 
             let array = response as! [[String: AnyObject]]
             let postIDs = self.remotePostIDsFromResponse(response: array)
+
             self.dispatch(action: PostIDsFetchedApiAction(payload: postIDs,
                                                           error: nil,
                                                           siteUUID: siteUUID,
+                                                          listName: listName,
                                                           count: postIDs.count,
                                                           page: page,
                                                           hasMore: postIDs.count == perPage))
@@ -51,6 +56,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             self.dispatch(action: PostIDsFetchedApiAction(payload: nil,
                                                           error: error,
                                                           siteUUID: siteUUID,
+                                                          listName: listName,
                                                           count: 0,
                                                           page: page,
                                                           hasMore: false))

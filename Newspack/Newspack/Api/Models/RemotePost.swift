@@ -24,6 +24,7 @@ struct RemotePost {
     let password: String
     let permalinkTemplate: String
     let pingStatus: String
+    let revisionCount: Int16
     let slug: String
     let status: String
     let sticky: Bool
@@ -59,6 +60,7 @@ struct RemotePost {
         password = dict[stringForKey: "password"]
         permalinkTemplate = dict[stringForKey: "permalink_template"]
         pingStatus = dict[stringForKey: "ping_status"]
+        revisionCount = Int16(dict[intForKey: "_links.version-history.count"])
         slug = dict[stringForKey: "slug"]
         status = dict[stringForKey: "status"]
         sticky = dict[boolForKey: "sticky"]
@@ -76,10 +78,12 @@ struct RemotePostID {
     let postID: Int64
     let date: String
     let modified: String
+    let revisionCount: Int16
 
     init(dict: [String: AnyObject]) {
         postID = dict[intForKey: "id"]
         date = dict[stringForKey: "date"]
         modified = dict[stringForKey: "modified"]
+        revisionCount = Int16(dict[intAtKeyPath: "_links.version-history.count"])
     }
 }

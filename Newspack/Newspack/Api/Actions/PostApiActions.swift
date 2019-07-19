@@ -15,9 +15,10 @@ struct PostFetchedApiAction: ApiAction {
 }
 
 struct PostIDsFetchedApiAction: ApiAction {
-    var payload: Any?
+    var payload: [RemotePostID]?
     var error: Error?
     var siteUUID: UUID
+    var listName: String
     var count: Int
     var page: Int
     var hasMore: Bool
