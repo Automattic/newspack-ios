@@ -101,6 +101,7 @@ extension PostStore {
         post.password = remotePost.password
         post.permalinkTemplate = remotePost.permalinkTemplate
         post.pingStatus = remotePost.pingStatus
+        post.revisionCount = remotePost.revisionCount
         post.slug = remotePost.slug
         post.status = remotePost.status
         post.sticky = remotePost.sticky
