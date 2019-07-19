@@ -80,7 +80,7 @@ extension AppDelegate {
             return
         }
 
-        let controller = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "InitialViewController")
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: "InitialViewController")
         var controllers = navController.viewControllers
         controllers.insert(controller, at: 0)
         navController.setViewControllers(controllers, animated: false)
