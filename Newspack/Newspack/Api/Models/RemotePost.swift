@@ -76,14 +76,15 @@ struct RemotePost {
 ///
 struct RemotePostID {
     let postID: Int64
-    let date: NSDate
-    let modified: NSDate
+    let dateGMT: NSDate
+    let modifiedGMT: NSDate
     let revisionCount: Int16
 
     init(dict: [String: AnyObject]) {
         postID = dict[intForKey: "id"]
-        date = NSDate(wordPressComJSONString: dict[stringForKey: "date"])
-        modified = NSDate(wordPressComJSONString: dict[stringForKey: "modified"])
+        dateGMT = Date.dateFromGMTString(string: dict[stringForKey: "date_gmt"])! as NSDate
+        modifiedGMT = Date.dateFromGMTString(string: dict[stringForKey: "modified_gmt"])! as NSDate
         revisionCount = Int16(dict[intAtKeyPath: "_links.version-history.count"])
     }
+
 }

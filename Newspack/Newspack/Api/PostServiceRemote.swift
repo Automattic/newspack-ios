@@ -33,7 +33,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     func fetchPostIDs(filter:[String: AnyObject], page: Int, siteUUID: UUID, listName: String) {
         let perPage = 100
         let params = [
-            "_fields": "id,date,modified,_links",
+            "_fields": "id,date_gmt,modified_gmt,_links",
             "page": page,
             "per_page": perPage
         ] as [String: AnyObject]
