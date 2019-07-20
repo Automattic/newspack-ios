@@ -101,6 +101,7 @@
 		E6E1834E22D6D44D009C2D0A /* remote-post-id-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834C22D6D44D009C2D0A /* remote-post-id-edit.json */; };
 		E6E1835022D79473009C2D0A /* RemoteTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E1834F22D79473009C2D0A /* RemoteTestCase.swift */; };
 		E6E2ACF722E10F3400A8E85D /* MainStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E2ACF622E10F3400A8E85D /* MainStoryboard.swift */; };
+		E6E2ACF922E2840C00A8E85D /* Date+FormatGMTString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */; };
 		E6E60A2622CCFCCB0000B6DE /* Revision+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2422CCFCCA0000B6DE /* Revision+CoreDataProperties.swift */; };
 		E6E60A2722CCFCCB0000B6DE /* Category+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2322CCFCCA0000B6DE /* Category+CoreDataProperties.swift */; };
 		E6E60A2822CCFCCB0000B6DE /* Page+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1C22CCFCC90000B6DE /* Page+CoreDataProperties.swift */; };
@@ -246,6 +247,7 @@
 		E6E1834C22D6D44D009C2D0A /* remote-post-id-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-post-id-edit.json"; sourceTree = "<group>"; };
 		E6E1834F22D79473009C2D0A /* RemoteTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTestCase.swift; sourceTree = "<group>"; };
 		E6E2ACF622E10F3400A8E85D /* MainStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStoryboard.swift; sourceTree = "<group>"; };
+		E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+FormatGMTString.swift"; sourceTree = "<group>"; };
 		E6E60A1622CCFCC80000B6DE /* Revision+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Revision+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Revision+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		E6E60A1722CCFCC80000B6DE /* Page+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Page+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Page+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		E6E60A1822CCFCC80000B6DE /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Tag+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Tag+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
@@ -640,6 +642,7 @@
 			children = (
 				E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */,
 				E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */,
+				E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1015,6 +1018,7 @@
 				E6E60A2C22CCFCCB0000B6DE /* Media+CoreDataClass.swift in Sources */,
 				E63CD0AB22A17D7200501C4F /* AccountDetails+CoreDataProperties.swift in Sources */,
 				E602E68022C1588600795CBA /* ApiService.swift in Sources */,
+				E6E2ACF922E2840C00A8E85D /* Date+FormatGMTString.swift in Sources */,
 				E6E60A2B22CCFCCB0000B6DE /* Tag+CoreDataProperties.swift in Sources */,
 				E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */,
 				E6FB520322B9715F0010FDF8 /* Post+CoreDataClass.swift in Sources */,
