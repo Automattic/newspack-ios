@@ -6,9 +6,15 @@ class PostListViewController: UITableViewController {
 
     var receipt:Receipt?
 
-    lazy var resultsController: NSFetchedResultsController<Post> = {
+    var postList: PostList! {
+        didSet {
+            resultsController.fetchRequest.predicate = NSPredicate(format: "list == %@", postList)
+        }
+    }
+
+    lazy var resultsController: NSFetchedResultsController<PostListItem> = {
         let context = CoreDataManager.shared.mainContext
-        let fetchRequest = Post.defaultFetchRequest()
+        let fetchRequest = PostListItem.defaultFetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "postID", ascending: false)]
         return NSFetchedResultsController(fetchRequest: fetchRequest,
                                           managedObjectContext: context,
@@ -16,12 +22,11 @@ class PostListViewController: UITableViewController {
                                           cacheName: nil)
     }()
 
-
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
-        receipt = StoreContainer.shared.postStore.onChange {
-            self.handlePostsChanged()
+        receipt = StoreContainer.shared.postListStore.onChange {
+            self.handlePostListItemsChanged()
         }
     }
 
@@ -33,8 +38,8 @@ class PostListViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         // Sync if needed.
-        StoreContainer.shared.postStore.syncPosts()
-        handlePostsChanged()
+        StoreContainer.shared.postListStore.syncItems()
+        handlePostListItemsChanged()
     }
 
     // MARK: - Table view data source
@@ -52,8 +57,13 @@ class PostListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCellIdentifier", for: indexPath)
 
-        let post = resultsController.object(at: indexPath)
-        cell.textLabel?.text = post.titleRendered
+        let listItem = resultsController.object(at: indexPath)
+        if let post = listItem.post {
+            cell.textLabel?.text = post.titleRendered
+        } else {
+            // TODO show skeleton/ghost cell
+            cell.textLabel?.text = "loading... \(indexPath.row)"
+        }
 
         return cell
     }
@@ -68,8 +78,7 @@ class PostListViewController: UITableViewController {
     }
     */
 
-
-    func handlePostsChanged() {
+    func handlePostListItemsChanged() {
         try? resultsController.performFetch()
         tableView.reloadData()
     }
