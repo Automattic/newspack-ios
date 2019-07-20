@@ -145,8 +145,8 @@
         <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postLists" inverseEntity="Site" syncable="YES"/>
     </entity>
     <entity name="PostListItem" representedClassName="PostListItem" syncable="YES">
-        <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="modified" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="postID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="revisionCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="syncing" transient="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>

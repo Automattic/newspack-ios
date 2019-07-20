@@ -9,8 +9,8 @@ extension PostListItem {
     }
 
     @NSManaged public var postID: Int64
-    @NSManaged public var date: NSDate!
-    @NSManaged public var modified: NSDate!
+    @NSManaged public var dateGMT: NSDate!
+    @NSManaged public var modifiedGMT: NSDate!
     @NSManaged public var revisionCount: Int16
     @NSManaged public var syncing: Bool
 
