@@ -14,7 +14,7 @@ extension Post {
     @NSManaged public var content: String!
     @NSManaged public var contentRendered: String!
     @NSManaged public var date: String!
-    @NSManaged public var dateGMT: String!
+    @NSManaged public var dateGMT: Date!
     @NSManaged public var excerpt: String!
     @NSManaged public var excerptRendered: String!
     @NSManaged public var featuredMedia: Int64
@@ -24,7 +24,7 @@ extension Post {
     @NSManaged public var guidRendered: String!
     @NSManaged public var link: String!
     @NSManaged public var modified: String!
-    @NSManaged public var modifiedGMT: String!
+    @NSManaged public var modifiedGMT: Date!
     @NSManaged public var password: String!
     @NSManaged public var permalinkTemplate: String!
     @NSManaged public var pingStatus: String!

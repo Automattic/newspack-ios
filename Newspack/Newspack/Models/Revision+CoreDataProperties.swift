@@ -12,11 +12,11 @@ extension Revision {
     @NSManaged public var content: String!
     @NSManaged public var contentRendered: String!
     @NSManaged public var date: String!
-    @NSManaged public var dateGMT: String!
+    @NSManaged public var dateGMT: Date!
     @NSManaged public var excerpt: String!
     @NSManaged public var excerptRendered: String!
     @NSManaged public var modified: String!
-    @NSManaged public var modifiedGMT: String!
+    @NSManaged public var modifiedGMT: Date!
     @NSManaged public var parentID: Int64
     @NSManaged public var revisionID: Int64
     @NSManaged public var slug: String!

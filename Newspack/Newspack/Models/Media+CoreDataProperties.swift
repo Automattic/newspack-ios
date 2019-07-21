@@ -14,7 +14,7 @@ extension Media {
     @NSManaged public var captionRendered: String!
     @NSManaged public var commentStatus: String!
     @NSManaged public var date: String!
-    @NSManaged public var dateGMT: String!
+    @NSManaged public var dateGMT: Date!
     @NSManaged public var descript: String!
     @NSManaged public var descriptionRendered: String!
     @NSManaged public var details: [String: Bool]!
@@ -26,7 +26,7 @@ extension Media {
     @NSManaged public var mediaType: String!
     @NSManaged public var mimeType: String!
     @NSManaged public var modified: String!
-    @NSManaged public var modifiedGMT: String!
+    @NSManaged public var modifiedGMT: Date!
     @NSManaged public var permalinkTemplate: String!
     @NSManaged public var pingStatus: String!
     @NSManaged public var postID: Int64

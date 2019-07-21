@@ -10,7 +10,7 @@ struct RemotePost {
     let content: String
     let contentRendered: String
     let date: String
-    let dateGMT: String
+    let dateGMT: Date
     let excerpt: String
     let excerptRendered: String
     let featuredMedia: Int64
@@ -20,7 +20,7 @@ struct RemotePost {
     let guidRendered: String
     let link: String
     let modified: String
-    let modifiedGMT: String
+    let modifiedGMT: Date
     let password: String
     let permalinkTemplate: String
     let pingStatus: String
@@ -46,7 +46,7 @@ struct RemotePost {
         content = dict[stringAtKeyPath: "content.raw"]
         contentRendered = dict[stringAtKeyPath: "content.rendered"]
         date = dict[stringForKey: "date"]
-        dateGMT = dict[stringForKey: "date_gmt"]
+        dateGMT = Date.dateFromGMTString(string: dict[stringForKey: "date_gmt"])!
         excerpt = dict[stringAtKeyPath: "excerpt.raw"]
         excerptRendered = dict[stringAtKeyPath: "excerpt.rendered"]
         featuredMedia = dict[intForKey: "featured_media"]
@@ -56,7 +56,7 @@ struct RemotePost {
         guidRendered = dict[stringAtKeyPath: "guid.rendered"]
         link = dict[stringForKey: "link"]
         modified = dict[stringForKey: "modified"]
-        modifiedGMT = dict[stringForKey: "modified_gmt"]
+        modifiedGMT = Date.dateFromGMTString(string: dict[stringForKey: "modified_gmt"])!
         password = dict[stringForKey: "password"]
         permalinkTemplate = dict[stringForKey: "permalink_template"]
         pingStatus = dict[stringForKey: "ping_status"]
@@ -76,14 +76,14 @@ struct RemotePost {
 ///
 struct RemotePostID {
     let postID: Int64
-    let dateGMT: NSDate
-    let modifiedGMT: NSDate
+    let dateGMT: Date
+    let modifiedGMT: Date
     let revisionCount: Int16
 
     init(dict: [String: AnyObject]) {
         postID = dict[intForKey: "id"]
-        dateGMT = Date.dateFromGMTString(string: dict[stringForKey: "date_gmt"])! as NSDate
-        modifiedGMT = Date.dateFromGMTString(string: dict[stringForKey: "modified_gmt"])! as NSDate
+        dateGMT = Date.dateFromGMTString(string: dict[stringForKey: "date_gmt"])!
+        modifiedGMT = Date.dateFromGMTString(string: dict[stringForKey: "modified_gmt"])!
         revisionCount = Int16(dict[intAtKeyPath: "_links.version-history.count"])
     }
 

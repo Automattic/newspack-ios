@@ -46,7 +46,7 @@
         <attribute name="captionRendered" attributeType="String" syncable="YES"/>
         <attribute name="commentStatus" attributeType="String" syncable="YES"/>
         <attribute name="date" attributeType="String" syncable="YES"/>
-        <attribute name="dateGMT" attributeType="String" syncable="YES"/>
+        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="descript" attributeType="String" syncable="YES"/>
         <attribute name="descriptionRendered" attributeType="String" syncable="YES"/>
         <attribute name="details" attributeType="Transformable" syncable="YES"/>
@@ -58,7 +58,7 @@
         <attribute name="mediaType" attributeType="String" syncable="YES"/>
         <attribute name="mimeType" attributeType="String" syncable="YES"/>
         <attribute name="modified" attributeType="String" syncable="YES"/>
-        <attribute name="modifiedGMT" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="permalinkTemplate" attributeType="String" syncable="YES"/>
         <attribute name="pingStatus" attributeType="String" syncable="YES"/>
         <attribute name="postID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -77,7 +77,7 @@
         <attribute name="content" attributeType="String" syncable="YES"/>
         <attribute name="contentRendered" attributeType="String" syncable="YES"/>
         <attribute name="date" attributeType="String" syncable="YES"/>
-        <attribute name="dateGMT" attributeType="String" syncable="YES"/>
+        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="excerpt" attributeType="String" syncable="YES"/>
         <attribute name="excerptRendered" attributeType="String" syncable="YES"/>
         <attribute name="featuredMedia" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -87,7 +87,7 @@
         <attribute name="link" attributeType="String" syncable="YES"/>
         <attribute name="menuOrder" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="modified" attributeType="String" syncable="YES"/>
-        <attribute name="modifiedGMT" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="pageID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="parentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="password" attributeType="String" syncable="YES"/>
@@ -108,7 +108,7 @@
         <attribute name="content" attributeType="String" syncable="YES"/>
         <attribute name="contentRendered" attributeType="String" syncable="YES"/>
         <attribute name="date" attributeType="String" syncable="YES"/>
-        <attribute name="dateGMT" attributeType="String" syncable="YES"/>
+        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="excerpt" attributeType="String" syncable="YES"/>
         <attribute name="excerptRendered" attributeType="String" syncable="YES"/>
         <attribute name="featuredMedia" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -118,7 +118,7 @@
         <attribute name="guidRendered" attributeType="String" syncable="YES"/>
         <attribute name="link" attributeType="String" syncable="YES"/>
         <attribute name="modified" attributeType="String" syncable="YES"/>
-        <attribute name="modifiedGMT" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="password" attributeType="String" syncable="YES"/>
         <attribute name="permalinkTemplate" attributeType="String" syncable="YES"/>
         <attribute name="pingStatus" attributeType="String" syncable="YES"/>
@@ -158,11 +158,11 @@
         <attribute name="content" attributeType="String" syncable="YES"/>
         <attribute name="contentRendered" attributeType="String" syncable="YES"/>
         <attribute name="date" attributeType="String" syncable="YES"/>
-        <attribute name="dateGMT" attributeType="String" syncable="YES"/>
+        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="excerpt" attributeType="String" syncable="YES"/>
         <attribute name="excerptRendered" attributeType="String" syncable="YES"/>
         <attribute name="modified" attributeType="String" syncable="YES"/>
-        <attribute name="modifiedGMT" attributeType="String" syncable="YES"/>
+        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="parentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="revisionID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="slug" attributeType="String" syncable="YES"/>
