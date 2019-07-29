@@ -10,6 +10,7 @@ class PostListStore: Store {
         didSet {
             if oldValue != currentList {
                 emitChange()
+                // TODO: sync if needed
             }
         }
     }
@@ -57,6 +58,8 @@ class PostListStore: Store {
 
 }
 
+// MARK: - Syncing
+
 /// Extension for wrangling API queries.
 ///
 extension PostListStore {
@@ -80,8 +83,12 @@ extension PostListStore {
     ///   - page: The page to sync. Default is 1.
     ///
     func syncItemsForList(list: PostList, page: Int = 1) {
+        list.syncing = true
+        CoreDataManager.shared.saveContext()
+
         let remote = ApiService.shared.postServiceRemote()
         remote.fetchPostIDs(filter: list.filter, page: page, siteUUID: list.site.uuid, listName: list.name)
+
     }
 
     /// Handles the postsFetched action.
@@ -90,17 +97,25 @@ extension PostListStore {
     ///     - action: Instance of the action to handle.
     ///
     func handlePostIDsFetched(action: PostIDsFetchedApiAction) {
+        guard let list = postListNamed(listName: action.listName, siteUUID: action.siteUUID) else {
+            //TODO: handle error.
+            return
+        }
+
+        list.syncing = false
+
+        defer {
+            CoreDataManager.shared.saveContext()
+        }
+
         guard !action.isError() else {
             // TODO: Handle error.
             return
         }
 
-        guard
-            let list = postListNamed(listName: action.listName, siteUUID: action.siteUUID),
-            let remotePostIDs = action.payload
-            else {
-                // TODO: Unknown error?
-                return
+        guard let remotePostIDs = action.payload else {
+            // TODO: Unknown error?
+            return
         }
 
         let context = CoreDataManager.shared.mainContext
@@ -122,9 +137,7 @@ extension PostListStore {
             list.addToItems(item)
         }
 
-        CoreDataManager.shared.saveContext()
-
-        emitChange()
+        list.lastSync = Date()
     }
 
 
@@ -141,6 +154,8 @@ extension PostListStore {
     }
 }
 
+
+// MARK: - Related to the default post lists and their setup.
 
 /// Extension for grouping default post list related things.
 ///
