@@ -6,16 +6,17 @@ class PostListViewController: UITableViewController {
 
     var receipt:Receipt?
 
-    var postList: PostList! {
-        didSet {
-            resultsController.fetchRequest.predicate = NSPredicate(format: "list == %@", postList)
-        }
-    }
-
     lazy var resultsController: NSFetchedResultsController<PostListItem> = {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = PostListItem.defaultFetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "postID", ascending: false)]
+
+        // TODO: See if there is a way to make this not an optional.  In practice it should never be one (unless logged out).
+        // Maybe log if its not found?
+        if let postList = StoreContainer.shared.postListStore.currentList {
+            fetchRequest.predicate = NSPredicate(format: "list == %@", postList)
+        }
+
         return NSFetchedResultsController(fetchRequest: fetchRequest,
                                           managedObjectContext: context,
                                           sectionNameKeyPath: nil,
@@ -25,8 +26,9 @@ class PostListViewController: UITableViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
 
+//        resultsController.delegate = self
         receipt = StoreContainer.shared.postListStore.onChange {
-            self.handlePostListItemsChanged()
+            self.handlePostListItemChanged()
         }
     }
 
@@ -39,7 +41,7 @@ class PostListViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         // Sync if needed.
         StoreContainer.shared.postListStore.syncItems()
-        handlePostListItemsChanged()
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -78,7 +80,10 @@ class PostListViewController: UITableViewController {
     }
     */
 
-    func handlePostListItemsChanged() {
+    func handlePostListItemChanged() {
+        if let postList = StoreContainer.shared.postListStore.currentList {
+            resultsController.fetchRequest.predicate = NSPredicate(format: "%@ in postLists", postList)
+        }
         try? resultsController.performFetch()
         tableView.reloadData()
     }
