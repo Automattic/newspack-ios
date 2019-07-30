@@ -8,6 +8,7 @@ extension PostList {
         return NSFetchRequest<PostList>(entityName: "PostList")
     }
 
+    @NSManaged public var uuid: UUID!
     @NSManaged public var name: String!
     @NSManaged public var syncing: Bool
     @NSManaged public var lastSync: Date!

@@ -18,7 +18,7 @@ struct PostIDsFetchedApiAction: ApiAction {
     var payload: [RemotePostID]?
     var error: Error?
     var siteUUID: UUID
-    var listName: String
+    var listID: UUID
     var count: Int
     var page: Int
     var hasMore: Bool

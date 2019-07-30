@@ -41,19 +41,27 @@ class PostListStore: Store {
     /// Convenience method for retrieving the specified post list.
     ///
     /// - Parameters:
-    ///   - listName: The name of the list
+    ///   - listID: The uuid of the list
     ///   - siteUUID: The uuid of the site that owns the list.
     /// - Returns: The list instance of found, or nil.
     ///
-    func postListNamed(listName: String, siteUUID: UUID) -> PostList? {
-        let store = StoreContainer.shared.siteStore
-        guard let site = store.getSiteByUUID(siteUUID) else {
+    func postListByIdentifier(listID: UUID, siteUUID: UUID) -> PostList? {
+        let fetchRequest = PostList.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "uuid == %@", listID as CVarArg)
+
+        let context = CoreDataManager.shared.mainContext
+        do {
+            guard
+                let list = try context.fetch(fetchRequest).first,
+                list.site.uuid == siteUUID
+            else {
+                return nil
+            }
+            return list
+        } catch {
+            // TODO: Handle error
             return nil
         }
-        let lists = site.postLists.filter { (item) -> Bool in
-            return item.name == listName
-        }
-        return lists.first
     }
 
 }
@@ -87,7 +95,7 @@ extension PostListStore {
         CoreDataManager.shared.saveContext()
 
         let remote = ApiService.shared.postServiceRemote()
-        remote.fetchPostIDs(filter: list.filter, page: page, siteUUID: list.site.uuid, listName: list.name)
+        remote.fetchPostIDs(filter: list.filter, page: page, siteUUID: list.site.uuid, listID: list.uuid)
 
     }
 
@@ -97,7 +105,7 @@ extension PostListStore {
     ///     - action: Instance of the action to handle.
     ///
     func handlePostIDsFetched(action: PostIDsFetchedApiAction) {
-        guard let list = postListNamed(listName: action.listName, siteUUID: action.siteUUID) else {
+        guard let list = postListByIdentifier(listID: action.listID, siteUUID: action.siteUUID) else {
             //TODO: handle error.
             return
         }
@@ -214,6 +222,7 @@ extension PostListStore {
 
         for item in PostListStore.defaultPostLists() {
             let list = PostList(context: context)
+            list.uuid = UUID()
             list.name = item.name
             list.filter = item.filter
             list.site = site

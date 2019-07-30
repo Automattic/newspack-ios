@@ -28,9 +28,9 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     ///   - filter: A dictionary that identifies a subset of ids to fetch.
     ///   - page: The page to fetch.
     ///   - siteUUID: Meta. The UUID of the site.
-    ///   - listName: Meta. The name of the list.
+    ///   - listID: Meta. The uuid of the list.
     ///
-    func fetchPostIDs(filter:[String: AnyObject], page: Int, siteUUID: UUID, listName: String) {
+    func fetchPostIDs(filter:[String: AnyObject], page: Int, siteUUID: UUID, listID: UUID) {
         let perPage = 100
         let params = [
             "_fields": "id,date_gmt,modified_gmt,_links",
@@ -47,7 +47,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             self.dispatch(action: PostIDsFetchedApiAction(payload: postIDs,
                                                           error: nil,
                                                           siteUUID: siteUUID,
-                                                          listName: listName,
+                                                          listID: listID,
                                                           count: postIDs.count,
                                                           page: page,
                                                           hasMore: postIDs.count == perPage))
@@ -56,7 +56,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             self.dispatch(action: PostIDsFetchedApiAction(payload: nil,
                                                           error: error,
                                                           siteUUID: siteUUID,
-                                                          listName: listName,
+                                                          listID: listID,
                                                           count: 0,
                                                           page: page,
                                                           hasMore: false))
