@@ -57,6 +57,11 @@ class PostListViewController: UITableViewController {
         return resultsController.fetchedObjects?.count ?? 0
     }
 
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let listItem = resultsController.object(at: indexPath)
+        StoreContainer.shared.postStore.syncPostIfNecessary(postID: listItem.postID)
+    }
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCellIdentifier", for: indexPath)
 
@@ -74,6 +79,7 @@ class PostListViewController: UITableViewController {
             cell.textLabel?.text = "loading... \(indexPath.row)"
         }
     }
+
 
     /*
     // MARK: - Navigation

@@ -6,19 +6,114 @@ import WordPressFlux
 ///
 class PostStore: Store {
 
+    let requestQueue: RequestQueue<Int64>
+
+    override init(dispatcher: ActionDispatcher = .global) {
+        requestQueue = RequestQueue<Int64>()
+        super.init(dispatcher: dispatcher)
+        requestQueue.delegate = self
+    }
+
     /// Action handler
     ///
     override func onDispatch(_ action: Action) {
 
         if let apiAction = action as? PostsFetchedApiAction {
             handlePostsFetched(action: apiAction)
+
+        } else if let apiAction = action as? PostFetchedApiAction {
+            handlePostFetchedAction(action: apiAction)
         }
 
     }
 
 }
 
+extension PostStore: RequestQueueDelegate {
+    func itemEnqueued(item: Any) {
+        guard let item = item as? Int64 else {
+            return
+        }
+        handleItemEnqueued(item: item)
+    }
+}
+
 extension PostStore {
+
+    func getPostListItemWithID(postID: Int64) -> PostListItem? {
+        let context = CoreDataManager.shared.mainContext
+        let fetchRequest = PostListItem.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "postID = %ld", postID)
+        do {
+            return try context.fetch(fetchRequest).first
+        } catch {
+            // TODO: Handle Error.
+        }
+        return nil
+    }
+
+    func syncPostIfNecessary(postID: Int64) {
+        guard let postItem = getPostListItemWithID(postID: postID) else {
+            return
+        }
+
+        if postItem.isStale() {
+            // Add to queue
+            requestQueue.append(item: postItem.postID)
+        }
+    }
+
+    func handleItemEnqueued(item: Int64) {
+        // TODO: For offline support, when coming back online see if there are enqueued items.
+        guard let uuid = StoreContainer.shared.accountStore.currentAccount?.currentSite?.uuid else {
+            return
+        }
+
+        let remote = ApiService.shared.postServiceRemote()
+        remote.fetchPost(postID: item, fromSite: uuid)
+    }
+
+    func handlePostFetchedAction(action: PostFetchedApiAction) {
+        guard !action.isError() else {
+            // TODO: Handle error
+            return
+        }
+
+        let siteStore = StoreContainer.shared.siteStore
+
+        guard
+            let site = siteStore.getSiteByUUID(action.siteUUID),
+            let remotePost = action.payload,
+            let listItem = getPostListItemWithID(postID: remotePost.postID)
+        else {
+            // TODO: Unknown error?
+            return
+        }
+
+        // remove item from queue.
+        // This should update the active queue and start the next sync
+        requestQueue.remove(item: remotePost.postID)
+
+        let context = CoreDataManager.shared.mainContext
+
+        let post: Post
+        let fetchRequest = Post.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "site = %@ AND postID = %ld", site, remotePost.postID)
+
+        do {
+            post = try context.fetch(fetchRequest).first ?? Post(context: context)
+        } catch {
+            post = Post(context: context)
+            // TODO: Propperly log this
+            print("Error fetching post")
+        }
+
+        updatePost(post, with: remotePost)
+        post.site = site
+        post.addToItems(listItem)
+
+        CoreDataManager.shared.saveContext()
+    }
 
     func syncPosts() {
         guard let uuid = StoreContainer.shared.accountStore.currentAccount?.currentSite?.uuid else {
@@ -44,9 +139,9 @@ extension PostStore {
         guard
             let site = siteStore.getSiteByUUID(action.siteUUID),
             let remotePosts = action.payload
-            else {
-                // TODO: Unknown error?
-                return
+        else {
+            // TODO: Unknown error?
+            return
         }
 
         let context = CoreDataManager.shared.mainContext
@@ -66,11 +161,12 @@ extension PostStore {
 
             updatePost(post, with: remotePost)
             post.site = site
+            if let listItem = getPostListItemWithID(postID: remotePost.postID) {
+                post.addToItems(listItem)
+            }
         }
 
         CoreDataManager.shared.saveContext()
-
-        emitChange()
     }
 
 
