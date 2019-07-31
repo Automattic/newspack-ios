@@ -86,7 +86,7 @@ class PostServiceRemoteTests: RemoteTestCase {
         stubRemoteResponse("posts", filename: remotePostsIDsEditFile, contentType: .ApplicationJSON)
 
         let remote = PostServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent") )
-        remote.fetchPostIDs(siteUUID: UUID(), page: 1)
+        remote.fetchPostIDs(filter: [:], page: 1, siteUUID: UUID(), listID: UUID())
 
         waitForExpectations(timeout: timeout, handler: nil)
     }
