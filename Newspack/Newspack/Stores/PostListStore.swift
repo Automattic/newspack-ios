@@ -81,7 +81,7 @@ extension PostListStore {
         guard let list = currentList else {
             return
         }
-        syncItemsForList(list: list)
+        syncItemsForList(list: list, page: page)
     }
 
     /// Sync the post list items for the specified list.
