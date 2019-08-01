@@ -8,6 +8,8 @@ class PostStore: Store {
     typealias Item = Int64
 
     let requestQueue: RequestQueue<Int64, PostStore>
+    private var saveTimer: Timer?
+    private var saveTimerInterval: TimeInterval = 1
 
     override init(dispatcher: ActionDispatcher = .global) {
         requestQueue = RequestQueue<Int64, PostStore>()
@@ -110,7 +112,12 @@ extension PostStore {
         post.site = site
         post.addToItems(listItem)
 
-        CoreDataManager.shared.saveContext()
+        if requestQueue.queue.count == 0 {
+            stopSaveTimer()
+            CoreDataManager.shared.saveContext()
+        } else {
+
+        }
     }
 
     func syncPosts() {
@@ -206,4 +213,23 @@ extension PostStore {
         post.type = remotePost.type
     }
 
+}
+
+// MARK: - Timer methods
+/// The timer is part of a performance strategy and is used to limit rapid saves to core data while syncing.
+extension PostStore {
+
+    private func startSaveTimer() {
+        guard saveTimer == nil else {
+            return
+        }
+        saveTimer = Timer.scheduledTimer(withTimeInterval: saveTimerInterval, repeats: true, block: { _ in
+            CoreDataManager.shared.saveContext()
+        })
+    }
+
+    private func stopSaveTimer() {
+        saveTimer?.invalidate()
+        saveTimer = nil
+    }
 }
