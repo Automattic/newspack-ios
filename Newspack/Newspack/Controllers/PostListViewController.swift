@@ -119,10 +119,6 @@ extension PostListViewController: NSFetchedResultsControllerDelegate {
     }
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        guard let indexPath = indexPath else {
-            return
-        }
-
         // Seriously, Apple?
         // https://developer.apple.com/library/archive/releasenotes/iPhone/NSFetchedResultsChangeMoveReportedAsNSFetchedResultsChangeUpdate/index.html
         //
@@ -130,23 +126,21 @@ extension PostListViewController: NSFetchedResultsControllerDelegate {
             guard type == .update && newIndexPath != nil && newIndexPath != indexPath else {
                 return type
             }
-
             return .move
         }()
 
+        let animation = UITableView.RowAnimation.none
+
         switch fixedType {
         case .insert:
-            tableView.insertRows(at: [indexPath], with: .automatic)
+            tableView.insertRows(at: [newIndexPath!], with: animation)
         case .delete:
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.deleteRows(at: [indexPath!], with: animation)
         case .move:
-            if let newIndexPath = newIndexPath {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
+            tableView.deleteRows(at: [indexPath!], with: animation)
+            tableView.insertRows(at: [newIndexPath!], with: animation)
         case .update:
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-            break;
+            tableView.reloadRows(at: [indexPath!], with: animation)
         }
     }
 
