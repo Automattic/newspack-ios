@@ -5,11 +5,12 @@ import WordPressFlux
 /// Responsible for managing post related things
 ///
 class PostStore: Store {
+    typealias Item = Int64
 
-    let requestQueue: RequestQueue<Int64>
+    let requestQueue: RequestQueue<Int64, PostStore>
 
     override init(dispatcher: ActionDispatcher = .global) {
-        requestQueue = RequestQueue<Int64>()
+        requestQueue = RequestQueue<Int64, PostStore>()
         super.init(dispatcher: dispatcher)
         requestQueue.delegate = self
     }
@@ -30,10 +31,7 @@ class PostStore: Store {
 }
 
 extension PostStore: RequestQueueDelegate {
-    func itemEnqueued(item: Any) {
-        guard let item = item as? Int64 else {
-            return
-        }
+    func itemEnqueued(item: Int64) {
         handleItemEnqueued(item: item)
     }
 }

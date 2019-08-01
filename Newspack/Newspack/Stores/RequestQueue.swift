@@ -1,12 +1,13 @@
 import Foundation
 
 protocol RequestQueueDelegate {
-    func itemEnqueued(item: Any)
+    associatedtype Item
+    func itemEnqueued(item: Item)
 }
 
-class RequestQueue<Item: Comparable> {
+class RequestQueue<Item: Comparable, Delegate: RequestQueueDelegate> where Delegate.Item == Item {
 
-    var delegate: RequestQueueDelegate?
+    var delegate: Delegate?
 
     var queue = [Item]()
     var activeQueue = [Item]()
