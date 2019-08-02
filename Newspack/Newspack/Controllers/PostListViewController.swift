@@ -27,22 +27,28 @@ class PostListViewController: UITableViewController {
         super.init(coder: aDecoder)
 
         resultsController.delegate = self
-        receipt = StoreContainer.shared.postListStore.onChange {
-            self.handlePostListItemChanged()
-        }
+        receipt = StoreContainer.shared.postListStore.onStateChange({ (state) in
+            self.handlePostListStateChanged(oldState: state.0, newState: state.1)
+        })
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        clearsSelectionOnViewWillAppear = false
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(syncItems), for: .valueChanged)
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        // Sync if needed.
-        StoreContainer.shared.postListStore.syncItems()
+        syncItems()
         try? resultsController.performFetch()
         tableView.reloadData()
+    }
+
+    @objc
+    func syncItems() {
+        // Sync if needed.
+        StoreContainer.shared.postListStore.syncItems()
     }
 
     // MARK: - Table view data source
@@ -91,7 +97,15 @@ class PostListViewController: UITableViewController {
     }
     */
 
-    func handlePostListItemChanged() {
+    func handlePostListStateChanged(oldState: PostListState, newState: PostListState) {
+        if oldState == .syncing {
+            refreshControl?.endRefreshing()
+        } else if oldState == .changingCurrentList {
+            handlePostListChanged()
+        }
+    }
+
+    func handlePostListChanged() {
         if let postList = StoreContainer.shared.postListStore.currentList {
             resultsController.fetchRequest.predicate = NSPredicate(format: "%@ in postLists", postList)
         }
