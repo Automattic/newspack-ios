@@ -2,14 +2,21 @@ import Foundation
 import CoreData
 import WordPressFlux
 
+enum PostListState {
+    case ready
+    case syncing
+    case changingCurrentList
+}
+
 /// Responsible for wrangling the current post list and other post list data.
 ///
-class PostListStore: Store {
+class PostListStore: StatefulStore<PostListState> {
 
     var currentList: PostList? {
         didSet {
             if oldValue != currentList {
-                emitChange()
+                state = .changingCurrentList
+                state = .ready
                 // TODO: sync if needed
             }
         }
@@ -17,8 +24,8 @@ class PostListStore: Store {
 
     var sessionReceipt: Receipt?
 
-    override init(dispatcher: ActionDispatcher = .global) {
-        super .init(dispatcher: dispatcher)
+    override init(initialState: PostListState = .ready, dispatcher: ActionDispatcher = .global) {
+        super.init(initialState: initialState, dispatcher: dispatcher)
 
         // Listen for session changes in order to seed default lists if necessary.
         // Weak self to avoid strong retains.
@@ -92,6 +99,7 @@ extension PostListStore {
     ///
     func syncItemsForList(list: PostList, page: Int = 1) {
         list.syncing = true
+        state = .syncing
         CoreDataManager.shared.saveContext()
 
         let remote = ApiService.shared.postServiceRemote()
@@ -111,6 +119,7 @@ extension PostListStore {
         }
 
         list.syncing = false
+        state = .ready
 
         defer {
             CoreDataManager.shared.saveContext()
