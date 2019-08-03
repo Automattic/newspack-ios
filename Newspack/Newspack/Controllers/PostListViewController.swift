@@ -1,6 +1,7 @@
 import UIKit
 import CoreData
 import WordPressFlux
+import WordPressUI
 
 class PostListViewController: UITableViewController {
 
@@ -40,9 +41,14 @@ class PostListViewController: UITableViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        syncItems()
         try? resultsController.performFetch()
+        if resultsController.fetchedObjects?.count == 0 {
+            let options = GhostOptions(reuseIdentifier: "PostCellIdentifier", rowsPerSection: [3])
+            tableView.displayGhostContent(options: options)
+        }
         tableView.reloadData()
+
+        syncItems()
     }
 
     @objc
@@ -79,10 +85,24 @@ class PostListViewController: UITableViewController {
     func configureCell(_ cell: UITableViewCell, atIndexPath indexPath: IndexPath) {
         let listItem = resultsController.object(at: indexPath)
         if let post = listItem.post {
+            cell.stopGhostAnimation()
+            cell.isGhostableDisabled = true
             cell.textLabel?.text = post.titleRendered
+            if listItem.syncing {
+                cell.accessoryView = UIActivityIndicatorView(style: .gray)
+            } else {
+                cell.accessoryView = nil
+                cell.accessoryType = .disclosureIndicator
+            }
         } else {
-            // TODO show skeleton/ghost cell
-            cell.textLabel?.text = "loading... \(indexPath.row)"
+            cell.isGhostableDisabled = false
+            (cell as? PostCell)?.ghostAnimationWillStart()
+            cell.startGhostAnimation()
+
+            cell.textLabel?.text = ""
+            cell.accessoryView = nil
+            cell.accessoryType = .disclosureIndicator
+
         }
     }
 
@@ -100,6 +120,8 @@ class PostListViewController: UITableViewController {
     func handlePostListStateChanged(oldState: PostListState, newState: PostListState) {
         if oldState == .syncing {
             refreshControl?.endRefreshing()
+            tableView.removeGhostContent()
+
         } else if oldState == .changingCurrentList {
             handlePostListChanged()
         }
@@ -110,6 +132,14 @@ class PostListViewController: UITableViewController {
             resultsController.fetchRequest.predicate = NSPredicate(format: "%@ in postLists", postList)
         }
         try? resultsController.performFetch()
+
+        if resultsController.fetchedObjects?.count == 0 {
+
+            let options = GhostOptions(reuseIdentifier: "PostCellIdentifier", rowsPerSection: [3])
+            tableView.displayGhostContent(options: options)
+        }
+
+
         tableView.reloadData()
     }
 }

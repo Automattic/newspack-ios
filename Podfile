@@ -57,6 +57,7 @@ target 'Newspack' do
     pod 'WordPressKit', '~> 4.1.1'
     pod 'WPMediaPicker', '~> 1.4.1'
     pod 'WordPressFlux', '1.0.0'
+    pod 'WordPressUI', '~> 1.3.0'
 
     ## Gutenberg
     ##
