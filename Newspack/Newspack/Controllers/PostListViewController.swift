@@ -84,15 +84,17 @@ class PostListViewController: UITableViewController {
 
     func configureCell(_ cell: UITableViewCell, atIndexPath indexPath: IndexPath) {
         let listItem = resultsController.object(at: indexPath)
+
+        cell.accessoryView = nil
+        cell.accessoryType = .disclosureIndicator
+
         if let post = listItem.post {
             cell.stopGhostAnimation()
             cell.isGhostableDisabled = true
+
             cell.textLabel?.text = post.titleRendered
             if listItem.syncing {
                 cell.accessoryView = UIActivityIndicatorView(style: .gray)
-            } else {
-                cell.accessoryView = nil
-                cell.accessoryType = .disclosureIndicator
             }
         } else {
             cell.isGhostableDisabled = false
@@ -100,8 +102,6 @@ class PostListViewController: UITableViewController {
             cell.startGhostAnimation()
 
             cell.textLabel?.text = ""
-            cell.accessoryView = nil
-            cell.accessoryType = .disclosureIndicator
 
         }
     }
