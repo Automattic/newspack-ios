@@ -66,9 +66,13 @@ extension AppDelegate {
         defer {
             navController.popToRootViewController(animated: true)
         }
-        if SessionManager.shared.state == .uninitialized {
+        let sessionState = SessionManager.shared.state
+        if sessionState == .uninitialized {
             handleUnauthenticatedSession()
+        } else if sessionState == .initialized {
+            StartupHelper.resetSyncFlags()
         }
+
     }
 
     func handleUnauthenticatedSession() {
