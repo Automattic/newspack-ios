@@ -215,7 +215,10 @@ extension PostListStore {
         }
 
         list.hasMore = remotePostIDs.count == pageSize
-        list.lastSync = Date()
+
+        if action.page == 1 {
+            list.lastSync = Date()
+        }
     }
 
 
