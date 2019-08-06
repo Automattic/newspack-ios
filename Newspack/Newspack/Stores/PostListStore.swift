@@ -99,7 +99,7 @@ extension PostListStore {
         if !force  {
             let now = Date()
             let then = list.lastSync.addingTimeInterval(syncInterval)
-            if now > then {
+            if now < then {
                 return
             }
         }
