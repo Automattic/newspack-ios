@@ -11,6 +11,10 @@ enum PostListState {
 /// Responsible for wrangling the current post list and other post list data.
 ///
 class PostListStore: StatefulStore<PostListState> {
+    let pageSize = 100
+    let maxPages = 10
+    let syncInterval: TimeInterval = 600 // 10 minutes.
+    var queue = [Int]()
 
     var currentList: PostList? {
         didSet {
@@ -79,6 +83,50 @@ class PostListStore: StatefulStore<PostListState> {
 ///
 extension PostListStore {
 
+    func numberOfPagesSyncedForList(list: PostList) -> Int {
+        return Int(ceil(Float(list.items.count) / Float(pageSize)))
+    }
+
+
+    func sync(force:Bool = false) {
+        guard
+            state != .syncing,
+            let list = currentList
+            else {
+                return
+        }
+
+        if !force  {
+            let now = Date()
+            let then = list.lastSync.addingTimeInterval(syncInterval)
+            if now > then {
+                return
+            }
+        }
+
+        let pages = numberOfPagesSyncedForList(list: list)
+        queue = pages > 1 ? [Int](1...pages) : [1]
+        queue.reverse()
+        syncItemsForList(list: list, page: queue.popLast()!)
+    }
+
+    func syncNextPage() {
+        guard
+            let list = currentList,
+            list.hasMore
+        else {
+            return
+        }
+
+        let page = numberOfPagesSyncedForList(list: list)
+        if page < maxPages  {
+            syncItemsForList(list: list, page: page + 1)
+        }
+
+    }
+
+
+
     /// Retrieve remote post items for the list with the specified name.
     ///
     /// - Parameters:
@@ -98,6 +146,10 @@ extension PostListStore {
     ///   - page: The page to sync. Default is 1.
     ///
     func syncItemsForList(list: PostList, page: Int = 1) {
+        if state == .syncing {
+            return
+        }
+
         list.syncing = true
         state = .syncing
         CoreDataManager.shared.saveContext()
@@ -118,19 +170,27 @@ extension PostListStore {
             return
         }
 
-        list.syncing = false
-        state = .ready
-
         defer {
+            list.syncing = false
+            state = .ready
+
             CoreDataManager.shared.saveContext()
+
+            if let page = queue.popLast() {
+                syncItemsForList(list: list, page: page)
+            }
         }
 
         guard !action.isError() else {
-            // TODO: Handle error.
+            // TODO: Inspect and handle error.
+            // For now assume we're out of pages.
+            list.hasMore = action.hasMore
+            queue.removeAll()
             return
         }
 
         guard let remotePostIDs = action.payload else {
+            queue.removeAll()
             // TODO: Unknown error?
             return
         }
@@ -154,6 +214,7 @@ extension PostListStore {
             list.addToItems(item)
         }
 
+        list.hasMore = remotePostIDs.count == pageSize
         list.lastSync = Date()
     }
 

@@ -28,8 +28,8 @@ class PostListViewController: UITableViewController {
         super.init(coder: aDecoder)
 
         resultsController.delegate = self
-        receipt = StoreContainer.shared.postListStore.onStateChange({ (state) in
-            self.handlePostListStateChanged(oldState: state.0, newState: state.1)
+        receipt = StoreContainer.shared.postListStore.onStateChange({ [weak self] state in
+            self?.handlePostListStateChanged(oldState: state.0, newState: state.1)
         })
     }
 
@@ -37,7 +37,7 @@ class PostListViewController: UITableViewController {
         super.viewDidLoad()
 
         refreshControl = UIRefreshControl()
-        refreshControl?.addTarget(self, action: #selector(syncItems), for: .valueChanged)
+        refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -48,13 +48,16 @@ class PostListViewController: UITableViewController {
         }
         tableView.reloadData()
 
-        syncItems()
+        syncIfNeeded()
     }
 
     @objc
-    func syncItems() {
-        // Sync if needed.
-        StoreContainer.shared.postListStore.syncItems()
+    func handleRefreshControl() {
+        StoreContainer.shared.postListStore.sync(force: true)
+    }
+
+    func syncIfNeeded() {
+        StoreContainer.shared.postListStore.sync()
     }
 
     // MARK: - Table view data source
@@ -72,6 +75,12 @@ class PostListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let listItem = resultsController.object(at: indexPath)
         StoreContainer.shared.postStore.syncPostIfNecessary(postID: listItem.postID)
+
+        let count = resultsController.fetchedObjects?.count ?? 0
+        if count > 0 && indexPath.row > (count - 5)  {
+            StoreContainer.shared.postListStore.syncNextPage()
+        }
+
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -102,7 +111,6 @@ class PostListViewController: UITableViewController {
             cell.startGhostAnimation()
 
             cell.textLabel?.text = ""
-
         }
     }
 
