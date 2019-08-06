@@ -110,7 +110,7 @@ extension PostStore {
 
         updatePost(post, with: remotePost)
         post.site = site
-        post.addToItems(listItem)
+        post.item = listItem
 
         if requestQueue.queue.count == 0 {
             stopSaveTimer()
@@ -167,7 +167,7 @@ extension PostStore {
             updatePost(post, with: remotePost)
             post.site = site
             if let listItem = getPostListItemWithID(postID: remotePost.postID) {
-                post.addToItems(listItem)
+                post.item = listItem
             }
         }
 

@@ -41,7 +41,7 @@ extension Post {
 
     @NSManaged public var revisions: Set<Revision>?
     @NSManaged public var site: Site!
-    @NSManaged public var items: Set<PostListItem>!
+    @NSManaged public var item: PostListItem!
 
 }
 
@@ -59,22 +59,5 @@ extension Post {
 
     @objc(removeRevisions:)
     @NSManaged public func removeFromRevisions(_ values: Set<Revision>)
-
-}
-
-// MARK: Generated accessors for items
-extension Post {
-
-    @objc(addItemsObject:)
-    @NSManaged public func addToItems(_ value: PostListItem)
-
-    @objc(removeItemsObject:)
-    @NSManaged public func removeFromItems(_ value: PostListItem)
-
-    @objc(addItems:)
-    @NSManaged public func addToItems(_ values: Set<PostListItem>)
-
-    @objc(removeItems:)
-    @NSManaged public func removeFromItems(_ values: Set<PostListItem>)
 
 }
