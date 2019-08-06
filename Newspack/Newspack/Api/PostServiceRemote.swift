@@ -53,6 +53,8 @@ class PostServiceRemote: ServiceRemoteCoreRest {
                                                           hasMore: postIDs.count == perPage))
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
+            // TODO: Need to update WordPressComRestApi to detect code = `rest_post_invalid_page_number` for an http 400 error.
+            // For now, assume the error is due to inalid page and go ahead and set hasMore to false.
             self.dispatch(action: PostIDsFetchedApiAction(payload: nil,
                                                           error: error,
                                                           siteUUID: siteUUID,
