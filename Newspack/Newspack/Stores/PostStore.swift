@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 import WordPressFlux
 
-/// Responsible for managing post related things
+/// Responsible for managing post related things.
 ///
 class PostStore: Store {
     typealias Item = Int64
@@ -20,16 +20,10 @@ class PostStore: Store {
     /// Action handler
     ///
     override func onDispatch(_ action: Action) {
-
-        if let apiAction = action as? PostsFetchedApiAction {
-            handlePostsFetched(action: apiAction)
-
-        } else if let apiAction = action as? PostFetchedApiAction {
+        if let apiAction = action as? PostFetchedApiAction {
             handlePostFetchedAction(action: apiAction)
         }
-
     }
-
 }
 
 extension PostStore: RequestQueueDelegate {
@@ -40,6 +34,12 @@ extension PostStore: RequestQueueDelegate {
 
 extension PostStore {
 
+
+    /// Gets the PostListItem from core data for the specified post ID.
+    ///
+    /// - Parameter postID: The post ID of the item.
+    /// - Returns: The model object, or nil if not found.
+    ///
     func getPostListItemWithID(postID: Int64) -> PostListItem? {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = PostListItem.defaultFetchRequest()
@@ -52,17 +52,26 @@ extension PostStore {
         return nil
     }
 
+    /// Syncs the Post for the spcified post ID if its associated PostListItem if
+    /// the post is absent or its data is stale.  Internally this method appends
+    /// the post id to a queue of post ids that need to be synced.
+    ///
+    /// - Parameter postID: The specified post ID
+    ///
     func syncPostIfNecessary(postID: Int64) {
         guard let postItem = getPostListItemWithID(postID: postID) else {
             return
         }
 
         if postItem.isStale() {
-            // Add to queue
             requestQueue.append(item: postItem.postID)
         }
     }
 
+    /// Handles syncing an enqueued post ID.
+    ///
+    /// - Parameter item: The post ID of the post to sync
+    ///
     func handleItemEnqueued(item: Int64) {
         // TODO: For offline support, when coming back online see if there are enqueued items.
         guard let uuid = StoreContainer.shared.accountStore.currentAccount?.currentSite?.uuid else {
@@ -73,6 +82,10 @@ extension PostStore {
         remote.fetchPost(postID: item, fromSite: uuid)
     }
 
+    /// Handles the dispatched action from the remote post service.
+    ///
+    /// - Parameter action: The action dispatched by the API
+    ///
     func handlePostFetchedAction(action: PostFetchedApiAction) {
         guard !action.isError() else {
             // TODO: Handle error
@@ -95,11 +108,10 @@ extension PostStore {
         requestQueue.remove(item: remotePost.postID)
 
         let context = CoreDataManager.shared.mainContext
-
-        let post: Post
         let fetchRequest = Post.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site = %@ AND postID = %ld", site, remotePost.postID)
 
+        let post: Post
         do {
             post = try context.fetch(fetchRequest).first ?? Post(context: context)
         } catch {
@@ -115,65 +127,8 @@ extension PostStore {
         if requestQueue.queue.count == 0 {
             stopSaveTimer()
             CoreDataManager.shared.saveContext()
-        } else {
-
         }
     }
-
-    func syncPosts() {
-        guard let uuid = StoreContainer.shared.accountStore.currentAccount?.currentSite?.uuid else {
-            return
-        }
-        let remote = ApiService.shared.postServiceRemote()
-        remote.fetchPosts(siteUUID: uuid)
-    }
-
-    /// Handles the postsFetched action.
-    ///
-    /// - Parameters:
-    ///     - action: Instance of the action to handle.
-    ///
-    func handlePostsFetched(action: PostsFetchedApiAction) {
-        guard !action.isError() else {
-            // TODO: Handle error.
-            return
-        }
-
-        let siteStore = StoreContainer.shared.siteStore
-
-        guard
-            let site = siteStore.getSiteByUUID(action.siteUUID),
-            let remotePosts = action.payload
-        else {
-            // TODO: Unknown error?
-            return
-        }
-
-        let context = CoreDataManager.shared.mainContext
-
-        for remotePost in remotePosts {
-            let post: Post
-            let fetchRequest = Post.defaultFetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "site = %@ AND postID = %ld", site, remotePost.postID)
-
-            do {
-                post = try context.fetch(fetchRequest).first ?? Post(context: context)
-            } catch {
-                // TODO: Propperly log this
-                print("Error fetching post")
-                continue
-            }
-
-            updatePost(post, with: remotePost)
-            post.site = site
-            if let listItem = getPostListItemWithID(postID: remotePost.postID) {
-                post.item = listItem
-            }
-        }
-
-        CoreDataManager.shared.saveContext()
-    }
-
 
     /// Update a post with a corresponding remote post
     ///
@@ -212,7 +167,6 @@ extension PostStore {
         post.titleRendered = remotePost.titleRendered
         post.type = remotePost.type
     }
-
 }
 
 // MARK: - Timer methods

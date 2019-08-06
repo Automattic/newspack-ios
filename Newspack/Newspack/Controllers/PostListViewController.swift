@@ -3,23 +3,25 @@ import CoreData
 import WordPressFlux
 import WordPressUI
 
+/// Displays a list of posts for the current PostList.
+/// State is divided between the PostListStore which is responsible for syncing,
+/// and identifying the current post list being worked on, and CoreData via an
+/// NSFetchedResultsControllerDelegate which is responsible for detecting and
+/// responding to changes in the data model.
+///
 class PostListViewController: UITableViewController {
 
-    var receipt:Receipt?
+    let cellIdentifier = "PostCellIdentifier"
+    let sortField = "postID"
+
+    // PostListStore receipt.
+    var postListReceipt: Receipt?
 
     lazy var resultsController: NSFetchedResultsController<PostListItem> = {
-        let context = CoreDataManager.shared.mainContext
         let fetchRequest = PostListItem.defaultFetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "postID", ascending: false)]
-
-        // TODO: See if there is a way to make this not an optional.  In practice it should never be one (unless logged out).
-        // Maybe log if its not found?
-        if let postList = StoreContainer.shared.postListStore.currentList {
-            fetchRequest.predicate = NSPredicate(format: "%@ in postLists", postList)
-        }
-
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortField, ascending: false)]
         return NSFetchedResultsController(fetchRequest: fetchRequest,
-                                          managedObjectContext: context,
+                                          managedObjectContext: CoreDataManager.shared.mainContext,
                                           sectionNameKeyPath: nil,
                                           cacheName: nil)
     }()
@@ -28,7 +30,7 @@ class PostListViewController: UITableViewController {
         super.init(coder: aDecoder)
 
         resultsController.delegate = self
-        receipt = StoreContainer.shared.postListStore.onStateChange({ [weak self] state in
+        postListReceipt = StoreContainer.shared.postListStore.onStateChange({ [weak self] state in
             self?.handlePostListStateChanged(oldState: state.0, newState: state.1)
         })
     }
@@ -41,26 +43,54 @@ class PostListViewController: UITableViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        try? resultsController.performFetch()
-        if resultsController.fetchedObjects?.count == 0 {
-            let options = GhostOptions(reuseIdentifier: "PostCellIdentifier", rowsPerSection: [3])
-            tableView.displayGhostContent(options: options)
-        }
-        tableView.reloadData()
+        super.viewWillAppear(animated)
 
+        configureResultsController()
         syncIfNeeded()
     }
 
-    @objc
-    func handleRefreshControl() {
+    func configureResultsController() {
+        if let postList = StoreContainer.shared.postListStore.currentList {
+            resultsController.fetchRequest.predicate = NSPredicate(format: "%@ in postLists", postList)
+        }
+        try? resultsController.performFetch()
+
+        if resultsController.fetchedObjects?.count == 0 {
+            let options = GhostOptions(reuseIdentifier: cellIdentifier, rowsPerSection: [3])
+            tableView.displayGhostContent(options: options)
+        }
+        tableView.reloadData()
+    }
+}
+
+// MARK: - Sync related methods.
+extension PostListViewController {
+
+    @objc func handleRefreshControl() {
         StoreContainer.shared.postListStore.sync(force: true)
     }
 
     func syncIfNeeded() {
         StoreContainer.shared.postListStore.sync()
     }
+}
 
-    // MARK: - Table view data source
+// MARK: - PostList State Related methods
+extension PostListViewController {
+
+    func handlePostListStateChanged(oldState: PostListState, newState: PostListState) {
+        if oldState == .syncing {
+            refreshControl?.endRefreshing()
+            tableView.removeGhostContent()
+
+        } else if oldState == .changingCurrentList {
+            configureResultsController()
+        }
+    }
+}
+
+// MARK: - Table view data source
+extension PostListViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -80,11 +110,10 @@ class PostListViewController: UITableViewController {
         if count > 0 && indexPath.row > (count - 5)  {
             StoreContainer.shared.postListStore.syncNextPage()
         }
-
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCellIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
 
         configureCell(cell, atIndexPath: indexPath)
 
@@ -113,51 +142,14 @@ class PostListViewController: UITableViewController {
             cell.textLabel?.text = ""
         }
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    func handlePostListStateChanged(oldState: PostListState, newState: PostListState) {
-        if oldState == .syncing {
-            refreshControl?.endRefreshing()
-            tableView.removeGhostContent()
-
-        } else if oldState == .changingCurrentList {
-            handlePostListChanged()
-        }
-    }
-
-    func handlePostListChanged() {
-        if let postList = StoreContainer.shared.postListStore.currentList {
-            resultsController.fetchRequest.predicate = NSPredicate(format: "%@ in postLists", postList)
-        }
-        try? resultsController.performFetch()
-
-        if resultsController.fetchedObjects?.count == 0 {
-
-            let options = GhostOptions(reuseIdentifier: "PostCellIdentifier", rowsPerSection: [3])
-            tableView.displayGhostContent(options: options)
-        }
-
-
-        tableView.reloadData()
-    }
 }
 
+// MARK: - NSFetchedResultsController Methods
 extension PostListViewController: NSFetchedResultsControllerDelegate {
 
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()
     }
-
 
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
         switch type {

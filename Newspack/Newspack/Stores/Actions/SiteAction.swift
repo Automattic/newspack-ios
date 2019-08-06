@@ -7,4 +7,3 @@ enum SiteAction: Action {
     case create(url: String, settings: RemoteSiteSettings, accountID: UUID)
     case update(site: Site, settings: RemoteSiteSettings)
 }
-

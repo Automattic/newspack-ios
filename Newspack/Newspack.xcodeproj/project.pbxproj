@@ -432,8 +432,8 @@
 				E6138FD12211FE86004E5B91 /* AppDelegate.swift */,
 				E67F56D42230914800BFD38B /* CoreDataManager.swift */,
 				E6241B95224EC8CD00B578F5 /* SessionManager.swift */,
-				E6034B1322529414007DB6DD /* UserAgent.swift */,
 				E61BBD6722FA0470008A6D4C /* StartupHelper.swift */,
+				E6034B1322529414007DB6DD /* UserAgent.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";

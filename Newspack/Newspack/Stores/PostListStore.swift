@@ -11,6 +11,8 @@ enum PostListState {
 /// Responsible for wrangling the current post list and other post list data.
 ///
 class PostListStore: StatefulStore<PostListState> {
+    private var sessionReceipt: Receipt?
+
     let pageSize = 100
     let maxPages = 10
     let syncInterval: TimeInterval = 600 // 10 minutes.
@@ -21,12 +23,10 @@ class PostListStore: StatefulStore<PostListState> {
             if oldValue != currentList {
                 state = .changingCurrentList
                 state = .ready
-                // TODO: sync if needed
+                sync()
             }
         }
     }
-
-    var sessionReceipt: Receipt?
 
     override init(initialState: PostListState = .ready, dispatcher: ActionDispatcher = .global) {
         super.init(initialState: initialState, dispatcher: dispatcher)
@@ -41,12 +41,13 @@ class PostListStore: StatefulStore<PostListState> {
         }
     }
 
+    /// Action handler
+    ///
+    /// - Parameter action:
     override func onDispatch(_ action: Action) {
-
         if let apiAction = action as? PostIDsFetchedApiAction {
             handlePostIDsFetched(action: apiAction)
         }
-
     }
 
     /// Convenience method for retrieving the specified post list.
@@ -74,34 +75,54 @@ class PostListStore: StatefulStore<PostListState> {
             return nil
         }
     }
-
 }
 
-// MARK: - Syncing
+// MARK: - Sync related methods
 
 /// Extension for wrangling API queries.
 ///
 extension PostListStore {
 
+    /// Get the number of pages for the specified list that are currently synced
+    /// and cached
+    ///
+    /// - Parameter list: The list in question.
+    /// - Returns: The number of pages
+    ///
     func numberOfPagesSyncedForList(list: PostList) -> Int {
         return Int(ceil(Float(list.items.count) / Float(pageSize)))
     }
 
+    /// Checks to see if enough time has passed since the specified list's last
+    /// sync for it to be synced again.
+    ///
+    /// - Parameter list: The list in question.
+    /// - Returns: True if the list can be synced.
+    ///
+    func timeForNextSyncForList(_ list: PostList) -> Bool {
+        let now = Date()
+        let then = list.lastSync.addingTimeInterval(syncInterval)
+        return now > then
+    }
 
+    /// Syncs the current list.
+    /// Attempts to sync post items for all currently synced pages, or the first
+    /// page if there are no currenty synced items.
+    /// Checks the date the list was last synced before syncing unless the force
+    /// parameter is true.
+    ///
+    /// - Parameter force: Whether to force a sync, ignoring the last synced date.
+    ///
     func sync(force:Bool = false) {
         guard
-            state != .syncing,
-            let list = currentList
-            else {
-                return
+            let list = currentList,
+            state != .syncing
+        else {
+            return
         }
 
-        if !force  {
-            let now = Date()
-            let then = list.lastSync.addingTimeInterval(syncInterval)
-            if now < then {
-                return
-            }
+        if !force && !timeForNextSyncForList(list) {
+            return
         }
 
         let pages = numberOfPagesSyncedForList(list: list)
@@ -110,6 +131,8 @@ extension PostListStore {
         syncItemsForList(list: list, page: queue.popLast()!)
     }
 
+    /// Sync's the next unsynced page of items.
+    ///
     func syncNextPage() {
         guard
             let list = currentList,
@@ -122,21 +145,6 @@ extension PostListStore {
         if page < maxPages  {
             syncItemsForList(list: list, page: page + 1)
         }
-
-    }
-
-
-
-    /// Retrieve remote post items for the list with the specified name.
-    ///
-    /// - Parameters:
-    ///   - page: The page number to sync. Default is 1.
-    ///
-    func syncItems(page: Int = 1) {
-        guard let list = currentList else {
-            return
-        }
-        syncItemsForList(list: list, page: page)
     }
 
     /// Sync the post list items for the specified list.
@@ -150,13 +158,11 @@ extension PostListStore {
             return
         }
 
-        list.syncing = true
         state = .syncing
         CoreDataManager.shared.saveContext()
 
         let remote = ApiService.shared.postServiceRemote()
         remote.fetchPostIDs(filter: list.filter, page: page, siteUUID: list.site.uuid, listID: list.uuid)
-
     }
 
     /// Handles the postsFetched action.
@@ -171,7 +177,6 @@ extension PostListStore {
         }
 
         defer {
-            list.syncing = false
             state = .ready
 
             CoreDataManager.shared.saveContext()
@@ -220,7 +225,6 @@ extension PostListStore {
             list.lastSync = Date()
         }
     }
-
 
     /// Update a post list item with a corresponding remote post id
     ///
@@ -309,4 +313,3 @@ struct PostListQuery {
     let name: String
     let filter: [String: AnyObject]
 }
-

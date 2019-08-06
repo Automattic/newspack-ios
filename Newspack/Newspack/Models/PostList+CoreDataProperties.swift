@@ -11,7 +11,6 @@ extension PostList {
     @NSManaged public var uuid: UUID!
     @NSManaged public var name: String!
     @NSManaged public var hasMore: Bool
-    @NSManaged public var syncing: Bool
     @NSManaged public var lastSync: Date!
     @NSManaged public var filter: [String: AnyObject]!
 

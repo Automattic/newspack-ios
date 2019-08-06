@@ -89,5 +89,4 @@ extension AppDelegate {
         controllers.insert(controller, at: 0)
         navController.setViewControllers(controllers, animated: false)
     }
-
 }

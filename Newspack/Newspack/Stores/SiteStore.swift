@@ -82,7 +82,6 @@ extension SiteStore {
             site.uuid = UUID()
         }
 
-//        site.url = url
         site.url = account.networkUrl // TODO: fix this.
 
         updateSite(site: site, withSettings: settings)
