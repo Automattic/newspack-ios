@@ -4,24 +4,6 @@ import Foundation
 ///
 class PostServiceRemote: ServiceRemoteCoreRest {
 
-    /// Fetch a default list of posts.
-    ///
-    /// - Parameter onComplete: Completion handler. Has parameteres for an array of remote posts and an error.
-    ///
-    func fetchPosts(siteUUID: UUID) {
-        let parameters = ["context": "edit"] as [String: AnyObject]
-        api.GET("posts", parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
-
-            let array = response as! [[String: AnyObject]]
-            let posts = self.remotePostsFromResponse(response: array)
-
-            self.dispatch(action: PostsFetchedApiAction(payload: posts, error: nil, siteUUID: siteUUID))
-
-        }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
-            self.dispatch(action: PostsFetchedApiAction(payload: nil, error: error, siteUUID: siteUUID))
-        })
-    }
-
     /// Fetch post IDs for the specified page.
     ///
     /// - Parameters:
