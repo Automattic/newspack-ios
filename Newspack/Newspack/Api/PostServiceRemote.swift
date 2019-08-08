@@ -9,11 +9,9 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     /// - Parameters:
     ///   - filter: A dictionary that identifies a subset of ids to fetch.
     ///   - page: The page to fetch.
-    ///   - siteUUID: Meta. The UUID of the site.
-    ///   - listID: Meta. The uuid of the list.
+    ///   - perPage: The number of items per page.
     ///
-    func fetchPostIDs(filter:[String: AnyObject], page: Int, siteUUID: UUID, listID: UUID) {
-        let perPage = 100
+    func fetchPostIDs(filter:[String: AnyObject], page: Int, perPage: Int = 100) {
         let params = [
             "_fields": "id,date_gmt,modified_gmt,_links",
             "page": page,
@@ -22,14 +20,11 @@ class PostServiceRemote: ServiceRemoteCoreRest {
         let parameters = params.merging(filter) { (current, _) in current }
 
         api.GET("posts", parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
-
             let array = response as! [[String: AnyObject]]
             let postIDs = self.remotePostIDsFromResponse(response: array)
 
             self.dispatch(action: PostIDsFetchedApiAction(payload: postIDs,
                                                           error: nil,
-                                                          siteUUID: siteUUID,
-                                                          listID: listID,
                                                           count: postIDs.count,
                                                           page: page,
                                                           hasMore: postIDs.count == perPage))
@@ -39,8 +34,6 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             // For now, assume the error is due to inalid page and go ahead and set hasMore to false.
             self.dispatch(action: PostIDsFetchedApiAction(payload: nil,
                                                           error: error,
-                                                          siteUUID: siteUUID,
-                                                          listID: listID,
                                                           count: 0,
                                                           page: page,
                                                           hasMore: false))
@@ -50,21 +43,20 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     /// Fetch the specified post from the specified site
     ///
     /// - Parameters:
-    ///   - postID: The ID of the post to fetch
-    ///   - siteUUID: The UUID of the site.
+    ///   - postID: The ID of the post to fetch.
     ///
-    func fetchPost(postID: Int64, fromSite siteUUID: UUID) {
+    func fetchPost(postID: Int64) {
         let parameters = ["context": "edit"] as [String: AnyObject]
         let path = "posts/\(postID)"
-        api.GET(path, parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
 
+        api.GET(path, parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
             let dict = response as! [String: AnyObject]
             let post = self.remotePostFromResponse(response: dict)
 
-            self.dispatch(action: PostFetchedApiAction(payload: post, error: nil, siteUUID: siteUUID))
+            self.dispatch(action: PostFetchedApiAction(payload: post, error: nil))
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
-            self.dispatch(action: PostFetchedApiAction(payload: nil, error: error, siteUUID: siteUUID))
+            self.dispatch(action: PostFetchedApiAction(payload: nil, error: error))
         })
     }
 }
@@ -107,5 +99,4 @@ extension PostServiceRemote {
     func remotePostFromResponse(response: [String: AnyObject]) -> RemotePost {
         return RemotePost(dict: response)
     }
-
 }
