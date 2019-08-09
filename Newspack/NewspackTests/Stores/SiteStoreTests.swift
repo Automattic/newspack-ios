@@ -5,7 +5,6 @@ import WordPressFlux
 
 class SiteStoreTests: BaseTest {
 
-    var store: SiteStore?
     var remoteSettings: RemoteSiteSettings?
     var account: Account?
     let siteURL = "http://example.com"
@@ -13,11 +12,8 @@ class SiteStoreTests: BaseTest {
     override func setUp() {
         super.setUp()
 
-        store = StoreContainer.shared.siteStore
-
         // Test account
         account = accountStore!.createAccount(authToken: "testToken", forNetworkAt: siteURL)
-        accountStore!.currentAccount = account
 
         // Test settings
         let response = Loader.jsonObject(for: "remote-site-settings") as! [String: AnyObject]
@@ -27,7 +23,6 @@ class SiteStoreTests: BaseTest {
     override func tearDown() {
         super.tearDown()
 
-        store = nil
         account = nil
         remoteSettings = nil
     }
@@ -35,17 +30,10 @@ class SiteStoreTests: BaseTest {
     func testCreateSite() {
         let account = self.account!
         let remoteSettings = self.remoteSettings!
-        let dispatcher = ActionDispatcher.global
 
-        let receipt = store?.onChange {}
+        SiteStore().createSite(url: siteURL, settings: remoteSettings, accountID: account.uuid)
+        let site = account.sites.first
 
-        // Error when missing account
-        let action = SiteFetchedApiAction(payload: remoteSettings, error: nil, accountUUID: account.uuid, siteUUID: nil)
-        dispatcher.dispatch(action)
-
-        let site = account.currentSite
-
-        XCTAssertNotNil(receipt)
         XCTAssertNotNil(site)
         XCTAssertEqual(site!.url, siteURL)
         XCTAssertEqual(site!.title, remoteSettings.title)
@@ -58,21 +46,22 @@ class SiteStoreTests: BaseTest {
         let testTitle = "Test Title"
         var site: Site?
 
-        store?.createSite(url: siteURL, settings: remoteSettings, accountID: account.uuid)
-        site = account.currentSite!
+        SiteStore().createSite(url: siteURL, settings: remoteSettings, accountID: account.uuid)
+        site = account.sites.first
 
         XCTAssertNotNil(site)
         XCTAssertEqual(site!.title, remoteSettings.title)
         XCTAssertNotEqual(site!.title, testTitle)
 
-        let receipt = store?.onChange {}
+        let store = SiteStore(dispatcher: dispatcher, siteID: site!.uuid)
+        let receipt = store.onChange {}
 
         var dict = Loader.jsonObject(for: "remote-site-settings") as! [String: AnyObject]
         dict["title"] = testTitle as AnyObject
         remoteSettings = RemoteSiteSettings(dict: dict)
 
         // Error when missing account
-        let action = SiteFetchedApiAction(payload: remoteSettings, error: nil, accountUUID: account.uuid, siteUUID: site!.uuid)
+        let action = SiteFetchedApiAction(payload: remoteSettings, error: nil)
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
@@ -116,42 +105,14 @@ class SiteStoreTests: BaseTest {
 
         CoreDataManager.shared.saveContext()
 
-        XCTAssertNotNil(account1.currentSite)
-        XCTAssertNil(account2.currentSite)
+        XCTAssertNotNil(account1.sites.first)
+        XCTAssertNil(account2.sites.first)
 
         site.account = account2
         CoreDataManager.shared.saveContext()
 
-        XCTAssertNil(account1.currentSite)
-        XCTAssertNotNil(account2.currentSite)
-    }
-
-    func testDefaultSiteAfterRemovingCurrentSite() {
-        let context = CoreDataManager.shared.mainContext
-        let account = self.account!
-
-        let site1 = ModelFactory.getTestSite(context: context)
-        site1.url = "url1"
-        site1.title = "site1"
-        site1.account = account
-
-        let site2 = ModelFactory.getTestSite(context: context)
-        site2.url = "url2"
-        site2.title = "site2"
-        site2.account = account
-
-        CoreDataManager.shared.saveContext()
-        XCTAssertEqual(account.sites.count, 2)
-
-        var currentSite = account.currentSite!
-        let title = currentSite.title
-        context.delete(currentSite)
-        CoreDataManager.shared.saveContext()
-
-        XCTAssertEqual(account.sites.count, 1)
-        currentSite = account.currentSite!
-        XCTAssertNotNil(currentSite)
-        XCTAssertNotEqual(title, currentSite.title)
+        XCTAssertNil(account1.sites.first)
+        XCTAssertNotNil(account2.sites.first)
     }
 
     func testRemovingAccountRemovesSites() {
