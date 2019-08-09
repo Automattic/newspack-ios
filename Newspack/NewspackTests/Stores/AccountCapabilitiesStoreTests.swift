@@ -13,17 +13,16 @@ class AccountCapabilitiesStoreTests: BaseTest {
     override func setUp() {
         super.setUp()
 
-        store = StoreContainer.shared.accountCapabilitiesStore
-
         // Test account
         account = accountStore!.createAccount(authToken: "testToken", forNetworkAt: "example.com")
-        accountStore!.currentAccount = account
 
         // Test site
         var response = Loader.jsonObject(for: "remote-site-settings") as! [String: AnyObject]
         let settings = RemoteSiteSettings(dict: response)
         let siteStore = SiteStore(dispatcher: .global)
         siteStore.createSite(url: siteURL, settings: settings, accountID: account!.uuid)
+
+        store = AccountCapabilitiesStore(dispatcher: .global, siteID: account!.sites.first!.uuid)
 
         // Test remote user
         response = Loader.jsonObject(for: "remote-user-edit") as! [String: AnyObject]
@@ -41,14 +40,14 @@ class AccountCapabilitiesStoreTests: BaseTest {
     func testUpdateAccountCapabilitiesCreatesCapabilities() {
         let account = self.account!
         let remoteUser = self.remoteUser!
-        let site = account.currentSite!
+        let site = account.sites.first!
 
         let receipt = store?.onChange{}
 
         XCTAssertNotNil(site)
         XCTAssertNil(site.capabilities)
 
-        let action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: site.uuid)
+        let action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         let dispatcher = ActionDispatcher.global
         dispatcher.dispatch(action)
 
@@ -61,11 +60,11 @@ class AccountCapabilitiesStoreTests: BaseTest {
         let dispatcher = ActionDispatcher.global
         let account = self.account!
         var remoteUser = self.remoteUser!
-        let site = account.currentSite!
+        let site = account.sites.first!
         let testRole = "TestRole"
 
         let receipt = store?.onChange{}
-        var action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: site.uuid)
+        var action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(site.capabilities)
@@ -75,7 +74,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         dict["roles"] = [testRole] as AnyObject
         remoteUser = RemoteUser(dict: dict)
 
-        action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: site.uuid)
+        action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
@@ -86,7 +85,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
     func testSiteHasOnlyOneSetOfAccountCapabilities() {
         let context = CoreDataManager.shared.mainContext
         let account = self.account!
-        let site = account.currentSite!
+        let site = account.sites.first!
         let role1 = "role1"
         let role2 = "role2"
 
@@ -123,7 +122,6 @@ class AccountCapabilitiesStoreTests: BaseTest {
         let context = CoreDataManager.shared.mainContext
         let account = self.account!
 
-
         let site1 = ModelFactory.getTestSite(context: context)
         site1.url = "url1"
         site1.title = "site1"
@@ -153,11 +151,11 @@ class AccountCapabilitiesStoreTests: BaseTest {
 
     func testHasCapabilities() {
         let account = self.account!
-        let site = account.currentSite!
+        let site = account.sites.first!
         let remoteUser = self.remoteUser!
         let dispatcher = ActionDispatcher.global
 
-        let action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: site.uuid)
+        let action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
         XCTAssertTrue(site.hasCapability(string: "moderate_comments"))
@@ -167,11 +165,11 @@ class AccountCapabilitiesStoreTests: BaseTest {
 
     func testHasRole() {
         let account = self.account!
-        let site = account.currentSite!
+        let site = account.sites.first!
         let remoteUser = self.remoteUser!
         let dispatcher = ActionDispatcher.global
 
-        let action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: site.uuid)
+        let action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
         XCTAssertTrue(site.hasRole(string: "editor"))
