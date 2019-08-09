@@ -12,11 +12,10 @@ class AccountDetailsStoreTests: BaseTest {
     override func setUp() {
         super.setUp()
 
-        store = StoreContainer.shared.accountDetailsStore
-
         // Test account
         account = accountStore!.createAccount(authToken: "testToken", forNetworkAt: "example.com")
-        accountStore!.currentAccount = account
+
+        store = AccountDetailsStore(dispatcher: .global, accountID: account!.uuid)
 
         // Test remote user
         let response = Loader.jsonObject(for: "remote-user-edit") as! [String: AnyObject]
@@ -39,7 +38,7 @@ class AccountDetailsStoreTests: BaseTest {
         XCTAssertNil(account.details)
 
         let receipt = store?.onChange{}
-        let action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: UUID())
+        let action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
@@ -53,7 +52,7 @@ class AccountDetailsStoreTests: BaseTest {
         var remoteUser = self.remoteUser!
 
         let receipt = store?.onChange{}
-        var action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: UUID())
+        var action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
@@ -65,7 +64,7 @@ class AccountDetailsStoreTests: BaseTest {
         dict["email"] = testEmail as AnyObject
         remoteUser = RemoteUser(dict: dict)
 
-        action = AccountFetchedApiAction(payload: remoteUser, error: nil, accountUUID: account.uuid, siteUUID: UUID())
+        action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(account.details)
