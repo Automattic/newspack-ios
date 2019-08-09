@@ -35,8 +35,4 @@ class BaseTest: XCTestCase {
         })
         CoreDataManager.shared.replaceContainer(container)
     }
-
-    func getTestAccount() {
-        
-    }
 }
