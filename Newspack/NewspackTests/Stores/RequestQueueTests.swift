@@ -6,13 +6,14 @@ class RequestQueueTests: XCTestCase {
     func testRequestQueue() {
         // Setup
         class Delegate: RequestQueueDelegate {
+            typealias Item = Int
             var item = 0
-            func itemEnqueued(item: Any) {
-                self.item = item as! Int
+            func itemEnqueued(item: Int) {
+                self.item = item
             }
         }
         let delegate = Delegate()
-        let queue = RequestQueue<Int>()
+        let queue = RequestQueue<Int, Delegate>()
         queue.delegate = delegate
 
         // Test that the delgate is called when an item is enqueued.
@@ -42,6 +43,4 @@ class RequestQueueTests: XCTestCase {
         XCTAssert(queue.queue == queue.activeQueue)
 
     }
-
-
 }
