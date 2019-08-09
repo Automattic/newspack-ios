@@ -6,16 +6,21 @@ import WordPressFlux
 ///
 class SiteStore: Store {
 
+    private(set) var currentSiteID: UUID?
+
+    init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
+        currentSiteID = siteID
+        super.init(dispatcher: dispatcher)
+    }
+
     /// Action handler
     ///
     override func onDispatch(_ action: Action) {
-
         if let apiAction = action as? NetworkSitesFetchedApiAction {
             handleNetworkSitesFetched(action: apiAction)
         } else if let apiAction = action as? SiteFetchedApiAction {
             handleSiteFetched(action: apiAction)
         }
-
     }
 
     /// Get the site for the specified UUID
@@ -37,7 +42,6 @@ class SiteStore: Store {
         }
         return nil
     }
-
 }
 
 extension SiteStore {
@@ -45,7 +49,6 @@ extension SiteStore {
     func handleNetworkSitesFetched(action: NetworkSitesFetchedApiAction) {
         // noop for now, pending other changes
     }
-
 
     /// Handles the siteFetched action.
     ///
@@ -59,30 +62,14 @@ extension SiteStore {
             return
         }
 
-        let accountStore = StoreContainer.shared.accountStore
-
         guard
-            let account = accountStore.getAccountByUUID(action.accountUUID),
-            let settings = action.payload
+            let settings = action.payload,
+            let siteID = currentSiteID,
+            let site = getSiteByUUID(siteID)
             else {
                 // TODO: Unknown error?
                 return
         }
-
-        let context = CoreDataManager.shared.mainContext
-
-        let site: Site
-        if  let siteUUID = action.siteUUID,
-            let maybeSite = getSiteByUUID(siteUUID),
-            account.sites.contains(maybeSite) {
-                site = maybeSite
-        } else {
-            site = Site(context: context)
-            site.account = account
-            site.uuid = UUID()
-        }
-
-        site.url = account.networkUrl // TODO: fix this.
 
         updateSite(site: site, withSettings: settings)
 
@@ -97,6 +84,7 @@ extension SiteStore {
     func createSite(url: String, settings: RemoteSiteSettings, accountID: UUID) {
         let accountStore = StoreContainer.shared.accountStore
         guard let account = accountStore.getAccountByUUID(accountID) else {
+            // TODO: Log error.
             return
         }
 
@@ -110,7 +98,6 @@ extension SiteStore {
 
         CoreDataManager.shared.saveContext()
     }
-
 
     func updateSite(site: Site, withSettings settings: RemoteSiteSettings) {
         site.title = settings.title

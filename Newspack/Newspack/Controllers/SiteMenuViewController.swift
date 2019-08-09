@@ -28,7 +28,7 @@ struct SiteMenuViewModel {
                 return
             }
             let action = AccountAction.removeAccount(uuid: account.uuid)
-            ActionDispatcher.global.dispatch(action)
+            SessionManager.shared.sessionDispatcher.dispatch(action)
         }
 
         let rows = [

@@ -6,16 +6,20 @@ import WordPressFlux
 ///
 class AccountDetailsStore: Store {
 
+    private(set) var currentAccountID: UUID?
+
+    init(dispatcher: ActionDispatcher = .global, accountID: UUID? = nil) {
+        currentAccountID = accountID
+        super.init(dispatcher: dispatcher)
+    }
+
     /// Action handler
     ///
     override func onDispatch(_ action: Action) {
-
         if let apiAction = action as? AccountFetchedApiAction {
             handleAccountFetched(action: apiAction)
         }
-
     }
-
 }
 
 extension AccountDetailsStore {
@@ -35,7 +39,9 @@ extension AccountDetailsStore {
         let accountStore = StoreContainer.shared.accountStore
         guard
             let user = action.payload,
-            let account = accountStore.getAccountByUUID(action.accountUUID) else {
+            let accountID = currentAccountID,
+            let account = accountStore.getAccountByUUID(accountID)
+            else {
                 // TODO: Unknown Error?
                 return
         }
@@ -64,5 +70,4 @@ extension AccountDetailsStore {
 
         emitChange()
     }
-
 }

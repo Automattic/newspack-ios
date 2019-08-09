@@ -6,16 +6,20 @@ import WordPressFlux
 ///
 class AccountCapabilitiesStore: Store {
 
+    private(set) var currentSiteID: UUID?
+
+    init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
+        currentSiteID = siteID
+        super.init(dispatcher: dispatcher)
+    }
+    
     /// Action handler
     ///
     override func onDispatch(_ action: Action) {
-
         if let apiAction = action as? AccountFetchedApiAction {
             handleAccountFetched(action: apiAction)
         }
-
     }
-
 }
 
 extension AccountCapabilitiesStore {
@@ -30,14 +34,12 @@ extension AccountCapabilitiesStore {
             return
         }
 
-        let accountStore = StoreContainer.shared.accountStore
         let siteStore = StoreContainer.shared.siteStore
 
         guard
             let user = action.payload,
-            let account = accountStore.getAccountByUUID(action.accountUUID),
-            let site =  siteStore.getSiteByUUID(action.siteUUID),
-            account.sites.contains(site)
+            let siteID = currentSiteID,
+            let site = siteStore.getSiteByUUID(siteID)
             else {
                 //TODO: Unknown error?
                 return
@@ -53,5 +55,4 @@ extension AccountCapabilitiesStore {
 
         emitChange()
     }
-
 }

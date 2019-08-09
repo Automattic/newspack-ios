@@ -17,49 +17,119 @@ class SessionManager: StatefulStore<SessionState> {
     ///
     static let shared = SessionManager()
 
-    /// A readonly reference to the api.
-    /// The API is an anonymous API until initialzed with an Account
+    /// Used with UserDefaults to store the current site's uuid for later recovery.
+    ///
+    private let currentSiteIDKey = "currentSiteIDKey"
+
+    /// Read only.  The ActionDispatcher for the current session.
+    ///
+    private (set) var sessionDispatcher = ActionDispatcher()
+
+    /// Read only. The site for the current session.
+    /// Holds the model vs its UUID to reduce the number of core data lookups.
+    ///
+    private(set) var currentSite: Site? {
+        didSet {
+            let defaults = UserDefaults.standard
+            defer {
+                defaults.synchronize()
+            }
+            guard let uuid = currentSite?.uuid else {
+                defaults.removeObject(forKey: currentSiteIDKey)
+                return
+            }
+            defaults.set(uuid.uuidString, forKey: currentSiteIDKey)
+        }
+    }
+
+    /// Read only. The API instance for the current sesion.
+    /// The API is an anonymous API until the sesion is initialized.
     ///
     private(set) var api = WordPressCoreRestApi(oAuthToken: nil, userAgent: UserAgent.defaultUserAgent)
 
-    private var accountStoreSubscription: Receipt?
-
     private init() {
         super.init(initialState: .pending)
-
-        let store = StoreContainer.shared.accountStore
-        accountStoreSubscription = store.onChange( accountStoreChangeHandler )
     }
 
-    /// Initialize the session with the specified account.  Typically this will
-    /// be the current account from the AccountStore
+    override func onDispatch(_ action: Action) {
+        guard let action = action as? AccountAction else {
+            return
+        }
+        switch action {
+        case .accountRemoved:
+            handleAccountRemoved()
+        default:
+            break
+        }
+    }
+
+    /// Initialize the session with the specified site. Typically this will be
+    /// the current site when restoring the session.
     ///
-    /// - Parameter account: The account for the session. All api calls will be made
-    /// on behalf of the account.
+    /// - Parameter site: The site for the session. The api will be configured for this site.
+    /// - Returns: True if initialized, false if not.
     ///
     @discardableResult
-    func initialize(account: Account?) -> Bool {
-        guard let account = account else {
+    func initialize(site: Site?) -> Bool {
+        guard
+            let site = site,
+            let token = AccountStore().getAuthTokenForAccount(site.account)
+        else {
+            sessionDispatcher = ActionDispatcher()
             api = WordPressCoreRestApi(oAuthToken: nil, userAgent: UserAgent.defaultUserAgent)
+            currentSite = nil
+
+            StoreContainer.shared.resetStores(dispatcher: sessionDispatcher, site: nil)
             state = .uninitialized
             return false
         }
 
-        let store = StoreContainer.shared.accountStore
-        let token = store.getAuthTokenForAccount(account)
+        sessionDispatcher = ActionDispatcher()
+        api = WordPressCoreRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent, site: site.url)
+        currentSite = site
 
-        let site = (account.currentSite?.url ?? account.networkUrl)!
-        api = WordPressCoreRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent, site: site)
-
+        StoreContainer.shared.resetStores(dispatcher: sessionDispatcher, site: site)
         state = .initialized
 
-        return token != nil
+        return true
     }
 
-    /// Handle changes broacast by the account store.  Primarily used to re-initialize
-    /// the api in the event the current account changes.
+    /// Attempt to restore the previous session.
     ///
-    func accountStoreChangeHandler() {
-        initialize(account: StoreContainer.shared.accountStore.currentAccount)
+    /// - Returns: True if the session was restored. False if not.
+    ///
+    @discardableResult
+    func restoreSession() -> Bool {
+        guard state != .initialized else {
+            return false
+        }
+        return initialize(site: retrieveSite())
+    }
+
+    /// Attempts to retrieve the site matching the uuid string saved in user defaults.
+    ///
+    /// - Returns: A site model if a matching site is found. Nil otherwise.
+    ///
+    private func retrieveSite() -> Site? {
+        guard
+            let uuidString = UserDefaults.standard.string(forKey: currentSiteIDKey),
+            let uuid = UUID(uuidString: uuidString)
+            else {
+                return nil
+        }
+        guard let site = SiteStore().getSiteByUUID(uuid) else {
+            currentSite = nil
+            return nil
+        }
+        return site
+    }
+
+
+    func handleAccountRemoved() {
+        if currentSite?.isDeleted == true || currentSite?.account == nil {
+            state = .pending
+            let store = AccountStore()
+            initialize(site: store.getAccounts().first?.sites.first)
+        }
     }
 }

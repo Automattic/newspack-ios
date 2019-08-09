@@ -12,7 +12,10 @@ class AccountStore: Store {
 
     /// Initializer
     ///
-    init(dispatcher: ActionDispatcher = .global, keychainServiceName: String = AccountStore.keychainServiceName) {
+    private(set) var currentAccountID: UUID?
+
+    init(dispatcher: ActionDispatcher = .global, accountID: UUID? = nil, keychainServiceName: String = AccountStore.keychainServiceName) {
+        currentAccountID = accountID
         self.keychain = Keychain(service: keychainServiceName).accessibility(.afterFirstUnlock)
         super.init(dispatcher: dispatcher)
     }
@@ -25,58 +28,21 @@ class AccountStore: Store {
         }
         
         switch accountAction {
-        case .setCurrentAccount(let account):
-            setCurrentAccount(account: account)
-
-        case .setCurrentSite(let site, let account):
-            setCurrentSite(site: site, for: account)
-
-        case . removeAccount(let uuid):
+        case .removeAccount(let uuid):
             removeAccount(uuid: uuid)
+        case .accountRemoved:
+            break
         }
     }
 }
 
 extension AccountStore {
 
-    /// Get or set the current account.
+    /// Read only. Convenience property for getting the current account for the current session.
     ///
     var currentAccount: Account? {
         get {
-            guard
-                let uuidString = UserDefaults.standard.string(forKey: currentAccountUUIDKey),
-                let uuid = UUID(uuidString: uuidString),
-                let account = getAccountByUUID(uuid)
-                else {
-                    // Womp womp.
-                    return nil
-            }
-            return account
-        }
-        set(account) {
-            let defaults = UserDefaults.standard
-            let uuidString = UserDefaults.standard.string(forKey: currentAccountUUIDKey)
-
-            // If everything is nil.
-            if account == nil && uuidString == nil {
-                return
-            }
-
-            // If managed objects are equal.
-            if account != nil && account == currentAccount {
-                return
-            }
-
-            defer {
-                defaults.synchronize()
-                emitChange()
-            }
-
-            guard let account = account else {
-                defaults.removeObject(forKey: currentAccountUUIDKey)
-                return
-            }
-            defaults.set(account.uuid.uuidString, forKey: currentAccountUUIDKey)
+            return SessionManager.shared.currentSite?.account
         }
     }
 
@@ -153,30 +119,6 @@ extension AccountStore {
         return account
     }
 
-    /// Handler for the .setCurrentAccount action.
-    ///
-    /// - Parameter account: The new account or nil.
-    ///
-    func setCurrentAccount(account: Account?) {
-        // Note: The computed property will emit the event.
-        currentAccount = account
-    }
-
-    /// Handler for the .setCurrentSite action.
-    ///
-    func setCurrentSite(site: Site, for account: Account) {
-        guard account.sites.contains(site) else {
-            return
-        }
-        guard site != account.currentSite else {
-            return
-        }
-
-        account.currentSite = site
-
-        emitChange()
-    }
-
     /// Handles the .removeAccount action. Sets currentAccount to a remaining account or nil.
     ///
     /// - Parameter uuid: The uuid of the account to remove.
@@ -189,12 +131,9 @@ extension AccountStore {
         let context = CoreDataManager.shared.mainContext
         context.delete(account)
         CoreDataManager.shared.saveContext(context: context)
-
-        let fetchRequest = Account.defaultFetchRequest()
-        let accounts = try? context.fetch(fetchRequest)
-        setCurrentAccount(account: accounts?.first)
+        
+        ActionDispatcher.global.dispatch(AccountAction.accountRemoved)
     }
-
 }
 
 

@@ -11,7 +11,10 @@ class PostStore: Store {
     private var saveTimer: Timer?
     private var saveTimerInterval: TimeInterval = 1
 
-    override init(dispatcher: ActionDispatcher = .global) {
+    private(set) var currentSiteID: UUID?
+
+    init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
+        currentSiteID = siteID
         requestQueue = RequestQueue<Int64, PostStore>()
         super.init(dispatcher: dispatcher)
         requestQueue.delegate = self
@@ -33,7 +36,6 @@ extension PostStore: RequestQueueDelegate {
 }
 
 extension PostStore {
-
 
     /// Gets the PostListItem from core data for the specified post ID.
     ///
@@ -74,12 +76,8 @@ extension PostStore {
     ///
     func handleItemEnqueued(item: Int64) {
         // TODO: For offline support, when coming back online see if there are enqueued items.
-        guard let uuid = StoreContainer.shared.accountStore.currentAccount?.currentSite?.uuid else {
-            return
-        }
-
         let remote = ApiService.shared.postServiceRemote()
-        remote.fetchPost(postID: item, fromSite: uuid)
+        remote.fetchPost(postID: item)
     }
 
     /// Handles the dispatched action from the remote post service.
@@ -95,7 +93,8 @@ extension PostStore {
         let siteStore = StoreContainer.shared.siteStore
 
         guard
-            let site = siteStore.getSiteByUUID(action.siteUUID),
+            let siteID = currentSiteID,
+            let site = siteStore.getSiteByUUID(siteID),
             let remotePost = action.payload,
             let listItem = getPostListItemWithID(postID: remotePost.postID)
         else {

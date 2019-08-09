@@ -7,12 +7,14 @@ import WordPressFlux
 class ServiceRemoteCoreRest {
 
     let api:WordPressCoreRestApi
+    let dispatcher: ActionDispatcher
 
-    init(wordPressComRestApi api: WordPressCoreRestApi) {
+    init(wordPressComRestApi api: WordPressCoreRestApi, dispatcher: ActionDispatcher) {
         self.api = api
+        self.dispatcher = dispatcher
     }
 
     func dispatch(action: Action) {
-        ActionDispatcher.global.dispatch(action)
+        dispatcher.dispatch(action)
     }
 }

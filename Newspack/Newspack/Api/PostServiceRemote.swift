@@ -26,6 +26,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             self.dispatch(action: PostIDsFetchedApiAction(payload: postIDs,
                                                           error: nil,
                                                           count: postIDs.count,
+                                                          filter: filter,
                                                           page: page,
                                                           hasMore: postIDs.count == perPage))
 
@@ -35,6 +36,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             self.dispatch(action: PostIDsFetchedApiAction(payload: nil,
                                                           error: error,
                                                           count: 0,
+                                                          filter: filter,
                                                           page: page,
                                                           hasMore: false))
         })

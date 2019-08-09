@@ -17,6 +17,7 @@ class PostListStore: StatefulStore<PostListState> {
     let maxPages = 10
     let syncInterval: TimeInterval = 600 // 10 minutes.
     var queue = [Int]()
+    private(set) var currentSiteID: UUID?
 
     var currentList: PostList? {
         didSet {
@@ -28,8 +29,9 @@ class PostListStore: StatefulStore<PostListState> {
         }
     }
 
-    override init(initialState: PostListState = .ready, dispatcher: ActionDispatcher = .global) {
-        super.init(initialState: initialState, dispatcher: dispatcher)
+    init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
+        currentSiteID = siteID
+        super.init(initialState: .ready, dispatcher: dispatcher)
 
         // Listen for session changes in order to seed default lists if necessary.
         // Weak self to avoid strong retains.
@@ -50,24 +52,28 @@ class PostListStore: StatefulStore<PostListState> {
         }
     }
 
-    /// Convenience method for retrieving the specified post list.
+    /// Convenience method for retrieving the post list for the specified filter.
     ///
     /// - Parameters:
-    ///   - listID: The uuid of the list
+    ///   - filter: The lists filter. This should be unique per site.
     ///   - siteUUID: The uuid of the site that owns the list.
     /// - Returns: The list instance of found, or nil.
     ///
-    func postListByIdentifier(listID: UUID, siteUUID: UUID) -> PostList? {
+    func postListByFilter(filter:[String: AnyObject], siteUUID: UUID) -> PostList? {
+        let siteStore = StoreContainer.shared.siteStore
+        guard let site = siteStore.getSiteByUUID(siteUUID) else {
+            return nil
+        }
         let fetchRequest = PostList.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "uuid == %@", listID as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "filter == %@ AND site == %@", filter as CVarArg, site)
 
         let context = CoreDataManager.shared.mainContext
         do {
             guard
                 let list = try context.fetch(fetchRequest).first,
                 list.site.uuid == siteUUID
-            else {
-                return nil
+                else {
+                    return nil
             }
             return list
         } catch {
@@ -162,7 +168,7 @@ extension PostListStore {
         CoreDataManager.shared.saveContext()
 
         let remote = ApiService.shared.postServiceRemote()
-        remote.fetchPostIDs(filter: list.filter, page: page, siteUUID: list.site.uuid, listID: list.uuid)
+        remote.fetchPostIDs(filter: list.filter, page: page)
     }
 
     /// Handles the postsFetched action.
@@ -171,9 +177,13 @@ extension PostListStore {
     ///     - action: Instance of the action to handle.
     ///
     func handlePostIDsFetched(action: PostIDsFetchedApiAction) {
-        guard let list = postListByIdentifier(listID: action.listID, siteUUID: action.siteUUID) else {
-            //TODO: handle error.
-            return
+
+        guard
+            let siteID = currentSiteID,
+            let list = postListByFilter(filter: action.filter, siteUUID: siteID)
+            else {
+                // TODO: Handle error.
+                return
         }
 
         defer {
@@ -265,10 +275,13 @@ extension PostListStore {
             currentList = nil
             return
         }
-        guard let site = StoreContainer.shared.accountStore.currentAccount?.currentSite else {
-            // TODO: Handle missing site error
-            currentList = nil
-            return
+        guard
+            let siteID = currentSiteID,
+            let site = StoreContainer.shared.siteStore.getSiteByUUID(siteID)
+            else {
+                // TODO: Handle missing site error
+                currentList = nil
+                return
         }
         setupDefaultPostListsIfNeeded(siteUUID: site.uuid)
         currentList = site.postLists.first

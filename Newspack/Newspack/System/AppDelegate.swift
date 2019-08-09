@@ -56,7 +56,7 @@ extension AppDelegate {
             self.handleSessionChange()
         }
 
-        SessionManager.shared.initialize(account: StoreContainer.shared.accountStore.currentAccount)
+        SessionManager.shared.restoreSession()
     }
 
     func handleSessionChange() {
