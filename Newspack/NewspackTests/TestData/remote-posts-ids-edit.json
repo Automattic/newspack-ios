@@ -1,52 +1,132 @@
 [
 	{
 		"id": 6815,
-		"date": "2019-05-22T19:35:27",
-		"modified": "2019-07-03T15:24:21"
+		"date_gmt": "2019-05-22T19:35:27",
+		"modified_gmt": "2019-07-03T15:24:21",
+        "_links": {
+            "version-history": [
+                {
+                    "count": 6,
+                    "href": "https://public-api.wordpress.com/wp/v2/sites/aerychtest.wordpress.com/posts/6815/revisions"
+                }
+            ]
+        }
 	},
 	{
 		"id": 6789,
-		"date": "2019-02-08T18:24:07",
-		"modified": "2019-02-08T18:25:34"
+		"date_gmt": "2019-02-08T18:24:07",
+		"modified_gmt": "2019-02-08T18:25:34",
+        "_links": {
+            "version-history": [
+                {
+                    "count": 6,
+                    "href": "https://public-api.wordpress.com/wp/v2/sites/aerychtest.wordpress.com/posts/6789/revisions"
+                }
+            ]
+        }
 	},
 	{
 		"id": 6787,
-		"date": "2019-02-08T18:21:00",
-		"modified": "2019-02-08T18:21:00"
+		"date_gmt": "2019-02-08T18:21:00",
+		"modified_gmt": "2019-02-08T18:21:00",
+        "_links": {
+            "version-history": [
+                {
+                    "count": 6,
+                    "href": "https://public-api.wordpress.com/wp/v2/sites/aerychtest.wordpress.com/posts/6787/revisions"
+                }
+            ]
+        }
 	},
 	{
 		"id": 6785,
-		"date": "2019-02-08T15:07:17",
-		"modified": "2019-02-08T15:07:17"
+		"date_gmt": "2019-02-08T15:07:17",
+		"modified_gmt": "2019-02-08T15:07:17",
+        "_links": {
+            "version-history": [
+                {
+                    "count": 6,
+                    "href": "https://public-api.wordpress.com/wp/v2/sites/aerychtest.wordpress.com/posts/6785/revisions"
+                }
+            ]
+        }
 	},
 	{
 		"id": 6783,
-		"date": "2019-02-08T15:04:39",
-		"modified": "2019-02-08T15:04:39"
+		"date_gmt": "2019-02-08T15:04:39",
+		"modified_gmt": "2019-02-08T15:04:39",
+        "_links": {
+            "version-history": [
+                {
+                    "count": 6,
+                    "href": "https://public-api.wordpress.com/wp/v2/sites/aerychtest.wordpress.com/posts/6783/revisions"
+                }
+            ]
+        }
 	},
 	{
 		"id": 6781,
-		"date": "2019-02-05T22:02:57",
-		"modified": "2019-02-05T22:02:57"
+		"date_gmt": "2019-02-05T22:02:57",
+		"modified_gmt": "2019-02-05T22:02:57",
+        "_links": {
+            "version-history": [
+                {
+                    "count": 6,
+                    "href": "https://public-api.wordpress.com/wp/v2/sites/aerychtest.wordpress.com/posts/6781/revisions"
+                }
+            ]
+        }
 	},
 	{
 		"id": 6778,
-		"date": "2019-02-05T18:21:57",
-		"modified": "2019-02-05T18:27:01"
+		"date_gmt": "2019-02-05T18:21:57",
+		"modified_gmt": "2019-02-05T18:27:01",
+        "_links": {
+            "version-history": [
+                {
+                    "count": 6,
+                    "href": "https://public-api.wordpress.com/wp/v2/sites/aerychtest.wordpress.com/posts/6778/revisions"
+                }
+            ]
+        }
 	},
 	{
 		"id": 6777,
-		"date": "2019-02-05T01:19:19",
-		"modified": "2019-02-05T01:19:19"
+		"date_gmt": "2019-02-05T01:19:19",
+		"modified_gmt": "2019-02-05T01:19:19",
+        "_links": {
+            "version-history": [
+                {
+                    "count": 6,
+                    "href": "https://public-api.wordpress.com/wp/v2/sites/aerychtest.wordpress.com/posts/6777/revisions"
+                }
+            ]
+        }
 	},
 	{
 		"id": 6771,
-		"date": "2019-01-11T16:33:00",
-		"modified": "2019-01-11T16:33:00"
+		"date_gmt": "2019-01-11T16:33:00",
+		"modified_gmt": "2019-01-11T16:33:00",
+        "_links": {
+            "version-history": [
+                {
+                    "count": 6,
+                    "href": "https://public-api.wordpress.com/wp/v2/sites/aerychtest.wordpress.com/posts/6771/revisions"
+                }
+            ]
+        }
 	},
 	{
 		"id": 6745,
-		"date": "2018-12-02T22:25:00",
-		"modified": "2018-12-02T22:25:00"
+		"date_gmt": "2018-12-02T22:25:00",
+		"modified_gmt": "2018-12-02T22:25:00",
+        "_links": {
+            "version-history": [
+                {
+                    "count": 6,
+                    "href": "https://public-api.wordpress.com/wp/v2/sites/aerychtest.wordpress.com/posts/6745/revisions"
+                }
+            ]
+        }
 	}
 ]

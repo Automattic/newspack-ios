@@ -37,32 +37,8 @@ class PostServiceRemoteTests: RemoteTestCase {
 
         stubRemoteResponse("posts", filename: remotePostEditFile, contentType: .ApplicationJSON)
 
-        let remote = PostServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent") )
-        remote.fetchPost(postID: 1, fromSite: UUID())
-
-        waitForExpectations(timeout: timeout, handler: nil)
-    }
-
-    func testFetchPosts() {
-        let expect = expectation(description: "fetch posts")
-
-        receipt = ActionDispatcher.global.subscribe { action in
-            defer {
-                expect.fulfill()
-            }
-            guard let postAction = action as? PostsFetchedApiAction else {
-                XCTAssert(false)
-                return
-            }
-
-            XCTAssertFalse(postAction.isError())
-            XCTAssertTrue(postAction.payload != nil)
-        }
-
-        stubRemoteResponse("posts", filename: remotePostsEditFile, contentType: .ApplicationJSON)
-
-        let remote = PostServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent") )
-        remote.fetchPosts(siteUUID: UUID())
+        let remote = PostServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: ActionDispatcher.global )
+        remote.fetchPost(postID: 1)
 
         waitForExpectations(timeout: timeout, handler: nil)
     }
@@ -85,8 +61,8 @@ class PostServiceRemoteTests: RemoteTestCase {
 
         stubRemoteResponse("posts", filename: remotePostsIDsEditFile, contentType: .ApplicationJSON)
 
-        let remote = PostServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent") )
-        remote.fetchPostIDs(filter: [:], page: 1, siteUUID: UUID(), listID: UUID())
+        let remote = PostServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: ActionDispatcher.global )
+        remote.fetchPostIDs(filter: [:], page: 1)
 
         waitForExpectations(timeout: timeout, handler: nil)
     }
