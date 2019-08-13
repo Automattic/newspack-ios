@@ -65,29 +65,45 @@
 		E62C7C6C2235F061000FEB33 /* AuthenticationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */; };
 		E637A6E222F0ED5D00229C1D /* RequestQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E637A6E122F0ED5D00229C1D /* RequestQueue.swift */; };
 		E637A6E422F0EE1500229C1D /* RequestQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */; };
-		E638804922DFAAF100B3C16A /* PostList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E638804522DFAAF000B3C16A /* PostList+CoreDataClass.swift */; };
-		E638804A22DFAAF100B3C16A /* PostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E638804622DFAAF000B3C16A /* PostList+CoreDataProperties.swift */; };
-		E638804B22DFAAF100B3C16A /* PostListItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E638804722DFAAF100B3C16A /* PostListItem+CoreDataProperties.swift */; };
-		E638804C22DFAAF100B3C16A /* PostListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E638804822DFAAF100B3C16A /* PostListItem+CoreDataClass.swift */; };
 		E638804E22DFC07900B3C16A /* PostListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E638804D22DFC07900B3C16A /* PostListStore.swift */; };
-		E63CD0AA22A17D7200501C4F /* AccountDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CD0A622A17D7100501C4F /* AccountDetails+CoreDataClass.swift */; };
-		E63CD0AB22A17D7200501C4F /* AccountDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CD0A722A17D7100501C4F /* AccountDetails+CoreDataProperties.swift */; };
-		E63CD0AC22A17D7200501C4F /* AccountCapabilities+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CD0A822A17D7100501C4F /* AccountCapabilities+CoreDataClass.swift */; };
-		E63CD0AD22A17D7200501C4F /* AccountCapabilities+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63CD0A922A17D7100501C4F /* AccountCapabilities+CoreDataProperties.swift */; };
 		E641A66122A71A83008BBD85 /* SiteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641A66022A71A83008BBD85 /* SiteStore.swift */; };
 		E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641A66222A7584A008BBD85 /* AccountDetailsStore.swift */; };
 		E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */; };
-		E64492922252F3A7003B70DF /* Site+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64492902252F3A7003B70DF /* Site+CoreDataProperties.swift */; };
-		E64492932252F3A7003B70DF /* Site+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64492912252F3A7003B70DF /* Site+CoreDataClass.swift */; };
 		E64594A122B448C2003BF6C0 /* PostServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */; };
 		E66231CE22F52243004F6DEC /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66231CD22F52243004F6DEC /* PostCell.swift */; };
 		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
 		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
 		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
+		E66CCA042303527C00F1CA59 /* Category+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9E82303527600F1CA59 /* Category+CoreDataProperties.swift */; };
+		E66CCA052303527C00F1CA59 /* Category+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9E92303527600F1CA59 /* Category+CoreDataClass.swift */; };
+		E66CCA062303527C00F1CA59 /* Site+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9EA2303527600F1CA59 /* Site+CoreDataClass.swift */; };
+		E66CCA072303527C00F1CA59 /* Account+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9EB2303527600F1CA59 /* Account+CoreDataClass.swift */; };
+		E66CCA082303527C00F1CA59 /* PostListItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9EC2303527600F1CA59 /* PostListItem+CoreDataProperties.swift */; };
+		E66CCA092303527C00F1CA59 /* PostList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9ED2303527600F1CA59 /* PostList+CoreDataClass.swift */; };
+		E66CCA0A2303527C00F1CA59 /* Page+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9EE2303527700F1CA59 /* Page+CoreDataProperties.swift */; };
+		E66CCA0B2303527C00F1CA59 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9EF2303527700F1CA59 /* Account+CoreDataProperties.swift */; };
+		E66CCA0C2303527C00F1CA59 /* Media+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F02303527800F1CA59 /* Media+CoreDataClass.swift */; };
+		E66CCA0D2303527C00F1CA59 /* Site+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F12303527800F1CA59 /* Site+CoreDataProperties.swift */; };
+		E66CCA0E2303527C00F1CA59 /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F22303527800F1CA59 /* Tag+CoreDataProperties.swift */; };
+		E66CCA0F2303527C00F1CA59 /* Revision+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F32303527800F1CA59 /* Revision+CoreDataProperties.swift */; };
+		E66CCA102303527C00F1CA59 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F42303527800F1CA59 /* User+CoreDataProperties.swift */; };
+		E66CCA112303527C00F1CA59 /* AccountCapabilities+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F52303527800F1CA59 /* AccountCapabilities+CoreDataClass.swift */; };
+		E66CCA122303527C00F1CA59 /* PostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F62303527900F1CA59 /* PostList+CoreDataProperties.swift */; };
+		E66CCA132303527C00F1CA59 /* Status+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F72303527900F1CA59 /* Status+CoreDataProperties.swift */; };
+		E66CCA142303527D00F1CA59 /* AccountDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F82303527900F1CA59 /* AccountDetails+CoreDataProperties.swift */; };
+		E66CCA152303527D00F1CA59 /* AccountCapabilities+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F92303527A00F1CA59 /* AccountCapabilities+CoreDataProperties.swift */; };
+		E66CCA162303527D00F1CA59 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9FA2303527A00F1CA59 /* Post+CoreDataProperties.swift */; };
+		E66CCA172303527D00F1CA59 /* PostListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9FB2303527B00F1CA59 /* PostListItem+CoreDataClass.swift */; };
+		E66CCA182303527D00F1CA59 /* Page+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9FC2303527B00F1CA59 /* Page+CoreDataClass.swift */; };
+		E66CCA192303527D00F1CA59 /* Media+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9FD2303527C00F1CA59 /* Media+CoreDataProperties.swift */; };
+		E66CCA1A2303527D00F1CA59 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9FE2303527C00F1CA59 /* Post+CoreDataClass.swift */; };
+		E66CCA1B2303527D00F1CA59 /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9FF2303527C00F1CA59 /* User+CoreDataClass.swift */; };
+		E66CCA1C2303527D00F1CA59 /* Revision+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CCA002303527C00F1CA59 /* Revision+CoreDataClass.swift */; };
+		E66CCA1D2303527D00F1CA59 /* AccountDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CCA012303527C00F1CA59 /* AccountDetails+CoreDataClass.swift */; };
+		E66CCA1E2303527D00F1CA59 /* Status+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CCA022303527C00F1CA59 /* Status+CoreDataClass.swift */; };
+		E66CCA1F2303527D00F1CA59 /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CCA032303527C00F1CA59 /* Tag+CoreDataClass.swift */; };
 		E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A04223596FE00E8DD88 /* CoreDataManagerTests.swift */; };
 		E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A062235979500E8DD88 /* BaseTest.swift */; };
-		E66E8A1A2235C57800E8DD88 /* Account+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */; };
-		E66E8A1B2235C57800E8DD88 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */; };
 		E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */; };
 		E6710A1722CE9F040036156E /* FadeTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6710A1622CE9F040036156E /* FadeTransitionController.swift */; };
 		E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67F56D42230914800BFD38B /* CoreDataManager.swift */; };
@@ -106,24 +122,8 @@
 		E6E1835022D79473009C2D0A /* RemoteTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E1834F22D79473009C2D0A /* RemoteTestCase.swift */; };
 		E6E2ACF722E10F3400A8E85D /* MainStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E2ACF622E10F3400A8E85D /* MainStoryboard.swift */; };
 		E6E2ACF922E2840C00A8E85D /* Date+FormatGMTString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */; };
-		E6E60A2622CCFCCB0000B6DE /* Revision+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2422CCFCCA0000B6DE /* Revision+CoreDataProperties.swift */; };
-		E6E60A2722CCFCCB0000B6DE /* Category+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2322CCFCCA0000B6DE /* Category+CoreDataProperties.swift */; };
-		E6E60A2822CCFCCB0000B6DE /* Page+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1C22CCFCC90000B6DE /* Page+CoreDataProperties.swift */; };
-		E6E60A2922CCFCCB0000B6DE /* Status+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2522CCFCCB0000B6DE /* Status+CoreDataProperties.swift */; };
-		E6E60A2B22CCFCCB0000B6DE /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1822CCFCC80000B6DE /* Tag+CoreDataProperties.swift */; };
-		E6E60A2C22CCFCCB0000B6DE /* Media+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2022CCFCCA0000B6DE /* Media+CoreDataClass.swift */; };
-		E6E60A2D22CCFCCB0000B6DE /* Category+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1A22CCFCC90000B6DE /* Category+CoreDataClass.swift */; };
-		E6E60A2E22CCFCCB0000B6DE /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1E22CCFCCA0000B6DE /* Tag+CoreDataClass.swift */; };
-		E6E60A2F22CCFCCB0000B6DE /* Media+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1B22CCFCC90000B6DE /* Media+CoreDataProperties.swift */; };
-		E6E60A3022CCFCCB0000B6DE /* Revision+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1622CCFCC80000B6DE /* Revision+CoreDataClass.swift */; };
-		E6E60A3122CCFCCB0000B6DE /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1F22CCFCCA0000B6DE /* User+CoreDataClass.swift */; };
-		E6E60A3222CCFCCB0000B6DE /* Page+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1722CCFCC80000B6DE /* Page+CoreDataClass.swift */; };
-		E6E60A3422CCFCCB0000B6DE /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A2122CCFCCA0000B6DE /* User+CoreDataProperties.swift */; };
-		E6E60A3522CCFCCB0000B6DE /* Status+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E60A1D22CCFCC90000B6DE /* Status+CoreDataClass.swift */; };
 		E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F1C52422C2A48600334003 /* ApiAction.swift */; };
 		E6FB520022B967910010FDF8 /* Dictionary+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */; };
-		E6FB520322B9715F0010FDF8 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520122B9715F0010FDF8 /* Post+CoreDataClass.swift */; };
-		E6FB520422B9715F0010FDF8 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520222B9715F0010FDF8 /* Post+CoreDataProperties.swift */; };
 		E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520522B973A60010FDF8 /* PostStore.swift */; };
 		E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520722B9D2A30010FDF8 /* AccountSetupHelper.swift */; };
 		EA27D6504B828267DD8A28ED /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EDB59DB68FD7578F7CF8D30 /* Pods_Newspack.framework */; };
@@ -212,32 +212,48 @@
 		E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManagerTests.swift; sourceTree = "<group>"; };
 		E637A6E122F0ED5D00229C1D /* RequestQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestQueue.swift; sourceTree = "<group>"; };
 		E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestQueueTests.swift; sourceTree = "<group>"; };
-		E638804522DFAAF000B3C16A /* PostList+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PostList+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/PostList+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		E638804622DFAAF000B3C16A /* PostList+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PostList+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/PostList+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		E638804722DFAAF100B3C16A /* PostListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PostListItem+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/PostListItem+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		E638804822DFAAF100B3C16A /* PostListItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "PostListItem+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/PostListItem+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		E638804D22DFC07900B3C16A /* PostListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListStore.swift; sourceTree = "<group>"; };
-		E63CD0A622A17D7100501C4F /* AccountDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
-		E63CD0A722A17D7100501C4F /* AccountDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		E63CD0A822A17D7100501C4F /* AccountCapabilities+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountCapabilities+CoreDataClass.swift"; sourceTree = "<group>"; };
-		E63CD0A922A17D7100501C4F /* AccountCapabilities+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountCapabilities+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E641A66022A71A83008BBD85 /* SiteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStore.swift; sourceTree = "<group>"; };
 		E641A66222A7584A008BBD85 /* AccountDetailsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsStore.swift; sourceTree = "<group>"; };
 		E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStore.swift; sourceTree = "<group>"; };
-		E64492902252F3A7003B70DF /* Site+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Site+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Site+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		E64492912252F3A7003B70DF /* Site+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Site+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Site+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostServiceRemote.swift; sourceTree = "<group>"; };
 		E66231CD22F52243004F6DEC /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
 		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
 		E66B7D4422162754004355D3 /* replace_secrets.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = replace_secrets.rb; sourceTree = "<group>"; };
+		E66CC9E82303527600F1CA59 /* Category+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Category+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9E92303527600F1CA59 /* Category+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Category+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CC9EA2303527600F1CA59 /* Site+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Site+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CC9EB2303527600F1CA59 /* Account+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CC9EC2303527600F1CA59 /* PostListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostListItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9ED2303527600F1CA59 /* PostList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CC9EE2303527700F1CA59 /* Page+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Page+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9EF2303527700F1CA59 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9F02303527800F1CA59 /* Media+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Media+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CC9F12303527800F1CA59 /* Site+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Site+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9F22303527800F1CA59 /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9F32303527800F1CA59 /* Revision+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Revision+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9F42303527800F1CA59 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9F52303527800F1CA59 /* AccountCapabilities+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountCapabilities+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CC9F62303527900F1CA59 /* PostList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9F72303527900F1CA59 /* Status+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Status+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9F82303527900F1CA59 /* AccountDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9F92303527A00F1CA59 /* AccountCapabilities+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountCapabilities+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9FA2303527A00F1CA59 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9FB2303527B00F1CA59 /* PostListItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CC9FC2303527B00F1CA59 /* Page+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Page+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CC9FD2303527C00F1CA59 /* Media+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Media+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9FE2303527C00F1CA59 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CC9FF2303527C00F1CA59 /* User+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CCA002303527C00F1CA59 /* Revision+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Revision+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CCA012303527C00F1CA59 /* AccountDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CCA022303527C00F1CA59 /* Status+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Status+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CCA032303527C00F1CA59 /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E66E8A04223596FE00E8DD88 /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
 		E66E8A062235979500E8DD88 /* BaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTest.swift; sourceTree = "<group>"; };
 		E66E8A0822359FE200E8DD88 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		E66E8A0B2235A13400E8DD88 /* Aztec.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Aztec.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E66E8A0D2235A15100E8DD88 /* Pods_Newspack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Newspack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataClass.swift"; sourceTree = "<group>"; };
-		E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		E6710A1622CE9F040036156E /* FadeTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeTransitionController.swift; sourceTree = "<group>"; };
 		E67F56D42230914800BFD38B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = Newspack/System/CoreDataManager.swift; sourceTree = SOURCE_ROOT; };
@@ -256,24 +272,8 @@
 		E6E1834F22D79473009C2D0A /* RemoteTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTestCase.swift; sourceTree = "<group>"; };
 		E6E2ACF622E10F3400A8E85D /* MainStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStoryboard.swift; sourceTree = "<group>"; };
 		E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+FormatGMTString.swift"; sourceTree = "<group>"; };
-		E6E60A1622CCFCC80000B6DE /* Revision+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Revision+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Revision+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		E6E60A1722CCFCC80000B6DE /* Page+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Page+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Page+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		E6E60A1822CCFCC80000B6DE /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Tag+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Tag+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		E6E60A1A22CCFCC90000B6DE /* Category+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Category+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Category+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		E6E60A1B22CCFCC90000B6DE /* Media+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Media+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Media+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		E6E60A1C22CCFCC90000B6DE /* Page+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Page+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Page+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		E6E60A1D22CCFCC90000B6DE /* Status+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Status+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Status+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		E6E60A1E22CCFCCA0000B6DE /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Tag+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Tag+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		E6E60A1F22CCFCCA0000B6DE /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/User+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		E6E60A2022CCFCCA0000B6DE /* Media+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Media+CoreDataClass.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Media+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		E6E60A2122CCFCCA0000B6DE /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/User+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		E6E60A2322CCFCCA0000B6DE /* Category+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Category+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Category+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		E6E60A2422CCFCCA0000B6DE /* Revision+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Revision+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Revision+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
-		E6E60A2522CCFCCB0000B6DE /* Status+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Status+CoreDataProperties.swift"; path = "/Users/aerych/Sandbox/xcode_ws/automattic/newspack/Newspack/Newspack/Models/Status+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		E6F1C52422C2A48600334003 /* ApiAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiAction.swift; sourceTree = "<group>"; };
 		E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+KeyPath.swift"; sourceTree = "<group>"; };
-		E6FB520122B9715F0010FDF8 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
-		E6FB520222B9715F0010FDF8 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E6FB520522B973A60010FDF8 /* PostStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStore.swift; sourceTree = "<group>"; };
 		E6FB520722B9D2A30010FDF8 /* AccountSetupHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSetupHelper.swift; sourceTree = "<group>"; };
 		EDB5819DB11C68775E987AB2 /* Pods-NewspackTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewspackTests.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-NewspackTests/Pods-NewspackTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -464,34 +464,34 @@
 		E6138FFA22120371004E5B91 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E66E8A182235C57800E8DD88 /* Account+CoreDataClass.swift */,
-				E66E8A192235C57800E8DD88 /* Account+CoreDataProperties.swift */,
-				E63CD0A822A17D7100501C4F /* AccountCapabilities+CoreDataClass.swift */,
-				E63CD0A922A17D7100501C4F /* AccountCapabilities+CoreDataProperties.swift */,
-				E63CD0A622A17D7100501C4F /* AccountDetails+CoreDataClass.swift */,
-				E63CD0A722A17D7100501C4F /* AccountDetails+CoreDataProperties.swift */,
-				E6E60A1A22CCFCC90000B6DE /* Category+CoreDataClass.swift */,
-				E6E60A2322CCFCCA0000B6DE /* Category+CoreDataProperties.swift */,
-				E6E60A2022CCFCCA0000B6DE /* Media+CoreDataClass.swift */,
-				E6E60A1B22CCFCC90000B6DE /* Media+CoreDataProperties.swift */,
-				E6E60A1722CCFCC80000B6DE /* Page+CoreDataClass.swift */,
-				E6E60A1C22CCFCC90000B6DE /* Page+CoreDataProperties.swift */,
-				E6FB520122B9715F0010FDF8 /* Post+CoreDataClass.swift */,
-				E6FB520222B9715F0010FDF8 /* Post+CoreDataProperties.swift */,
-				E638804522DFAAF000B3C16A /* PostList+CoreDataClass.swift */,
-				E638804622DFAAF000B3C16A /* PostList+CoreDataProperties.swift */,
-				E638804822DFAAF100B3C16A /* PostListItem+CoreDataClass.swift */,
-				E638804722DFAAF100B3C16A /* PostListItem+CoreDataProperties.swift */,
-				E6E60A1622CCFCC80000B6DE /* Revision+CoreDataClass.swift */,
-				E6E60A2422CCFCCA0000B6DE /* Revision+CoreDataProperties.swift */,
-				E64492912252F3A7003B70DF /* Site+CoreDataClass.swift */,
-				E64492902252F3A7003B70DF /* Site+CoreDataProperties.swift */,
-				E6E60A1D22CCFCC90000B6DE /* Status+CoreDataClass.swift */,
-				E6E60A2522CCFCCB0000B6DE /* Status+CoreDataProperties.swift */,
-				E6E60A1E22CCFCCA0000B6DE /* Tag+CoreDataClass.swift */,
-				E6E60A1822CCFCC80000B6DE /* Tag+CoreDataProperties.swift */,
-				E6E60A1F22CCFCCA0000B6DE /* User+CoreDataClass.swift */,
-				E6E60A2122CCFCCA0000B6DE /* User+CoreDataProperties.swift */,
+				E66CC9EB2303527600F1CA59 /* Account+CoreDataClass.swift */,
+				E66CC9EF2303527700F1CA59 /* Account+CoreDataProperties.swift */,
+				E66CC9F52303527800F1CA59 /* AccountCapabilities+CoreDataClass.swift */,
+				E66CC9F92303527A00F1CA59 /* AccountCapabilities+CoreDataProperties.swift */,
+				E66CCA012303527C00F1CA59 /* AccountDetails+CoreDataClass.swift */,
+				E66CC9F82303527900F1CA59 /* AccountDetails+CoreDataProperties.swift */,
+				E66CC9E92303527600F1CA59 /* Category+CoreDataClass.swift */,
+				E66CC9E82303527600F1CA59 /* Category+CoreDataProperties.swift */,
+				E66CC9F02303527800F1CA59 /* Media+CoreDataClass.swift */,
+				E66CC9FD2303527C00F1CA59 /* Media+CoreDataProperties.swift */,
+				E66CC9FC2303527B00F1CA59 /* Page+CoreDataClass.swift */,
+				E66CC9EE2303527700F1CA59 /* Page+CoreDataProperties.swift */,
+				E66CC9FE2303527C00F1CA59 /* Post+CoreDataClass.swift */,
+				E66CC9FA2303527A00F1CA59 /* Post+CoreDataProperties.swift */,
+				E66CC9ED2303527600F1CA59 /* PostList+CoreDataClass.swift */,
+				E66CC9F62303527900F1CA59 /* PostList+CoreDataProperties.swift */,
+				E66CC9FB2303527B00F1CA59 /* PostListItem+CoreDataClass.swift */,
+				E66CC9EC2303527600F1CA59 /* PostListItem+CoreDataProperties.swift */,
+				E66CCA002303527C00F1CA59 /* Revision+CoreDataClass.swift */,
+				E66CC9F32303527800F1CA59 /* Revision+CoreDataProperties.swift */,
+				E66CC9EA2303527600F1CA59 /* Site+CoreDataClass.swift */,
+				E66CC9F12303527800F1CA59 /* Site+CoreDataProperties.swift */,
+				E66CCA022303527C00F1CA59 /* Status+CoreDataClass.swift */,
+				E66CC9F72303527900F1CA59 /* Status+CoreDataProperties.swift */,
+				E66CCA032303527C00F1CA59 /* Tag+CoreDataClass.swift */,
+				E66CC9F22303527800F1CA59 /* Tag+CoreDataProperties.swift */,
+				E66CC9FF2303527C00F1CA59 /* User+CoreDataClass.swift */,
+				E66CC9F42303527800F1CA59 /* User+CoreDataProperties.swift */,
 				E6138FD82211FE86004E5B91 /* Newspack.xcdatamodeld */,
 			);
 			path = Models;
@@ -994,77 +994,77 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6710A1722CE9F040036156E /* FadeTransitionController.swift in Sources */,
-				E66E8A1B2235C57800E8DD88 /* Account+CoreDataProperties.swift in Sources */,
 				E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */,
-				E6E60A3022CCFCCB0000B6DE /* Revision+CoreDataClass.swift in Sources */,
+				E66CCA1D2303527D00F1CA59 /* AccountDetails+CoreDataClass.swift in Sources */,
 				E6FB520022B967910010FDF8 /* Dictionary+KeyPath.swift in Sources */,
-				E6E60A3222CCFCCB0000B6DE /* Page+CoreDataClass.swift in Sources */,
-				E64492922252F3A7003B70DF /* Site+CoreDataProperties.swift in Sources */,
 				E637A6E222F0ED5D00229C1D /* RequestQueue.swift in Sources */,
-				E638804922DFAAF100B3C16A /* PostList+CoreDataClass.swift in Sources */,
 				E602E69422C1669B00795CBA /* AccountCapabilitiesAction.swift in Sources */,
-				E6E60A3522CCFCCB0000B6DE /* Status+CoreDataClass.swift in Sources */,
-				E6E60A2F22CCFCCB0000B6DE /* Media+CoreDataProperties.swift in Sources */,
-				E638804A22DFAAF100B3C16A /* PostList+CoreDataProperties.swift in Sources */,
+				E66CCA122303527C00F1CA59 /* PostList+CoreDataProperties.swift in Sources */,
 				E602E69822C1670800795CBA /* PostAction.swift in Sources */,
-				E66E8A1A2235C57800E8DD88 /* Account+CoreDataClass.swift in Sources */,
 				E6138FD42211FE86004E5B91 /* InitialViewController.swift in Sources */,
-				E6E60A3122CCFCCB0000B6DE /* User+CoreDataClass.swift in Sources */,
+				E66CCA072303527C00F1CA59 /* Account+CoreDataClass.swift in Sources */,
 				E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */,
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
-				E63CD0AD22A17D7200501C4F /* AccountCapabilities+CoreDataProperties.swift in Sources */,
+				E66CCA162303527D00F1CA59 /* Post+CoreDataProperties.swift in Sources */,
 				E602E69222C1666C00795CBA /* AccountAction.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
-				E6E60A2D22CCFCCB0000B6DE /* Category+CoreDataClass.swift in Sources */,
+				E66CCA192303527D00F1CA59 /* Media+CoreDataProperties.swift in Sources */,
+				E66CCA1E2303527D00F1CA59 /* Status+CoreDataClass.swift in Sources */,
 				E602E69622C166C700795CBA /* AccountDetailsAction.swift in Sources */,
-				E6E60A2722CCFCCB0000B6DE /* Category+CoreDataProperties.swift in Sources */,
 				E61BBD6822FA0470008A6D4C /* StartupHelper.swift in Sources */,
 				E602E69A22C1676500795CBA /* SiteAction.swift in Sources */,
+				E66CCA112303527C00F1CA59 /* AccountCapabilities+CoreDataClass.swift in Sources */,
+				E66CCA152303527D00F1CA59 /* AccountCapabilities+CoreDataProperties.swift in Sources */,
 				E638804E22DFC07900B3C16A /* PostListStore.swift in Sources */,
 				E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */,
 				E64594A122B448C2003BF6C0 /* PostServiceRemote.swift in Sources */,
+				E66CCA1C2303527D00F1CA59 /* Revision+CoreDataClass.swift in Sources */,
+				E66CCA062303527C00F1CA59 /* Site+CoreDataClass.swift in Sources */,
 				E69E59FD22541ABD00899DE2 /* WordPressCoreRestApi.swift in Sources */,
+				E66CCA182303527D00F1CA59 /* Page+CoreDataClass.swift in Sources */,
+				E66CCA142303527D00F1CA59 /* AccountDetails+CoreDataProperties.swift in Sources */,
 				E602E68322C15EC100795CBA /* RemoteUser.swift in Sources */,
 				E6871F1B22C3FDE7008D3D46 /* PostListViewController.swift in Sources */,
-				E6E60A2922CCFCCB0000B6DE /* Status+CoreDataProperties.swift in Sources */,
 				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
-				E6E60A2C22CCFCCB0000B6DE /* Media+CoreDataClass.swift in Sources */,
-				E63CD0AB22A17D7200501C4F /* AccountDetails+CoreDataProperties.swift in Sources */,
 				E602E68022C1588600795CBA /* ApiService.swift in Sources */,
 				E6E2ACF922E2840C00A8E85D /* Date+FormatGMTString.swift in Sources */,
-				E6E60A2B22CCFCCB0000B6DE /* Tag+CoreDataProperties.swift in Sources */,
 				E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */,
-				E6FB520322B9715F0010FDF8 /* Post+CoreDataClass.swift in Sources */,
+				E66CCA172303527D00F1CA59 /* PostListItem+CoreDataClass.swift in Sources */,
 				E602E68522C15ECC00795CBA /* RemoteSiteSettings.swift in Sources */,
 				E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */,
+				E66CCA102303527C00F1CA59 /* User+CoreDataProperties.swift in Sources */,
 				E6E2ACF722E10F3400A8E85D /* MainStoryboard.swift in Sources */,
-				E6E60A2E22CCFCCB0000B6DE /* Tag+CoreDataClass.swift in Sources */,
 				E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */,
+				E66CCA052303527C00F1CA59 /* Category+CoreDataClass.swift in Sources */,
 				E602E69F22C1747D00795CBA /* Dictionary+Unwrappers.swift in Sources */,
-				E64492932252F3A7003B70DF /* Site+CoreDataClass.swift in Sources */,
-				E63CD0AA22A17D7200501C4F /* AccountDetails+CoreDataClass.swift in Sources */,
+				E66CCA1B2303527D00F1CA59 /* User+CoreDataClass.swift in Sources */,
 				E66231CE22F52243004F6DEC /* PostCell.swift in Sources */,
+				E66CCA0F2303527C00F1CA59 /* Revision+CoreDataProperties.swift in Sources */,
 				E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */,
-				E6FB520422B9715F0010FDF8 /* Post+CoreDataProperties.swift in Sources */,
-				E638804B22DFAAF100B3C16A /* PostListItem+CoreDataProperties.swift in Sources */,
-				E6E60A3422CCFCCB0000B6DE /* User+CoreDataProperties.swift in Sources */,
-				E638804C22DFAAF100B3C16A /* PostListItem+CoreDataClass.swift in Sources */,
-				E6E60A2622CCFCCB0000B6DE /* Revision+CoreDataProperties.swift in Sources */,
 				E602E68D22C1634900795CBA /* SiteApiActions.swift in Sources */,
 				E623C6F62220516600F9865C /* ApiCredentials.swift in Sources */,
+				E66CCA1A2303527D00F1CA59 /* Post+CoreDataClass.swift in Sources */,
 				E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */,
 				E602E68722C15ED700795CBA /* RemotePost.swift in Sources */,
+				E66CCA082303527C00F1CA59 /* PostListItem+CoreDataProperties.swift in Sources */,
 				E602E68B22C1632C00795CBA /* UserApiActions.swift in Sources */,
+				E66CCA132303527C00F1CA59 /* Status+CoreDataProperties.swift in Sources */,
+				E66CCA042303527C00F1CA59 /* Category+CoreDataProperties.swift in Sources */,
+				E66CCA1F2303527D00F1CA59 /* Tag+CoreDataClass.swift in Sources */,
+				E66CCA0D2303527C00F1CA59 /* Site+CoreDataProperties.swift in Sources */,
+				E66CCA0B2303527C00F1CA59 /* Account+CoreDataProperties.swift in Sources */,
 				E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */,
 				E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */,
+				E66CCA0C2303527C00F1CA59 /* Media+CoreDataClass.swift in Sources */,
 				E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */,
+				E66CCA0A2303527C00F1CA59 /* Page+CoreDataProperties.swift in Sources */,
 				E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */,
 				E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */,
-				E6E60A2822CCFCCB0000B6DE /* Page+CoreDataProperties.swift in Sources */,
+				E66CCA0E2303527C00F1CA59 /* Tag+CoreDataProperties.swift in Sources */,
 				E6241B96224EC8CD00B578F5 /* SessionManager.swift in Sources */,
 				E641A66122A71A83008BBD85 /* SiteStore.swift in Sources */,
-				E63CD0AC22A17D7200501C4F /* AccountCapabilities+CoreDataClass.swift in Sources */,
+				E66CCA092303527C00F1CA59 /* PostList+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
