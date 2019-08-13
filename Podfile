@@ -26,10 +26,29 @@ end
 def gutenberg_dependencies(options)
     dependencies = [
         'React',
+        'React-Core',
+        'React-DevSupport',
+        'React-RCTActionSheet',
+        'React-RCTAnimation',
+        'React-RCTBlob',
+        'React-RCTImage',
+        'React-RCTLinking',
+        'React-RCTNetwork',
+        'React-RCTSettings',
+        'React-RCTText',
+        'React-RCTVibration',
+        'React-RCTWebSocket',
+        'React-cxxreact',
+        'React-jsinspector',
+        'React-jsi',
+        'React-jsiexecutor',
         'yoga',
         'Folly',
+        'glog',
+        'react-native-keyboard-aware-scroll-view',
         'react-native-safe-area',
         'react-native-video',
+        'RNSVG'
     ]
     if options[:path]
         podspec_prefix = options[:path]
@@ -42,6 +61,7 @@ def gutenberg_dependencies(options)
         pod pod_name, :podspec => "#{podspec_prefix}/react-native-gutenberg-bridge/third-party-podspecs/#{pod_name}.podspec.json"
     end
 end
+
 
 
 ## Newspack
@@ -61,9 +81,7 @@ target 'Newspack' do
 
     ## Gutenberg
     ##
-    gutenberg :tag => 'v1.5.1'
-    pod 'RNSVG', :git => 'https://github.com/wordpress-mobile/react-native-svg.git', :tag => '9.3.3-gb'
-    pod 'react-native-keyboard-aware-scroll-view', :git => 'https://github.com/wordpress-mobile/react-native-keyboard-aware-scroll-view.git', :tag => 'gb-v0.8.7'
+    gutenberg :tag => 'v1.10.2'
 
     target 'NewspackTests' do
         inherit! :search_paths
