@@ -67,10 +67,12 @@ class PostListViewController: UITableViewController {
 extension PostListViewController {
 
     @objc func handleRefreshControl() {
+        //TODO: Dispatch action rather than calling sync directly.
         StoreContainer.shared.postListStore.sync(force: true)
     }
 
     func syncIfNeeded() {
+        //TODO: Dispatch action rather than calling sync directly.
         StoreContainer.shared.postListStore.sync()
     }
 }
