@@ -78,6 +78,7 @@ target 'Newspack' do
     pod 'WPMediaPicker', '~> 1.4.1'
     pod 'WordPressFlux', '1.0.0'
     pod 'WordPressUI', '~> 1.3.0'
+    pod 'WordPress-Editor-iOS', '~> 1.8.0' # A gutenberg dependency.
 
     ## Gutenberg
     ##
