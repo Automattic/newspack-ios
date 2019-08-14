@@ -153,6 +153,8 @@ PODS:
   - SVProgressHUD (2.2.5)
   - UIDeviceIdentifier (1.1.4)
   - WordPress-Aztec-iOS (1.8.0)
+  - WordPress-Editor-iOS (1.8.0):
+    - WordPress-Aztec-iOS (= 1.8.0)
   - WordPressAuthenticator (1.5.0):
     - 1PasswordExtension (= 1.8.5)
     - Alamofire (= 4.7.3)
@@ -211,6 +213,7 @@ DEPENDENCIES:
   - React-RCTWebSocket (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.10.2/react-native-gutenberg-bridge/third-party-podspecs/React-RCTWebSocket.podspec.json`)
   - RNSVG (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.10.2/react-native-gutenberg-bridge/third-party-podspecs/RNSVG.podspec.json`)
   - RNTAztecView (from `http://github.com/wordpress-mobile/gutenberg-mobile/`, tag `v1.10.2`)
+  - WordPress-Editor-iOS (~> 1.8.0)
   - WordPressAuthenticator (~> 1.5.0)
   - WordPressFlux (= 1.0.0)
   - WordPressKit (~> 4.1.1)
@@ -238,6 +241,7 @@ SPEC REPOS:
     - SVProgressHUD
     - UIDeviceIdentifier
     - WordPress-Aztec-iOS
+    - WordPress-Editor-iOS
     - WordPressAuthenticator
     - WordPressFlux
     - WordPressKit
@@ -360,6 +364,7 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   UIDeviceIdentifier: 8f8a24b257a4d978c8d40ad1e7355b944ffbfa8c
   WordPress-Aztec-iOS: 5022d76e7c4cd2a492f670944e24b9dd05639763
+  WordPress-Editor-iOS: e0116fe2c4d3e0d2c325f053d9becdf637bfd708
   WordPressAuthenticator: 958545e13b06d39d064d96b2cfdd92c250fe6ead
   WordPressFlux: a381542b0a0414ef85fb0b2a0f9dbde78ffe0637
   WordPressKit: 188a1825d2bffdfa5e63bc3da836b0f4281637d9
@@ -369,6 +374,6 @@ SPEC CHECKSUMS:
   wpxmlrpc: 6ba55c773cfa27083ae4a2173e69b19f46da98e2
   yoga: 4e71c9a33abf45ba55af55ae9cbc86f4234bb2a9
 
-PODFILE CHECKSUM: 01dbfb78b934334b8a05d26a78a0a577b792b156
+PODFILE CHECKSUM: d6a4b7791dcd849416c28bd54c49a743df1c2969
 
 COCOAPODS: 1.5.3

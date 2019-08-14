@@ -60,6 +60,7 @@
 		E6257887222F0B2E00DE6F26 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6257886222F0B2E00DE6F26 /* Photos.framework */; };
 		E6257889222F0B3C00DE6F26 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6257888222F0B3C00DE6F26 /* AVFoundation.framework */; };
 		E625788B222F0B4C00DE6F26 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E625788A222F0B4B00DE6F26 /* ImageIO.framework */; };
+		E629822A2303667E00E8CEC7 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62982292303667E00E8CEC7 /* EditorViewController.swift */; };
 		E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C652235E16E000FEB33 /* AccountStore.swift */; };
 		E62C7C692235E73F000FEB33 /* AccountStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */; };
 		E62C7C6C2235F061000FEB33 /* AuthenticationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */; };
@@ -109,6 +110,9 @@
 		E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67F56D42230914800BFD38B /* CoreDataManager.swift */; };
 		E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */; };
 		E6871F1B22C3FDE7008D3D46 /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */; };
+		E68B29FF23048C6C0021283C /* EditCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B29FE23048C6C0021283C /* EditCoordinator.swift */; };
+		E68B2A0123048E050021283C /* EditorAttachmentImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */; };
+		E68B2A0323048E510021283C /* EditorAttachmentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */; };
 		E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */; };
 		E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E59FA22540D5000899DE2 /* ServiceRemoteCoreRest.swift */; };
 		E69E59FD22541ABD00899DE2 /* WordPressCoreRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E59FC22541ABD00899DE2 /* WordPressCoreRestApi.swift */; };
@@ -207,6 +211,7 @@
 		E6257886222F0B2E00DE6F26 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		E6257888222F0B3C00DE6F26 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E625788A222F0B4B00DE6F26 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		E62982292303667E00E8CEC7 /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
 		E62C7C652235E16E000FEB33 /* AccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStore.swift; sourceTree = "<group>"; };
 		E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStoreTests.swift; sourceTree = "<group>"; };
 		E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManagerTests.swift; sourceTree = "<group>"; };
@@ -259,6 +264,9 @@
 		E67F56D42230914800BFD38B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = Newspack/System/CoreDataManager.swift; sourceTree = SOURCE_ROOT; };
 		E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMenuViewController.swift; sourceTree = "<group>"; };
 		E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
+		E68B29FE23048C6C0021283C /* EditCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCoordinator.swift; sourceTree = "<group>"; };
+		E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAttachmentImageProvider.swift; sourceTree = "<group>"; };
+		E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAttachmentDelegate.swift; sourceTree = "<group>"; };
 		E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteServiceRemote.swift; sourceTree = "<group>"; };
 		E69E59FA22540D5000899DE2 /* ServiceRemoteCoreRest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRemoteCoreRest.swift; sourceTree = "<group>"; };
 		E69E59FC22541ABD00899DE2 /* WordPressCoreRestApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPressCoreRestApi.swift; sourceTree = "<group>"; };
@@ -530,6 +538,10 @@
 				E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */,
 				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
 				E66231CD22F52243004F6DEC /* PostCell.swift */,
+				E62982292303667E00E8CEC7 /* EditorViewController.swift */,
+				E68B29FE23048C6C0021283C /* EditCoordinator.swift */,
+				E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */,
+				E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -868,6 +880,7 @@
 				"${BUILT_PRODUCTS_DIR}/UIDeviceIdentifier/UIDeviceIdentifier.framework",
 				"${BUILT_PRODUCTS_DIR}/WPMediaPicker/WPMediaPicker.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPress-Aztec-iOS/Aztec.framework",
+				"${BUILT_PRODUCTS_DIR}/WordPress-Editor-iOS/WordPressEditor.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPressFlux/WordPressFlux.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPressKit/WordPressKit.framework",
 				"${BUILT_PRODUCTS_DIR}/WordPressShared/WordPressShared.framework",
@@ -918,6 +931,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIDeviceIdentifier.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WPMediaPicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Aztec.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressEditor.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressFlux.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WordPressShared.framework",
@@ -1035,6 +1049,7 @@
 				E66CCA072303527C00F1CA59 /* Account+CoreDataClass.swift in Sources */,
 				E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */,
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
+				E68B29FF23048C6C0021283C /* EditCoordinator.swift in Sources */,
 				E66CCA162303527D00F1CA59 /* Post+CoreDataProperties.swift in Sources */,
 				E602E69222C1666C00795CBA /* AccountAction.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
@@ -1062,12 +1077,14 @@
 				E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */,
 				E66CCA172303527D00F1CA59 /* PostListItem+CoreDataClass.swift in Sources */,
 				E602E68522C15ECC00795CBA /* RemoteSiteSettings.swift in Sources */,
+				E68B2A0323048E510021283C /* EditorAttachmentDelegate.swift in Sources */,
 				E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */,
 				E66CCA102303527C00F1CA59 /* User+CoreDataProperties.swift in Sources */,
 				E6E2ACF722E10F3400A8E85D /* MainStoryboard.swift in Sources */,
 				E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */,
 				E66CCA052303527C00F1CA59 /* Category+CoreDataClass.swift in Sources */,
 				E602E69F22C1747D00795CBA /* Dictionary+Unwrappers.swift in Sources */,
+				E629822A2303667E00E8CEC7 /* EditorViewController.swift in Sources */,
 				E66CCA1B2303527D00F1CA59 /* User+CoreDataClass.swift in Sources */,
 				E66231CE22F52243004F6DEC /* PostCell.swift in Sources */,
 				E66CCA0F2303527C00F1CA59 /* Revision+CoreDataProperties.swift in Sources */,
@@ -1091,6 +1108,7 @@
 				E66CCA0A2303527C00F1CA59 /* Page+CoreDataProperties.swift in Sources */,
 				E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */,
 				E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */,
+				E68B2A0123048E050021283C /* EditorAttachmentImageProvider.swift in Sources */,
 				E66CCA0E2303527C00F1CA59 /* Tag+CoreDataProperties.swift in Sources */,
 				E6241B96224EC8CD00B578F5 /* SessionManager.swift in Sources */,
 				E641A66122A71A83008BBD85 /* SiteStore.swift in Sources */,
