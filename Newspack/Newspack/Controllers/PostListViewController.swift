@@ -40,6 +40,11 @@ class PostListViewController: UITableViewController {
 
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                                            target: self,
+                                                            action: #selector(handleCreatePostButtonTapped))
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -60,6 +65,12 @@ class PostListViewController: UITableViewController {
             tableView.displayGhostContent(options: options)
         }
         tableView.reloadData()
+    }
+
+    @objc func handleCreatePostButtonTapped() {
+        let coordinator = EditCoordinator(post: nil)
+        let controller = EditorViewController.init(coordinator: coordinator)
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 
@@ -143,6 +154,16 @@ extension PostListViewController {
 
             cell.textLabel?.text = ""
         }
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let listItem = resultsController.object(at: indexPath)
+        guard let post = listItem.post else {
+            return
+        }
+        let coordinator = EditCoordinator.init(post: post)
+        let controller = EditorViewController.init(coordinator: coordinator)
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 
