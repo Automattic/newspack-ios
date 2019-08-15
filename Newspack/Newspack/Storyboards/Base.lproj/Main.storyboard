@@ -69,6 +69,7 @@
                             <outlet property="delegate" destination="fc7-7Y-0ky" id="r9N-Ce-2nv"/>
                         </connections>
                     </tableView>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7f8-9p-9lu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -102,6 +103,14 @@
                             <outlet property="delegate" destination="9gP-PW-Wct" id="Vt8-7Y-l1e"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Posts" id="Z65-vC-gGW">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="adX-rW-rKp">
+                            <connections>
+                                <action selector="handleCreatePostButtonTapped" destination="9gP-PW-Wct" id="SlA-wi-4dI"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ATV-Ck-5iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -117,6 +126,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="sFx-NT-hQr"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Edit" id="3af-5u-CsJ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="0ga-jv-su9">
+                            <connections>
+                                <action selector="handleSaveButtonTapped" destination="5eS-vw-2j8" id="6JG-ti-1rF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="saveButton" destination="0ga-jv-su9" id="rec-D5-vNI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WKJ-qY-5tg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

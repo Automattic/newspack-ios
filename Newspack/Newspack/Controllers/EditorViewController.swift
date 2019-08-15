@@ -7,6 +7,7 @@ class EditorViewController: UIViewController {
     let saveTimerInterval: TimeInterval = 60
     var saveTimer: Timer?
     var coordinator: EditCoordinator?
+    @IBOutlet var saveButton: UIBarButtonItem!
 
     private lazy var gutenberg: Gutenberg = {
         guard coordinator != nil else {
@@ -38,6 +39,9 @@ class EditorViewController: UIViewController {
         view.bottomAnchor.constraint(equalTo: gutenberg.rootView.bottomAnchor).isActive = true
     }
 
+    @IBAction func handleSaveButtonTapped() {
+
+    }
 
     func handleSaveTimer() {
         gutenberg.requestHTML()

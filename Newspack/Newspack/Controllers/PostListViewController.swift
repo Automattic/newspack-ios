@@ -40,11 +40,6 @@ class PostListViewController: UITableViewController {
 
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
-
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
-                                                            target: self,
-                                                            action: #selector(handleCreatePostButtonTapped))
-
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -67,7 +62,7 @@ class PostListViewController: UITableViewController {
         tableView.reloadData()
     }
 
-    @objc func handleCreatePostButtonTapped() {
+    @IBAction func handleCreatePostButtonTapped() {
         let coordinator = EditCoordinator(post: nil)
         let controller = MainStoryboard.instantiateViewController(withIdentifier: .editor) as! EditorViewController
         controller.coordinator = coordinator
