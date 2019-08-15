@@ -9,6 +9,9 @@ class EditorViewController: UIViewController {
     var coordinator: EditCoordinator?
 
     private lazy var gutenberg: Gutenberg = {
+        guard coordinator != nil else {
+            fatalError("An EditCoordinator must be assigned before accessing the gutenberg property.")
+        }
         return Gutenberg(dataSource: coordinator!, extraModules: [])
     }()
 
