@@ -16,11 +16,11 @@ class EditCoordinator {
 
 extension EditCoordinator: GutenbergBridgeDataSource {
     func gutenbergInitialContent() -> String? {
-        return post?.content ?? nil
+        return post?.content ?? ""
     }
 
     func gutenbergInitialTitle() -> String? {
-        return post?.title ?? nil
+        return post?.title ?? ""
     }
 
     func aztecAttachmentDelegate() -> TextViewAttachmentDelegate {
