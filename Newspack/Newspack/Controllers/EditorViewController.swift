@@ -6,25 +6,15 @@ class EditorViewController: UIViewController {
 
     let saveTimerInterval: TimeInterval = 60
     var saveTimer: Timer?
-    let coordinator: EditCoordinator
+    var coordinator: EditCoordinator?
 
     private lazy var gutenberg: Gutenberg = {
-        return Gutenberg(dataSource: coordinator, extraModules: [])
+        return Gutenberg(dataSource: coordinator!, extraModules: [])
     }()
-
-    init(coordinator: EditCoordinator) {
-        self.coordinator = coordinator
-
-        super.init(nibName: nil, bundle: nil)
-    }
 
     deinit {
         stopSaveTimer()
         gutenberg.invalidate()
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError()
     }
 
     override func viewDidLoad() {
@@ -33,7 +23,6 @@ class EditorViewController: UIViewController {
         configureGutenberg()
         gutenberg.delegate = self
     }
-
 
     func configureGutenberg() {
         view.backgroundColor = .white

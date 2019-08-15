@@ -107,5 +107,20 @@
             </objects>
             <point key="canvasLocation" x="964" y="149"/>
         </scene>
+        <!--Edit-->
+        <scene sceneID="euE-WE-sAy">
+            <objects>
+                <viewController storyboardIdentifier="EditorViewController" title="Edit" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5eS-vw-2j8" customClass="EditorViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0k3-LG-gnN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="sFx-NT-hQr"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WKJ-qY-5tg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1641" y="149"/>
+        </scene>
     </scenes>
 </document>

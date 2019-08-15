@@ -2,7 +2,17 @@ import Foundation
 import UIKit
 
 class MainStoryboard {
-    static func instantiateViewController(withIdentifier identifier: String) -> UIViewController {
-        return UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: identifier)
+
+    enum Identifier: String {
+        typealias RawValue = String
+        case initial = "InitialViewController"
+        case siteMenu = "SiteMenuViewController"
+        case postList = "PostListViewController"
+        case editor = "EditorViewController"
+
+    }
+
+    static func instantiateViewController(withIdentifier identifier: Identifier) -> UIViewController {
+        return UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: identifier.rawValue)
     }
 }

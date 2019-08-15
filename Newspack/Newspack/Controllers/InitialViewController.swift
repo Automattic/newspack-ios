@@ -51,7 +51,7 @@ class InitialViewController: UIViewController {
     }
 
     func navigateToMenu() {
-        let controller = MainStoryboard.instantiateViewController(withIdentifier: "SiteMenuViewController")
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .siteMenu)
         controller.modalTransitionStyle = .crossDissolve
         navigationController?.setViewControllers([controller], animated: true)
     }
