@@ -41,6 +41,9 @@
 		E6051DE623072251005AAF0B /* remote-revisions.json in Resources */ = {isa = PBXBuildFile; fileRef = E6051DE423072251005AAF0B /* remote-revisions.json */; };
 		E6051DE723072251005AAF0B /* remote-autosave.json in Resources */ = {isa = PBXBuildFile; fileRef = E6051DE523072251005AAF0B /* remote-autosave.json */; };
 		E6051DE9230722FC005AAF0B /* remote-revision.json in Resources */ = {isa = PBXBuildFile; fileRef = E6051DE8230722FC005AAF0B /* remote-revision.json */; };
+		E6051DEC23075A3A005AAF0B /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6051DEB23075A3A005AAF0B /* Dictionary+Merge.swift */; };
+		E6051DEF23075F8A005AAF0B /* DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6051DEE23075F8A005AAF0B /* DateTests.swift */; };
+		E6051DF123076191005AAF0B /* DictionaryMergeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6051DF023076191005AAF0B /* DictionaryMergeTests.swift */; };
 		E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */; };
 		E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */; };
 		E607386122A9A5EF00504EA4 /* AccountDetailsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */; };
@@ -191,6 +194,9 @@
 		E6051DE423072251005AAF0B /* remote-revisions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-revisions.json"; sourceTree = "<group>"; };
 		E6051DE523072251005AAF0B /* remote-autosave.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-autosave.json"; sourceTree = "<group>"; };
 		E6051DE8230722FC005AAF0B /* remote-revision.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "remote-revision.json"; sourceTree = "<group>"; };
+		E6051DEB23075A3A005AAF0B /* Dictionary+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Merge.swift"; sourceTree = "<group>"; };
+		E6051DEE23075F8A005AAF0B /* DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTests.swift; sourceTree = "<group>"; };
+		E6051DF023076191005AAF0B /* DictionaryMergeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryMergeTests.swift; sourceTree = "<group>"; };
 		E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStoreTests.swift; sourceTree = "<group>"; };
 		E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStoreTests.swift; sourceTree = "<group>"; };
 		E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsStoreTests.swift; sourceTree = "<group>"; };
@@ -388,6 +394,15 @@
 			path = Actions;
 			sourceTree = "<group>";
 		};
+		E6051DED23075F60005AAF0B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E6051DEE23075F8A005AAF0B /* DateTests.swift */,
+				E6051DF023076191005AAF0B /* DictionaryMergeTests.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		E6138FC52211FE86004E5B91 = {
 			isa = PBXGroup;
 			children = (
@@ -435,6 +450,7 @@
 				E61FC607229F3280009E1748 /* TestTools */,
 				E66E8A122235ABB300E8DD88 /* Base */,
 				E66E8A03223596B400E8DD88 /* CoreData */,
+				E6051DED23075F60005AAF0B /* Extensions */,
 				E61FC601229F2E96009E1748 /* Api */,
 				E62C7C672235E729000FEB33 /* Stores */,
 				E62C7C6A2235F042000FEB33 /* Services */,
@@ -678,6 +694,7 @@
 			children = (
 				E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */,
 				E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */,
+				E6051DEB23075A3A005AAF0B /* Dictionary+Merge.swift */,
 				E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */,
 			);
 			path = Extensions;
@@ -1070,6 +1087,7 @@
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E66CCA192303527D00F1CA59 /* Media+CoreDataProperties.swift in Sources */,
 				E66CCA1E2303527D00F1CA59 /* Status+CoreDataClass.swift in Sources */,
+				E6051DEC23075A3A005AAF0B /* Dictionary+Merge.swift in Sources */,
 				E602E69622C166C700795CBA /* AccountDetailsAction.swift in Sources */,
 				E61BBD6822FA0470008A6D4C /* StartupHelper.swift in Sources */,
 				E602E69A22C1676500795CBA /* SiteAction.swift in Sources */,
@@ -1140,6 +1158,7 @@
 				E69EB27E22BAE2E2004A92FA /* CoreRestApiTests.swift in Sources */,
 				E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */,
 				E6E1835022D79473009C2D0A /* RemoteTestCase.swift in Sources */,
+				E6051DF123076191005AAF0B /* DictionaryMergeTests.swift in Sources */,
 				E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */,
 				E637A6E422F0EE1500229C1D /* RequestQueueTests.swift in Sources */,
 				E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */,
@@ -1147,6 +1166,7 @@
 				E61A28CF22D53EFD003E214F /* PostServiceRemoteTests.swift in Sources */,
 				E61FC603229F2EEE009E1748 /* UserServiceRemoteTests.swift in Sources */,
 				E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */,
+				E6051DEF23075F8A005AAF0B /* DateTests.swift in Sources */,
 				E61FC605229F2F10009E1748 /* SiteServiceRemoteTests.swift in Sources */,
 				E61FC609229F329A009E1748 /* Loader.swift in Sources */,
 				E607386122A9A5EF00504EA4 /* AccountDetailsStoreTests.swift in Sources */,
