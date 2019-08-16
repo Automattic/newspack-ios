@@ -10,6 +10,8 @@ class PostServiceRemoteTests: RemoteTestCase {
     let remotePostsEditFile = "remote-posts-edit.json"
     let remotePostsIDsEditFile = "remote-posts-ids-edit.json"
     let remoteAutosaveFile = "remote-autosave.json"
+    let remotePostsCreateFile = "remote-posts-create.json"
+    let remotePostsUpdateFile = "remote-posts-update.json"
 
     // Used to retain receipts while fulfilling expectations.
     var receipt: Receipt?
@@ -88,6 +90,54 @@ class PostServiceRemoteTests: RemoteTestCase {
 
         let remote = PostServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: ActionDispatcher.global )
         remote.autosave(postID: 1, title: "Testing", content: "Testing")
+
+        waitForExpectations(timeout: timeout, handler: nil)
+    }
+
+    func testCreatePost() {
+        let expect = expectation(description: "create POST result")
+
+        receipt = ActionDispatcher.global.subscribe { action in
+            defer {
+                expect.fulfill()
+            }
+            guard let postAction = action as? PostCreatedApiAction else {
+                XCTAssert(false)
+                return
+            }
+
+            XCTAssertFalse(postAction.isError())
+            XCTAssertTrue(postAction.payload != nil)
+        }
+
+        stubRemoteResponse("posts", filename: remotePostsCreateFile, contentType: .ApplicationJSON)
+
+        let remote = PostServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: ActionDispatcher.global )
+        remote.createPost(postParams: [String: AnyObject]())
+
+        waitForExpectations(timeout: timeout, handler: nil)
+    }
+
+    func testEditPost() {
+        let expect = expectation(description: "Update POST result")
+
+        receipt = ActionDispatcher.global.subscribe { action in
+            defer {
+                expect.fulfill()
+            }
+            guard let postAction = action as? PostUpdatedApiAction else {
+                XCTAssert(false)
+                return
+            }
+
+            XCTAssertFalse(postAction.isError())
+            XCTAssertTrue(postAction.payload != nil)
+        }
+
+        stubRemoteResponse("posts/1", filename: remotePostsUpdateFile, contentType: .ApplicationJSON)
+
+        let remote = PostServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: ActionDispatcher.global )
+        remote.updatePost(postID: 1, postParams: [String: AnyObject]())
 
         waitForExpectations(timeout: timeout, handler: nil)
     }

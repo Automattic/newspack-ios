@@ -1,0 +1,153 @@
+{
+	"id": 6865,
+	"date": "2019-08-16T22:31:23",
+	"date_gmt": "2019-08-16T22:31:23",
+	"guid": {
+		"rendered": "https://example.com/?p=6865",
+		"raw": "https://example.com/?p=6865"
+	},
+	"modified": "2019-08-16T22:31:23",
+	"modified_gmt": "2019-08-16T22:31:23",
+	"password": "",
+	"slug": "",
+	"status": "draft",
+	"type": "post",
+	"link": "https://example.com/?p=6865",
+	"title": {
+		"raw": "Test post created from the rest console.",
+		"rendered": "Test post created from the rest&nbsp;console."
+	},
+	"content": {
+		"raw": "Test content. Making the all with just a title and plain text content.",
+		"rendered": "<p>Test content. Making the all with just a title and plain text content.</p>\n",
+		"protected": false,
+		"block_version": 0
+	},
+	"excerpt": {
+		"raw": "",
+		"rendered": "<p>Test content. Making the all with just a title and plain text content.</p>\n",
+		"protected": false
+	},
+	"author": 34720192,
+	"featured_media": 0,
+	"comment_status": "open",
+	"ping_status": "open",
+	"sticky": false,
+	"template": "",
+	"format": "standard",
+	"meta": {
+		"_coblocks_attr": "",
+		"_coblocks_dimensions": "",
+		"_coblocks_responsive_height": "",
+		"_coblocks_accordion_ie_support": "",
+		"amp_status": "",
+		"spay_email": "",
+		"jetpack_publicize_message": ""
+	},
+	"categories": [
+		12
+	],
+	"tags": [],
+	"permalink_template": "https://example.com/2019/08/16/%postname%/",
+	"generated_slug": "test-post-created-from-the-rest-console",
+	"jetpack-related-posts": [],
+	"jetpack_featured_media_url": "",
+	"jetpack_publicize_connections": [],
+	"jetpack_shortlink": "https://wp.me/p2m73S-1MJ",
+	"jetpack_sharing_enabled": true,
+	"jetpack_likes_enabled": true,
+	"_links": {
+		"self": [
+			{
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/posts/6865"
+			}
+		],
+		"collection": [
+			{
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/posts"
+			}
+		],
+		"about": [
+			{
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/types/post"
+			}
+		],
+		"author": [
+			{
+				"embeddable": true,
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/users/34720192"
+			}
+		],
+		"replies": [
+			{
+				"embeddable": true,
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/comments?post=6865"
+			}
+		],
+		"version-history": [
+			{
+				"count": 0,
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/posts/6865/revisions"
+			}
+		],
+		"wp:attachment": [
+			{
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/media?parent=6865"
+			}
+		],
+		"wp:term": [
+			{
+				"taxonomy": "category",
+				"embeddable": true,
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/categories?post=6865"
+			},
+			{
+				"taxonomy": "post_tag",
+				"embeddable": true,
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/tags?post=6865"
+			}
+		],
+		"wp:action-publish": [
+			{
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/posts/6865"
+			}
+		],
+		"wp:action-sticky": [
+			{
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/posts/6865"
+			}
+		],
+		"wp:action-assign-author": [
+			{
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/posts/6865"
+			}
+		],
+		"wp:action-create-categories": [
+			{
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/posts/6865"
+			}
+		],
+		"wp:action-assign-categories": [
+			{
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/posts/6865"
+			}
+		],
+		"wp:action-create-tags": [
+			{
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/posts/6865"
+			}
+		],
+		"wp:action-assign-tags": [
+			{
+				"href": "https://public-api.wordpress.com/wp/v2/sites/example.com/posts/6865"
+			}
+		],
+		"curies": [
+			{
+				"name": "wp",
+				"href": "https://api.w.org/{rel}",
+				"templated": true
+			}
+		]
+	}
+}

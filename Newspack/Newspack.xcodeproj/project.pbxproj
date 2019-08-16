@@ -124,6 +124,8 @@
 		E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E59FA22540D5000899DE2 /* ServiceRemoteCoreRest.swift */; };
 		E69E59FD22541ABD00899DE2 /* WordPressCoreRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E59FC22541ABD00899DE2 /* WordPressCoreRestApi.swift */; };
 		E69EB27E22BAE2E2004A92FA /* CoreRestApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69EB27D22BAE2E2004A92FA /* CoreRestApiTests.swift */; };
+		E6A4D73D230766AC00929376 /* remote-posts-create.json in Resources */ = {isa = PBXBuildFile; fileRef = E6A4D73C230766AC00929376 /* remote-posts-create.json */; };
+		E6A4D73F23076A3200929376 /* remote-posts-update.json in Resources */ = {isa = PBXBuildFile; fileRef = E6A4D73E23076A3200929376 /* remote-posts-update.json */; };
 		E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */; };
 		E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */; };
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
@@ -285,6 +287,8 @@
 		E69E59FA22540D5000899DE2 /* ServiceRemoteCoreRest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRemoteCoreRest.swift; sourceTree = "<group>"; };
 		E69E59FC22541ABD00899DE2 /* WordPressCoreRestApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPressCoreRestApi.swift; sourceTree = "<group>"; };
 		E69EB27D22BAE2E2004A92FA /* CoreRestApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRestApiTests.swift; sourceTree = "<group>"; };
+		E6A4D73C230766AC00929376 /* remote-posts-create.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-create.json"; sourceTree = "<group>"; };
+		E6A4D73E23076A3200929376 /* remote-posts-update.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-update.json"; sourceTree = "<group>"; };
 		E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceRemote.swift; sourceTree = "<group>"; };
 		E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-ids-edit.json"; sourceTree = "<group>"; };
 		E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-edit.json"; sourceTree = "<group>"; };
@@ -593,6 +597,8 @@
 		E61FC60A229F330A009E1748 /* TestData */ = {
 			isa = PBXGroup;
 			children = (
+				E6A4D73E23076A3200929376 /* remote-posts-update.json */,
+				E6A4D73C230766AC00929376 /* remote-posts-create.json */,
 				E6051DE523072251005AAF0B /* remote-autosave.json */,
 				E6051DE8230722FC005AAF0B /* remote-revision.json */,
 				E6051DE423072251005AAF0B /* remote-revisions.json */,
@@ -806,7 +812,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6A4D73D230766AC00929376 /* remote-posts-create.json in Resources */,
 				E6051DE623072251005AAF0B /* remote-revisions.json in Resources */,
+				E6A4D73F23076A3200929376 /* remote-posts-update.json in Resources */,
 				E61FC610229F33C5009E1748 /* remote-user-view.json in Resources */,
 				E61FC60E229F3377009E1748 /* remote-user-edit.json in Resources */,
 				E61FC60C229F3361009E1748 /* remote-site-settings.json in Resources */,
