@@ -4,6 +4,7 @@ import WordPressFlux
 struct PostFetchedApiAction: ApiAction {
     var payload: RemotePost?
     var error: Error?
+    var postID: Int64
 }
 
 struct PostIDsFetchedApiAction: ApiAction {
@@ -17,6 +18,17 @@ struct PostIDsFetchedApiAction: ApiAction {
 
 struct AutosaveApiAction: ApiAction {
     var payload: RemoteRevision?
+    var error: Error?
+    var postID: Int64
+}
+
+struct PostCreatedApiAction: ApiAction {
+    var payload: RemotePost?
+    var error: Error?
+}
+
+struct PostUpdatedApiAction: ApiAction {
+    var payload: RemotePost?
     var error: Error?
     var postID: Int64
 }

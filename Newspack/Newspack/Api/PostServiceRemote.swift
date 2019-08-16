@@ -17,7 +17,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             "page": page,
             "per_page": perPage
         ] as [String: AnyObject]
-        let parameters = params.merging(filter) { (current, _) in current }
+        let parameters = params.mergedWith(filter)
 
         api.GET("posts", parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
             let array = response as! [[String: AnyObject]]
@@ -55,10 +55,10 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             let dict = response as! [String: AnyObject]
             let post = self.remotePostFromResponse(response: dict)
 
-            self.dispatch(action: PostFetchedApiAction(payload: post, error: nil))
+            self.dispatch(action: PostFetchedApiAction(payload: post, error: nil, postID: postID))
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
-            self.dispatch(action: PostFetchedApiAction(payload: nil, error: error))
+            self.dispatch(action: PostFetchedApiAction(payload: nil, error: error, postID: postID))
         })
     }
 
@@ -98,6 +98,55 @@ class PostServiceRemote: ServiceRemoteCoreRest {
                                                     postID: postID))
         })
     }
+
+    /// Creates a new post with the provided parameters.
+    ///
+    /// - Parameter postParams: A dictionary having the keys/values with which to create the new post.
+    ///
+    func createPost(postParams: [String: AnyObject]) {
+        let defaultParams = [
+            "context": "edit"
+            ] as [String: AnyObject]
+
+        let parameters = defaultParams.mergedWith(postParams)
+        let path = "posts"
+
+        api.POST(path, parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
+            let dict = response as! [String: AnyObject]
+            let post = self.remotePostFromResponse(response: dict)
+
+            self.dispatch(action: PostCreatedApiAction(payload: post, error: nil))
+
+        }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
+            self.dispatch(action: PostCreatedApiAction(payload: nil, error: error))
+        })
+    }
+
+    /// Update the specified post with the provided parameters.
+    ///
+    /// - Parameters:
+    ///   - postID: The ID of the post to update.
+    ///   - postParams: A dictionary having the keys/values with which to update the specified post.
+    ///
+    func updatePost(postID: Int64, postParams: [String: AnyObject]) {
+        let defaultParams = [
+            "context": "edit"
+        ] as [String: AnyObject]
+        let parameters = defaultParams.mergedWith(postParams)
+
+        let path = "posts/\(postID)"
+
+        api.POST(path, parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
+            let dict = response as! [String: AnyObject]
+            let post = self.remotePostFromResponse(response: dict)
+
+            self.dispatch(action: PostUpdatedApiAction(payload: post, error: nil, postID: postID))
+
+        }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
+            self.dispatch(action: PostUpdatedApiAction(payload: nil, error: error, postID: postID))
+        })
+    }
+
 }
 
 // MARK: - Remote model management.
