@@ -9,6 +9,7 @@ class PostServiceRemoteTests: RemoteTestCase {
     let remotePostIDEditFile = "remote-post-id-edit.json"
     let remotePostsEditFile = "remote-posts-edit.json"
     let remotePostsIDsEditFile = "remote-posts-ids-edit.json"
+    let remoteAutosaveFile = "remote-autosave.json"
 
     // Used to retain receipts while fulfilling expectations.
     var receipt: Receipt?
@@ -67,8 +68,31 @@ class PostServiceRemoteTests: RemoteTestCase {
         waitForExpectations(timeout: timeout, handler: nil)
     }
 
+    func testAutosave() {
+        let expect = expectation(description: "autosaves POST result")
+
+        receipt = ActionDispatcher.global.subscribe { action in
+            defer {
+                expect.fulfill()
+            }
+            guard let autosaveAction = action as? AutosaveApiAction else {
+                XCTAssert(false)
+                return
+            }
+
+            XCTAssertFalse(autosaveAction.isError())
+            XCTAssertTrue(autosaveAction.payload != nil)
+        }
+
+        stubRemoteResponse("posts/1/autosaves", filename: remoteAutosaveFile, contentType: .ApplicationJSON)
+
+        let remote = PostServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: ActionDispatcher.global )
+        remote.autosave(postID: 1, title: "Testing", content: "Testing")
+
+        waitForExpectations(timeout: timeout, handler: nil)
+    }
+
     func testRemotePost() {
-        
         guard let response = Loader.jsonObject(for: "remote-post-edit") as? [String: AnyObject] else {
             XCTAssert(false)
             return
@@ -83,7 +107,6 @@ class PostServiceRemoteTests: RemoteTestCase {
     }
 
     func testRemotePostID() {
-
         guard let response = Loader.jsonObject(for: "remote-post-id-edit") as? [String: AnyObject] else {
             XCTAssert(false)
             return
@@ -92,6 +115,32 @@ class PostServiceRemoteTests: RemoteTestCase {
         let remotePostID = RemotePostID(dict: response)
 
         XCTAssert(remotePostID.postID == 6815)
+    }
+
+    func testRemoteRevision() {
+        guard let response = Loader.jsonObject(for: "remote-revision") as? [String: AnyObject] else {
+            XCTAssert(false)
+            return
+        }
+
+        let remoteRevision = RemoteRevision(dict: response)
+
+        XCTAssert(remoteRevision.postID == 6860)
+        XCTAssert(remoteRevision.parentID == 6858)
+        XCTAssert(remoteRevision.previewLink == "")
+    }
+
+    func testRemoteRevisionAsAutosaveResponse() {
+        guard let response = Loader.jsonObject(for: "remote-autosave") as? [String: AnyObject] else {
+            XCTAssert(false)
+            return
+        }
+
+        let remoteRevision = RemoteRevision(dict: response)
+
+        XCTAssert(remoteRevision.postID == 6860)
+        XCTAssert(remoteRevision.parentID == 6858)
+        XCTAssert(remoteRevision.previewLink == "https://example.com/2019/08/15/private-post/?preview_id=6858&preview_nonce=ed89b5a440&preview=true")
     }
 
 }

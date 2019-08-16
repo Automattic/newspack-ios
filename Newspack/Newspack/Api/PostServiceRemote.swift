@@ -83,7 +83,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             "content": content,
             "excerpt": excerpt
             ] as [String: AnyObject]
-        let path = "posts/\(postID)/autosave"
+        let path = "posts/\(postID)/autosaves"
 
         api.POST(path, parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
             var revision: RemoteRevision?
