@@ -37,6 +37,7 @@
 		E602E69A22C1676500795CBA /* SiteAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69922C1676500795CBA /* SiteAction.swift */; };
 		E602E69F22C1747D00795CBA /* Dictionary+Unwrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */; };
 		E6034B1422529414007DB6DD /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6034B1322529414007DB6DD /* UserAgent.swift */; };
+		E6051DE323071A3A005AAF0B /* RemoteRevision.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6051DE223071A3A005AAF0B /* RemoteRevision.swift */; };
 		E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */; };
 		E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */; };
 		E607386122A9A5EF00504EA4 /* AccountDetailsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */; };
@@ -183,6 +184,7 @@
 		E602E69922C1676500795CBA /* SiteAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteAction.swift; sourceTree = "<group>"; };
 		E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Unwrappers.swift"; sourceTree = "<group>"; };
 		E6034B1322529414007DB6DD /* UserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
+		E6051DE223071A3A005AAF0B /* RemoteRevision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRevision.swift; sourceTree = "<group>"; };
 		E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStoreTests.swift; sourceTree = "<group>"; };
 		E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStoreTests.swift; sourceTree = "<group>"; };
 		E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsStoreTests.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				E602E68222C15EC100795CBA /* RemoteUser.swift */,
 				E602E68422C15ECC00795CBA /* RemoteSiteSettings.swift */,
 				E602E68622C15ED700795CBA /* RemotePost.swift */,
+				E6051DE223071A3A005AAF0B /* RemoteRevision.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1086,6 +1089,7 @@
 				E602E69F22C1747D00795CBA /* Dictionary+Unwrappers.swift in Sources */,
 				E629822A2303667E00E8CEC7 /* EditorViewController.swift in Sources */,
 				E66CCA1B2303527D00F1CA59 /* User+CoreDataClass.swift in Sources */,
+				E6051DE323071A3A005AAF0B /* RemoteRevision.swift in Sources */,
 				E66231CE22F52243004F6DEC /* PostCell.swift in Sources */,
 				E66CCA0F2303527C00F1CA59 /* Revision+CoreDataProperties.swift in Sources */,
 				E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */,

@@ -61,6 +61,43 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             self.dispatch(action: PostFetchedApiAction(payload: nil, error: error))
         })
     }
+
+    /// Create or update an autosave for changes to the specified post.
+    /// The behavior of this call changes depending on the post's status.
+    /// When the post's status is publish, private, or future, the endpoint
+    /// will return an autosave revision response.
+    /// When the post's status is draft or pending the endpoint returns an empty
+    /// array and the changes are applied directly to the draft/pending without
+    /// creating a new revision.
+    ///
+    /// - Parameters:
+    ///   - postID: The ID of the post being modified..
+    ///   - title: The post's title
+    ///   - content: The post's html content.
+    ///   - excerpt: An excerpt of the post's content. (Optional.)
+    ///
+    func autosave(postID: Int64, title: String, content: String, excerpt: String = "") {
+        let parameters = [
+            "context": "edit",
+            "title": title,
+            "content": content,
+            "excerpt": excerpt
+            ] as [String: AnyObject]
+        let path = "posts/\(postID)/autosave"
+
+        api.POST(path, parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
+            var revision: RemoteRevision?
+            if let dict = response as? [String: AnyObject] {
+                revision = RemoteRevision(dict: dict)
+            }
+            self.dispatch(action: AutosaveApiAction(payload: revision, error: nil, postID: postID))
+
+        }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
+            self.dispatch(action: AutosaveApiAction(payload: nil,
+                                                    error: error,
+                                                    postID: postID))
+        })
+    }
 }
 
 // MARK: - Remote model management.

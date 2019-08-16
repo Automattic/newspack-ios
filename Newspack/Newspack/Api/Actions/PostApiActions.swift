@@ -14,3 +14,9 @@ struct PostIDsFetchedApiAction: ApiAction {
     var page: Int
     var hasMore: Bool
 }
+
+struct AutosaveApiAction: ApiAction {
+    var payload: RemoteRevision?
+    var error: Error?
+    var postID: Int64
+}
