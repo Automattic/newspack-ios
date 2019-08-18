@@ -126,6 +126,8 @@
 		E69EB27E22BAE2E2004A92FA /* CoreRestApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69EB27D22BAE2E2004A92FA /* CoreRestApiTests.swift */; };
 		E6A4D73D230766AC00929376 /* remote-posts-create.json in Resources */ = {isa = PBXBuildFile; fileRef = E6A4D73C230766AC00929376 /* remote-posts-create.json */; };
 		E6A4D73F23076A3200929376 /* remote-posts-update.json in Resources */ = {isa = PBXBuildFile; fileRef = E6A4D73E23076A3200929376 /* remote-posts-update.json */; };
+		E6A4D742230A08A700929376 /* StagedEdits+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A4D740230A08A600929376 /* StagedEdits+CoreDataProperties.swift */; };
+		E6A4D743230A08A700929376 /* StagedEdits+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A4D741230A08A700929376 /* StagedEdits+CoreDataClass.swift */; };
 		E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */; };
 		E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */; };
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
@@ -289,6 +291,8 @@
 		E69EB27D22BAE2E2004A92FA /* CoreRestApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRestApiTests.swift; sourceTree = "<group>"; };
 		E6A4D73C230766AC00929376 /* remote-posts-create.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-create.json"; sourceTree = "<group>"; };
 		E6A4D73E23076A3200929376 /* remote-posts-update.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-update.json"; sourceTree = "<group>"; };
+		E6A4D740230A08A600929376 /* StagedEdits+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StagedEdits+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E6A4D741230A08A700929376 /* StagedEdits+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StagedEdits+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceRemote.swift; sourceTree = "<group>"; };
 		E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-ids-edit.json"; sourceTree = "<group>"; };
 		E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-edit.json"; sourceTree = "<group>"; };
@@ -523,6 +527,8 @@
 				E66CC9F32303527800F1CA59 /* Revision+CoreDataProperties.swift */,
 				E66CC9EA2303527600F1CA59 /* Site+CoreDataClass.swift */,
 				E66CC9F12303527800F1CA59 /* Site+CoreDataProperties.swift */,
+				E6A4D741230A08A700929376 /* StagedEdits+CoreDataClass.swift */,
+				E6A4D740230A08A600929376 /* StagedEdits+CoreDataProperties.swift */,
 				E66CCA022303527C00F1CA59 /* Status+CoreDataClass.swift */,
 				E66CC9F72303527900F1CA59 /* Status+CoreDataProperties.swift */,
 				E66CCA032303527C00F1CA59 /* Tag+CoreDataClass.swift */,
@@ -1088,9 +1094,11 @@
 				E6138FD42211FE86004E5B91 /* InitialViewController.swift in Sources */,
 				E66CCA072303527C00F1CA59 /* Account+CoreDataClass.swift in Sources */,
 				E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */,
+				E6A4D742230A08A700929376 /* StagedEdits+CoreDataProperties.swift in Sources */,
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
 				E68B29FF23048C6C0021283C /* EditCoordinator.swift in Sources */,
 				E66CCA162303527D00F1CA59 /* Post+CoreDataProperties.swift in Sources */,
+				E6A4D743230A08A700929376 /* StagedEdits+CoreDataClass.swift in Sources */,
 				E602E69222C1666C00795CBA /* AccountAction.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E66CCA192303527D00F1CA59 /* Media+CoreDataProperties.swift in Sources */,

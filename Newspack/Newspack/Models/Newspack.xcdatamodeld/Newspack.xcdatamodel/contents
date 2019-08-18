@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES">
         <attribute name="networkUrl" attributeType="String" syncable="YES"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
@@ -153,6 +153,7 @@
         <attribute name="syncing" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="post" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Post" inverseName="item" inverseEntity="Post" syncable="YES"/>
         <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostList" inverseName="items" inverseEntity="PostList" syncable="YES"/>
+        <relationship name="stagedEdits" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="StagedEdits" inverseName="postListItem" inverseEntity="StagedEdits" syncable="YES"/>
     </entity>
     <entity name="Revision" representedClassName="Revision" syncable="YES">
         <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -198,6 +199,12 @@
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Tag" inverseName="site" inverseEntity="Tag" syncable="YES"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="User" inverseName="site" inverseEntity="User" syncable="YES"/>
     </entity>
+    <entity name="StagedEdits" representedClassName="StagedEdits" syncable="YES" codeGenerationType="class">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="excerpt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="postListItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="stagedEdits" inverseEntity="PostListItem" syncable="YES"/>
+    </entity>
     <entity name="Status" representedClassName="Status" syncable="YES">
         <attribute name="isPrivate" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isProtected" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
@@ -237,11 +244,12 @@
         <element name="Page" positionX="-1323" positionY="-198" width="128" height="465"/>
         <element name="Post" positionX="-1359" positionY="-234" width="128" height="540"/>
         <element name="PostList" positionX="-1341" positionY="-225" width="128" height="150"/>
-        <element name="PostListItem" positionX="-1350" positionY="-234" width="128" height="150"/>
+        <element name="PostListItem" positionX="-1350" positionY="-234" width="128" height="165"/>
         <element name="Revision" positionX="-1350" positionY="-225" width="128" height="270"/>
         <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="420"/>
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
         <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>
         <element name="User" positionX="-1305" positionY="-180" width="128" height="165"/>
+        <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="105"/>
     </elements>
 </model>
