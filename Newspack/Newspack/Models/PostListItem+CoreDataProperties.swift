@@ -16,7 +16,7 @@ extension PostListItem {
 
     @NSManaged public var post: Post!
     @NSManaged public var postLists: Set<PostList>!
-    @NSManaged public var stagedEdits: stagedEdits?
+    @NSManaged public var stagedEdits: StagedEdits?
 
 }
 

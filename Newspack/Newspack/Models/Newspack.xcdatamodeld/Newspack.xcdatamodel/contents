@@ -199,7 +199,7 @@
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Tag" inverseName="site" inverseEntity="Tag" syncable="YES"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="User" inverseName="site" inverseEntity="User" syncable="YES"/>
     </entity>
-    <entity name="StagedEdits" representedClassName="StagedEdits" syncable="YES" codeGenerationType="class">
+    <entity name="StagedEdits" representedClassName="StagedEdits" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="excerpt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
