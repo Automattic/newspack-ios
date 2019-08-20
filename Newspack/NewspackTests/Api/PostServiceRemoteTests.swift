@@ -96,6 +96,7 @@ class PostServiceRemoteTests: RemoteTestCase {
 
     func testCreatePost() {
         let expect = expectation(description: "create POST result")
+        let uuid = UUID()
 
         receipt = ActionDispatcher.global.subscribe { action in
             defer {
@@ -108,12 +109,13 @@ class PostServiceRemoteTests: RemoteTestCase {
 
             XCTAssertFalse(postAction.isError())
             XCTAssertTrue(postAction.payload != nil)
+            XCTAssertTrue(postAction.uuid == uuid)
         }
 
         stubRemoteResponse("posts", filename: remotePostsCreateFile, contentType: .ApplicationJSON)
 
         let remote = PostServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: ActionDispatcher.global )
-        remote.createPost(postParams: [String: AnyObject]())
+        remote.createPost(uuid: uuid, postParams: [String: AnyObject]())
 
         waitForExpectations(timeout: timeout, handler: nil)
     }

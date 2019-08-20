@@ -103,7 +103,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     ///
     /// - Parameter postParams: A dictionary having the keys/values with which to create the new post.
     ///
-    func createPost(postParams: [String: AnyObject]) {
+    func createPost(uuid: UUID, postParams: [String: AnyObject]) {
         let defaultParams = [
             "context": "edit"
             ] as [String: AnyObject]
@@ -115,10 +115,10 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             let dict = response as! [String: AnyObject]
             let post = self.remotePostFromResponse(response: dict)
 
-            self.dispatch(action: PostCreatedApiAction(payload: post, error: nil))
+            self.dispatch(action: PostCreatedApiAction(payload: post, error: nil, uuid: uuid))
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
-            self.dispatch(action: PostCreatedApiAction(payload: nil, error: error))
+            self.dispatch(action: PostCreatedApiAction(payload: nil, error: error, uuid: uuid))
         })
     }
 

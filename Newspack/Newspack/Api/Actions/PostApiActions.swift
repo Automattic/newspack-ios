@@ -25,6 +25,7 @@ struct AutosaveApiAction: ApiAction {
 struct PostCreatedApiAction: ApiAction {
     var payload: RemotePost?
     var error: Error?
+    var uuid: UUID
 }
 
 struct PostUpdatedApiAction: ApiAction {
