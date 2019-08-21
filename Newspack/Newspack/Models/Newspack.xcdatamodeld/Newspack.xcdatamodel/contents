@@ -153,6 +153,7 @@
         <attribute name="syncing" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <relationship name="post" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Post" inverseName="item" inverseEntity="Post" syncable="YES"/>
         <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostList" inverseName="items" inverseEntity="PostList" syncable="YES"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postListItems" inverseEntity="Site" syncable="YES"/>
         <relationship name="stagedEdits" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="StagedEdits" inverseName="postListItem" inverseEntity="StagedEdits" syncable="YES"/>
     </entity>
     <entity name="Revision" representedClassName="Revision" syncable="YES">
@@ -193,6 +194,7 @@
         <relationship name="categories" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Category" inverseName="site" inverseEntity="Category" syncable="YES"/>
         <relationship name="media" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Media" inverseName="site" inverseEntity="Media" syncable="YES"/>
         <relationship name="pages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Page" inverseName="site" inverseEntity="Page" syncable="YES"/>
+        <relationship name="postListItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostListItem" inverseName="site" inverseEntity="PostListItem" syncable="YES"/>
         <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostList" inverseName="site" inverseEntity="PostList" syncable="YES"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Post" inverseName="site" inverseEntity="Post" syncable="YES"/>
         <relationship name="statuses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Status" inverseName="site" inverseEntity="Status" syncable="YES"/>
@@ -244,12 +246,12 @@
         <element name="Page" positionX="-1323" positionY="-198" width="128" height="465"/>
         <element name="Post" positionX="-1359" positionY="-234" width="128" height="540"/>
         <element name="PostList" positionX="-1341" positionY="-225" width="128" height="150"/>
-        <element name="PostListItem" positionX="-1350" positionY="-234" width="128" height="165"/>
+        <element name="PostListItem" positionX="-1350" positionY="-234" width="128" height="180"/>
         <element name="Revision" positionX="-1350" positionY="-225" width="128" height="270"/>
-        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="420"/>
+        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="435"/>
+        <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="105"/>
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
         <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>
         <element name="User" positionX="-1305" positionY="-180" width="128" height="165"/>
-        <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="105"/>
     </elements>
 </model>

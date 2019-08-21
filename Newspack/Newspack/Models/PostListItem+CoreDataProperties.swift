@@ -15,6 +15,7 @@ extension PostListItem {
     @NSManaged public var syncing: Bool
 
     @NSManaged public var post: Post!
+    @NSManaged public var site: Site!
     @NSManaged public var postLists: Set<PostList>!
     @NSManaged public var stagedEdits: StagedEdits?
 

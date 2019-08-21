@@ -226,6 +226,7 @@ extension PostListStore {
             }
 
             updatePostListItem(item, with: remotePostID)
+            item.site = list.site
             list.addToItems(item)
         }
 
