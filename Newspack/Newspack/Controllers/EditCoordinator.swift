@@ -6,21 +6,59 @@ import Aztec
 ///
 class EditCoordinator {
 
-    var post: Post?
+    var postItem: PostListItem?
+    let stagedEdits: StagedEdits
 
-    init(post: Post?) {
-        self.post = post
+
+    init(postItem: PostListItem?) {
+        self.postItem = postItem
+        self.stagedEdits = postItem?.stagedEdits ?? StagedEdits(context: CoreDataManager.shared.mainContext)
+    }
+
+    func stageChanges(title: String, content: String) {
+        stagedEdits.title = title
+        stagedEdits.content = content
+
+        CoreDataManager.shared.saveContext()
+    }
+
+    func autosave(title: String, content: String) {
+        // TODO: check for changes. If no changes bail.
+
+        if postItem == nil {
+            // This is either the first autosave.
+            // create post list item
+            // TODO:
+        }
+
+        // Try to autosave changes.
+        let title = stagedEdits.title ?? ""
+        let content = stagedEdits.content ?? ""
+        let postService = ApiService.shared.postServiceRemote()
+        postService.autosave(postID: 1, title: title, content: content)
     }
 
 }
 
 extension EditCoordinator: GutenbergBridgeDataSource {
     func gutenbergInitialContent() -> String? {
-        return post?.content ?? ""
+        if
+            let edits = postItem?.stagedEdits,
+            let content = edits.content
+        {
+            return content
+        }
+        return postItem?.post?.content ?? ""
     }
 
     func gutenbergInitialTitle() -> String? {
-        return post?.title ?? ""
+        if
+            let edits = postItem?.stagedEdits,
+            let title = edits.title
+        {
+            return title
+        }
+        return postItem?.post?.title ?? ""
     }
 
     func aztecAttachmentDelegate() -> TextViewAttachmentDelegate {

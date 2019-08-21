@@ -6,6 +6,7 @@ class EditorViewController: UIViewController {
 
     let saveTimerInterval: TimeInterval = 60
     var saveTimer: Timer?
+    var saveCounter = 0
     var coordinator: EditCoordinator?
     @IBOutlet var saveButton: UIBarButtonItem!
 
@@ -40,10 +41,36 @@ class EditorViewController: UIViewController {
     }
 
     @IBAction func handleSaveButtonTapped() {
+        // Prompt with options (request from coordinator):
+        //
+        // If Draft
+        //  - Preview
+        //  - Save Draft (creates revision also?)
+        //  - Publish Now
+        //  - Schedule
+        //
+        // If Pending
+        //  - Preview
+        //  - Save as Pending
+        //  - Publish Now
+        //  - Schedule
+        //
+        // If Publish or Private
+        //  - Preview
+        //  - Update
+        //  - Switch to Draft
+        //
+        // If Future
+        //  - Preview
+        //  - Update
+        //  - Publish Now
+        //  - Switch to Draft
+
 
     }
 
     func handleSaveTimer() {
+        saveCounter += 1
         gutenberg.requestHTML()
     }
 
@@ -64,7 +91,12 @@ extension EditorViewController: GutenbergBridgeDelegate {
         guard changed else {
             return
         }
-        // TODO:
+        if saveCounter < 10 {
+            coordinator?.stageChanges(title: title, content: html)
+        } else {
+            saveCounter = 0
+            coordinator?.autosave(title: title, content: html)
+        }
     }
 
     func gutenbergDidRequestMedia(from source: MediaPickerSource, filter: [MediaFilter]?, with callback: @escaping MediaPickerDidPickMediaCallback) {
