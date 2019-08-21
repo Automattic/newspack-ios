@@ -37,6 +37,24 @@ extension PostStore: RequestQueueDelegate {
 
 extension PostStore {
 
+    func getHighestPostID() -> Int64 {
+        guard let siteID = currentSiteID else {
+            return 0
+        }
+        let context = CoreDataManager.shared.mainContext
+        let fetchRequest = PostListItem.defaultFetchRequest()
+        fetchRequest.fetchLimit = 1
+        fetchRequest.predicate = NSPredicate(format: "site.siteID = @", siteID as CVarArg)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "postID", ascending: false)]
+
+        if let results = try? context.fetch(fetchRequest) {
+            if let result = results.first {
+                return result.postID
+            }
+        }
+        return 0
+    }
+
     /// Gets the PostListItem from core data for the specified post ID.
     ///
     /// - Parameter postID: The post ID of the item.
