@@ -10,10 +10,10 @@ class EditCoordinator: Store {
     var postItem: PostListItem?
     let stagedEdits: StagedEdits
 
-
-    init(postItem: PostListItem?) {
+    init(postItem: PostListItem?, dispatcher: ActionDispatcher) {
         self.postItem = postItem
         self.stagedEdits = postItem?.stagedEdits ?? StagedEdits(context: CoreDataManager.shared.mainContext)
+        super.init(dispatcher: dispatcher)
     }
 
     func stageChanges(title: String, content: String) {
