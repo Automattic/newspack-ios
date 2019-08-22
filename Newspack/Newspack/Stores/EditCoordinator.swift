@@ -1,10 +1,11 @@
 import Foundation
+import WordPressFlux
 import Gutenberg
 import Aztec
 
 /// Provides a bridge between the Editor, and the content being edited.
 ///
-class EditCoordinator {
+class EditCoordinator: Store {
 
     var postItem: PostListItem?
     let stagedEdits: StagedEdits

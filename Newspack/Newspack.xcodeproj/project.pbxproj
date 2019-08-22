@@ -574,7 +574,6 @@
 				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
 				E66231CD22F52243004F6DEC /* PostCell.swift */,
 				E62982292303667E00E8CEC7 /* EditorViewController.swift */,
-				E68B29FE23048C6C0021283C /* EditCoordinator.swift */,
 				E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */,
 				E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */,
 			);
@@ -638,6 +637,7 @@
 				E62C7C652235E16E000FEB33 /* AccountStore.swift */,
 				E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */,
 				E641A66222A7584A008BBD85 /* AccountDetailsStore.swift */,
+				E68B29FE23048C6C0021283C /* EditCoordinator.swift */,
 				E6FB520522B973A60010FDF8 /* PostStore.swift */,
 				E638804D22DFC07900B3C16A /* PostListStore.swift */,
 				E641A66022A71A83008BBD85 /* SiteStore.swift */,
