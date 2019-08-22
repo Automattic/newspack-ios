@@ -91,11 +91,12 @@ extension EditorViewController: GutenbergBridgeDelegate {
         guard changed else {
             return
         }
+        let dispatcher = SessionManager.shared.sessionDispatcher
         if saveCounter < 10 {
-            coordinator?.stageChanges(title: title, content: html)
+            dispatcher.dispatch(EditAction.stageChanges(title: title, content: html))
         } else {
             saveCounter = 0
-            coordinator?.autosave(title: title, content: html)
+            dispatcher.dispatch(EditAction.autosave(title: title, content: html))
         }
     }
 

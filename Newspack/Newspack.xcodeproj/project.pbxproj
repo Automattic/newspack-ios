@@ -137,6 +137,7 @@
 		E6E1835022D79473009C2D0A /* RemoteTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E1834F22D79473009C2D0A /* RemoteTestCase.swift */; };
 		E6E2ACF722E10F3400A8E85D /* MainStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E2ACF622E10F3400A8E85D /* MainStoryboard.swift */; };
 		E6E2ACF922E2840C00A8E85D /* Date+FormatGMTString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */; };
+		E6E43EA4230F1D2B00A1974E /* EditAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E43EA3230F1D2B00A1974E /* EditAction.swift */; };
 		E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F1C52422C2A48600334003 /* ApiAction.swift */; };
 		E6FB520022B967910010FDF8 /* Dictionary+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */; };
 		E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520522B973A60010FDF8 /* PostStore.swift */; };
@@ -302,6 +303,7 @@
 		E6E1834F22D79473009C2D0A /* RemoteTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTestCase.swift; sourceTree = "<group>"; };
 		E6E2ACF622E10F3400A8E85D /* MainStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStoryboard.swift; sourceTree = "<group>"; };
 		E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+FormatGMTString.swift"; sourceTree = "<group>"; };
+		E6E43EA3230F1D2B00A1974E /* EditAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAction.swift; sourceTree = "<group>"; };
 		E6F1C52422C2A48600334003 /* ApiAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiAction.swift; sourceTree = "<group>"; };
 		E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+KeyPath.swift"; sourceTree = "<group>"; };
 		E6FB520522B973A60010FDF8 /* PostStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStore.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				E602E69522C166C700795CBA /* AccountDetailsAction.swift */,
 				E602E69722C1670800795CBA /* PostAction.swift */,
 				E602E69922C1676500795CBA /* SiteAction.swift */,
+				E6E43EA3230F1D2B00A1974E /* EditAction.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -1120,6 +1123,7 @@
 				E602E68322C15EC100795CBA /* RemoteUser.swift in Sources */,
 				E6871F1B22C3FDE7008D3D46 /* PostListViewController.swift in Sources */,
 				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
+				E6E43EA4230F1D2B00A1974E /* EditAction.swift in Sources */,
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
 				E602E68022C1588600795CBA /* ApiService.swift in Sources */,
 				E6E2ACF922E2840C00A8E85D /* Date+FormatGMTString.swift in Sources */,

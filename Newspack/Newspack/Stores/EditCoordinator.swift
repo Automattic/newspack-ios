@@ -16,14 +16,27 @@ class EditCoordinator: Store {
         super.init(dispatcher: dispatcher)
     }
 
-    func stageChanges(title: String, content: String) {
+    override func onDispatch(_ action: Action) {
+        guard let editAction = action as? EditAction else {
+            return
+        }
+
+        switch editAction {
+        case .autosave(let title, let content):
+            handleAutosave(title: title, content: content)
+        case .stageChanges(let title, let content):
+            handleStageChanges(title: title, content: content)
+        }
+    }
+
+    func handleStageChanges(title: String, content: String) {
         stagedEdits.title = title
         stagedEdits.content = content
 
         CoreDataManager.shared.saveContext()
     }
 
-    func autosave(title: String, content: String) {
+    func handleAutosave(title: String, content: String) {
         // TODO: check for changes. If no changes bail.
 
         if postItem == nil {
