@@ -69,11 +69,8 @@ class PostListStore: StatefulStore<PostListState> {
 
         let context = CoreDataManager.shared.mainContext
         do {
-            guard
-                let list = try context.fetch(fetchRequest).first,
-                list.site.uuid == siteUUID
-                else {
-                    return nil
+            guard let list = try context.fetch(fetchRequest).first else {
+                return nil
             }
             return list
         } catch {
@@ -81,6 +78,27 @@ class PostListStore: StatefulStore<PostListState> {
             return nil
         }
     }
+
+    func postListByName(name: String, siteUUID: UUID) -> PostList? {
+        let siteStore = StoreContainer.shared.siteStore
+        guard let site = siteStore.getSiteByUUID(siteUUID) else {
+            return nil
+        }
+        let fetchRequest = PostList.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "name == 'all' AND site == %@", site)
+
+        let context = CoreDataManager.shared.mainContext
+        do {
+            guard let list = try context.fetch(fetchRequest).first else {
+                return nil
+            }
+            return list
+        } catch {
+            // TODO: Handle error
+            return nil
+        }
+    }
+
 }
 
 // MARK: - Sync related methods
