@@ -63,7 +63,10 @@ class PostListViewController: UITableViewController {
     }
 
     @IBAction func handleCreatePostButtonTapped() {
-        let coordinator = EditCoordinator(postItem: nil, dispatcher: SessionManager.shared.sessionDispatcher)
+        guard let site = StoreContainer.shared.postListStore.currentList?.site else {
+            return
+        }
+        let coordinator = EditCoordinator(postItem: nil, dispatcher: SessionManager.shared.sessionDispatcher, siteID: site.uuid)
         let controller = MainStoryboard.instantiateViewController(withIdentifier: .editor) as! EditorViewController
         controller.coordinator = coordinator
         navigationController?.pushViewController(controller, animated: true)
@@ -154,7 +157,7 @@ extension PostListViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let listItem = resultsController.object(at: indexPath)
-        let coordinator = EditCoordinator.init(postItem: listItem, dispatcher: SessionManager.shared.sessionDispatcher)
+        let coordinator = EditCoordinator.init(postItem: listItem, dispatcher: SessionManager.shared.sessionDispatcher, siteID: listItem.site.uuid)
         let controller = MainStoryboard.instantiateViewController(withIdentifier: .editor) as! EditorViewController
         controller.coordinator = coordinator
         navigationController?.pushViewController(controller, animated: true)
