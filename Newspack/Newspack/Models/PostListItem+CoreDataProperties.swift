@@ -24,16 +24,16 @@ extension PostListItem {
 // MARK: Generated accessors for postList
 extension PostListItem {
 
-    @objc(addPostListObject:)
+    @objc(addPostListsObject:)
     @NSManaged public func addToPostLists(_ value: PostList)
 
-    @objc(removePostListObject:)
+    @objc(removePostListsObject:)
     @NSManaged public func removeFromPostLists(_ value: PostList)
 
-    @objc(addPostList:)
+    @objc(addPostLists:)
     @NSManaged public func addToPostLists(_ values: Set<PostList>)
 
-    @objc(removePostList:)
+    @objc(removePostLists:)
     @NSManaged public func removeFromPostLists(_ values: Set<PostList>)
 
 }
