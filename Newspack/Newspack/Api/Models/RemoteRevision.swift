@@ -1,7 +1,7 @@
 import Foundation
 
 struct RemoteRevision {
-    let postID: Int64
+    let revisionID: Int64
     let authorID: Int64
     let content: String
     let contentRendered: String
@@ -24,7 +24,7 @@ struct RemoteRevision {
     /// - Parameter dict: The source dictionary
     ///
     init(dict: [String: AnyObject]) {
-        postID = dict[intForKey: "id"]
+        revisionID = dict[intForKey: "id"]
         authorID = dict[intForKey: "author"]
         content = dict[stringAtKeyPath: "content.raw"]
         contentRendered = dict[stringAtKeyPath: "content.rendered"]
