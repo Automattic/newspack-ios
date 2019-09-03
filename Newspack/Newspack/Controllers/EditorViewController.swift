@@ -4,9 +4,10 @@ import Aztec
 
 class EditorViewController: UIViewController {
 
-    let saveTimerInterval: TimeInterval = 60
+    let saveTimerInterval: TimeInterval = 10
     var saveTimer: Timer?
     var saveCounter = 0
+    let maxSaveCounter = 6 // If the timer fires every 10 seconds, the sixth fire is one minute.
     var coordinator: EditCoordinator?
     @IBOutlet var saveButton: UIBarButtonItem!
 
@@ -88,16 +89,20 @@ class EditorViewController: UIViewController {
 
 extension EditorViewController: GutenbergBridgeDelegate {
     func gutenbergDidProvideHTML(title: String, html: String, changed: Bool) {
+        let dispatcher = SessionManager.shared.sessionDispatcher
+
+        // Autosave regardless of changes.
+        if saveCounter >= maxSaveCounter {
+            saveCounter = 0
+            dispatcher.dispatch(EditAction.autosave(title: title, content: html))
+            return
+        }
+
         guard changed else {
             return
         }
-        let dispatcher = SessionManager.shared.sessionDispatcher
-        if saveCounter < 10 {
-            dispatcher.dispatch(EditAction.stageChanges(title: title, content: html))
-        } else {
-            saveCounter = 0
-            dispatcher.dispatch(EditAction.autosave(title: title, content: html))
-        }
+
+        dispatcher.dispatch(EditAction.stageChanges(title: title, content: html))
     }
 
     func gutenbergDidRequestMedia(from source: MediaPickerSource, filter: [MediaFilter]?, with callback: @escaping MediaPickerDidPickMediaCallback) {
