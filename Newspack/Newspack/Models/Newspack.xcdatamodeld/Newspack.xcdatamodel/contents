@@ -204,6 +204,7 @@
     <entity name="StagedEdits" representedClassName="StagedEdits" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="excerpt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastModified" attributeType="Date" defaultDateTimeInterval="-595929600" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="postListItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="stagedEdits" inverseEntity="PostListItem" syncable="YES"/>
     </entity>
@@ -249,7 +250,7 @@
         <element name="PostListItem" positionX="-1350" positionY="-234" width="128" height="180"/>
         <element name="Revision" positionX="-1350" positionY="-225" width="128" height="270"/>
         <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="435"/>
-        <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="105"/>
+        <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="120"/>
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
         <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>
         <element name="User" positionX="-1305" positionY="-180" width="128" height="165"/>
