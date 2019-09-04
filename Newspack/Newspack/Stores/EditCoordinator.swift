@@ -50,14 +50,16 @@ class EditCoordinator: Store {
     func handleAutosaveAction(title: String, content: String) {
         handleStageChangesAction(title: title, content: content)
 
-        // TODO: check for changes. If no changes bail.
-
         if stagedEdits.postListItem == nil {
             // This is our first remote autosave, so create a new draft post.
             createDraft()
-        } else {
-            autosave()
+            return
         }
+
+        // TODO: check for changes. If no changes bail.
+
+
+        autosave()
     }
 
     func createDraft() {
@@ -90,21 +92,54 @@ class EditCoordinator: Store {
 extension EditCoordinator {
     func handleAutosaveApiAction(action: AutosaveApiAction) {
         if action.isError() {
-            // TODO:
+            // TODO: Handle error
             return
         }
 
-        guard let remoteRevision = action.payload else {
-            // If the payload is empty, the post is either draft or pending and
-            // was directly updated by the autosave.
+        guard
+            let remoteRevision = action.payload,
+            let post = stagedEdits.postListItem?.post
+        else {
+            // This is a critical error and should not be able to happen.
             return
         }
 
-        guard let post = stagedEdits.postListItem?.post else {
-            // this shouldn't happen.
+        if remoteRevision.parentID == 0 {
+            // we're updating a draft/pending post directly.
+            updatePost(post: post, with: remoteRevision)
+
+        } else if remoteRevision.revisionID == post.postID {
+            // we're updating an autosave on published/scheduled/private post.
+            createOrUpdateAutosaveRevisionForPost(post: post, with: remoteRevision)
+        } else {
+            // TODO: Handle error.
+            assertionFailure()
+        }
+    }
+
+    func updatePost(post: Post, with remoteRevision: RemoteRevision) {
+        guard post.postID == remoteRevision.revisionID else {
             return
         }
 
+        // Update a draft/pending post with remote post.
+        // Autosaves should only update title, content, exerpt and modified.
+        // However, update the date also in case it should match date modified.
+        post.title = remoteRevision.title
+        post.titleRendered = remoteRevision.titleRendered
+        post.content = remoteRevision.content
+        post.contentRendered = remoteRevision.contentRendered
+        post.excerpt = remoteRevision.excerpt
+        post.excerptRendered = remoteRevision.excerptRendered
+        post.date = remoteRevision.date
+        post.dateGMT = remoteRevision.dateGMT
+        post.modified = remoteRevision.modified
+        post.modifiedGMT = remoteRevision.modifiedGMT
+
+        CoreDataManager.shared.saveContext()
+    }
+
+    func createOrUpdateAutosaveRevisionForPost(post: Post, with remoteRevision: RemoteRevision) {
         // create or update autosave revision
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = Revision.defaultFetchRequest()
@@ -163,7 +198,6 @@ extension EditCoordinator {
         postItem.post = post
         postItem.site = list.site
         postItem.addToPostLists(list)
-
     }
 
     func handlePostUpdatedApiAction(action: PostUpdatedApiAction) {
