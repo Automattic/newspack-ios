@@ -41,8 +41,12 @@ class EditCoordinator: Store {
     }
 
     func handleStageChangesAction(title: String, content: String) {
+        guard title != stagedEdits.title || content != stagedEdits.content else {
+            return
+        }
         stagedEdits.title = title
         stagedEdits.content = content
+        stagedEdits.lastModified = Date()
 
         CoreDataManager.shared.saveContext()
     }
@@ -50,14 +54,16 @@ class EditCoordinator: Store {
     func handleAutosaveAction(title: String, content: String) {
         handleStageChangesAction(title: title, content: content)
 
-        if stagedEdits.postListItem == nil {
-            // This is our first remote autosave, so create a new draft post.
+        guard let item = stagedEdits.postListItem else {
+            // This is our first remote autosave, so create a new draft post and post list item.
             createDraft()
             return
         }
 
-        // TODO: check for changes. If no changes bail.
-
+        if item.modifiedGMT > stagedEdits.lastModified {
+            // No changes.
+            return
+        }
 
         autosave()
     }
@@ -135,6 +141,10 @@ extension EditCoordinator {
         post.dateGMT = remoteRevision.dateGMT
         post.modified = remoteRevision.modified
         post.modifiedGMT = remoteRevision.modifiedGMT
+
+        // Enusre the post list item reflects the updated date.
+        post.item.dateGMT = post.dateGMT
+        post.item.modifiedGMT = post.modifiedGMT
 
         CoreDataManager.shared.saveContext()
     }
