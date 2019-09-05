@@ -7,3 +7,12 @@ enum EditAction: Action {
     case stageChanges(title: String, content: String)
     case autosave(title: String, content: String)
 }
+
+enum PostSaveAction: Action {
+    case publish
+    case publishPrivately
+    case schedule(date:Date)
+    case saveAsDraft
+    case saveAsPending
+    case trash
+}

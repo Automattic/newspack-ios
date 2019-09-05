@@ -92,6 +92,29 @@ class EditCoordinator: Store {
         postService.autosave(postID: postID, title: title, content: content)
     }
 
+    func handlePostSaveAction(action: PostSaveAction) {
+        // TODO: Handle different save options.
+        guard let post = stagedEdits.postListItem?.post else {
+            // Saving before we've create a draft, so we need to treat this like saving a draft.
+            createDraft()
+            return
+        }
+
+        let params = parametersFromPost(post: post)
+        let postService = ApiService.shared.postServiceRemote()
+        postService.updatePost(postID: post.postID, postParams: params)
+    }
+
+    func parametersFromPost(post: Post) -> [String: AnyObject] {
+        var dict = [String: Any]()
+        dict["title"] = post.title
+        dict["content"] = post.content
+        dict["status"] = post.status
+        dict["date"] = post.date
+        // TODO: Flesh this out as other properties are editable.
+        return dict as [String: AnyObject]
+    }
+
 }
 
 // MARK: - Api action handlers
