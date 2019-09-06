@@ -11,7 +11,6 @@ enum EditAction: Action {
 enum PostSaveAction: Action {
     case publish
     case publishPrivately
-    case schedule(date:Date)
     case saveAsDraft
     case saveAsPending
     case trash

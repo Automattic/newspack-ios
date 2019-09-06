@@ -292,3 +292,29 @@ extension EditCoordinator: GutenbergBridgeDataSource {
         return nil
     }
 }
+
+extension EditCoordinator {
+
+    func getSaveAlertController() -> UIAlertController {
+        var hasChanges = false
+        if let post = postItem?.post {
+            hasChanges = postHasChanges(post: post)
+        }
+        return EditorSaveAlertControllerFactory().controllerForStagedEdits(stagedEdits: stagedEdits, hasChanges: hasChanges, for: postItem?.post)
+    }
+
+    func postHasChanges(post: Post) -> Bool {
+        // Yes if draft.
+        // If published, YES stagedEdits do not match what's in the post.
+
+        if ["draft", "pending"].contains(post.status) {
+            return true
+        }
+
+        if stagedEdits.title != post.title || stagedEdits.content != post.content {
+            return true
+        }
+
+        return false
+    }
+}

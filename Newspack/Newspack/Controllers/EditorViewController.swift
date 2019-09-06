@@ -42,32 +42,11 @@ class EditorViewController: UIViewController {
     }
 
     @IBAction func handleSaveButtonTapped() {
-        // Prompt with options (request from coordinator):
-        //
-        // If Draft
-        //  - Preview
-        //  - Save Draft (creates revision also?)
-        //  - Publish Now
-        //  - Schedule
-        //
-        // If Pending
-        //  - Preview
-        //  - Save as Pending
-        //  - Publish Now
-        //  - Schedule
-        //
-        // If Publish or Private
-        //  - Preview
-        //  - Update
-        //  - Switch to Draft
-        //
-        // If Future
-        //  - Preview
-        //  - Update
-        //  - Publish Now
-        //  - Switch to Draft
-
-
+        guard let coordinator = coordinator else {
+            return
+        }
+        let controller = coordinator.getSaveAlertController()
+        present(controller, animated: true, completion: nil)
     }
 
     func handleSaveTimer() {
