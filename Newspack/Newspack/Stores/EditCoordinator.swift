@@ -10,7 +10,7 @@ class EditCoordinator: Store {
     private let currentSiteID: UUID
     var postItem: PostListItem?
     let stagedEdits: StagedEdits
-    var draftUUID: UUID? // An identifier used to pair an api action to edits being made.
+    var createdPostUUID: UUID? // An identifier used to pair an api action to edits being made.
 
     init(postItem: PostListItem?, dispatcher: ActionDispatcher, siteID: UUID) {
         self.currentSiteID = siteID
@@ -20,14 +20,25 @@ class EditCoordinator: Store {
     }
 
     override func onDispatch(_ action: Action) {
+        // API Actions
         if let apiAction = action as? PostCreatedApiAction {
             handlePostCreatedApiAction(action: apiAction)
+            return
         } else if let apiAction = action as? AutosaveApiAction {
             handleAutosaveApiAction(action: apiAction)
+            return
         } else if let apiAction = action as? PostUpdatedApiAction {
             handlePostUpdatedApiAction(action: apiAction)
+            return
         }
 
+        // Save Actions
+        if let saveAction = action as? PostSaveAction {
+            handlePostSaveAction(action: saveAction)
+            return
+        }
+
+        // Edit Actions
         guard let editAction = action as? EditAction else {
             return
         }
@@ -37,6 +48,27 @@ class EditCoordinator: Store {
             handleAutosaveAction(title: title, content: content)
         case .stageChanges(let title, let content):
             handleStageChangesAction(title: title, content: content)
+        }
+    }
+
+}
+
+// MARK: - Edit and Save Action Handlers
+extension EditCoordinator {
+
+    func handlePostSaveAction(action: PostSaveAction) {
+        switch action {
+        case .publish:
+            createOrUpdatePostWithStatus(status: "publish")
+        case .publishPrivately:
+            createOrUpdatePostWithStatus(status: "private")
+        case .saveAsDraft:
+            createOrUpdatePostWithStatus(status: "draft")
+        case .saveAsPending:
+            createOrUpdatePostWithStatus(status: "pending")
+        case .trash:
+            createOrUpdatePostWithStatus(status: "trash")
+            break
         }
     }
 
@@ -56,7 +88,7 @@ class EditCoordinator: Store {
 
         guard let item = stagedEdits.postListItem else {
             // This is our first remote autosave, so create a new draft post and post list item.
-            createDraft()
+            createPostWithStatus(status: "draft")
             return
         }
 
@@ -67,22 +99,14 @@ class EditCoordinator: Store {
 
         autosave()
     }
+}
 
-    func createDraft() {
-        let title = stagedEdits.title ?? ""
-        let content = stagedEdits.content ?? ""
-        let postService = ApiService.shared.postServiceRemote()
-
-        let params = [
-            "title": title,
-            "content" : content
-        ] as [String: AnyObject]
-        draftUUID = UUID()
-        postService.createPost(uuid: draftUUID!, postParams: params)
-    }
+// MARK: - API Calls
+extension EditCoordinator {
 
     func autosave() {
         guard let postID = stagedEdits.postListItem?.postID else {
+            // TODO: Log this
             return
         }
 
@@ -92,15 +116,32 @@ class EditCoordinator: Store {
         postService.autosave(postID: postID, title: title, content: content)
     }
 
-    func handlePostSaveAction(action: PostSaveAction) {
-        // TODO: Handle different save options.
+    func createOrUpdatePostWithStatus(status: String) {
         guard let post = stagedEdits.postListItem?.post else {
-            // Saving before we've create a draft, so we need to treat this like saving a draft.
-            createDraft()
+            createPostWithStatus(status: status)
             return
         }
+        updatePost(post: post, withStatus: status)
+    }
 
-        let params = parametersFromPost(post: post)
+    func createPostWithStatus(status: String) {
+        let postService = ApiService.shared.postServiceRemote()
+
+        let title = stagedEdits.title ?? ""
+        let content = stagedEdits.content ?? ""
+        let params = [
+            "title": title,
+            "content" : content,
+            "status" : status,
+            ] as [String: AnyObject]
+        createdPostUUID = UUID()
+        postService.createPost(uuid: createdPostUUID!, postParams: params)
+    }
+
+    func updatePost(post: Post, withStatus status: String) {
+        var params = parametersFromPost(post: post)
+        params["status"] = status as AnyObject
+
         let postService = ApiService.shared.postServiceRemote()
         postService.updatePost(postID: post.postID, postParams: params)
     }
@@ -109,16 +150,15 @@ class EditCoordinator: Store {
         var dict = [String: Any]()
         dict["title"] = post.title
         dict["content"] = post.content
-        dict["status"] = post.status
         dict["date"] = post.date
         // TODO: Flesh this out as other properties are editable.
         return dict as [String: AnyObject]
     }
-
 }
 
-// MARK: - Api action handlers
+// MARK: - API action handlers
 extension EditCoordinator {
+
     func handleAutosaveApiAction(action: AutosaveApiAction) {
         if action.isError() {
             // TODO: Handle error
@@ -188,9 +228,9 @@ extension EditCoordinator {
 
         updateRevision(revision: revision, with: remoteRevision)
         revision.post = post
+
         CoreDataManager.shared.saveContext()
     }
-
 
     func handlePostCreatedApiAction(action: PostCreatedApiAction) {
         if action.isError() {
@@ -200,12 +240,12 @@ extension EditCoordinator {
 
         guard
             let remotePost = action.payload,
-            action.uuid == draftUUID
+            action.uuid == createdPostUUID
         else {
             return
         }
 
-        draftUUID = nil
+        createdPostUUID = nil
 
         // Use the payload to create a new Post and PostListItem.
         // The item should be assigned to the "ALL" PostList.
@@ -231,15 +271,39 @@ extension EditCoordinator {
         postItem.post = post
         postItem.site = list.site
         postItem.addToPostLists(list)
+
+        CoreDataManager.shared.saveContext()
     }
 
     func handlePostUpdatedApiAction(action: PostUpdatedApiAction) {
         // TODO:
+        if action.isError() {
+            // TODO:
+            return
+        }
 
+        guard
+            let remotePost = action.payload,
+            let postItem = postItem,
+            let post = postItem.post,
+            post.postID == remotePost.postID
+        else {
+            return
+        }
+
+        let postStore = StoreContainer.shared.postStore
+        postStore.updatePost(post, with: remotePost)
+
+        // TODO: This work could be moved into postStore.updatePost provided
+        // there is always a postItem.
+        postItem.dateGMT = post.dateGMT
+        postItem.modifiedGMT = post.modifiedGMT
+        postItem.revisionCount = post.revisionCount
+
+        CoreDataManager.shared.saveContext()
     }
 
-
-    func updateRevision(revision:Revision, with remoteRevision: RemoteRevision) {
+    func updateRevision(revision: Revision, with remoteRevision: RemoteRevision) {
         revision.authorID = remoteRevision.authorID
         revision.content = remoteRevision.content
         revision.contentRendered = remoteRevision.contentRendered
@@ -255,9 +319,9 @@ extension EditCoordinator {
         revision.title = remoteRevision.title
         revision.titleRendered = remoteRevision.titleRendered
     }
-
 }
 
+// MARK: - Gutenberg related
 extension EditCoordinator: GutenbergBridgeDataSource {
     func gutenbergInitialContent() -> String? {
         if
@@ -293,6 +357,7 @@ extension EditCoordinator: GutenbergBridgeDataSource {
     }
 }
 
+// MARK: - UIAlertController related / Save options.
 extension EditCoordinator {
 
     func getSaveAlertController() -> UIAlertController {
