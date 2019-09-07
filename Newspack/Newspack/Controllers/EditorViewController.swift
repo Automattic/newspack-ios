@@ -46,6 +46,8 @@ class EditorViewController: UIViewController {
             return
         }
         let controller = coordinator.getSaveAlertController()
+        controller.popoverPresentationController?.barButtonItem = saveButton
+        controller.popoverPresentationController?.sourceView = view
         present(controller, animated: true, completion: nil)
     }
 
