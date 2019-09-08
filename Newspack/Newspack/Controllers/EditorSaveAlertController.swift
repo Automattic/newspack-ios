@@ -16,10 +16,10 @@ class EditorSaveAlertControllerFactory {
         static let cancel = NSLocalizedString("Cancel", comment: "Cancel")
     }
 
-    func controllerForStagedEdits(stagedEdits: StagedEdits, hasChanges: Bool, for post: Post?) -> UIAlertController {
+    func controllerForStagedEdits(stagedEdits: StagedEdits, canUpdate: Bool, for post: Post?) -> UIAlertController {
 
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let actions = availableSaveActions(stagedEdits: stagedEdits, hasChanges: hasChanges, for: post)
+        let actions = availableSaveActions(stagedEdits: stagedEdits, canUpdate: canUpdate, for: post)
         for action in actions {
             controller.addAction(action)
         }
@@ -27,7 +27,7 @@ class EditorSaveAlertControllerFactory {
 
     }
 
-    func availableSaveActions(stagedEdits: StagedEdits, hasChanges: Bool, for post: Post?) -> [UIAlertAction] {
+    func availableSaveActions(stagedEdits: StagedEdits, canUpdate: Bool, for post: Post?) -> [UIAlertAction] {
         let cancelAction = UIAlertAction(title: ActionTitles.cancel, style: .cancel, handler: nil)
 
         var alertActions = [UIAlertAction]()
@@ -59,10 +59,10 @@ class EditorSaveAlertControllerFactory {
             alertActions = alertActionsForPending()
 
         } else if post.status == "private" {
-            alertActions = alertActionsForPrivate(hasChanges: hasChanges)
+            alertActions = alertActionsForPrivate(canUpdate: canUpdate)
 
         } else if post.status == "publish" {
-            alertActions = alertActionsForPublish(hasChanges: hasChanges)
+            alertActions = alertActionsForPublish(canUpdate: canUpdate)
         } else {
             // This might be a status of inherit, trash, or a custom post status.
             // TODO: Log this.
@@ -92,9 +92,9 @@ class EditorSaveAlertControllerFactory {
         return alertActions
     }
 
-    func alertActionsForPrivate(hasChanges: Bool) -> [UIAlertAction] {
+    func alertActionsForPrivate(canUpdate: Bool) -> [UIAlertAction] {
         var alertActions = [UIAlertAction]()
-        if hasChanges {
+        if canUpdate {
             alertActions.append(alertActionWithTitle(title: ActionTitles.update, and: .publishPrivately))
         }
         alertActions.append(alertActionWithTitle(title: ActionTitles.makePublic, and: .publish))
@@ -102,9 +102,9 @@ class EditorSaveAlertControllerFactory {
         return alertActions
     }
 
-    func alertActionsForPublish(hasChanges: Bool) -> [UIAlertAction] {
+    func alertActionsForPublish(canUpdate: Bool) -> [UIAlertAction] {
         var alertActions = [UIAlertAction]()
-        if hasChanges {
+        if canUpdate {
             alertActions.append(alertActionWithTitle(title: ActionTitles.update, and: .publish))
         }
         alertActions.append(alertActionWithTitle(title: ActionTitles.makePrivate, and: .publishPrivately))

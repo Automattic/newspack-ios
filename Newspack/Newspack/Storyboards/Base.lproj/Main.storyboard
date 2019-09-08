@@ -126,7 +126,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="sFx-NT-hQr"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit" id="3af-5u-CsJ">
+                    <navigationItem key="navigationItem" title="Edit" leftItemsSupplementBackButton="YES" id="3af-5u-CsJ">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="rwg-8H-VeN">
+                            <connections>
+                                <action selector="handleCancelButtonTapped" destination="5eS-vw-2j8" id="VNw-3u-fiJ"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="0ga-jv-su9">
                             <connections>
                                 <action selector="handleSaveButtonTapped" destination="5eS-vw-2j8" id="6JG-ti-1rF"/>
@@ -135,6 +140,7 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="cancelButton" destination="rwg-8H-VeN" id="5t2-DJ-CgK"/>
                         <outlet property="saveButton" destination="0ga-jv-su9" id="rec-D5-vNI"/>
                     </connections>
                 </viewController>

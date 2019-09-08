@@ -10,6 +10,7 @@ class EditorViewController: UIViewController {
     let maxSaveCounter = 6 // If the timer fires every 10 seconds, the sixth fire is one minute.
     var coordinator: EditCoordinator?
     @IBOutlet var saveButton: UIBarButtonItem!
+    @IBOutlet var cancelButton: UIBarButtonItem!
 
     private lazy var gutenberg: Gutenberg = {
         guard coordinator != nil else {
@@ -41,6 +42,14 @@ class EditorViewController: UIViewController {
         view.bottomAnchor.constraint(equalTo: gutenberg.rootView.bottomAnchor).isActive = true
     }
 
+    @IBAction func handleCancelButtonTapped() {
+        if coordinator?.hasLocalChanges == true {
+            showPromptToDiscardChanges()
+        } else {
+            dismiss()
+        }
+    }
+
     @IBAction func handleSaveButtonTapped() {
         guard let coordinator = coordinator else {
             return
@@ -65,6 +74,38 @@ class EditorViewController: UIViewController {
     func stopSaveTimer() {
         saveTimer?.invalidate()
         saveTimer = nil
+    }
+
+    func dismiss() {
+        navigationController?.popViewController(animated: true)
+    }
+}
+
+// MARK: - Dismiss Prompt
+extension EditorViewController {
+
+    func showPromptToDiscardChanges() {
+        let cancel = NSLocalizedString("Cancel", comment: "Verb. A button title.")
+        let discard = NSLocalizedString("Discard Changes", comment: "A button title.")
+        let controller = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertController.Style.actionSheet)
+
+        let cancelAction = UIAlertAction(title: cancel, style: .cancel, handler: nil)
+        controller.addAction(cancelAction)
+
+        let discardAction = UIAlertAction(title: discard, style: .destructive) { [weak self] _ in
+            self?.discardChangesAndDismiss()
+        }
+        controller.addAction(discardAction)
+
+        controller.popoverPresentationController?.barButtonItem = cancelButton
+        controller.popoverPresentationController?.sourceView = view
+        present(controller, animated: true, completion: nil)
+    }
+
+    func discardChangesAndDismiss() {
+        let dispatcher = SessionManager.shared.sessionDispatcher
+        dispatcher.dispatch(EditAction.discardChanges)
+        dismiss()
     }
 }
 

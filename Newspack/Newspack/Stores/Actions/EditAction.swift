@@ -6,6 +6,7 @@ import WordPressFlux
 enum EditAction: Action {
     case stageChanges(title: String, content: String)
     case autosave(title: String, content: String)
+    case discardChanges
 }
 
 enum PostSaveAction: Action {

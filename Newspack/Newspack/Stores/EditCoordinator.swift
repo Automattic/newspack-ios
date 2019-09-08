@@ -12,6 +12,18 @@ class EditCoordinator: Store {
     let stagedEdits: StagedEdits
     var createdPostUUID: UUID? // An identifier used to pair an api action to edits being made.
 
+    var hasLocalChanges: Bool {
+        if stagedEdits.title == "" && stagedEdits.content == "" {
+            return false
+        }
+
+        if let post = stagedEdits.postListItem?.post {
+            return stagedEdits.title != post.title || stagedEdits.content != post.content
+        }
+
+        return true
+    }
+
     init(postItem: PostListItem?, dispatcher: ActionDispatcher, siteID: UUID) {
         self.currentSiteID = siteID
         self.postItem = postItem
@@ -48,6 +60,8 @@ class EditCoordinator: Store {
             handleAutosaveAction(title: title, content: content)
         case .stageChanges(let title, let content):
             handleStageChangesAction(title: title, content: content)
+        case .discardChanges:
+            handleDiscardChangesAction()
         }
     }
 
@@ -98,6 +112,13 @@ extension EditCoordinator {
         }
 
         autosave()
+    }
+
+    func handleDiscardChangesAction() {
+        // TODO: This will need also need to clean up a "local" post list item if we go that route.
+        let context = CoreDataManager.shared.mainContext
+        context.delete(stagedEdits)
+        CoreDataManager.shared.saveContext()
     }
 }
 
@@ -361,25 +382,14 @@ extension EditCoordinator: GutenbergBridgeDataSource {
 extension EditCoordinator {
 
     func getSaveAlertController() -> UIAlertController {
-        var hasChanges = false
+        var canUpdate = false
         if let post = postItem?.post {
-            hasChanges = postHasChanges(post: post)
+            canUpdate = postCanUpdate(post: post)
         }
-        return EditorSaveAlertControllerFactory().controllerForStagedEdits(stagedEdits: stagedEdits, hasChanges: hasChanges, for: postItem?.post)
+        return EditorSaveAlertControllerFactory().controllerForStagedEdits(stagedEdits: stagedEdits, canUpdate: canUpdate, for: postItem?.post)
     }
 
-    func postHasChanges(post: Post) -> Bool {
-        // Yes if draft.
-        // If published, YES stagedEdits do not match what's in the post.
-
-        if ["draft", "pending"].contains(post.status) {
-            return true
-        }
-
-        if stagedEdits.title != post.title || stagedEdits.content != post.content {
-            return true
-        }
-
-        return false
+    func postCanUpdate(post: Post) -> Bool {
+        return stagedEdits.title != post.title || stagedEdits.content != post.content
     }
 }
