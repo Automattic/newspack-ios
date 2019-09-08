@@ -177,7 +177,7 @@ class PostServiceRemoteTests: RemoteTestCase {
 
         let remoteRevision = RemoteRevision(dict: response)
 
-        XCTAssert(remoteRevision.postID == 6860)
+        XCTAssert(remoteRevision.revisionID == 6860)
         XCTAssert(remoteRevision.parentID == 6858)
         XCTAssert(remoteRevision.previewLink == "")
     }
@@ -190,7 +190,7 @@ class PostServiceRemoteTests: RemoteTestCase {
 
         let remoteRevision = RemoteRevision(dict: response)
 
-        XCTAssert(remoteRevision.postID == 6860)
+        XCTAssert(remoteRevision.revisionID == 6860)
         XCTAssert(remoteRevision.parentID == 6858)
         XCTAssert(remoteRevision.previewLink == "https://example.com/2019/08/15/private-post/?preview_id=6858&preview_nonce=ed89b5a440&preview=true")
     }
