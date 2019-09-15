@@ -1,4 +1,5 @@
 import UIKit
+import CocoaLumberjack
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Necessary in order to present the authentication flow.
         configureWindow()
         configureSession()
-
+        configureLogger()
+DDLogInfo("Launched!")
         return true
     }
 
@@ -90,4 +92,18 @@ extension AppDelegate {
         controllers.insert(controller, at: 0)
         navController.setViewControllers(controllers, animated: false)
     }
+}
+
+extension AppDelegate {
+
+    private func configureLogger() {
+        DDLog.add(DDOSLogger.sharedInstance) // Uses os_log
+        DDLog.add(DDTTYLogger.sharedInstance) // Uses the console
+
+        let fileLogger: DDFileLogger = DDFileLogger() // File Logger
+        fileLogger.rollingFrequency = 60 * 60 * 24 // 24 hours
+        fileLogger.logFileManager.maximumNumberOfLogFiles = 7
+        DDLog.add(fileLogger)
+    }
+
 }

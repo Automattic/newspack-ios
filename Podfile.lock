@@ -5,6 +5,8 @@ PODS:
   - CocoaLumberjack (3.5.2):
     - CocoaLumberjack/Core (= 3.5.2)
   - CocoaLumberjack/Core (3.5.2)
+  - CocoaLumberjack/Swift (3.5.2):
+    - CocoaLumberjack/Core
   - DoubleConversion (1.1.5)
   - Folly (2018.10.22.00):
     - boost-for-react-native
@@ -185,7 +187,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (= 4.7.3)
-  - CocoaLumberjack (= 3.5.2)
+  - CocoaLumberjack/Swift (= 3.5.2)
   - Folly (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.10.2/react-native-gutenberg-bridge/third-party-podspecs/Folly.podspec.json`)
   - glog (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.10.2/react-native-gutenberg-bridge/third-party-podspecs/glog.podspec.json`)
   - Gutenberg (from `http://github.com/wordpress-mobile/gutenberg-mobile/`, tag `v1.10.2`)
@@ -374,6 +376,6 @@ SPEC CHECKSUMS:
   wpxmlrpc: 6ba55c773cfa27083ae4a2173e69b19f46da98e2
   yoga: 4e71c9a33abf45ba55af55ae9cbc86f4234bb2a9
 
-PODFILE CHECKSUM: d6a4b7791dcd849416c28bd54c49a743df1c2969
+PODFILE CHECKSUM: 2aeaf43155fa064783dcb3f2929a6ad92c174464
 
 COCOAPODS: 1.5.3

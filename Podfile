@@ -70,7 +70,7 @@ target 'Newspack' do
     project 'Newspack/Newspack.xcodeproj'
     shared_with_networking_pods
 
-    pod 'CocoaLumberjack', '3.5.2'
+    pod 'CocoaLumberjack/Swift', '3.5.2'
     pod 'KeychainAccess', '3.2.0'
 
     pod 'WordPressAuthenticator', '~> 1.5.0'
