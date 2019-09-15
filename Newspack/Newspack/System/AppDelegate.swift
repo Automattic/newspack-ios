@@ -71,6 +71,7 @@ extension AppDelegate {
             handleUnauthenticatedSession()
         } else if sessionState == .initialized {
             StartupHelper.resetSyncFlags()
+            StartupHelper.purgeStaleStagedEdits()
         }
 
     }
