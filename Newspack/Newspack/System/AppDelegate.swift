@@ -1,5 +1,4 @@
 import UIKit
-import CocoaLumberjack
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureWindow()
         configureSession()
         configureLogger()
-DDLogInfo("Launched!")
+
+        LogInfo(message: "Application did finish launching.")
+
         return true
     }
 
@@ -97,13 +98,7 @@ extension AppDelegate {
 extension AppDelegate {
 
     private func configureLogger() {
-        DDLog.add(DDOSLogger.sharedInstance) // Uses os_log
-        DDLog.add(DDTTYLogger.sharedInstance) // Uses the console
-
-        let fileLogger: DDFileLogger = DDFileLogger() // File Logger
-        fileLogger.rollingFrequency = 60 * 60 * 24 // 24 hours
-        fileLogger.logFileManager.maximumNumberOfLogFiles = 7
-        DDLog.add(fileLogger)
+        Log.setup()
     }
 
 }
