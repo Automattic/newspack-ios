@@ -11,7 +11,7 @@ class EditorAttachmentDelegate: TextViewAttachmentDelegate {
             DispatchQueue.main.async {
                 success(image)
             }
-            }.resume()
+        }.resume()
     }
 
     func textView(_ textView: TextView, urlFor imageAttachment: ImageAttachment) -> URL? {

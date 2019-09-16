@@ -65,7 +65,7 @@ class EditorSaveAlertControllerFactory {
             alertActions = alertActionsForPublish(canUpdate: canUpdate)
         } else {
             // This might be a status of inherit, trash, or a custom post status.
-            // TODO: Log this.
+            LogWarn(message: "availableSaveActions: Post had an unexpected post status: " + post.status)
         }
 
         // Add a cancel action
