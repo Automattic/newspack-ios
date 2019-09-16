@@ -128,6 +128,7 @@ extension EditCoordinator {
     func autosave() {
         guard let postID = stagedEdits.postListItem?.postID else {
             // TODO: Log this
+            LogError(message: "autosave: Unable to get post by postID.")
             return
         }
 
@@ -183,6 +184,9 @@ extension EditCoordinator {
     func handleAutosaveApiAction(action: AutosaveApiAction) {
         if action.isError() {
             // TODO: Handle error
+            if let error = action.error as NSError? {
+                LogError(message: "handleAutosaveApiAction: " + error.localizedDescription)
+            }
             return
         }
 
@@ -191,6 +195,7 @@ extension EditCoordinator {
             let post = stagedEdits.postListItem?.post
         else {
             // This is a critical error and should not be able to happen.
+            LogError(message: "handleAutosaveApiAction: Critical Error. A value was unexpectedly nil.")
             return
         }
 
@@ -203,12 +208,14 @@ extension EditCoordinator {
             createOrUpdateAutosaveRevisionForPost(post: post, with: remoteRevision)
         } else {
             // TODO: Handle error.
+            LogError(message: "handleAutosaveApiAction: Critical Error. Unable to create or update post.")
             assertionFailure()
         }
     }
 
     func updatePost(post: Post, with remoteRevision: RemoteRevision) {
         guard post.postID == remoteRevision.revisionID else {
+            LogError(message: "updatePost: Post ID did not match Revision ID.")
             return
         }
 
@@ -244,7 +251,9 @@ extension EditCoordinator {
             revision = try context.fetch(fetchRequest).first ?? Revision(context: context)
         } catch {
             revision = Revision(context: context)
-            // TODO: properly log this
+
+            let error = error as NSError
+            LogError(message: "createOrUpdateAutosaveRevisionForPost: " + error.localizedDescription)
         }
 
         updateRevision(revision: revision, with: remoteRevision)
@@ -255,7 +264,10 @@ extension EditCoordinator {
 
     func handlePostCreatedApiAction(action: PostCreatedApiAction) {
         if action.isError() {
-            // TODO:
+            if let error = action.error as NSError? {
+                LogError(message: "handlePostCreatedApiAction: " + error.localizedDescription)
+            }
+            // TODO: handle error
             return
         }
 
@@ -263,6 +275,7 @@ extension EditCoordinator {
             let remotePost = action.payload,
             action.uuid == createdPostUUID
         else {
+            LogError(message: "handlePostCreatedApiAction: A value was unexpectedly nil, or failed an equality check.")
             return
         }
 
@@ -272,6 +285,7 @@ extension EditCoordinator {
         // The item should be assigned to the "ALL" PostList.
 
         guard let list = StoreContainer.shared.postListStore.postListByName(name: "all", siteUUID: currentSiteID) else {
+            LogError(message: "handlePostCreatedApiAction: A value was unexpectedly nil.")
             return
         }
 
@@ -297,9 +311,11 @@ extension EditCoordinator {
     }
 
     func handlePostUpdatedApiAction(action: PostUpdatedApiAction) {
-        // TODO:
         if action.isError() {
-            // TODO:
+            // TODO: Handle error
+            if let error = action.error as NSError? {
+                LogError(message: "handlePostUpdatedApiAction: " + error.localizedDescription)
+            }
             return
         }
 
@@ -309,6 +325,7 @@ extension EditCoordinator {
             let post = postItem.post,
             post.postID == remotePost.postID
         else {
+            LogError(message: "handlePostCreatedApiAction: A value was unexpectedly nil.")
             return
         }
 

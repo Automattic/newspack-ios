@@ -68,6 +68,8 @@ extension PostStore {
             return try context.fetch(fetchRequest).first
         } catch {
             // TODO: Handle Error.
+            let error = error as NSError
+            LogError(message: "getPostListItemWithID: " + error.localizedDescription)
         }
         return nil
     }
@@ -80,6 +82,7 @@ extension PostStore {
     ///
     func syncPostIfNecessary(postID: Int64) {
         guard let postItem = getPostListItemWithID(postID: postID) else {
+            LogWarn(message: "syncPostIfNecessary: Unable to find post list by ID.")
             return
         }
 
@@ -105,6 +108,9 @@ extension PostStore {
     func handlePostFetchedAction(action: PostFetchedApiAction) {
         guard !action.isError() else {
             // TODO: Handle error
+            if let error = action.error as NSError? {
+                LogError(message: "handlePostFetchedAction: " + error.localizedDescription)
+            }
             return
         }
 
@@ -116,7 +122,7 @@ extension PostStore {
             let remotePost = action.payload,
             let listItem = getPostListItemWithID(postID: remotePost.postID)
         else {
-            // TODO: Unknown error?
+            LogError(message: "handlePostFetchedAction: A value was unexpectedly nil.")
             return
         }
 
@@ -133,8 +139,8 @@ extension PostStore {
             post = try context.fetch(fetchRequest).first ?? Post(context: context)
         } catch {
             post = Post(context: context)
-            // TODO: Propperly log this
-            print("Error fetching post")
+            let error = error as NSError
+            LogWarn(message: "handlePostFetchedAction: " + error.localizedDescription)
         }
 
         updatePost(post, with: remotePost)

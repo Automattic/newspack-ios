@@ -31,6 +31,9 @@ extension AccountCapabilitiesStore {
     func handleAccountFetched(action: AccountFetchedApiAction) {
         guard !action.isError() else {
             // TODO: Handle error.
+            if let error = action.error as NSError? {
+                LogError(message: "handleAccountFetched: " + error.localizedDescription)
+            }
             return
         }
 
@@ -41,7 +44,7 @@ extension AccountCapabilitiesStore {
             let siteID = currentSiteID,
             let site = siteStore.getSiteByUUID(siteID)
             else {
-                //TODO: Unknown error?
+                LogError(message: "handleAccountFetched: A value was unexpectedly nil.")
                 return
         }
 

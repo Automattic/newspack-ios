@@ -75,6 +75,8 @@ class PostListStore: StatefulStore<PostListState> {
             return list
         } catch {
             // TODO: Handle error
+            let error = error as NSError
+            LogError(message: "postListByFilter: " + error.localizedDescription)
             return nil
         }
     }
@@ -95,6 +97,8 @@ class PostListStore: StatefulStore<PostListState> {
             return list
         } catch {
             // TODO: Handle error
+            let error = error as NSError
+            LogError(message: "postListByName: " + error.localizedDescription)
             return nil
         }
     }
@@ -201,6 +205,7 @@ extension PostListStore {
             let list = postListByFilter(filter: action.filter, siteUUID: siteID)
             else {
                 // TODO: Handle error.
+                LogError(message: "handlePostIDsFetched: A value was unexpectedly nil.")
                 return
         }
 
@@ -224,7 +229,7 @@ extension PostListStore {
 
         guard let remotePostIDs = action.payload else {
             queue.removeAll()
-            // TODO: Unknown error?
+            LogWarn(message: "handlePostIDsFetched: A value was unexpectedly nil.")
             return
         }
 
@@ -238,8 +243,8 @@ extension PostListStore {
             do {
                 item = try context.fetch(fetchRequest).first ?? PostListItem(context: context)
             } catch {
-                // TODO: Propperly log this
-                print("Error fetching post list item")
+                let error = error as NSError
+                LogError(message: "handlePostIDsFetched: " + error.localizedDescription)
                 continue
             }
 
@@ -299,6 +304,7 @@ extension PostListStore {
             let site = StoreContainer.shared.siteStore.getSiteByUUID(siteID)
             else {
                 // TODO: Handle missing site error
+                LogError(message: "handleSessionChanged: A value was unexpectedly nil.")
                 currentList = nil
                 return
         }
@@ -316,11 +322,13 @@ extension PostListStore {
 
         guard let site = StoreContainer.shared.siteStore.getSiteByUUID(siteUUID) else {
             // TODO: Handle no site.
+            LogError(message: "setupDefaultPostListsIfNeeded: Unable to get site by UUID.")
             return
         }
 
         guard let count = try? context.count(for: fetchRequest) else {
             // TODO: Handle core data error.
+            LogError(message: "setupDefaultPostListsIfNeeded: Unable to get count from NSManagedObjectContext.")
             return
         }
 

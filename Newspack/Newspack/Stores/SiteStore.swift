@@ -36,9 +36,8 @@ class SiteStore: Store {
             let results = try context.fetch(fetchRequest)
             return results.first
         } catch {
-            // TODO: Need to log this
             let error = error as NSError
-            print(error.localizedDescription)
+            LogError(message: "getSiteByUUID: " + error.localizedDescription)
         }
         return nil
     }
@@ -59,6 +58,9 @@ extension SiteStore {
     func handleSiteFetched(action: SiteFetchedApiAction) {
         guard !action.isError() else {
             // TODO: Handle error.
+            if let error = action.error as NSError? {
+                LogError(message: "handleSiteFetched: " + error.localizedDescription)
+            }
             return
         }
 
@@ -67,7 +69,7 @@ extension SiteStore {
             let siteID = currentSiteID,
             let site = getSiteByUUID(siteID)
             else {
-                // TODO: Unknown error?
+                LogError(message: "handleSiteFetched: A value was unexpectedly nil.")
                 return
         }
 
@@ -84,7 +86,8 @@ extension SiteStore {
     func createSite(url: String, settings: RemoteSiteSettings, accountID: UUID) {
         let accountStore = StoreContainer.shared.accountStore
         guard let account = accountStore.getAccountByUUID(accountID) else {
-            // TODO: Log error.
+            // TODO: handle error
+            LogError(message: "createSite: Unable to find account by UUID.")
             return
         }
 

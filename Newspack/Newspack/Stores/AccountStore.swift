@@ -59,9 +59,8 @@ extension AccountStore {
             let results = try context.fetch(fetchRequest)
             return results.first
         } catch {
-            // TODO: Need to log this
             let error = error as NSError
-            print(error.localizedDescription)
+            LogError(message: "getAccountByUUID: " + error.localizedDescription)
         }
         return nil
     }
@@ -77,9 +76,8 @@ extension AccountStore {
             let accounts = try context.fetch(fetchRequest)
             return accounts
         } catch {
-            // TODO: Need to log this
             let error = error as NSError
-            print(error.localizedDescription)
+            LogError(message: "getAccounts: " + error.localizedDescription)
         }
         return [Account]()
     }
@@ -126,6 +124,7 @@ extension AccountStore {
     func removeAccount(uuid: UUID) {
         guard let account = getAccountByUUID(uuid) else {
             // TODO: Log this.
+            LogError(message: "removeAccount: Unable to find account by UUID.")
             return
         }
         let context = CoreDataManager.shared.mainContext
