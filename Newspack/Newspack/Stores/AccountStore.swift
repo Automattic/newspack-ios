@@ -123,7 +123,6 @@ extension AccountStore {
     ///
     func removeAccount(uuid: UUID) {
         guard let account = getAccountByUUID(uuid) else {
-            // TODO: Log this.
             LogError(message: "removeAccount: Unable to find account by UUID.")
             return
         }

@@ -18,7 +18,7 @@ class StartupHelper {
             try CoreDataManager.shared.mainContext.execute(listRequest)
             try CoreDataManager.shared.mainContext.execute(itemRequest)
         } catch {
-            // TODO: Log error
+            LogError(message: "resetSyncFlags: Error updating hasMore and/or syncing fields on lists and list items.")
         }
     }
 
@@ -41,7 +41,7 @@ class StartupHelper {
             let changes: [AnyHashable: Any] = [NSDeletedObjectsKey: result?.result as? [NSManagedObjectID] ?? []]
             NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [context])
         } catch {
-            // TODO: Log error
+            LogError(message: "purgeStaleStagedEdits: Error purging stale staged edits.")
         }
 
     }

@@ -38,6 +38,7 @@ class AccountSetupHelper {
         remote.fetchSiteSettings { (settings, error) in
             guard let settings = settings else {
                 // TODO: Custom errors?  Regardless, need to log the ones from the network.
+                LogError(message:"configure: Error fetching site settings: \(String(describing: error))")
                 self.completionHandler?(error as NSError?)
                 return
             }
@@ -77,7 +78,7 @@ class AccountSetupHelper {
     ///   - onComplete: Completion callback. Returns the settings object and whether it is a newspack site.
     ///
     func validateNewspackSite(_ settings: RemoteSiteSettings, onComplete: @escaping (RemoteSiteSettings, Bool)->Void ) {
-        // TODO: Log validating site.
+        LogInfo(message: "validateNewspackSite: Validating site")
         // Assumes there is an API request to check. For now just assume true.
         onComplete(settings, true)
     }
@@ -89,8 +90,7 @@ class AccountSetupHelper {
     ///   - sites:
     ///   - error:
     func validationComplete(sites: [RemoteSiteSettings]) {
-        // TODO: Log validation complete.
-
+        LogInfo(message: "validationComplete: Validation complete")
         guard sites.count > 0 else {
             let error = AccountSetupErrors.noValidSitesFound as NSError
             completionHandler?(error)

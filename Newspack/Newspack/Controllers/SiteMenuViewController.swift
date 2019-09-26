@@ -24,6 +24,7 @@ struct SiteMenuViewModel {
 
         let logoutRow = SiteMenuRow(title: "Log out") {
             guard let account = StoreContainer.shared.accountStore.currentAccount else {
+                LogError(message: "SiteMenu: Attempted to log out but found no account.")
                 //TODO: Handle no account.
                 return
             }
