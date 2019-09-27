@@ -205,6 +205,8 @@ extension PostListViewController: NSFetchedResultsControllerDelegate {
             tableView.insertRows(at: [newIndexPath!], with: animation)
         case .update:
             tableView.reloadRows(at: [indexPath!], with: animation)
+        @unknown default:
+            LogWarn(message: "Unhandled NSFetchedResultsChangeType")
         }
     }
 

@@ -3,7 +3,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 inhibit_all_warnings!
 use_frameworks!
 
-platform :ios, '11.0'
+platform :ios, '13.0'
 plugin 'cocoapods-repo-update'
 workspace 'Newspack.xcworkspace'
 
@@ -70,11 +70,11 @@ target 'Newspack' do
     project 'Newspack/Newspack.xcodeproj'
     shared_with_networking_pods
 
-    pod 'CocoaLumberjack/Swift', '3.5.2'
+    pod 'CocoaLumberjack/Swift', '3.5.3'
     pod 'KeychainAccess', '3.2.0'
 
-    pod 'WordPressAuthenticator', '~> 1.5.0'
-    pod 'WordPressKit', '~> 4.1.1'
+    pod 'WordPressAuthenticator', '~> 1.9.0'
+    pod 'WordPressKit', '~> 4.5.0'
     pod 'WPMediaPicker', '~> 1.4.1'
     pod 'WordPressFlux', '1.0.0'
     pod 'WordPressUI', '~> 1.3.0'
@@ -87,7 +87,7 @@ target 'Newspack' do
     target 'NewspackTests' do
         inherit! :search_paths
 
-        pod 'OHHTTPStubs/Swift', '6.1.0'
+        pod 'OHHTTPStubs/Swift', '8.0.0'
     end
 
 end

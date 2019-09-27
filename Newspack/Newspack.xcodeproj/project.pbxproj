@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -779,9 +779,11 @@
 				TargetAttributes = {
 					E6138FCD2211FE86004E5B91 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1100;
 					};
 					E6138FE42211FE88004E5B91 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1100;
 						TestTargetID = E6138FCD2211FE86004E5B91;
 					};
 					E6E1FA7D2216134300119ECE = {
@@ -1265,7 +1267,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.Newspack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1285,7 +1287,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.Newspack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1307,7 +1309,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.NewspackTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Newspack.app/Newspack";
 			};
@@ -1330,7 +1332,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.NewspackTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Newspack.app/Newspack";
 			};

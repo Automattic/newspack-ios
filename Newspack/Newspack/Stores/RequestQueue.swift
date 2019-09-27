@@ -49,7 +49,7 @@ class RequestQueue<Item: Comparable, Delegate: RequestQueueDelegate> where Deleg
     /// - Parameter item: The item to remove.
     ///
     func remove(item: Item) {
-        guard let idx = queue.index(of: item) else {
+        guard let idx = queue.firstIndex(of: item) else {
             return
         }
         queue.remove(at: idx)
@@ -80,7 +80,7 @@ class RequestQueue<Item: Comparable, Delegate: RequestQueueDelegate> where Deleg
     /// available item is added to the active queue if appropriate.
     ///
     private func removeActive(item: Item) {
-        guard let idx = activeQueue.index(of: item) else {
+        guard let idx = activeQueue.firstIndex(of: item) else {
             return
         }
         activeQueue.remove(at: idx)
