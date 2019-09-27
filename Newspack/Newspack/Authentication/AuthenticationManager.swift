@@ -1,6 +1,7 @@
 import Foundation
 import WordPressAuthenticator
 import WordPressFlux
+import Gridicons
 
 class AuthenticationManager {
 
@@ -26,7 +27,31 @@ class AuthenticationManager {
                                                                 googleLoginServerClientId: "",
                                                                 googleLoginScheme: "",
                                                                 userAgent: UserAgent.defaultUserAgent)
-        WordPressAuthenticator.initialize(configuration: configuration, style: WordPressAuthenticatorStyle.defaultStyle)
+
+        let style = WordPressAuthenticatorStyle(primaryNormalBackgroundColor: WPStyleGuide.mediumBlue(),
+                                                primaryNormalBorderColor: WPStyleGuide.wordPressBlue(),
+                                                primaryHighlightBackgroundColor: WPStyleGuide.wordPressBlue(),
+                                                primaryHighlightBorderColor: WPStyleGuide.wordPressBlue(),
+                                                secondaryNormalBackgroundColor: UIColor.white,
+                                                secondaryNormalBorderColor: WPStyleGuide.greyLighten20(),
+                                                secondaryHighlightBackgroundColor: WPStyleGuide.greyLighten20(),
+                                                secondaryHighlightBorderColor: WPStyleGuide.greyLighten20(),
+                                                disabledBackgroundColor: UIColor.white,
+                                                disabledBorderColor: WPStyleGuide.greyLighten30(),
+                                                primaryTitleColor: UIColor.white,
+                                                secondaryTitleColor: WPStyleGuide.darkGrey(),
+                                                disabledTitleColor: WPStyleGuide.greyLighten30(),
+                                                textButtonColor: WPStyleGuide.greyLighten30(),
+                                                textButtonHighlightColor: WPStyleGuide.greyLighten30(),
+                                                instructionColor: WPStyleGuide.darkGrey(),
+                                                subheadlineColor: WPStyleGuide.wordPressBlue(),
+                                                placeholderColor: WPStyleGuide.greyDarken20(),
+                                                viewControllerBackgroundColor: WPStyleGuide.lightGrey(),
+                                                textFieldBackgroundColor: UIColor.white,
+                                                navBarImage: Gridicon.iconOfType(.mySites),
+                                                navBarBadgeColor: UIColor.gray)
+
+        WordPressAuthenticator.initialize(configuration: configuration, style: style)
         initialized = true
     }
 
@@ -201,33 +226,5 @@ extension AuthenticationManager: WordPressAuthenticatorDelegate {
     ///
     func track(event: WPAnalyticsStat, error: Error) {
 
-    }
-}
-
-extension WordPressAuthenticatorStyle {
-    static var defaultStyle: WordPressAuthenticatorStyle {
-        return WordPressAuthenticatorStyle(primaryNormalBackgroundColor: WPStyleGuide.mediumBlue(),
-                                           primaryNormalBorderColor: WPStyleGuide.wordPressBlue(),
-                                           primaryHighlightBackgroundColor: WPStyleGuide.wordPressBlue(),
-                                           primaryHighlightBorderColor: WPStyleGuide.wordPressBlue(),
-                                           secondaryNormalBackgroundColor: UIColor.white,
-                                           secondaryNormalBorderColor: WPStyleGuide.greyLighten20(),
-                                           secondaryHighlightBackgroundColor: WPStyleGuide.greyLighten20(),
-                                           secondaryHighlightBorderColor: WPStyleGuide.greyLighten20(),
-                                           disabledBackgroundColor: UIColor.white,
-                                           disabledBorderColor: WPStyleGuide.greyLighten30(),
-                                           primaryTitleColor: UIColor.white,
-                                           secondaryTitleColor: WPStyleGuide.darkGrey(),
-                                           disabledTitleColor: WPStyleGuide.greyLighten30(),
-                                           textButtonColor: WPStyleGuide.greyLighten30(),
-                                           textButtonHighlightColor: WPStyleGuide.greyLighten30(),
-                                           instructionColor: WPStyleGuide.greyLighten30(),
-                                           subheadlineColor: WPStyleGuide.wordPressBlue(),
-                                           placeholderColor: WPStyleGuide.greyDarken20(),
-                                           viewControllerBackgroundColor: WPStyleGuide.lightGrey(),
-                                           textFieldBackgroundColor: UIColor.white,
-                                           navBarImage: UIImage(),
-                                           navBarBadgeColor: UIColor.white
-        )
     }
 }
