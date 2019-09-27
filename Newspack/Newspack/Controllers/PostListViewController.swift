@@ -144,7 +144,7 @@ extension PostListViewController {
 
             cell.textLabel?.text = post.titleRendered
             if listItem.syncing {
-                cell.accessoryView = UIActivityIndicatorView(style: .gray)
+                cell.accessoryView = UIActivityIndicatorView(style: .medium)
             }
         } else {
             cell.isGhostableDisabled = false
