@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -74,6 +74,9 @@
 		E637A6E222F0ED5D00229C1D /* RequestQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E637A6E122F0ED5D00229C1D /* RequestQueue.swift */; };
 		E637A6E422F0EE1500229C1D /* RequestQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */; };
 		E638804E22DFC07900B3C16A /* PostListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E638804D22DFC07900B3C16A /* PostListStore.swift */; };
+		E63EECD7234289DD00669FFC /* PostApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECD6234289DD00669FFC /* PostApiService.swift */; };
+		E63EECD9234289F700669FFC /* SiteApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECD8234289F700669FFC /* SiteApiService.swift */; };
+		E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECDA23428A0900669FFC /* UserApiService.swift */; };
 		E641A66122A71A83008BBD85 /* SiteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641A66022A71A83008BBD85 /* SiteStore.swift */; };
 		E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641A66222A7584A008BBD85 /* AccountDetailsStore.swift */; };
 		E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */; };
@@ -239,6 +242,9 @@
 		E637A6E122F0ED5D00229C1D /* RequestQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestQueue.swift; sourceTree = "<group>"; };
 		E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestQueueTests.swift; sourceTree = "<group>"; };
 		E638804D22DFC07900B3C16A /* PostListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListStore.swift; sourceTree = "<group>"; };
+		E63EECD6234289DD00669FFC /* PostApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostApiService.swift; sourceTree = "<group>"; };
+		E63EECD8234289F700669FFC /* SiteApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteApiService.swift; sourceTree = "<group>"; };
+		E63EECDA23428A0900669FFC /* UserApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiService.swift; sourceTree = "<group>"; };
 		E641A66022A71A83008BBD85 /* SiteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStore.swift; sourceTree = "<group>"; };
 		E641A66222A7584A008BBD85 /* AccountDetailsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsStore.swift; sourceTree = "<group>"; };
 		E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStore.swift; sourceTree = "<group>"; };
@@ -503,9 +509,13 @@
 				E602E68922C1617E00795CBA /* Config */,
 				E602E68822C1615C00795CBA /* Actions */,
 				E602E68122C15EAB00795CBA /* Models */,
+				E63EECDC23428B3E00669FFC /* ServiceRemotes */,
 				E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */,
 				E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */,
 				E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */,
+				E63EECD6234289DD00669FFC /* PostApiService.swift */,
+				E63EECD8234289F700669FFC /* SiteApiService.swift */,
+				E63EECDA23428A0900669FFC /* UserApiService.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -673,6 +683,13 @@
 				E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		E63EECDC23428B3E00669FFC /* ServiceRemotes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ServiceRemotes;
 			sourceTree = "<group>";
 		};
 		E66B7D3E22162754004355D3 /* Credentials */ = {
@@ -1001,6 +1018,7 @@
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
 				E68B29FF23048C6C0021283C /* EditCoordinator.swift in Sources */,
 				E66CCA162303527D00F1CA59 /* Post+CoreDataProperties.swift in Sources */,
+				E63EECD9234289F700669FFC /* SiteApiService.swift in Sources */,
 				E6A4D743230A08A700929376 /* StagedEdits+CoreDataClass.swift in Sources */,
 				E602E69222C1666C00795CBA /* AccountAction.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
@@ -1045,6 +1063,7 @@
 				E66CCA0F2303527C00F1CA59 /* Revision+CoreDataProperties.swift in Sources */,
 				E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */,
 				E602E68D22C1634900795CBA /* SiteApiActions.swift in Sources */,
+				E63EECD7234289DD00669FFC /* PostApiService.swift in Sources */,
 				E623C6F62220516600F9865C /* ApiCredentials.swift in Sources */,
 				E66CCA1A2303527D00F1CA59 /* Post+CoreDataClass.swift in Sources */,
 				E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */,
@@ -1054,6 +1073,7 @@
 				E66CCA132303527C00F1CA59 /* Status+CoreDataProperties.swift in Sources */,
 				E66CCA042303527C00F1CA59 /* Category+CoreDataProperties.swift in Sources */,
 				E66CCA1F2303527D00F1CA59 /* Tag+CoreDataClass.swift in Sources */,
+				E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */,
 				E66CCA0D2303527C00F1CA59 /* Site+CoreDataProperties.swift in Sources */,
 				E66CCA0B2303527C00F1CA59 /* Account+CoreDataProperties.swift in Sources */,
 				E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */,
