@@ -510,9 +510,6 @@
 				E602E68822C1615C00795CBA /* Actions */,
 				E602E68122C15EAB00795CBA /* Models */,
 				E63EECDC23428B3E00669FFC /* ServiceRemotes */,
-				E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */,
-				E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */,
-				E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */,
 				E63EECD6234289DD00669FFC /* PostApiService.swift */,
 				E63EECD8234289F700669FFC /* SiteApiService.swift */,
 				E63EECDA23428A0900669FFC /* UserApiService.swift */,
@@ -688,6 +685,9 @@
 		E63EECDC23428B3E00669FFC /* ServiceRemotes */ = {
 			isa = PBXGroup;
 			children = (
+				E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */,
+				E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */,
+				E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */,
 			);
 			path = ServiceRemotes;
 			sourceTree = "<group>";
