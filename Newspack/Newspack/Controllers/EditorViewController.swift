@@ -110,6 +110,11 @@ extension EditorViewController {
 }
 
 extension EditorViewController: GutenbergBridgeDelegate {
+
+    func editorDidAutosave() {
+
+    }
+
     func gutenbergDidProvideHTML(title: String, html: String, changed: Bool) {
         let dispatcher = SessionManager.shared.sessionDispatcher
 

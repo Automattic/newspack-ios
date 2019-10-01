@@ -48,7 +48,8 @@ def gutenberg_dependencies(options)
         'react-native-keyboard-aware-scroll-view',
         'react-native-safe-area',
         'react-native-video',
-        'RNSVG'
+        'RNSVG',
+        'ReactNativeDarkMode',
     ]
     if options[:path]
         podspec_prefix = options[:path]
@@ -82,7 +83,8 @@ target 'Newspack' do
 
     ## Gutenberg
     ##
-    gutenberg :tag => 'v1.10.2'
+    # gutenberg :tag => 'v1.10.2'
+    gutenberg :commit => '640455e3203791f84b207974fa8c3e307f1fa586'
 
     target 'NewspackTests' do
         inherit! :search_paths
