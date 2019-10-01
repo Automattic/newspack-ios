@@ -189,8 +189,8 @@ extension PostListStore {
         state = .syncing
         CoreDataManager.shared.saveContext()
 
-        let remote = ApiService.shared.postServiceRemote()
-        remote.fetchPostIDs(filter: list.filter, page: page)
+        let service = ApiService.postService()
+        service.fetchPostIDs(filter: list.filter, page: page)
     }
 
     /// Handles the postsFetched action.

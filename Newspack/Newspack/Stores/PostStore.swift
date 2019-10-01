@@ -97,8 +97,8 @@ extension PostStore {
     ///
     func handleItemEnqueued(item: Int64) {
         // TODO: For offline support, when coming back online see if there are enqueued items.
-        let remote = ApiService.shared.postServiceRemote()
-        remote.fetchPost(postID: item)
+        let service = ApiService.postService()
+        service.fetchPost(postID: item)
     }
 
     /// Handles the dispatched action from the remote post service.

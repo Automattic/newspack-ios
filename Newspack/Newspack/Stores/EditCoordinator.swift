@@ -134,8 +134,8 @@ extension EditCoordinator {
 
         let title = stagedEdits.title ?? ""
         let content = stagedEdits.content ?? ""
-        let postService = ApiService.shared.postServiceRemote()
-        postService.autosave(postID: postID, title: title, content: content)
+        let service = ApiService.postService()
+        service.autosave(postID: postID, title: title, content: content)
     }
 
     func createOrUpdatePostWithStatus(status: String) {
@@ -147,7 +147,7 @@ extension EditCoordinator {
     }
 
     func createPostWithStatus(status: String) {
-        let postService = ApiService.shared.postServiceRemote()
+        let service = ApiService.postService()
 
         let title = stagedEdits.title ?? ""
         let content = stagedEdits.content ?? ""
@@ -157,15 +157,15 @@ extension EditCoordinator {
             "status" : status,
             ] as [String: AnyObject]
         createdPostUUID = UUID()
-        postService.createPost(uuid: createdPostUUID!, postParams: params)
+        service.createPost(uuid: createdPostUUID!, postParams: params)
     }
 
     func updatePost(post: Post, withStatus status: String) {
         var params = parametersFromPost(post: post)
         params["status"] = status as AnyObject
 
-        let postService = ApiService.shared.postServiceRemote()
-        postService.updatePost(postID: post.postID, postParams: params)
+        let service = ApiService.postService()
+        service.updatePost(postID: post.postID, postParams: params)
     }
 
     func parametersFromPost(post: Post) -> [String: AnyObject] {

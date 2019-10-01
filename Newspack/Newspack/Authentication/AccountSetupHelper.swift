@@ -34,7 +34,7 @@ class AccountSetupHelper {
 
         let api = WordPressCoreRestApi(oAuthToken: token, userAgent: UserAgent.defaultUserAgent, site: network)
         // Manual setup because we're not initializing a session yet.
-        let remote = SiteServiceRemote(wordPressComRestApi: api, dispatcher: SessionManager.shared.sessionDispatcher)
+        let remote = SiteServiceRemote(wordPressComRestApi: api)
         remote.fetchSiteSettings { (settings, error) in
             guard let settings = settings else {
                 // TODO: Custom errors?  Regardless, need to log the ones from the network.
