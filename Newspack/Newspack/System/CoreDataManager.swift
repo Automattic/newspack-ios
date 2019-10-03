@@ -52,27 +52,11 @@ class CoreDataManager {
         }
     }
 
-    // Returns an NSManagedObjectContext that is a child of the mainContext and
-    // is configured to run on a private background queue.
-    //
-    public func newPrivateChildContext() -> NSManagedObjectContext {
-        let childContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        childContext.parent = mainContext
-        childContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        return childContext
-    }
-
     // Returns an NSManagedObjectContext that is a child of the NSPersistentContainer's
     // private context--a sibling of the public mainContext.
     //
     public func newPrivateContext() -> NSManagedObjectContext {
         return container.newBackgroundContext()
-    }
-
-    // A convenience method for saving the mainContext.
-    //
-    public func saveContext() {
-        saveContext(context: mainContext)
     }
 
     // Saves the passed NSManagedObjectContext if it has changes.
