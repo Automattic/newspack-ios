@@ -42,20 +42,24 @@ extension AccountCapabilitiesStore {
         guard
             let user = action.payload,
             let siteID = currentSiteID,
-            let site = siteStore.getSiteByUUID(siteID)
+            let siteObjID = siteStore.getSiteByUUID(siteID)?.objectID
             else {
                 LogError(message: "handleAccountFetched: A value was unexpectedly nil.")
                 return
         }
 
-        let context = CoreDataManager.shared.mainContext
-        let capabilities = site.capabilities ?? AccountCapabilities(context: context)
-        capabilities.roles = user.roles
-        capabilities.capabilities = user.capabilities
-        capabilities.site = site
+        CoreDataManager.shared.performOnWriteContext { [weak self] context in
+            let site = context.object(with: siteObjID) as! Site
+            let capabilities = site.capabilities ?? AccountCapabilities(context: context)
+            capabilities.roles = user.roles
+            capabilities.capabilities = user.capabilities
+            capabilities.site = site
 
-        CoreDataManager.shared.saveContext(context: context)
+            CoreDataManager.shared.saveContext(context: context)
 
-        emitChange()
+            DispatchQueue.main.async {
+                self?.emitChange()
+            }
+        }
     }
 }

@@ -187,7 +187,6 @@ extension PostListStore {
         }
 
         state = .syncing
-        CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
 
         let service = ApiService.postService()
         service.fetchPostIDs(filter: list.filter, page: page)
@@ -212,8 +211,6 @@ extension PostListStore {
         defer {
             state = .ready
 
-            CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
-
             if let page = queue.popLast() {
                 syncItemsForList(list: list, page: page)
             }
@@ -223,6 +220,7 @@ extension PostListStore {
             // TODO: Inspect and handle error.
             // For now assume we're out of pages.
             list.hasMore = action.hasMore
+            CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
             queue.removeAll()
             return
         }
@@ -233,31 +231,60 @@ extension PostListStore {
             return
         }
 
-        let context = CoreDataManager.shared.mainContext
+        let listObjID = list.objectID
+        CoreDataManager.shared.performOnWriteContext { (context) in
+            let list = context.object(with: listObjID) as! PostList
+            list.hasMore = remotePostIDs.count == self.pageSize
 
-        for remotePostID in remotePostIDs {
-            let item: PostListItem
-            let fetchRequest = PostListItem.defaultFetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "%@ IN postLists AND postID = %ld", list, remotePostID.postID)
-
-            do {
-                item = try context.fetch(fetchRequest).first ?? PostListItem(context: context)
-            } catch {
-                let error = error as NSError
-                LogError(message: "handlePostIDsFetched: " + error.localizedDescription)
-                continue
+            if action.page == 1 {
+                list.lastSync = Date()
             }
 
-            updatePostListItem(item, with: remotePostID)
-            item.site = list.site
-            list.addToItems(item)
-        }
+            for remotePostID in remotePostIDs {
+                let item: PostListItem
+                let fetchRequest = PostListItem.defaultFetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "%@ IN postLists AND postID = %ld", list, remotePostID.postID)
 
-        list.hasMore = remotePostIDs.count == pageSize
+                do {
+                    item = try context.fetch(fetchRequest).first ?? PostListItem(context: context)
+                } catch {
+                    let error = error as NSError
+                    LogError(message: "handlePostIDsFetched: " + error.localizedDescription)
+                    continue
+                }
 
-        if action.page == 1 {
-            list.lastSync = Date()
+                self.updatePostListItem(item, with: remotePostID)
+                item.site = list.site
+                list.addToItems(item)
+            }
+            CoreDataManager.shared.saveContext(context: context)
         }
+//        list.hasMore = remotePostIDs.count == pageSize
+//
+//        if action.page == 1 {
+//            list.lastSync = Date()
+//        }
+//
+//        let context = CoreDataManager.shared.mainContext
+//
+//        for remotePostID in remotePostIDs {
+//            let item: PostListItem
+//            let fetchRequest = PostListItem.defaultFetchRequest()
+//            fetchRequest.predicate = NSPredicate(format: "%@ IN postLists AND postID = %ld", list, remotePostID.postID)
+//
+//            do {
+//                item = try context.fetch(fetchRequest).first ?? PostListItem(context: context)
+//            } catch {
+//                let error = error as NSError
+//                LogError(message: "handlePostIDsFetched: " + error.localizedDescription)
+//                continue
+//            }
+//
+//            updatePostListItem(item, with: remotePostID)
+//            item.site = list.site
+//            list.addToItems(item)
+//        }
+
     }
 
     /// Update a post list item with a corresponding remote post id
@@ -317,35 +344,38 @@ extension PostListStore {
     /// Ideally this should be set up as part of an initial sync.
     ///
     func setupDefaultPostListsIfNeeded(siteUUID: UUID) {
-        let context = CoreDataManager.shared.mainContext
-        let fetchRequest = PostList.defaultFetchRequest()
-
-        guard let site = StoreContainer.shared.siteStore.getSiteByUUID(siteUUID) else {
+        let store = StoreContainer.shared.siteStore
+        guard let siteObjID = store.getSiteByUUID(siteUUID)?.objectID else {
             // TODO: Handle no site.
             LogError(message: "setupDefaultPostListsIfNeeded: Unable to get site by UUID.")
             return
         }
 
-        guard let count = try? context.count(for: fetchRequest) else {
-            // TODO: Handle core data error.
-            LogError(message: "setupDefaultPostListsIfNeeded: Unable to get count from NSManagedObjectContext.")
-            return
-        }
+        CoreDataManager.shared.performOnWriteContext { (context) in
+            let site = context.object(with: siteObjID) as! Site
+            let fetchRequest = PostList.defaultFetchRequest()
 
-        if count > 0 {
-            // Nothing to do here.
-            return
-        }
+            guard let count = try? context.count(for: fetchRequest) else {
+                // TODO: Handle core data error.
+                LogError(message: "setupDefaultPostListsIfNeeded: Unable to get count from NSManagedObjectContext.")
+                return
+            }
 
-        for item in PostListStore.defaultPostLists() {
-            let list = PostList(context: context)
-            list.uuid = UUID()
-            list.name = item.name
-            list.filter = item.filter
-            list.site = site
-        }
+            if count > 0 {
+                // Nothing to do here.
+                return
+            }
 
-        CoreDataManager.shared.saveContext(context: context)
+            for item in PostListStore.defaultPostLists() {
+                let list = PostList(context: context)
+                list.uuid = UUID()
+                list.name = item.name
+                list.filter = item.filter
+                list.site = site
+            }
+
+            CoreDataManager.shared.saveContext(context: context)
+        }
     }
 }
 

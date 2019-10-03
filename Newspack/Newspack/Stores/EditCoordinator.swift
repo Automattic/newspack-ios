@@ -87,14 +87,18 @@ extension EditCoordinator {
     }
 
     func handleStageChangesAction(title: String, content: String) {
-        guard title != stagedEdits.title || content != stagedEdits.content else {
+        guard
+            title != stagedEdits.title || content != stagedEdits.content,
+            let context = stagedEdits.managedObjectContext
+        else {
             return
         }
         stagedEdits.title = title
         stagedEdits.content = content
         stagedEdits.lastModified = Date()
 
-        CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
+        // This should be in response to a user action so we will save on the main thread.
+        CoreDataManager.shared.saveContext(context: context)
     }
 
     func handleAutosaveAction(title: String, content: String) {
@@ -116,9 +120,12 @@ extension EditCoordinator {
 
     func handleDiscardChangesAction() {
         // TODO: This will need also need to clean up a "local" post list item if we go that route.
-        let context = CoreDataManager.shared.mainContext
-        context.delete(stagedEdits)
-        CoreDataManager.shared.saveContext(context: context)
+        let objID = stagedEdits.objectID
+        CoreDataManager.shared.performOnWriteContext { (context) in
+            let edits = context.object(with: objID) as! StagedEdits
+            context.delete(edits)
+            CoreDataManager.shared.saveContext(context: context)
+        }
     }
 }
 
@@ -201,7 +208,7 @@ extension EditCoordinator {
 
         if remoteRevision.parentID == 0 {
             // we're updating a draft/pending post directly.
-            updatePost(post: post, with: remoteRevision)
+            updateAndSavePost(post: post, with: remoteRevision)
 
         } else if remoteRevision.revisionID == post.postID {
             // we're updating an autosave on published/scheduled/private post.
@@ -213,53 +220,61 @@ extension EditCoordinator {
         }
     }
 
-    func updatePost(post: Post, with remoteRevision: RemoteRevision) {
+    func updateAndSavePost(post: Post, with remoteRevision: RemoteRevision) {
         guard post.postID == remoteRevision.revisionID else {
             LogError(message: "updatePost: Post ID did not match Revision ID.")
             return
         }
 
-        // Update a draft/pending post with remote post.
-        // Autosaves should only update title, content, exerpt and modified.
-        // However, update the date also in case it should match date modified.
-        post.title = remoteRevision.title
-        post.titleRendered = remoteRevision.titleRendered
-        post.content = remoteRevision.content
-        post.contentRendered = remoteRevision.contentRendered
-        post.excerpt = remoteRevision.excerpt
-        post.excerptRendered = remoteRevision.excerptRendered
-        post.date = remoteRevision.date
-        post.dateGMT = remoteRevision.dateGMT
-        post.modified = remoteRevision.modified
-        post.modifiedGMT = remoteRevision.modifiedGMT
+        let postObjID = post.objectID
+        CoreDataManager.shared.performOnWriteContext { (context) in
+            let post = context.object(with: postObjID) as! Post
 
-        // Enusre the post list item reflects the updated date.
-        post.item.dateGMT = post.dateGMT
-        post.item.modifiedGMT = post.modifiedGMT
+            // Update a draft/pending post with remote post.
+            // Autosaves should only update title, content, exerpt and modified.
+            // However, update the date also in case it should match date modified.
+            post.title = remoteRevision.title
+            post.titleRendered = remoteRevision.titleRendered
+            post.content = remoteRevision.content
+            post.contentRendered = remoteRevision.contentRendered
+            post.excerpt = remoteRevision.excerpt
+            post.excerptRendered = remoteRevision.excerptRendered
+            post.date = remoteRevision.date
+            post.dateGMT = remoteRevision.dateGMT
+            post.modified = remoteRevision.modified
+            post.modifiedGMT = remoteRevision.modifiedGMT
 
-        CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
+            // Enusre the post list item reflects the updated date.
+            post.item.dateGMT = post.dateGMT
+            post.item.modifiedGMT = post.modifiedGMT
+
+            CoreDataManager.shared.saveContext(context: context)
+        }
     }
 
     func createOrUpdateAutosaveRevisionForPost(post: Post, with remoteRevision: RemoteRevision) {
         // create or update autosave revision
-        let context = CoreDataManager.shared.mainContext
-        let fetchRequest = Revision.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "post == %@ AND revisionID == %ld", post, remoteRevision.revisionID)
+        let objID = post.objectID
+        CoreDataManager.shared.performOnWriteContext { [weak self] (context) in
+            let post = context.object(with: objID) as! Post
+            let fetchRequest = Revision.defaultFetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "post == %@ AND revisionID == %ld", post, remoteRevision.revisionID)
 
-        let revision: Revision
-        do {
-            revision = try context.fetch(fetchRequest).first ?? Revision(context: context)
-        } catch {
-            revision = Revision(context: context)
+            let revision: Revision
+            do {
+                revision = try context.fetch(fetchRequest).first ?? Revision(context: context)
+            } catch {
+                revision = Revision(context: context)
 
-            let error = error as NSError
-            LogError(message: "createOrUpdateAutosaveRevisionForPost: " + error.localizedDescription)
+                let error = error as NSError
+                LogError(message: "createOrUpdateAutosaveRevisionForPost: " + error.localizedDescription)
+            }
+
+            self?.updateRevision(revision: revision, with: remoteRevision)
+            revision.post = post
+
+            CoreDataManager.shared.saveContext(context: context)
         }
-
-        updateRevision(revision: revision, with: remoteRevision)
-        revision.post = post
-
-        CoreDataManager.shared.saveContext(context: context)
     }
 
     func handlePostCreatedApiAction(action: PostCreatedApiAction) {
@@ -284,30 +299,34 @@ extension EditCoordinator {
         // Use the payload to create a new Post and PostListItem.
         // The item should be assigned to the "ALL" PostList.
 
-        guard let list = StoreContainer.shared.postListStore.postListByName(name: "all", siteUUID: currentSiteID) else {
+        guard let listObjID = StoreContainer.shared.postListStore.postListByName(name: "all", siteUUID: currentSiteID)?.objectID else {
             LogError(message: "handlePostCreatedApiAction: A value was unexpectedly nil.")
             return
         }
+        let editsID = stagedEdits.objectID
 
-        let context = CoreDataManager.shared.mainContext
+        CoreDataManager.shared.performOnWriteContext { (context) in
+            let list = context.object(with: listObjID) as! PostList
+            let stagedEdits = context.object(with: editsID) as! StagedEdits
 
-        let postStore = StoreContainer.shared.postStore
-        let post = Post(context: context)
-        postStore.updatePost(post, with: remotePost)
-        post.site = list.site
+            let postStore = StoreContainer.shared.postStore
+            let post = Post(context: context)
+            postStore.updatePost(post, with: remotePost)
+            post.site = list.site
 
-        let postItem = PostListItem(context: context)
-        postItem.postID = post.postID
-        postItem.dateGMT = post.dateGMT
-        postItem.modifiedGMT = post.modifiedGMT
-        postItem.revisionCount = 0
+            let postItem = PostListItem(context: context)
+            postItem.postID = post.postID
+            postItem.dateGMT = post.dateGMT
+            postItem.modifiedGMT = post.modifiedGMT
+            postItem.revisionCount = 0
 
-        postItem.stagedEdits = stagedEdits
-        postItem.post = post
-        postItem.site = list.site
-        postItem.addToPostLists(list)
+            postItem.stagedEdits = stagedEdits
+            postItem.post = post
+            postItem.site = list.site
+            postItem.addToPostLists(list)
 
-        CoreDataManager.shared.saveContext(context: context)
+            CoreDataManager.shared.saveContext(context: context)
+        }
     }
 
     func handlePostUpdatedApiAction(action: PostUpdatedApiAction) {
@@ -329,16 +348,23 @@ extension EditCoordinator {
             return
         }
 
-        let postStore = StoreContainer.shared.postStore
-        postStore.updatePost(post, with: remotePost)
+        let postObjID = post.objectID
+        let itemObjID = postItem.objectID
+        CoreDataManager.shared.performOnWriteContext { (context) in
+            let post = context.object(with: postObjID) as! Post
+            let postItem = context.object(with: itemObjID) as! PostListItem
 
-        // TODO: This work could be moved into postStore.updatePost provided
-        // there is always a postItem.
-        postItem.dateGMT = post.dateGMT
-        postItem.modifiedGMT = post.modifiedGMT
-        postItem.revisionCount = post.revisionCount
+            let postStore = StoreContainer.shared.postStore
+            postStore.updatePost(post, with: remotePost)
 
-        CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
+            // TODO: This work could be moved into postStore.updatePost provided
+            // there is always a postItem.
+            postItem.dateGMT = post.dateGMT
+            postItem.modifiedGMT = post.modifiedGMT
+            postItem.revisionCount = post.revisionCount
+
+            CoreDataManager.shared.saveContext(context: context)
+        }
     }
 
     func updateRevision(revision: Revision, with remoteRevision: RemoteRevision) {

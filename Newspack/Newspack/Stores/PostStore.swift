@@ -117,10 +117,10 @@ extension PostStore {
         let siteStore = StoreContainer.shared.siteStore
 
         guard
-            let siteID = currentSiteID,
-            let site = siteStore.getSiteByUUID(siteID),
             let remotePost = action.payload,
-            let listItem = getPostListItemWithID(postID: remotePost.postID)
+            let siteID = currentSiteID,
+            let siteObjID = siteStore.getSiteByUUID(siteID)?.objectID,
+            let listItemObjID = getPostListItemWithID(postID: remotePost.postID)?.objectID
         else {
             LogError(message: "handlePostFetchedAction: A value was unexpectedly nil.")
             return
@@ -130,25 +130,26 @@ extension PostStore {
         // This should update the active queue and start the next sync
         requestQueue.remove(item: remotePost.postID)
 
-        let context = CoreDataManager.shared.mainContext
-        let fetchRequest = Post.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "site = %@ AND postID = %ld", site, remotePost.postID)
+        CoreDataManager.shared.performOnWriteContext { (context) in
+            let site = context.object(with: siteObjID) as! Site
+            let listItem = context.object(with: listItemObjID) as! PostListItem
 
-        let post: Post
-        do {
-            post = try context.fetch(fetchRequest).first ?? Post(context: context)
-        } catch {
-            post = Post(context: context)
-            let error = error as NSError
-            LogWarn(message: "handlePostFetchedAction: " + error.localizedDescription)
-        }
+            let fetchRequest = Post.defaultFetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "site = %@ AND postID = %ld", site, remotePost.postID)
 
-        updatePost(post, with: remotePost)
-        post.site = site
-        post.item = listItem
+            let post: Post
+            do {
+                post = try context.fetch(fetchRequest).first ?? Post(context: context)
+            } catch {
+                post = Post(context: context)
+                let error = error as NSError
+                LogWarn(message: "handlePostFetchedAction: " + error.localizedDescription)
+            }
 
-        if requestQueue.queue.count == 0 {
-            stopSaveTimer()
+            self.updatePost(post, with: remotePost)
+            post.site = site
+            post.item = listItem
+
             CoreDataManager.shared.saveContext(context: context)
         }
     }
@@ -189,24 +190,5 @@ extension PostStore {
         post.title = remotePost.title
         post.titleRendered = remotePost.titleRendered
         post.type = remotePost.type
-    }
-}
-
-// MARK: - Timer methods
-/// The timer is part of a performance strategy and is used to limit rapid saves to core data while syncing.
-extension PostStore {
-
-    private func startSaveTimer() {
-        guard saveTimer == nil else {
-            return
-        }
-        saveTimer = Timer.scheduledTimer(withTimeInterval: saveTimerInterval, repeats: true, block: { _ in
-            CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
-        })
-    }
-
-    private func stopSaveTimer() {
-        saveTimer?.invalidate()
-        saveTimer = nil
     }
 }
