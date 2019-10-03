@@ -149,7 +149,7 @@ extension PostStore {
 
         if requestQueue.queue.count == 0 {
             stopSaveTimer()
-            CoreDataManager.shared.saveContext()
+            CoreDataManager.shared.saveContext(context: context)
         }
     }
 
@@ -201,7 +201,7 @@ extension PostStore {
             return
         }
         saveTimer = Timer.scheduledTimer(withTimeInterval: saveTimerInterval, repeats: true, block: { _ in
-            CoreDataManager.shared.saveContext()
+            CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
         })
     }
 

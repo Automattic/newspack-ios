@@ -94,7 +94,7 @@ extension EditCoordinator {
         stagedEdits.content = content
         stagedEdits.lastModified = Date()
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
     }
 
     func handleAutosaveAction(title: String, content: String) {
@@ -118,7 +118,7 @@ extension EditCoordinator {
         // TODO: This will need also need to clean up a "local" post list item if we go that route.
         let context = CoreDataManager.shared.mainContext
         context.delete(stagedEdits)
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
     }
 }
 
@@ -237,7 +237,7 @@ extension EditCoordinator {
         post.item.dateGMT = post.dateGMT
         post.item.modifiedGMT = post.modifiedGMT
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
     }
 
     func createOrUpdateAutosaveRevisionForPost(post: Post, with remoteRevision: RemoteRevision) {
@@ -259,7 +259,7 @@ extension EditCoordinator {
         updateRevision(revision: revision, with: remoteRevision)
         revision.post = post
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
     }
 
     func handlePostCreatedApiAction(action: PostCreatedApiAction) {
@@ -307,7 +307,7 @@ extension EditCoordinator {
         postItem.site = list.site
         postItem.addToPostLists(list)
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
     }
 
     func handlePostUpdatedApiAction(action: PostUpdatedApiAction) {
@@ -338,7 +338,7 @@ extension EditCoordinator {
         postItem.modifiedGMT = post.modifiedGMT
         postItem.revisionCount = post.revisionCount
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
     }
 
     func updateRevision(revision: Revision, with remoteRevision: RemoteRevision) {

@@ -110,7 +110,7 @@ extension AccountStore {
         account.uuid = UUID()
         account.networkUrl = url
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         setAuthToken(authToken, for: account)
 

@@ -75,7 +75,7 @@ extension SiteStore {
 
         updateSite(site: site, withSettings: settings)
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
 
         emitChange()
     }
@@ -99,7 +99,7 @@ extension SiteStore {
 
         updateSite(site: site, withSettings: settings)
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
     }
 
     func updateSite(site: Site, withSettings settings: RemoteSiteSettings) {

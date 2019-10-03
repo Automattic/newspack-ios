@@ -69,7 +69,7 @@ extension AccountDetailsStore {
 
         account.details = details
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         emitChange()
     }

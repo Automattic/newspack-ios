@@ -187,7 +187,7 @@ extension PostListStore {
         }
 
         state = .syncing
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
 
         let service = ApiService.postService()
         service.fetchPostIDs(filter: list.filter, page: page)
@@ -212,7 +212,7 @@ extension PostListStore {
         defer {
             state = .ready
 
-            CoreDataManager.shared.saveContext()
+            CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
 
             if let page = queue.popLast() {
                 syncItemsForList(list: list, page: page)

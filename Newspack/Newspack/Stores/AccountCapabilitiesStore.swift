@@ -54,7 +54,7 @@ extension AccountCapabilitiesStore {
         capabilities.capabilities = user.capabilities
         capabilities.site = site
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         emitChange()
     }
