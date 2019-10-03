@@ -20,7 +20,14 @@ class CoreDataManager {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+        container.viewContext.automaticallyMergesChangesFromParent = true
         return container
+    }()
+
+    private lazy var writeContext: NSManagedObjectContext = {
+        let context = container.newBackgroundContext()
+        context.automaticallyMergesChangesFromParent = true
+        return context
     }()
 
     /// A convenience method used for tests.
@@ -49,6 +56,17 @@ class CoreDataManager {
     public func performBackgroundTask(_ block: @escaping (NSManagedObjectContext) -> Void) {
         container.performBackgroundTask { context in
             block(context)
+        }
+    }
+
+    /// A convenience method for performing work on a persistent write context.  Useful when multiple
+    /// units of work need to happen in order on a single background queue.
+    ///
+    /// - Parameter block:An anonymous block executed on the background "write" thread.
+    ///
+    public func performOnWriteContext(_ block: @escaping (NSManagedObjectContext) -> Void) {
+        writeContext.performAndWait { [unowned writeContext] in
+            block(writeContext)
         }
     }
 
