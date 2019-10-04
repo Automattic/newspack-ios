@@ -125,6 +125,7 @@
 		E68B29FF23048C6C0021283C /* EditCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B29FE23048C6C0021283C /* EditCoordinator.swift */; };
 		E68B2A0123048E050021283C /* EditorAttachmentImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */; };
 		E68B2A0323048E510021283C /* EditorAttachmentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */; };
+		E68BA80C2347BAA300AB60F9 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68BA80B2347BAA300AB60F9 /* Environment.swift */; };
 		E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */; };
 		E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E59FA22540D5000899DE2 /* ServiceRemoteCoreRest.swift */; };
 		E69E59FD22541ABD00899DE2 /* WordPressCoreRestApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E59FC22541ABD00899DE2 /* WordPressCoreRestApi.swift */; };
@@ -296,6 +297,7 @@
 		E68B29FE23048C6C0021283C /* EditCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCoordinator.swift; sourceTree = "<group>"; };
 		E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAttachmentImageProvider.swift; sourceTree = "<group>"; };
 		E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAttachmentDelegate.swift; sourceTree = "<group>"; };
+		E68BA80B2347BAA300AB60F9 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteServiceRemote.swift; sourceTree = "<group>"; };
 		E69E59FA22540D5000899DE2 /* ServiceRemoteCoreRest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRemoteCoreRest.swift; sourceTree = "<group>"; };
 		E69E59FC22541ABD00899DE2 /* WordPressCoreRestApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordPressCoreRestApi.swift; sourceTree = "<group>"; };
@@ -489,6 +491,7 @@
 				E61BBD6722FA0470008A6D4C /* StartupHelper.swift */,
 				E6034B1322529414007DB6DD /* UserAgent.swift */,
 				E67339A5232EFEA3007C5E45 /* Logging.swift */,
+				E68BA80B2347BAA300AB60F9 /* Environment.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -1033,6 +1036,7 @@
 				E638804E22DFC07900B3C16A /* PostListStore.swift in Sources */,
 				E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */,
 				E64594A122B448C2003BF6C0 /* PostServiceRemote.swift in Sources */,
+				E68BA80C2347BAA300AB60F9 /* Environment.swift in Sources */,
 				E66CCA1C2303527D00F1CA59 /* Revision+CoreDataClass.swift in Sources */,
 				E66CCA062303527C00F1CA59 /* Site+CoreDataClass.swift in Sources */,
 				E69E59FD22541ABD00899DE2 /* WordPressCoreRestApi.swift in Sources */,
