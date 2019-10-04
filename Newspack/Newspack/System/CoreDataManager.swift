@@ -10,18 +10,21 @@ class CoreDataManager {
     //
     static let shared = CoreDataManager()
 
+    func resetForTests() {
+        guard Environment.isTesting() else {
+            return
+        }
+
+        let model = container.managedObjectModel
+        container = buildContainer(objectModel: model)
+        writeContext = container.newBackgroundContext()
+        writeContext.automaticallyMergesChangesFromParent = true
+    }
+
     // Private lazy constructor for the default internally managed NSPersistentContainer
     //
     private lazy var container: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Newspack")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                // TODO: Rebuild the stack anew.
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        container.viewContext.automaticallyMergesChangesFromParent = true
-        return container
+        return buildContainer()
     }()
 
     private lazy var writeContext: NSManagedObjectContext = {
@@ -29,16 +32,6 @@ class CoreDataManager {
         context.automaticallyMergesChangesFromParent = true
         return context
     }()
-
-    /// A convenience method used for tests.
-    /// Replaces the default NSPersistentContainer with the one supplied.
-    ///
-    /// - Parameters:
-    ///     - container: An instance of NSPersistentContainer to use instead of the default one.
-    ///
-    func replaceContainer(_ container: NSPersistentContainer) {
-        self.container = container
-    }
 
     // The main NSManagedObjectContext, Its operations are performed on the UI thread.
     // It is a child context of a private background context performing IO.
@@ -65,7 +58,7 @@ class CoreDataManager {
     /// - Parameter block:An anonymous block executed on the background "write" thread.
     ///
     public func performOnWriteContext(_ block: @escaping (NSManagedObjectContext) -> Void) {
-        writeContext.performAndWait { [unowned writeContext] in
+        writeContext.perform { [unowned writeContext] in
             block(writeContext)
         }
     }
@@ -92,6 +85,33 @@ class CoreDataManager {
                 }
             }
         }
+    }
+}
+
+extension CoreDataManager {
+
+    private func buildContainer(objectModel: NSManagedObjectModel? = nil) -> NSPersistentContainer {
+        let container: NSPersistentContainer
+        if let model = objectModel {
+            container = NSPersistentContainer(name: "Newspack", managedObjectModel: model)
+        } else {
+            container = NSPersistentContainer(name: "Newspack")
+        }
+
+        if Environment.isTesting() {
+            let description = NSPersistentStoreDescription()
+            description.type = NSInMemoryStoreType
+            container.persistentStoreDescriptions = [description]
+        }
+
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                // TODO: Rebuild the stack anew.
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        return container
     }
 }
 
