@@ -76,13 +76,13 @@ class AccountDetailsStoreTests: BaseTest {
         let account1 = Account(context: context)
         account1.uuid = UUID()
         account1.networkUrl = "http://account1.com"
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         let details1 = ModelFactory.getTestAccountDetails(context: context)
         details1.userID = 1
 
         account1.details = details1
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertEqual(account1.details!.userID, 1)
 
@@ -90,7 +90,7 @@ class AccountDetailsStoreTests: BaseTest {
         details2.userID = 2
 
         account1.details = details2
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertEqual(account1.details!.userID, 2)
 
@@ -118,13 +118,13 @@ class AccountDetailsStoreTests: BaseTest {
         let details = ModelFactory.getTestAccountDetails(context: context)
 
         account1.details = details
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertNotNil(account1.details)
         XCTAssertNil(account2.details)
 
         account2.details = account1.details
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertNil(account1.details)
         XCTAssertNotNil(account2.details)

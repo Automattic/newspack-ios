@@ -94,7 +94,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         cap1.roles = [role1]
 
         site.capabilities = cap1
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertEqual(site.capabilities?.roles.first, role1)
 
@@ -103,7 +103,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         cap2.roles = [role2]
 
         site.capabilities = cap2
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertEqual(site.capabilities?.roles.first, role2)
 
@@ -137,13 +137,13 @@ class AccountCapabilitiesStoreTests: BaseTest {
         cap1.roles = ["ROLE"]
 
         site1.capabilities = cap1
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertNotNil(site1.capabilities)
         XCTAssertNil(site2.capabilities)
 
         site2.capabilities = cap1
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertNil(site1.capabilities)
         XCTAssertNotNil(site2.capabilities)

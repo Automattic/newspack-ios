@@ -84,7 +84,7 @@ class SiteStoreTests: BaseTest {
         site2.title = "site2"
         site2.account = account
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertEqual(account.sites.count, 2)
     }
@@ -103,13 +103,13 @@ class SiteStoreTests: BaseTest {
         let site = ModelFactory.getTestSite(context: context)
         site.account = account1
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertNotNil(account1.sites.first)
         XCTAssertNil(account2.sites.first)
 
         site.account = account2
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertNil(account1.sites.first)
         XCTAssertNotNil(account2.sites.first)
@@ -129,14 +129,14 @@ class SiteStoreTests: BaseTest {
         site2.title = "site2"
         site2.account = account
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         let fetchRequest = Site.defaultFetchRequest()
         var count = try! context.count(for: fetchRequest)
         XCTAssertEqual(count, 2)
 
         context.delete(account)
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         count = try! context.count(for: fetchRequest)
         XCTAssertEqual(count, 0)
@@ -163,14 +163,14 @@ class SiteStoreTests: BaseTest {
         site2.title = "site2"
         site2.account = account2
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         let fetchRequest = Site.defaultFetchRequest()
         var count = try! context.count(for: fetchRequest)
         XCTAssertEqual(count, 2)
 
         context.delete(account1)
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         count = try! context.count(for: fetchRequest)
         XCTAssertEqual(count, 1)
