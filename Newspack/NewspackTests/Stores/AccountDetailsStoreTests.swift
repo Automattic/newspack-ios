@@ -42,8 +42,14 @@ class AccountDetailsStoreTests: BaseTest {
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
-        XCTAssertNotNil(account.details)
-        XCTAssertEqual(remoteUser.email, account.details!.email)
+
+        let expect = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            XCTAssertNotNil(account.details)
+            XCTAssertEqual(remoteUser.email, account.details!.email)
+            return true
+        }
+
+        wait(for: [expect], timeout: 1)
     }
 
     func testUpdateAccountDetailsUpdatesExistingDetails() {
@@ -56,8 +62,14 @@ class AccountDetailsStoreTests: BaseTest {
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
-        XCTAssertNotNil(account.details)
-        XCTAssertEqual(remoteUser.email, account.details!.email)
+
+        let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            XCTAssertNotNil(account.details)
+            XCTAssertEqual(remoteUser.email, account.details!.email)
+            return true
+        }
+
+        wait(for: [expect1], timeout: 1)
 
         let testEmail = "test@test.com"
         var dict = Loader.jsonObject(for: "remote-user-edit") as! [String: AnyObject]
@@ -67,8 +79,13 @@ class AccountDetailsStoreTests: BaseTest {
         action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
-        XCTAssertNotNil(account.details)
-        XCTAssertEqual(remoteUser.email, account.details!.email)
+        let expect2 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            XCTAssertNotNil(account.details)
+            XCTAssertEqual(remoteUser.email, account.details!.email)
+            return true
+        }
+
+        wait(for: [expect2], timeout: 1)
     }
 
     func testAccountHasOnlyOneSetOfAccountDetails() {

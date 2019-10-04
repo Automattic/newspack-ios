@@ -8,9 +8,12 @@ class SiteStoreTests: BaseTest {
     var remoteSettings: RemoteSiteSettings?
     var account: Account?
     let siteURL = "http://example.com"
+    var siteStore = SiteStore()
 
     override func setUp() {
         super.setUp()
+
+        siteStore = SiteStore()
 
         // Test account
         account = accountStore!.createAccount(authToken: "testToken", forNetworkAt: siteURL)
@@ -31,30 +34,45 @@ class SiteStoreTests: BaseTest {
         let account = self.account!
         let remoteSettings = self.remoteSettings!
 
-        SiteStore().createSite(url: siteURL, settings: remoteSettings, accountID: account.uuid)
-        let site = account.sites.first
+        siteStore.createSite(url: siteURL, settings: remoteSettings, accountID: account.uuid)
 
-        XCTAssertNotNil(site)
-        XCTAssertEqual(site!.url, siteURL)
-        XCTAssertEqual(site!.title, remoteSettings.title)
+        let expect = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            let site = account.sites.first
+
+            XCTAssertNotNil(site)
+            XCTAssertEqual(site!.url, self.siteURL)
+            XCTAssertEqual(site!.title, remoteSettings.title)
+
+            return true
+        }
+
+        wait(for: [expect], timeout: 1)
     }
 
     func testUpdateSite() {
         let account = self.account!
         var remoteSettings = self.remoteSettings!
-        let dispatcher = ActionDispatcher.global
+        let dispatcher = ActionDispatcher()
         let testTitle = "Test Title"
         var site: Site?
 
-        SiteStore().createSite(url: siteURL, settings: remoteSettings, accountID: account.uuid)
+        siteStore.createSite(url: siteURL, settings: remoteSettings, accountID: account.uuid)
+
+        let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            site = account.sites.first
+
+            XCTAssertNotNil(site)
+            XCTAssertEqual(site!.title, remoteSettings.title)
+            XCTAssertNotEqual(site!.title, testTitle)
+
+            return true
+        }
+
+        wait(for: [expect1], timeout: 1)
+
         site = account.sites.first
-
-        XCTAssertNotNil(site)
-        XCTAssertEqual(site!.title, remoteSettings.title)
-        XCTAssertNotEqual(site!.title, testTitle)
-
-        let store = SiteStore(dispatcher: dispatcher, siteID: site!.uuid)
-        let receipt = store.onChange {}
+        siteStore = SiteStore(dispatcher: dispatcher, siteID: site!.uuid)
+        let receipt = siteStore.onChange {}
 
         var dict = Loader.jsonObject(for: "remote-site-settings") as! [String: AnyObject]
         dict["title"] = testTitle as AnyObject
@@ -65,9 +83,18 @@ class SiteStoreTests: BaseTest {
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
-        XCTAssertNotNil(site)
-        XCTAssertEqual(site!.url, siteURL)
-        XCTAssertEqual(site!.title, testTitle)
+
+        let expect2 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            site = account.sites.first
+
+            XCTAssertNotNil(site)
+            XCTAssertEqual(site!.url, self.siteURL)
+            XCTAssertEqual(site!.title, testTitle)
+
+            return true
+        }
+
+        wait(for: [expect2], timeout: 1)
     }
 
     func testSingleAccountHasMultipleSites() {

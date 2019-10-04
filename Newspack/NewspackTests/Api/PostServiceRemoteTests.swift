@@ -24,8 +24,8 @@ class PostServiceRemoteTests: RemoteTestCase {
 
     func testFetchPost() {
         let expect = expectation(description: "fetch post")
-
-        receipt = ActionDispatcher.global.subscribe { action in
+        let dispatcher = ActionDispatcher()
+        receipt = dispatcher.subscribe { action in
             defer {
                 expect.fulfill()
             }
@@ -40,7 +40,7 @@ class PostServiceRemoteTests: RemoteTestCase {
 
         stubRemoteResponse("posts", filename: remotePostEditFile, contentType: .ApplicationJSON)
 
-        let remote = PostApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: ActionDispatcher.global )
+        let remote = PostApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: dispatcher )
         remote.fetchPost(postID: 1)
 
         waitForExpectations(timeout: timeout, handler: nil)
