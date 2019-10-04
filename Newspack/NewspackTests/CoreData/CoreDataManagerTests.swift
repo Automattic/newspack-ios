@@ -4,6 +4,16 @@ import CoreData
 
 class CoreDataManagerTests: BaseTest {
 
+    // Ensure we're using an in-memory store for tests.
+    //
+    func testPersistentContainerIsInMemory() {
+        guard let type = CoreDataManager.shared.mainContext.persistentStoreCoordinator?.persistentStores.first?.type else {
+            XCTFail("Could not retrive the type of the store.")
+            return
+        }
+        XCTAssertTrue(type == NSInMemoryStoreType)
+    }
+
     // Check that the context is a private sibling of the public main context.
     //
     func testPrivateContextIsSiblingOfMainContext() {
