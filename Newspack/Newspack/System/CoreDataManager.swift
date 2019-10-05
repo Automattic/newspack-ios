@@ -1,51 +1,42 @@
 import Foundation
 import CoreData
 
-// CoreDataManager is a singleton wrapper around a NSPersistentContainer.
-// Its responsible for providing NSManagedObjectContexts and saving contexts.
-//
+/// CoreDataManager is a singleton wrapper around a NSPersistentContainer.
+/// Its responsible for providing NSManagedObjectContexts and saving contexts.
+///
 class CoreDataManager {
 
-    // The shared singleton instance of the CoreDataManager.
-    //
+    /// The shared singleton instance of the CoreDataManager.
+    ///
     static let shared = CoreDataManager()
 
-    func resetForTests() {
-        guard Environment.isTesting() else {
-            return
-        }
-
-        let model = container.managedObjectModel
-        container = buildContainer(objectModel: model)
-        writeContext = container.newBackgroundContext()
-        writeContext.automaticallyMergesChangesFromParent = true
-    }
-
-    // Private lazy constructor for the default internally managed NSPersistentContainer
-    //
+    /// Private lazy constructor for the default internally managed NSPersistentContainer
+    ///
     private lazy var container: NSPersistentContainer = {
         return buildContainer()
     }()
 
+    /// A private NSManagedObjectContext intended to be used only for saving changes off of the main thread.
+    ///
     private lazy var writeContext: NSManagedObjectContext = {
         let context = container.newBackgroundContext()
         context.automaticallyMergesChangesFromParent = true
         return context
     }()
 
-    // The main NSManagedObjectContext, Its operations are performed on the UI thread.
-    // It is a child context of a private background context performing IO.
-    //
+    /// The main NSManagedObjectContext, Its operations are performed on the UI thread.
+    /// It is a child context of a private background context performing IO.
+    ///
     public var mainContext: NSManagedObjectContext {
         return container.viewContext
     }
 
-    // A convenience method for performing work in the supplied block on a
-    // background thread.
-    //
-    // Parameters:
-    // - block: An anonymous block executed on a background thread.
-    //
+    /// A convenience method for performing work in the supplied block on a
+    /// background thread.
+    ///
+    /// Parameters:
+    /// - block: An anonymous block executed on a background thread.
+    ///
     public func performBackgroundTask(_ block: @escaping (NSManagedObjectContext) -> Void) {
         container.performBackgroundTask { context in
             block(context)
@@ -55,7 +46,8 @@ class CoreDataManager {
     /// A convenience method for performing work on a persistent write context.  Useful when multiple
     /// units of work need to happen in order on a single background queue.
     ///
-    /// - Parameter block:An anonymous block executed on the background "write" thread.
+    /// - Parameter block:An anonymous block. accepting a reference to the write context as a
+    /// parameter,  executed on the background "write" thread.
     ///
     public func performOnWriteContext(_ block: @escaping (NSManagedObjectContext) -> Void) {
         writeContext.perform { [unowned writeContext] in
@@ -63,18 +55,18 @@ class CoreDataManager {
         }
     }
 
-    // Returns an NSManagedObjectContext that is a child of the NSPersistentContainer's
-    // private context--a sibling of the public mainContext.
-    //
+    /// Returns an NSManagedObjectContext that is a child of the NSPersistentContainer's
+    /// private context--a sibling of the public mainContext.
+    ///
     public func newPrivateContext() -> NSManagedObjectContext {
         return container.newBackgroundContext()
     }
 
-    // Saves the passed NSManagedObjectContext if it has changes.
-    //
-    // Parameters
-    // - context: The NSManagedObjectContext to save.
-    //
+    /// Saves the passed NSManagedObjectContext if it has changes.
+    ///
+    /// Parameters
+    /// - context: The NSManagedObjectContext to save.
+    ///
     public func saveContext(context: NSManagedObjectContext) {
         if context.hasChanges {
             context.performAndWait {
@@ -90,6 +82,14 @@ class CoreDataManager {
 
 extension CoreDataManager {
 
+    /// Factory method for creating and configuring a NSPersistentContainer.
+    ///
+    /// - Parameter objectModel: An NSManagedObjectModel instance.  When resetting between
+    /// tests the NSManagedObjectModel used by the previous NSPersistentContainer should be passed
+    /// to this method, and the new NSPersistentContainer created with it, rather than letting the NSPersistentContainer
+    /// create a new instance of the object model.
+    /// Note: This may be unnecessary as of iOS 13 if the object model is cached by the system once loaded.
+    ///
     private func buildContainer(objectModel: NSManagedObjectModel? = nil) -> NSPersistentContainer {
         let container: NSPersistentContainer
         if let model = objectModel {
@@ -113,9 +113,29 @@ extension CoreDataManager {
         container.viewContext.automaticallyMergesChangesFromParent = true
         return container
     }
+
+
+    /// A convenience method used by the test suite to reset an in-memory persistent store in between tests.
+    /// A new NSPersistentContainer is created passing the existing NSManagedObjectModel instance.
+    ///
+    func resetForTests() {
+        guard Environment.isTesting() else {
+            LogWarn(message: "restForTests called when not running tests!")
+            return
+        }
+
+        let model = container.managedObjectModel
+        container = buildContainer(objectModel: model)
+        writeContext = container.newBackgroundContext()
+        writeContext.automaticallyMergesChangesFromParent = true
+    }
+
 }
 
-// Imported from CoreData.CoreDataErrors
+// MARK - Save Error handling.
+
+/// Imported from CoreData.CoreDataErrors
+///
 private let coreDataKnownErrorCodes = [
     NSCoreDataError: "General Core Data error",
     NSEntityMigrationPolicyError: "Migration failed during processing of the entity migration policy ",
