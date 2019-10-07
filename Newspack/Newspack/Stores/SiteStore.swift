@@ -87,7 +87,7 @@ extension SiteStore {
     // TODO: It would be nice to not need a special method to handle site creation
     // during the intial set up process. There should be a way to rely on
     // flux instead.
-    func createSite(url: String, settings: RemoteSiteSettings, accountID: UUID) {
+    func createSites(sites: [RemoteSiteSettings], accountID: UUID, onComplete:(() -> Void)? = nil) {
         let accountStore = StoreContainer.shared.accountStore
         guard let accountObjID = accountStore.getAccountByUUID(accountID)?.objectID else {
             // TODO: handle error
@@ -97,14 +97,19 @@ extension SiteStore {
 
         CoreDataManager.shared.performOnWriteContext { [weak self] (context) in
             let account = context.object(with: accountObjID) as! Account
-            let site = Site(context: context)
-            site.account = account
-            site.uuid = UUID()
-            site.url = url
+            for settings in sites {
+                let site = Site(context: context)
+                site.account = account
+                site.uuid = UUID()
 
-            self?.updateSite(site: site, withSettings: settings)
+                self?.updateSite(site: site, withSettings: settings)
+            }
 
             CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+            }
         }
     }
 
@@ -122,5 +127,6 @@ extension SiteStore {
         site.postsPerPage = settings.postsPerPage
         site.defaultPingStatus = settings.defaultPingStatus
         site.defaultCommentStatus = settings.defaultCommentStatus
+        site.url = settings.url
     }
 }

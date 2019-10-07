@@ -16,6 +16,7 @@ struct RemoteSiteSettings {
     let postsPerPage: Int64
     let defaultPingStatus: String
     let defaultCommentStatus: String
+    let url: String
 
     /// Convenience initializer to create an instance from a dictionary
     ///
@@ -35,5 +36,6 @@ struct RemoteSiteSettings {
         postsPerPage = dict[intForKey: "posts_per_page"]
         defaultPingStatus = dict[stringForKey: "default_ping_status"]
         defaultCommentStatus = dict[stringForKey: "default_comment_status"]
+        url = dict[stringForKey: "url"]
     }
 }

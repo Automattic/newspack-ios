@@ -34,13 +34,13 @@ class SiteStoreTests: BaseTest {
         let account = self.account!
         let remoteSettings = self.remoteSettings!
 
-        siteStore.createSite(url: siteURL, settings: remoteSettings, accountID: account.uuid)
+        siteStore.createSites(sites:[remoteSettings], accountID: account.uuid)
 
         let expect = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
             let site = account.sites.first
 
             XCTAssertNotNil(site)
-            XCTAssertEqual(site!.url, self.siteURL)
+            XCTAssertEqual(site!.url, self.siteURL) // NOTE: The url is defined in the mock data. The actual endpoint does not currently return this value.
             XCTAssertEqual(site!.title, remoteSettings.title)
 
             return true
@@ -56,7 +56,7 @@ class SiteStoreTests: BaseTest {
         let testTitle = "Test Title"
         var site: Site?
 
-        siteStore.createSite(url: siteURL, settings: remoteSettings, accountID: account.uuid)
+        siteStore.createSites(sites: [remoteSettings], accountID: account.uuid)
 
         let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
             site = account.sites.first
@@ -88,7 +88,7 @@ class SiteStoreTests: BaseTest {
             site = account.sites.first
 
             XCTAssertNotNil(site)
-            XCTAssertEqual(site!.url, self.siteURL)
+            XCTAssertEqual(site!.url, self.siteURL) // NOTE: The url is defined in the mock data. The actual endpoint does not currently return this value.
             XCTAssertEqual(site!.title, testTitle)
 
             return true

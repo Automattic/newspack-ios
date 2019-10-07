@@ -29,6 +29,7 @@ class AccountSetupHelper {
     /// Until then we assume networks are single sites.
     ///
     /// - Parameter onComplete: callback
+    ///
     func configure(onComplete: @escaping CompletionHandler) {
         completionHandler = onComplete
 
@@ -51,6 +52,7 @@ class AccountSetupHelper {
     /// - Parameters:
     ///   - sites: An array of RemoteSiteSettings objects.
     ///   - onComplete: Completion handler.
+    ///
     func validateNewspackSites(_ sites: [RemoteSiteSettings]) {
         // TODO: Log validating sites
         // Assume we will have an API request to make for each site.
@@ -88,7 +90,7 @@ class AccountSetupHelper {
     ///
     /// - Parameters:
     ///   - sites:
-    ///   - error:
+    ///
     func validationComplete(sites: [RemoteSiteSettings]) {
         LogInfo(message: "validationComplete: Validation complete")
         guard sites.count > 0 else {
@@ -101,16 +103,10 @@ class AccountSetupHelper {
         let account = accountStore.createAccount(authToken: token, forNetworkAt: network)
 
         let siteStore = StoreContainer.shared.siteStore
-        for site in sites {
-            // TODO: URL should come from settings when we have actual multisite support.
-            // For now just use network.
-            siteStore.createSite(url: network, settings: site, accountID: account.uuid)
+        siteStore.createSites(sites: sites, accountID: account.uuid) {
+            SessionManager.shared.initialize(site: account.sites.first)
+            self.completionHandler?(nil)
         }
-
-        // Initialize a new session.
-        SessionManager.shared.initialize(site: account.sites.first)
-
-        completionHandler?(nil)
     }
 
 }

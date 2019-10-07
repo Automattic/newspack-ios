@@ -11,5 +11,6 @@
     "default_post_format": "standard",
     "posts_per_page": 10,
     "default_ping_status": "open",
-    "default_comment_status": "open"
+    "default_comment_status": "open",
+    "url":"http://example.com"
 }

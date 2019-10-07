@@ -43,13 +43,24 @@ extension SiteServiceRemote {
     private func fetchSettings(onComplete: @escaping ((RemoteSiteSettings? , Error?) -> Void)) {
         api.GET("settings", parameters: nil, success: { (response: AnyObject!, httpResponse: HTTPURLResponse?) in
 
-            let dict = response as! [String: AnyObject]
+            var dict = response as! [String: AnyObject]
+
+            // HACK: We assume multisite in the future so assign a URL field
+            // to the response.  This will have to be reworked when multisite
+            // is actually supported.
+            dict["url"] = self.siteURLforAPI() as AnyObject
+
             let settings = RemoteSiteSettings(dict: dict)
             onComplete(settings, nil)
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) -> Void in
             onComplete(nil, error)
         })
+    }
+
+
+    private func siteURLforAPI() -> String {
+        return api.baseURLString.removingPrefix(WordPressCoreRestApi.apiBaseURLString)
     }
 
 }
