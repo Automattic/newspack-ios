@@ -4,13 +4,14 @@ import CoreData
 
 class CoreDataManagerTests: BaseTest {
 
-    // Check that the context is a child of the main context.
+    // Ensure we're using an in-memory store for tests.
     //
-    func testPrivateChildContextIsChildOfMainContext() {
-        let context = CoreDataManager.shared.newPrivateChildContext()
-
-        XCTAssertTrue(context.parent == CoreDataManager.shared.mainContext)
-        XCTAssertTrue(context.concurrencyType == .privateQueueConcurrencyType)
+    func testPersistentContainerIsInMemory() {
+        guard let type = CoreDataManager.shared.mainContext.persistentStoreCoordinator?.persistentStores.first?.type else {
+            XCTFail("Could not retrive the type of the store.")
+            return
+        }
+        XCTAssertTrue(type == NSInMemoryStoreType)
     }
 
     // Check that the context is a private sibling of the public main context.
@@ -27,7 +28,20 @@ class CoreDataManagerTests: BaseTest {
     func testPerformBackgroundTaskIsRanInBackground() {
         let expectation = XCTestExpectation(description: "Check if background thread")
 
-        CoreDataManager.shared.performBackgroundTask { (context) in
+        CoreDataManager.shared.performBackgroundTask { _ in
+            XCTAssertFalse(Thread.isMainThread)
+            expectation.fulfill()
+        }
+
+        wait(for: [expectation], timeout: 5.0)
+    }
+
+    // Check that blocks are ran on a background thread.
+    //
+    func testPerformOnWriteContextIsRanInBackground() {
+        let expectation = XCTestExpectation(description: "Check if background thread")
+
+        CoreDataManager.shared.performOnWriteContext { _ in
             XCTAssertFalse(Thread.isMainThread)
             expectation.fulfill()
         }

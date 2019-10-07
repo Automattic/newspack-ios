@@ -67,17 +67,21 @@ extension SiteStore {
         guard
             let settings = action.payload,
             let siteID = currentSiteID,
-            let site = getSiteByUUID(siteID)
+            let siteObjID = getSiteByUUID(siteID)?.objectID
             else {
                 LogError(message: "handleSiteFetched: A value was unexpectedly nil.")
                 return
         }
 
-        updateSite(site: site, withSettings: settings)
+        CoreDataManager.shared.performOnWriteContext { [weak self] (context) in
+            let site = context.object(with: siteObjID) as! Site
+            self?.updateSite(site: site, withSettings: settings)
+            CoreDataManager.shared.saveContext(context: context)
 
-        CoreDataManager.shared.saveContext()
-
-        emitChange()
+            DispatchQueue.main.async {
+                self?.emitChange()
+            }
+        }
     }
 
     // TODO: It would be nice to not need a special method to handle site creation
@@ -85,21 +89,23 @@ extension SiteStore {
     // flux instead.
     func createSite(url: String, settings: RemoteSiteSettings, accountID: UUID) {
         let accountStore = StoreContainer.shared.accountStore
-        guard let account = accountStore.getAccountByUUID(accountID) else {
+        guard let accountObjID = accountStore.getAccountByUUID(accountID)?.objectID else {
             // TODO: handle error
             LogError(message: "createSite: Unable to find account by UUID.")
             return
         }
 
-        let context = CoreDataManager.shared.mainContext
-        let site = Site(context: context)
-        site.account = account
-        site.uuid = UUID()
-        site.url = url
+        CoreDataManager.shared.performOnWriteContext { [weak self] (context) in
+            let account = context.object(with: accountObjID) as! Account
+            let site = Site(context: context)
+            site.account = account
+            site.uuid = UUID()
+            site.url = url
 
-        updateSite(site: site, withSettings: settings)
+            self?.updateSite(site: site, withSettings: settings)
 
-        CoreDataManager.shared.saveContext()
+            CoreDataManager.shared.saveContext(context: context)
+        }
     }
 
     func updateSite(site: Site, withSettings settings: RemoteSiteSettings) {

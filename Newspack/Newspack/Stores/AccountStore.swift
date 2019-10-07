@@ -105,12 +105,14 @@ extension AccountStore {
     ///
     @discardableResult
     func createAccount(authToken: String, forNetworkAt url: String) -> Account {
+        // We'll do this on the main context since we have to create an account
+        // when authentiating. 
         let context = CoreDataManager.shared.mainContext
         let account = Account(context: context)
         account.uuid = UUID()
         account.networkUrl = url
 
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         setAuthToken(authToken, for: account)
 
@@ -122,15 +124,19 @@ extension AccountStore {
     /// - Parameter uuid: The uuid of the account to remove.
     ///
     func removeAccount(uuid: UUID) {
-        guard let account = getAccountByUUID(uuid) else {
+        guard let accountObjID = getAccountByUUID(uuid)?.objectID else {
             LogError(message: "removeAccount: Unable to find account by UUID.")
             return
         }
-        let context = CoreDataManager.shared.mainContext
-        context.delete(account)
-        CoreDataManager.shared.saveContext(context: context)
-        
-        ActionDispatcher.global.dispatch(AccountAction.accountRemoved)
+        CoreDataManager.shared.performOnWriteContext { (context) in
+            let account = context.object(with: accountObjID) as! Account
+            context.delete(account)
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                ActionDispatcher.global.dispatch(AccountAction.accountRemoved)
+            }
+        }
     }
 }
 

@@ -42,8 +42,14 @@ class AccountDetailsStoreTests: BaseTest {
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
-        XCTAssertNotNil(account.details)
-        XCTAssertEqual(remoteUser.email, account.details!.email)
+
+        let expect = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            XCTAssertNotNil(account.details)
+            XCTAssertEqual(remoteUser.email, account.details!.email)
+            return true
+        }
+
+        wait(for: [expect], timeout: 1)
     }
 
     func testUpdateAccountDetailsUpdatesExistingDetails() {
@@ -56,8 +62,14 @@ class AccountDetailsStoreTests: BaseTest {
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
-        XCTAssertNotNil(account.details)
-        XCTAssertEqual(remoteUser.email, account.details!.email)
+
+        let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            XCTAssertNotNil(account.details)
+            XCTAssertEqual(remoteUser.email, account.details!.email)
+            return true
+        }
+
+        wait(for: [expect1], timeout: 1)
 
         let testEmail = "test@test.com"
         var dict = Loader.jsonObject(for: "remote-user-edit") as! [String: AnyObject]
@@ -67,8 +79,13 @@ class AccountDetailsStoreTests: BaseTest {
         action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
-        XCTAssertNotNil(account.details)
-        XCTAssertEqual(remoteUser.email, account.details!.email)
+        let expect2 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            XCTAssertNotNil(account.details)
+            XCTAssertEqual(remoteUser.email, account.details!.email)
+            return true
+        }
+
+        wait(for: [expect2], timeout: 1)
     }
 
     func testAccountHasOnlyOneSetOfAccountDetails() {
@@ -76,13 +93,13 @@ class AccountDetailsStoreTests: BaseTest {
         let account1 = Account(context: context)
         account1.uuid = UUID()
         account1.networkUrl = "http://account1.com"
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         let details1 = ModelFactory.getTestAccountDetails(context: context)
         details1.userID = 1
 
         account1.details = details1
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertEqual(account1.details!.userID, 1)
 
@@ -90,7 +107,7 @@ class AccountDetailsStoreTests: BaseTest {
         details2.userID = 2
 
         account1.details = details2
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertEqual(account1.details!.userID, 2)
 
@@ -118,13 +135,13 @@ class AccountDetailsStoreTests: BaseTest {
         let details = ModelFactory.getTestAccountDetails(context: context)
 
         account1.details = details
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertNotNil(account1.details)
         XCTAssertNil(account2.details)
 
         account2.details = account1.details
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertNil(account1.details)
         XCTAssertNotNil(account2.details)

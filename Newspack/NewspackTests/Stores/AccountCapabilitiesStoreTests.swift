@@ -20,7 +20,14 @@ class AccountCapabilitiesStoreTests: BaseTest {
         var response = Loader.jsonObject(for: "remote-site-settings") as! [String: AnyObject]
         let settings = RemoteSiteSettings(dict: response)
         let siteStore = SiteStore(dispatcher: .global)
-        siteStore.createSite(url: siteURL, settings: settings, accountID: account!.uuid)
+
+        let context = account!.managedObjectContext!
+        let site = Site(context: context)
+        site.account = account
+        site.uuid = UUID()
+        site.url = siteURL
+        siteStore.updateSite(site: site, withSettings: settings)
+        CoreDataManager.shared.saveContext(context: context)
 
         store = AccountCapabilitiesStore(dispatcher: .global, siteID: account!.sites.first!.uuid)
 
@@ -52,8 +59,15 @@ class AccountCapabilitiesStoreTests: BaseTest {
         dispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
-        XCTAssertNotNil(site.capabilities)
-        XCTAssertEqual(remoteUser.roles.first, site.capabilities!.roles.first)
+
+        let expect = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            XCTAssertNotNil(site.capabilities)
+            XCTAssertEqual(remoteUser.roles.first, site.capabilities!.roles.first)
+
+            return true
+        }
+
+        wait(for: [expect], timeout: 1)
     }
 
     func testUpdateAccountCapabilitiesUpdatesExistingCapabilities() {
@@ -67,8 +81,14 @@ class AccountCapabilitiesStoreTests: BaseTest {
         var action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
-        XCTAssertNotNil(site.capabilities)
-        XCTAssertNotEqual(site.capabilities!.roles.first, testRole)
+        XCTAssertNotNil(receipt)
+        let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            XCTAssertNotNil(site.capabilities)
+            XCTAssertNotEqual(site.capabilities!.roles.first, testRole)
+            return true
+        }
+
+        wait(for: [expect1], timeout: 1)
 
         var dict = Loader.jsonObject(for: "remote-user-edit") as! [String: AnyObject]
         dict["roles"] = [testRole] as AnyObject
@@ -77,9 +97,13 @@ class AccountCapabilitiesStoreTests: BaseTest {
         action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
-        XCTAssertNotNil(receipt)
-        XCTAssertNotNil(site.capabilities)
-        XCTAssertEqual(site.capabilities!.roles.first, testRole)
+        let expect2 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            XCTAssertNotNil(site.capabilities)
+            XCTAssertEqual(site.capabilities!.roles.first, testRole)
+            return true
+        }
+
+        wait(for: [expect2], timeout: 1)
     }
 
     func testSiteHasOnlyOneSetOfAccountCapabilities() {
@@ -94,7 +118,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         cap1.roles = [role1]
 
         site.capabilities = cap1
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertEqual(site.capabilities?.roles.first, role1)
 
@@ -103,7 +127,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         cap2.roles = [role2]
 
         site.capabilities = cap2
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertEqual(site.capabilities?.roles.first, role2)
 
@@ -113,9 +137,9 @@ class AccountCapabilitiesStoreTests: BaseTest {
         var count = try! context.count(for: fetchRequest)
         XCTAssertEqual(count, 1)
 
-        fetchRequest.predicate = nil
+        fetchRequest.predicate = NSPredicate(format: "site = NULL")
         count = try! context.count(for: fetchRequest)
-        XCTAssertEqual(count, 1)
+        XCTAssertEqual(count, 0)
     }
 
     func testMultipleSitesCannotShareAccountCapabilities() {
@@ -137,13 +161,13 @@ class AccountCapabilitiesStoreTests: BaseTest {
         cap1.roles = ["ROLE"]
 
         site1.capabilities = cap1
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertNotNil(site1.capabilities)
         XCTAssertNil(site2.capabilities)
 
         site2.capabilities = cap1
-        CoreDataManager.shared.saveContext()
+        CoreDataManager.shared.saveContext(context: context)
 
         XCTAssertNil(site1.capabilities)
         XCTAssertNotNil(site2.capabilities)
@@ -158,9 +182,14 @@ class AccountCapabilitiesStoreTests: BaseTest {
         let action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
-        XCTAssertTrue(site.hasCapability(string: "moderate_comments"))
-        XCTAssertTrue(site.hasCapability(string: "MODERATE_COMMENTS"))
-        XCTAssertFalse(site.hasCapability(string: "NON-EXISTANT-CAP"))
+        let expect = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            XCTAssertTrue(site.hasCapability(string: "moderate_comments"))
+            XCTAssertTrue(site.hasCapability(string: "MODERATE_COMMENTS"))
+            XCTAssertFalse(site.hasCapability(string: "NON-EXISTANT-CAP"))
+            return true
+        }
+
+        wait(for: [expect], timeout: 1)
     }
 
     func testHasRole() {
@@ -172,9 +201,15 @@ class AccountCapabilitiesStoreTests: BaseTest {
         let action = AccountFetchedApiAction(payload: remoteUser, error: nil)
         dispatcher.dispatch(action)
 
-        XCTAssertTrue(site.hasRole(string: "editor"))
-        XCTAssertTrue(site.hasRole(string: "EDITOR"))
-        XCTAssertFalse(site.hasRole(string: "subscriber"))
+        let expect = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            XCTAssertTrue(site.hasRole(string: "editor"))
+            XCTAssertTrue(site.hasRole(string: "EDITOR"))
+            XCTAssertFalse(site.hasRole(string: "subscriber"))
+
+            return true
+        }
+
+        wait(for: [expect], timeout: 1)
     }
 
 }

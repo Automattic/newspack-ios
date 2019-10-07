@@ -1,42 +1,49 @@
 import Foundation
+import WordPressFlux
 
-/// Convenience class providing factory methods for creating remotes.
+/// Base class for API services.  Provides static factory methods for convenience.
 ///
 class ApiService {
 
-    /// Singleon reference
+    /// Get an instance of the UserApiService
     ///
-    static let shared = ApiService()
-
-    private init() {}
-
-    /// Get an instance of the UserServiceRemote
+    /// - Returns: UserApiService
     ///
-    /// - Returns: UserServiceRemote
-    ///
-    func userServiceRemote() -> UserServiceRemote {
+    static func userService() -> UserApiService {
         let api = SessionManager.shared.api
         let dispatcher = SessionManager.shared.sessionDispatcher
-        return UserServiceRemote(wordPressComRestApi: api, dispatcher: dispatcher)
+        return UserApiService(wordPressComRestApi: api, dispatcher: dispatcher)
     }
 
-    /// Get an instance of the SiteServiceRemote
+    /// Get an instance of the SiteApiService
     ///
-    /// - Returns: SiteServiceRemote
+    /// - Returns: SiteApiService
     ///
-    func siteServiceRemote() -> SiteServiceRemote {
+    static func siteService() -> SiteApiService {
         let api = SessionManager.shared.api
         let dispatcher = SessionManager.shared.sessionDispatcher
-        return SiteServiceRemote(wordPressComRestApi: api, dispatcher: dispatcher)
+        return SiteApiService(wordPressComRestApi: api, dispatcher: dispatcher)
     }
 
-    /// Get an instance of the PostServiceRemote
+    /// Get an instance of the PostApiService
     ///
-    /// - Returns: PostServiceRemote
+    /// - Returns: PostApiService
     ///
-    func postServiceRemote() -> PostServiceRemote {
+    static func postService() -> PostApiService {
         let api = SessionManager.shared.api
         let dispatcher = SessionManager.shared.sessionDispatcher
-        return PostServiceRemote(wordPressComRestApi: api, dispatcher: dispatcher)
+        return PostApiService(wordPressComRestApi: api, dispatcher: dispatcher)
+    }
+
+    let api:WordPressCoreRestApi
+    let dispatcher: ActionDispatcher
+
+    init(wordPressComRestApi api: WordPressCoreRestApi, dispatcher: ActionDispatcher) {
+        self.api = api
+        self.dispatcher = dispatcher
+    }
+
+    func dispatch(action: Action) {
+        dispatcher.dispatch(action)
     }
 }

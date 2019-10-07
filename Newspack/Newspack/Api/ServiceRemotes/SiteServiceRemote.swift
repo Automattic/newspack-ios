@@ -8,26 +8,26 @@ class SiteServiceRemote: ServiceRemoteCoreRest {
     /// There is not currently API to support a multisite install.
     /// This anticipates a time when there is.
     ///
-    func fetchSitesForNetwork() {
+    func fetchSitesForNetwork(_ onComplete: @escaping ([RemoteSiteSettings]? , Error?) -> Void) {
         // When multisite is supported, we'll sync all sites and then filter
         // the ones that support Newspack.
         // For now, assume the network's URL is a single site and that it is a
         // Newspack site, i.e. we'll just fetch the current site.
         // TODO: Check for the Newspack plugin.
-        fetchSiteSettings { (settings, error) in
+        fetchSettings { (settings, error) in
             var sites: [RemoteSiteSettings]?
             if let site = settings {
                 sites = [site]
             }
-            self.dispatch(action: NetworkSitesFetchedApiAction(payload: sites, error: error))
+            onComplete(sites, error)
         }
     }
 
     /// Fetches settings for the current account's current site.
     ///
-    func fetchSiteSettings() {
-        fetchSiteSettings { (settings, error) in
-            self.dispatch(action: SiteFetchedApiAction(payload: settings, error: error))
+    func fetchSiteSettings(_ onComplete: @escaping (RemoteSiteSettings? , Error?) -> Void) {
+        fetchSettings { (settings, error) in
+            onComplete(settings, error)
         }
     }
 
@@ -40,7 +40,7 @@ extension SiteServiceRemote {
     ///
     /// - Parameter onComplete: Callback
     ///
-    func fetchSiteSettings(onComplete: @escaping ((RemoteSiteSettings? , Error?) -> Void)) {
+    private func fetchSettings(onComplete: @escaping ((RemoteSiteSettings? , Error?) -> Void)) {
         api.GET("settings", parameters: nil, success: { (response: AnyObject!, httpResponse: HTTPURLResponse?) in
 
             let dict = response as! [String: AnyObject]

@@ -11,7 +11,10 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     ///   - page: The page to fetch.
     ///   - perPage: The number of items per page.
     ///
-    func fetchPostIDs(filter:[String: AnyObject], page: Int, perPage: Int = 100) {
+    func fetchPostIDs(filter:[String: AnyObject],
+                      page: Int,
+                      perPage: Int,
+                      onComplete: @escaping (_ postIDs: [RemotePostID]?, _ error: Error?) -> Void) {
         let params = [
             "_fields": "id,date_gmt,modified_gmt,_links",
             "page": page,
@@ -23,22 +26,10 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             let array = response as! [[String: AnyObject]]
             let postIDs = self.remotePostIDsFromResponse(response: array)
 
-            self.dispatch(action: PostIDsFetchedApiAction(payload: postIDs,
-                                                          error: nil,
-                                                          count: postIDs.count,
-                                                          filter: filter,
-                                                          page: page,
-                                                          hasMore: postIDs.count == perPage))
+            onComplete(postIDs, nil)
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
-            // TODO: Need to update WordPressComRestApi to detect code = `rest_post_invalid_page_number` for an http 400 error.
-            // For now, assume the error is due to inalid page and go ahead and set hasMore to false.
-            self.dispatch(action: PostIDsFetchedApiAction(payload: nil,
-                                                          error: error,
-                                                          count: 0,
-                                                          filter: filter,
-                                                          page: page,
-                                                          hasMore: false))
+            onComplete(nil, error)
         })
     }
 
@@ -47,7 +38,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     /// - Parameters:
     ///   - postID: The ID of the post to fetch.
     ///
-    func fetchPost(postID: Int64) {
+    func fetchPost(postID: Int64, onComplete: @escaping (_ post: RemotePost?, _ error: Error?) -> Void) {
         let parameters = ["context": "edit"] as [String: AnyObject]
         let path = "posts/\(postID)"
 
@@ -55,10 +46,10 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             let dict = response as! [String: AnyObject]
             let post = self.remotePostFromResponse(response: dict)
 
-            self.dispatch(action: PostFetchedApiAction(payload: post, error: nil, postID: postID))
+            onComplete(post, nil)
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
-            self.dispatch(action: PostFetchedApiAction(payload: nil, error: error, postID: postID))
+            onComplete(nil, error)
         })
     }
 
@@ -76,26 +67,27 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     ///   - content: The post's html content.
     ///   - excerpt: An excerpt of the post's content. (Optional.)
     ///
-    func autosave(postID: Int64, title: String, content: String, excerpt: String = "") {
+    func autosave(postID: Int64,
+                  title: String,
+                  content: String,
+                  excerpt: String,
+                  onComplete: @escaping (_ revision: RemoteRevision?, _ error: Error?) -> Void) {
+        let path = "posts/\(postID)/autosaves"
         let parameters = [
             "context": "edit",
             "title": title,
             "content": content,
             "excerpt": excerpt
             ] as [String: AnyObject]
-        let path = "posts/\(postID)/autosaves"
 
         api.POST(path, parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
-            var revision: RemoteRevision?
-            if let dict = response as? [String: AnyObject] {
-                revision = RemoteRevision(dict: dict)
-            }
-            self.dispatch(action: AutosaveApiAction(payload: revision, error: nil, postID: postID))
+            let dict = response as! [String: AnyObject]
+            let revision = RemoteRevision(dict: dict)
+
+            onComplete(revision, nil)
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
-            self.dispatch(action: AutosaveApiAction(payload: nil,
-                                                    error: error,
-                                                    postID: postID))
+            onComplete(nil, error)
         })
     }
 
@@ -103,7 +95,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     ///
     /// - Parameter postParams: A dictionary having the keys/values with which to create the new post.
     ///
-    func createPost(uuid: UUID, postParams: [String: AnyObject]) {
+    func createPost(postParams: [String: AnyObject], onComplete: @escaping (_ post: RemotePost?, _ error: Error?) -> Void) {
         let defaultParams = [
             "context": "edit"
             ] as [String: AnyObject]
@@ -115,10 +107,10 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             let dict = response as! [String: AnyObject]
             let post = self.remotePostFromResponse(response: dict)
 
-            self.dispatch(action: PostCreatedApiAction(payload: post, error: nil, uuid: uuid))
+            onComplete(post, nil)
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
-            self.dispatch(action: PostCreatedApiAction(payload: nil, error: error, uuid: uuid))
+            onComplete(nil, error)
         })
     }
 
@@ -128,7 +120,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     ///   - postID: The ID of the post to update.
     ///   - postParams: A dictionary having the keys/values with which to update the specified post.
     ///
-    func updatePost(postID: Int64, postParams: [String: AnyObject]) {
+    func updatePost(postID: Int64, postParams: [String: AnyObject], onComplete: @escaping (_ post: RemotePost?, _ error: Error?) -> Void) {
         let defaultParams = [
             "context": "edit"
         ] as [String: AnyObject]
@@ -140,10 +132,10 @@ class PostServiceRemote: ServiceRemoteCoreRest {
             let dict = response as! [String: AnyObject]
             let post = self.remotePostFromResponse(response: dict)
 
-            self.dispatch(action: PostUpdatedApiAction(payload: post, error: nil, postID: postID))
+            onComplete(post, nil)
 
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
-            self.dispatch(action: PostUpdatedApiAction(payload: nil, error: error, postID: postID))
+            onComplete(nil, error)
         })
     }
 
