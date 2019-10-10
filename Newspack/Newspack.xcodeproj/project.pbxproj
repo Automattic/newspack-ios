@@ -74,6 +74,10 @@
 		E636C260234FBACC00564B63 /* MediaItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C25F234FBACC00564B63 /* MediaItemStore.swift */; };
 		E636C262234FBE6800564B63 /* RemoteMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C261234FBE6800564B63 /* RemoteMedia.swift */; };
 		E636C264234FD16F00564B63 /* MediaApiActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C263234FD16F00564B63 /* MediaApiActions.swift */; };
+		E636C269234FEAD800564B63 /* MediaItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C265234FEAD700564B63 /* MediaItem+CoreDataClass.swift */; };
+		E636C26A234FEAD800564B63 /* MediaItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C266234FEAD800564B63 /* MediaItem+CoreDataProperties.swift */; };
+		E636C26B234FEAD800564B63 /* MediaQuery+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C267234FEAD800564B63 /* MediaQuery+CoreDataClass.swift */; };
+		E636C26C234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C268234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift */; };
 		E637A6E222F0ED5D00229C1D /* RequestQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E637A6E122F0ED5D00229C1D /* RequestQueue.swift */; };
 		E637A6E422F0EE1500229C1D /* RequestQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */; };
 		E638804E22DFC07900B3C16A /* PostListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E638804D22DFC07900B3C16A /* PostListStore.swift */; };
@@ -250,6 +254,10 @@
 		E636C25F234FBACC00564B63 /* MediaItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemStore.swift; sourceTree = "<group>"; };
 		E636C261234FBE6800564B63 /* RemoteMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMedia.swift; sourceTree = "<group>"; };
 		E636C263234FD16F00564B63 /* MediaApiActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaApiActions.swift; sourceTree = "<group>"; };
+		E636C265234FEAD700564B63 /* MediaItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MediaItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E636C266234FEAD800564B63 /* MediaItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MediaItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E636C267234FEAD800564B63 /* MediaQuery+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MediaQuery+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E636C268234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MediaQuery+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E637A6E122F0ED5D00229C1D /* RequestQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestQueue.swift; sourceTree = "<group>"; };
 		E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestQueueTests.swift; sourceTree = "<group>"; };
 		E638804D22DFC07900B3C16A /* PostListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListStore.swift; sourceTree = "<group>"; };
@@ -550,6 +558,10 @@
 				E66CC9E82303527600F1CA59 /* Category+CoreDataProperties.swift */,
 				E66CC9F02303527800F1CA59 /* Media+CoreDataClass.swift */,
 				E66CC9FD2303527C00F1CA59 /* Media+CoreDataProperties.swift */,
+				E636C265234FEAD700564B63 /* MediaItem+CoreDataClass.swift */,
+				E636C266234FEAD800564B63 /* MediaItem+CoreDataProperties.swift */,
+				E636C267234FEAD800564B63 /* MediaQuery+CoreDataClass.swift */,
+				E636C268234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift */,
 				E66CC9FC2303527B00F1CA59 /* Page+CoreDataClass.swift */,
 				E66CC9EE2303527700F1CA59 /* Page+CoreDataProperties.swift */,
 				E66CC9FE2303527C00F1CA59 /* Post+CoreDataClass.swift */,
@@ -1031,6 +1043,7 @@
 				E6710A1722CE9F040036156E /* FadeTransitionController.swift in Sources */,
 				E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */,
 				E66CCA1D2303527D00F1CA59 /* AccountDetails+CoreDataClass.swift in Sources */,
+				E636C26A234FEAD800564B63 /* MediaItem+CoreDataProperties.swift in Sources */,
 				E6FB520022B967910010FDF8 /* Dictionary+KeyPath.swift in Sources */,
 				E637A6E222F0ED5D00229C1D /* RequestQueue.swift in Sources */,
 				E602E69422C1669B00795CBA /* AccountCapabilitiesAction.swift in Sources */,
@@ -1041,6 +1054,7 @@
 				E66CCA072303527C00F1CA59 /* Account+CoreDataClass.swift in Sources */,
 				E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */,
 				E6A4D742230A08A700929376 /* StagedEdits+CoreDataProperties.swift in Sources */,
+				E636C26B234FEAD800564B63 /* MediaQuery+CoreDataClass.swift in Sources */,
 				E67339A6232EFEA3007C5E45 /* Logging.swift in Sources */,
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
 				E68B29FF23048C6C0021283C /* EditCoordinator.swift in Sources */,
@@ -1055,6 +1069,7 @@
 				E6051DEC23075A3A005AAF0B /* Dictionary+Merge.swift in Sources */,
 				E602E69622C166C700795CBA /* AccountDetailsAction.swift in Sources */,
 				E61BBD6822FA0470008A6D4C /* StartupHelper.swift in Sources */,
+				E636C26C234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift in Sources */,
 				E602E69A22C1676500795CBA /* SiteAction.swift in Sources */,
 				E66CCA112303527C00F1CA59 /* AccountCapabilities+CoreDataClass.swift in Sources */,
 				E66CCA152303527D00F1CA59 /* AccountCapabilities+CoreDataProperties.swift in Sources */,
@@ -1063,6 +1078,7 @@
 				E6D44DF3234BDBB500B51438 /* MediaServiceRemote.swift in Sources */,
 				E64594A122B448C2003BF6C0 /* PostServiceRemote.swift in Sources */,
 				E68BA80C2347BAA300AB60F9 /* Environment.swift in Sources */,
+				E636C269234FEAD800564B63 /* MediaItem+CoreDataClass.swift in Sources */,
 				E66CCA1C2303527D00F1CA59 /* Revision+CoreDataClass.swift in Sources */,
 				E66CCA062303527C00F1CA59 /* Site+CoreDataClass.swift in Sources */,
 				E69E59FD22541ABD00899DE2 /* WordPressCoreRestApi.swift in Sources */,

@@ -39,5 +39,6 @@ extension Media {
     @NSManaged public var type: String!
 
     @NSManaged public var site: Site!
+    @NSManaged public var item: MediaItem!
 
 }

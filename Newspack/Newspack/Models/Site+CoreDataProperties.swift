@@ -28,6 +28,8 @@ extension Site {
     @NSManaged public var capabilities: AccountCapabilities?
     @NSManaged public var categories: Set<Category>!
     @NSManaged public var media: Set<Media>!
+    @NSManaged public var mediaItems: Set<MediaItem>!
+    @NSManaged public var mediaQueries: Set<MediaQuery>!
     @NSManaged public var pages: Set<Page>!
     @NSManaged public var posts: Set<Post>!
     @NSManaged public var statuses: Set<Status>!
@@ -189,5 +191,40 @@ extension Site {
 
     @objc(removePostListItems:)
     @NSManaged public func removeFromPostListItems(_ values: Set<PostListItem>)
+
+}
+
+// MARK: Generated accessors for mediaQueries
+extension Site {
+
+    @objc(addPostListsObject:)
+    @NSManaged public func addToMediaQueries(_ value: MediaQuery)
+
+    @objc(removePostListsObject:)
+    @NSManaged public func removeFromMediaQueries(_ value: MediaQuery)
+
+    @objc(addPostLists:)
+    @NSManaged public func addToMediaQueries(_ values: Set<MediaQuery>)
+
+    @objc(removePostLists:)
+    @NSManaged public func removeFromMediaQueries(_ values: Set<MediaQuery>)
+
+}
+
+
+// MARK: Generated accessors for mediaItems
+extension Site {
+
+    @objc(addPostListItemsObject:)
+    @NSManaged public func addToMediaItems(_ value: MediaItem)
+
+    @objc(removePostListItemsObject:)
+    @NSManaged public func removeFromMediaItems(_ value: MediaItem)
+
+    @objc(addPostListItems:)
+    @NSManaged public func addToMediaItems(_ values: Set<MediaItem>)
+
+    @objc(removePostListItems:)
+    @NSManaged public func removeFromMediaItems(_ values: Set<MediaItem>)
 
 }

@@ -1,258 +1,283 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="19A583" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES">
-        <attribute name="networkUrl" attributeType="String" syncable="YES"/>
-        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="details" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AccountDetails" inverseName="account" inverseEntity="AccountDetails" syncable="YES"/>
-        <relationship name="sites" toMany="YES" deletionRule="Cascade" destinationEntity="Site" inverseName="account" inverseEntity="Site" syncable="YES"/>
+        <attribute name="networkUrl" attributeType="String"/>
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="details" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AccountDetails" inverseName="account" inverseEntity="AccountDetails"/>
+        <relationship name="sites" toMany="YES" deletionRule="Cascade" destinationEntity="Site" inverseName="account" inverseEntity="Site"/>
     </entity>
     <entity name="AccountCapabilities" representedClassName="AccountCapabilities" syncable="YES">
-        <attribute name="capabilities" attributeType="Transformable" syncable="YES"/>
-        <attribute name="roles" attributeType="Transformable" syncable="YES"/>
-        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="capabilities" inverseEntity="Site" syncable="YES"/>
+        <attribute name="capabilities" attributeType="Transformable"/>
+        <attribute name="roles" attributeType="Transformable"/>
+        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="capabilities" inverseEntity="Site"/>
     </entity>
     <entity name="AccountDetails" representedClassName="AccountDetails" syncable="YES">
-        <attribute name="avatarUrls" attributeType="Transformable" syncable="YES"/>
-        <attribute name="email" attributeType="String" syncable="YES"/>
-        <attribute name="firstName" attributeType="String" syncable="YES"/>
-        <attribute name="lastName" attributeType="String" syncable="YES"/>
-        <attribute name="link" attributeType="String" syncable="YES"/>
-        <attribute name="locale" attributeType="String" syncable="YES"/>
-        <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="nickname" attributeType="String" syncable="YES"/>
-        <attribute name="registeredDate" attributeType="String" syncable="YES"/>
-        <attribute name="slug" attributeType="String" syncable="YES"/>
-        <attribute name="summary" attributeType="String" syncable="YES"/>
-        <attribute name="url" attributeType="String" syncable="YES"/>
-        <attribute name="userID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="username" attributeType="String" syncable="YES"/>
-        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="details" inverseEntity="Account" syncable="YES"/>
+        <attribute name="avatarUrls" attributeType="Transformable"/>
+        <attribute name="email" attributeType="String"/>
+        <attribute name="firstName" attributeType="String"/>
+        <attribute name="lastName" attributeType="String"/>
+        <attribute name="link" attributeType="String"/>
+        <attribute name="locale" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="nickname" attributeType="String"/>
+        <attribute name="registeredDate" attributeType="String"/>
+        <attribute name="slug" attributeType="String"/>
+        <attribute name="summary" attributeType="String"/>
+        <attribute name="url" attributeType="String"/>
+        <attribute name="userID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="username" attributeType="String"/>
+        <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="details" inverseEntity="Account"/>
     </entity>
     <entity name="Category" representedClassName="Category" syncable="YES">
-        <attribute name="categoryID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="count" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="descript" attributeType="String" syncable="YES"/>
-        <attribute name="link" attributeType="String" syncable="YES"/>
-        <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="parentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="slug" attributeType="String" syncable="YES"/>
-        <attribute name="taxonomy" attributeType="String" syncable="YES"/>
-        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="categories" inverseEntity="Site" syncable="YES"/>
+        <attribute name="categoryID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="count" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="descript" attributeType="String"/>
+        <attribute name="link" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="parentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="slug" attributeType="String"/>
+        <attribute name="taxonomy" attributeType="String"/>
+        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="categories" inverseEntity="Site"/>
     </entity>
     <entity name="Media" representedClassName="Media" syncable="YES">
-        <attribute name="altText" attributeType="String" syncable="YES"/>
-        <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="caption" attributeType="String" syncable="YES"/>
-        <attribute name="captionRendered" attributeType="String" syncable="YES"/>
-        <attribute name="commentStatus" attributeType="String" syncable="YES"/>
-        <attribute name="date" attributeType="String" syncable="YES"/>
-        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="descript" attributeType="String" syncable="YES"/>
-        <attribute name="descriptionRendered" attributeType="String" syncable="YES"/>
-        <attribute name="details" attributeType="Transformable" syncable="YES"/>
-        <attribute name="generatedSlug" attributeType="String" syncable="YES"/>
-        <attribute name="guid" attributeType="String" syncable="YES"/>
-        <attribute name="guidRendered" attributeType="String" syncable="YES"/>
-        <attribute name="link" attributeType="String" syncable="YES"/>
-        <attribute name="mediaID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="mediaType" attributeType="String" syncable="YES"/>
-        <attribute name="mimeType" attributeType="String" syncable="YES"/>
-        <attribute name="modified" attributeType="String" syncable="YES"/>
-        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="permalinkTemplate" attributeType="String" syncable="YES"/>
-        <attribute name="pingStatus" attributeType="String" syncable="YES"/>
-        <attribute name="postID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="slug" attributeType="String" syncable="YES"/>
-        <attribute name="source" attributeType="String" syncable="YES"/>
-        <attribute name="status" attributeType="String" syncable="YES"/>
-        <attribute name="template" attributeType="String" syncable="YES"/>
-        <attribute name="title" attributeType="String" syncable="YES"/>
-        <attribute name="titleRendered" attributeType="String" syncable="YES"/>
-        <attribute name="type" attributeType="String" syncable="YES"/>
-        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="media" inverseEntity="Site" syncable="YES"/>
+        <attribute name="altText" attributeType="String"/>
+        <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="caption" attributeType="String"/>
+        <attribute name="captionRendered" attributeType="String"/>
+        <attribute name="commentStatus" attributeType="String"/>
+        <attribute name="date" attributeType="String"/>
+        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="descript" attributeType="String"/>
+        <attribute name="descriptionRendered" attributeType="String"/>
+        <attribute name="details" attributeType="Transformable"/>
+        <attribute name="generatedSlug" attributeType="String"/>
+        <attribute name="guid" attributeType="String"/>
+        <attribute name="guidRendered" attributeType="String"/>
+        <attribute name="link" attributeType="String"/>
+        <attribute name="mediaID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="mediaType" attributeType="String"/>
+        <attribute name="mimeType" attributeType="String"/>
+        <attribute name="modified" attributeType="String"/>
+        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="permalinkTemplate" attributeType="String"/>
+        <attribute name="pingStatus" attributeType="String"/>
+        <attribute name="postID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="slug" attributeType="String"/>
+        <attribute name="source" attributeType="String"/>
+        <attribute name="status" attributeType="String"/>
+        <attribute name="template" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="titleRendered" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+        <relationship name="item" maxCount="1" deletionRule="Nullify" destinationEntity="MediaItem" inverseName="media" inverseEntity="MediaItem"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="media" inverseEntity="Site"/>
+    </entity>
+    <entity name="MediaItem" representedClassName="MediaItem" syncable="YES">
+        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="details" attributeType="Transformable"/>
+        <attribute name="mediaID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="sourceURL" attributeType="String"/>
+        <attribute name="syncing" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <relationship name="media" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Media" inverseName="item" inverseEntity="Media"/>
+        <relationship name="queries" toMany="YES" deletionRule="Nullify" destinationEntity="MediaQuery" inverseName="items" inverseEntity="MediaQuery"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="mediaItems" inverseEntity="Site"/>
+    </entity>
+    <entity name="MediaQuery" representedClassName="MediaQuery" syncable="YES">
+        <attribute name="filter" attributeType="Transformable"/>
+        <attribute name="hasMore" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="lastSync" attributeType="Date" defaultDateTimeInterval="568018800" usesScalarValueType="NO"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MediaItem" inverseName="queries" inverseEntity="MediaItem"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="mediaQueries" inverseEntity="Site"/>
     </entity>
     <entity name="Page" representedClassName="Page" syncable="YES">
-        <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="commentStatus" attributeType="String" syncable="YES"/>
-        <attribute name="content" attributeType="String" syncable="YES"/>
-        <attribute name="contentRendered" attributeType="String" syncable="YES"/>
-        <attribute name="date" attributeType="String" syncable="YES"/>
-        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="excerpt" attributeType="String" syncable="YES"/>
-        <attribute name="excerptRendered" attributeType="String" syncable="YES"/>
-        <attribute name="featuredMedia" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="generatedSlug" attributeType="String" syncable="YES"/>
-        <attribute name="guid" attributeType="String" syncable="YES"/>
-        <attribute name="guidRendered" attributeType="String" syncable="YES"/>
-        <attribute name="link" attributeType="String" syncable="YES"/>
-        <attribute name="menuOrder" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="modified" attributeType="String" syncable="YES"/>
-        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="pageID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="parentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="password" attributeType="String" syncable="YES"/>
-        <attribute name="permalinkTemplate" attributeType="String" syncable="YES"/>
-        <attribute name="pingStatus" attributeType="String" syncable="YES"/>
-        <attribute name="slug" attributeType="String" syncable="YES"/>
-        <attribute name="status" attributeType="String" syncable="YES"/>
-        <attribute name="template" attributeType="String" syncable="YES"/>
-        <attribute name="title" attributeType="String" syncable="YES"/>
-        <attribute name="titleRendered" attributeType="String" syncable="YES"/>
-        <attribute name="type" attributeType="String" syncable="YES"/>
-        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="pages" inverseEntity="Site" syncable="YES"/>
+        <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="commentStatus" attributeType="String"/>
+        <attribute name="content" attributeType="String"/>
+        <attribute name="contentRendered" attributeType="String"/>
+        <attribute name="date" attributeType="String"/>
+        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="excerpt" attributeType="String"/>
+        <attribute name="excerptRendered" attributeType="String"/>
+        <attribute name="featuredMedia" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="generatedSlug" attributeType="String"/>
+        <attribute name="guid" attributeType="String"/>
+        <attribute name="guidRendered" attributeType="String"/>
+        <attribute name="link" attributeType="String"/>
+        <attribute name="menuOrder" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="modified" attributeType="String"/>
+        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="pageID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="parentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="password" attributeType="String"/>
+        <attribute name="permalinkTemplate" attributeType="String"/>
+        <attribute name="pingStatus" attributeType="String"/>
+        <attribute name="slug" attributeType="String"/>
+        <attribute name="status" attributeType="String"/>
+        <attribute name="template" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="titleRendered" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="pages" inverseEntity="Site"/>
     </entity>
     <entity name="Post" representedClassName="Post" syncable="YES">
-        <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="categories" attributeType="Transformable" syncable="YES"/>
-        <attribute name="commentStatus" attributeType="String" syncable="YES"/>
-        <attribute name="content" attributeType="String" syncable="YES"/>
-        <attribute name="contentRendered" attributeType="String" syncable="YES"/>
-        <attribute name="date" attributeType="String" syncable="YES"/>
-        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="excerpt" attributeType="String" syncable="YES"/>
-        <attribute name="excerptRendered" attributeType="String" syncable="YES"/>
-        <attribute name="featuredMedia" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="format" attributeType="String" syncable="YES"/>
-        <attribute name="generatedSlug" attributeType="String" syncable="YES"/>
-        <attribute name="guid" attributeType="String" syncable="YES"/>
-        <attribute name="guidRendered" attributeType="String" syncable="YES"/>
-        <attribute name="link" attributeType="String" syncable="YES"/>
-        <attribute name="modified" attributeType="String" syncable="YES"/>
-        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="password" attributeType="String" syncable="YES"/>
-        <attribute name="permalinkTemplate" attributeType="String" syncable="YES"/>
-        <attribute name="pingStatus" attributeType="String" syncable="YES"/>
-        <attribute name="postID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="revisionCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="slug" attributeType="String" syncable="YES"/>
-        <attribute name="status" attributeType="String" syncable="YES"/>
-        <attribute name="sticky" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="tags" attributeType="Transformable" syncable="YES"/>
-        <attribute name="template" attributeType="String" syncable="YES"/>
-        <attribute name="title" attributeType="String" syncable="YES"/>
-        <attribute name="titleRendered" attributeType="String" syncable="YES"/>
-        <attribute name="type" attributeType="String" syncable="YES"/>
-        <relationship name="item" maxCount="1" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="post" inverseEntity="PostListItem" syncable="YES"/>
-        <relationship name="revisions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Revision" inverseName="post" inverseEntity="Revision" syncable="YES"/>
-        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="posts" inverseEntity="Site" syncable="YES"/>
+        <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="categories" attributeType="Transformable"/>
+        <attribute name="commentStatus" attributeType="String"/>
+        <attribute name="content" attributeType="String"/>
+        <attribute name="contentRendered" attributeType="String"/>
+        <attribute name="date" attributeType="String"/>
+        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="excerpt" attributeType="String"/>
+        <attribute name="excerptRendered" attributeType="String"/>
+        <attribute name="featuredMedia" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="format" attributeType="String"/>
+        <attribute name="generatedSlug" attributeType="String"/>
+        <attribute name="guid" attributeType="String"/>
+        <attribute name="guidRendered" attributeType="String"/>
+        <attribute name="link" attributeType="String"/>
+        <attribute name="modified" attributeType="String"/>
+        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="password" attributeType="String"/>
+        <attribute name="permalinkTemplate" attributeType="String"/>
+        <attribute name="pingStatus" attributeType="String"/>
+        <attribute name="postID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="revisionCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="slug" attributeType="String"/>
+        <attribute name="status" attributeType="String"/>
+        <attribute name="sticky" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="tags" attributeType="Transformable"/>
+        <attribute name="template" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="titleRendered" attributeType="String"/>
+        <attribute name="type" attributeType="String"/>
+        <relationship name="item" maxCount="1" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="post" inverseEntity="PostListItem"/>
+        <relationship name="revisions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Revision" inverseName="post" inverseEntity="Revision"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="posts" inverseEntity="Site"/>
     </entity>
     <entity name="PostList" representedClassName="PostList" syncable="YES">
-        <attribute name="filter" attributeType="Transformable" syncable="YES"/>
-        <attribute name="hasMore" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="lastSync" attributeType="Date" defaultDateTimeInterval="568015200" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="postLists" inverseEntity="PostListItem" syncable="YES"/>
-        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postLists" inverseEntity="Site" syncable="YES"/>
+        <attribute name="filter" attributeType="Transformable"/>
+        <attribute name="hasMore" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="lastSync" attributeType="Date" defaultDateTimeInterval="568015200" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="postLists" inverseEntity="PostListItem"/>
+        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postLists" inverseEntity="Site"/>
     </entity>
     <entity name="PostListItem" representedClassName="PostListItem" syncable="YES">
-        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="postID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="revisionCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="syncing" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="post" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Post" inverseName="item" inverseEntity="Post" syncable="YES"/>
-        <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostList" inverseName="items" inverseEntity="PostList" syncable="YES"/>
-        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postListItems" inverseEntity="Site" syncable="YES"/>
-        <relationship name="stagedEdits" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="StagedEdits" inverseName="postListItem" inverseEntity="StagedEdits" syncable="YES"/>
+        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="postID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="revisionCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="syncing" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <relationship name="post" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Post" inverseName="item" inverseEntity="Post"/>
+        <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostList" inverseName="items" inverseEntity="PostList"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postListItems" inverseEntity="Site"/>
+        <relationship name="stagedEdits" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="StagedEdits" inverseName="postListItem" inverseEntity="StagedEdits"/>
     </entity>
     <entity name="Revision" representedClassName="Revision" syncable="YES">
-        <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="content" attributeType="String" syncable="YES"/>
-        <attribute name="contentRendered" attributeType="String" syncable="YES"/>
-        <attribute name="date" attributeType="String" syncable="YES"/>
-        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="excerpt" attributeType="String" syncable="YES"/>
-        <attribute name="excerptRendered" attributeType="String" syncable="YES"/>
-        <attribute name="modified" attributeType="String" syncable="YES"/>
-        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="parentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="revisionID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="slug" attributeType="String" syncable="YES"/>
-        <attribute name="title" attributeType="String" syncable="YES"/>
-        <attribute name="titleRendered" attributeType="String" syncable="YES"/>
-        <relationship name="post" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="revisions" inverseEntity="Post" syncable="YES"/>
+        <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="content" attributeType="String"/>
+        <attribute name="contentRendered" attributeType="String"/>
+        <attribute name="date" attributeType="String"/>
+        <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="excerpt" attributeType="String"/>
+        <attribute name="excerptRendered" attributeType="String"/>
+        <attribute name="modified" attributeType="String"/>
+        <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="parentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="revisionID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="slug" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="titleRendered" attributeType="String"/>
+        <relationship name="post" maxCount="1" deletionRule="Nullify" destinationEntity="Post" inverseName="revisions" inverseEntity="Post"/>
     </entity>
     <entity name="Site" representedClassName="Site" syncable="YES">
-        <attribute name="dateFormat" attributeType="String" syncable="YES"/>
-        <attribute name="defaultCategory" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="defaultCommentStatus" attributeType="String" syncable="YES"/>
-        <attribute name="defaultPingStatus" attributeType="String" syncable="YES"/>
-        <attribute name="defaultPostFormat" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="language" attributeType="String" syncable="YES"/>
-        <attribute name="postsPerPage" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="startOfWeek" attributeType="String" syncable="YES"/>
-        <attribute name="summary" attributeType="String" syncable="YES"/>
-        <attribute name="timeFormat" attributeType="String" syncable="YES"/>
-        <attribute name="timezone" attributeType="String" syncable="YES"/>
-        <attribute name="title" attributeType="String" syncable="YES"/>
-        <attribute name="url" attributeType="String" syncable="YES"/>
-        <attribute name="useSmilies" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="account" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="sites" inverseEntity="Account" syncable="YES"/>
-        <relationship name="capabilities" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AccountCapabilities" inverseName="site" inverseEntity="AccountCapabilities" syncable="YES"/>
-        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Category" inverseName="site" inverseEntity="Category" syncable="YES"/>
-        <relationship name="media" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Media" inverseName="site" inverseEntity="Media" syncable="YES"/>
-        <relationship name="pages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Page" inverseName="site" inverseEntity="Page" syncable="YES"/>
-        <relationship name="postListItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostListItem" inverseName="site" inverseEntity="PostListItem" syncable="YES"/>
-        <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostList" inverseName="site" inverseEntity="PostList" syncable="YES"/>
-        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Post" inverseName="site" inverseEntity="Post" syncable="YES"/>
-        <relationship name="statuses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Status" inverseName="site" inverseEntity="Status" syncable="YES"/>
-        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Tag" inverseName="site" inverseEntity="Tag" syncable="YES"/>
-        <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="User" inverseName="site" inverseEntity="User" syncable="YES"/>
+        <attribute name="dateFormat" attributeType="String"/>
+        <attribute name="defaultCategory" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="defaultCommentStatus" attributeType="String"/>
+        <attribute name="defaultPingStatus" attributeType="String"/>
+        <attribute name="defaultPostFormat" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="language" attributeType="String"/>
+        <attribute name="postsPerPage" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="startOfWeek" attributeType="String"/>
+        <attribute name="summary" attributeType="String"/>
+        <attribute name="timeFormat" attributeType="String"/>
+        <attribute name="timezone" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="url" attributeType="String"/>
+        <attribute name="useSmilies" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="account" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="sites" inverseEntity="Account"/>
+        <relationship name="capabilities" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AccountCapabilities" inverseName="site" inverseEntity="AccountCapabilities"/>
+        <relationship name="categories" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Category" inverseName="site" inverseEntity="Category"/>
+        <relationship name="media" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Media" inverseName="site" inverseEntity="Media"/>
+        <relationship name="mediaItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MediaItem" inverseName="site" inverseEntity="MediaItem"/>
+        <relationship name="mediaQueries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MediaQuery" inverseName="site" inverseEntity="MediaQuery"/>
+        <relationship name="pages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Page" inverseName="site" inverseEntity="Page"/>
+        <relationship name="postListItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostListItem" inverseName="site" inverseEntity="PostListItem"/>
+        <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostList" inverseName="site" inverseEntity="PostList"/>
+        <relationship name="posts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Post" inverseName="site" inverseEntity="Post"/>
+        <relationship name="statuses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Status" inverseName="site" inverseEntity="Status"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Tag" inverseName="site" inverseEntity="Tag"/>
+        <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="User" inverseName="site" inverseEntity="User"/>
     </entity>
     <entity name="StagedEdits" representedClassName="StagedEdits" syncable="YES">
-        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="excerpt" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lastModified" attributeType="Date" defaultDateTimeInterval="-595929600" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="postListItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="stagedEdits" inverseEntity="PostListItem" syncable="YES"/>
+        <attribute name="content" optional="YES" attributeType="String"/>
+        <attribute name="excerpt" optional="YES" attributeType="String"/>
+        <attribute name="lastModified" attributeType="Date" defaultDateTimeInterval="-595929600" usesScalarValueType="NO"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="postListItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="stagedEdits" inverseEntity="PostListItem"/>
     </entity>
     <entity name="Status" representedClassName="Status" syncable="YES">
-        <attribute name="isPrivate" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isProtected" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isPublic" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="isQueryable" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="show" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="slug" attributeType="String" syncable="YES"/>
-        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="statuses" inverseEntity="Site" syncable="YES"/>
+        <attribute name="isPrivate" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isProtected" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isPublic" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isQueryable" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="show" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="slug" attributeType="String"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="statuses" inverseEntity="Site"/>
     </entity>
     <entity name="Tag" representedClassName="Tag" syncable="YES">
-        <attribute name="count" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="descript" attributeType="String" syncable="YES"/>
-        <attribute name="link" attributeType="String" syncable="YES"/>
-        <attribute name="name" attributeType="String" syncable="YES"/>
-        <attribute name="slug" attributeType="String" syncable="YES"/>
-        <attribute name="tagID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="taxonomy" attributeType="String" syncable="YES"/>
-        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="tags" inverseEntity="Site" syncable="YES"/>
+        <attribute name="count" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="descript" attributeType="String"/>
+        <attribute name="link" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="slug" attributeType="String"/>
+        <attribute name="tagID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="taxonomy" attributeType="String"/>
+        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="tags" inverseEntity="Site"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
-        <attribute name="avatarUrls" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="descript" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="users" inverseEntity="Site" syncable="YES"/>
+        <attribute name="avatarUrls" optional="YES" attributeType="Transformable"/>
+        <attribute name="descript" optional="YES" attributeType="String"/>
+        <attribute name="link" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="slug" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+        <attribute name="userID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="users" inverseEntity="Site"/>
     </entity>
     <elements>
         <element name="Account" positionX="-1478.8671875" positionY="-295.10546875" width="128" height="103"/>
         <element name="AccountCapabilities" positionX="-1215.9921875" positionY="-44.7890625" width="128" height="90"/>
         <element name="AccountDetails" positionX="-1479.90625" positionY="-91.0390625" width="128" height="270"/>
         <element name="Category" positionX="-1341" positionY="-216" width="128" height="180"/>
-        <element name="Media" positionX="-1314" positionY="-189" width="128" height="495"/>
+        <element name="Media" positionX="-1314" positionY="-189" width="128" height="508"/>
         <element name="Page" positionX="-1323" positionY="-198" width="128" height="465"/>
         <element name="Post" positionX="-1359" positionY="-234" width="128" height="540"/>
         <element name="PostList" positionX="-1341" positionY="-225" width="128" height="150"/>
         <element name="PostListItem" positionX="-1350" positionY="-234" width="128" height="180"/>
         <element name="Revision" positionX="-1350" positionY="-225" width="128" height="270"/>
-        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="435"/>
+        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="463"/>
         <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="120"/>
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
         <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>
         <element name="User" positionX="-1305" positionY="-180" width="128" height="165"/>
+        <element name="MediaItem" positionX="-1359" positionY="-234" width="128" height="178"/>
+        <element name="MediaQuery" positionX="-1350" positionY="-225" width="128" height="148"/>
     </elements>
 </model>
