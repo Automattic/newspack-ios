@@ -19,7 +19,8 @@ struct SiteMenuViewModel {
         }
 
         let mediaRow = SiteMenuRow(title: "Media") {
-            print( "TODO:")
+            let controller = MediaViewController()
+            presenter.navigationController?.pushViewController(controller, animated: true)
         }
 
         let logoutRow = SiteMenuRow(title: "Log out") {
