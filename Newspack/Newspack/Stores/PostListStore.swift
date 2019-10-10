@@ -259,31 +259,6 @@ extension PostListStore {
             }
             CoreDataManager.shared.saveContext(context: context)
         }
-//        list.hasMore = remotePostIDs.count == pageSize
-//
-//        if action.page == 1 {
-//            list.lastSync = Date()
-//        }
-//
-//        let context = CoreDataManager.shared.mainContext
-//
-//        for remotePostID in remotePostIDs {
-//            let item: PostListItem
-//            let fetchRequest = PostListItem.defaultFetchRequest()
-//            fetchRequest.predicate = NSPredicate(format: "%@ IN postLists AND postID = %ld", list, remotePostID.postID)
-//
-//            do {
-//                item = try context.fetch(fetchRequest).first ?? PostListItem(context: context)
-//            } catch {
-//                let error = error as NSError
-//                LogError(message: "handlePostIDsFetched: " + error.localizedDescription)
-//                continue
-//            }
-//
-//            updatePostListItem(item, with: remotePostID)
-//            item.site = list.site
-//            list.addToItems(item)
-//        }
 
     }
 
