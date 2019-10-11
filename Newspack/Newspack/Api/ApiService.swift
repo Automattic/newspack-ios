@@ -35,6 +35,16 @@ class ApiService {
         return PostApiService(wordPressComRestApi: api, dispatcher: dispatcher)
     }
 
+    /// Get an instance of the MediaApiService
+    ///
+    /// - Returns: MediaApiService
+    ///
+    static func mediaService() -> MediaApiService {
+        let api = SessionManager.shared.api
+        let dispatcher = SessionManager.shared.sessionDispatcher
+        return MediaApiService(wordPressComRestApi: api, dispatcher: dispatcher)
+    }
+
     let api:WordPressCoreRestApi
     let dispatcher: ActionDispatcher
 
