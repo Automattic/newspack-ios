@@ -17,7 +17,7 @@ extension Media {
     @NSManaged public var dateGMT: Date!
     @NSManaged public var descript: String!
     @NSManaged public var descriptionRendered: String!
-    @NSManaged public var details: [String: Bool]!
+    @NSManaged public var details: [String: AnyObject]!
     @NSManaged public var generatedSlug: String!
     @NSManaged public var guid: String!
     @NSManaged public var guidRendered: String!

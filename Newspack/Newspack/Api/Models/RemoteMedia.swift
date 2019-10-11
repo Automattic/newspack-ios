@@ -19,7 +19,7 @@ struct RemoteMedia {
     let guidRendered: String
     let link: String
     let mediaType: String
-    let mediaDetails: [String: Any]
+    let mediaDetails: [String: AnyObject]
     let mimeType: String
     let modified: String
     let modifiedGMT: Date
