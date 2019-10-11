@@ -5,7 +5,7 @@ import CoreData
 public class MediaItem: NSManagedObject {
 
     @nonobjc public class func defaultFetchRequest() -> NSFetchRequest<MediaItem> {
-        return NSFetchRequest<Media>(entityName: "MediaItem")
+        return NSFetchRequest<MediaItem>(entityName: "MediaItem")
     }
 
 }

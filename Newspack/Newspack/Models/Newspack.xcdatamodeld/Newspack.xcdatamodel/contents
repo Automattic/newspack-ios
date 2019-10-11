@@ -267,6 +267,8 @@
         <element name="AccountDetails" positionX="-1479.90625" positionY="-91.0390625" width="128" height="270"/>
         <element name="Category" positionX="-1341" positionY="-216" width="128" height="180"/>
         <element name="Media" positionX="-1314" positionY="-189" width="128" height="508"/>
+        <element name="MediaItem" positionX="-1359" positionY="-234" width="128" height="178"/>
+        <element name="MediaQuery" positionX="-1350" positionY="-225" width="128" height="148"/>
         <element name="Page" positionX="-1323" positionY="-198" width="128" height="465"/>
         <element name="Post" positionX="-1359" positionY="-234" width="128" height="540"/>
         <element name="PostList" positionX="-1341" positionY="-225" width="128" height="150"/>
@@ -277,7 +279,5 @@
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
         <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>
         <element name="User" positionX="-1305" positionY="-180" width="128" height="165"/>
-        <element name="MediaItem" positionX="-1359" positionY="-234" width="128" height="178"/>
-        <element name="MediaQuery" positionX="-1350" positionY="-225" width="128" height="148"/>
     </elements>
 </model>

@@ -31,12 +31,12 @@ extension Site {
     @NSManaged public var mediaItems: Set<MediaItem>!
     @NSManaged public var mediaQueries: Set<MediaQuery>!
     @NSManaged public var pages: Set<Page>!
+    @NSManaged public var postListItems: Set<PostListItem>!
+    @NSManaged public var postLists: Set<PostList>!
     @NSManaged public var posts: Set<Post>!
     @NSManaged public var statuses: Set<Status>!
     @NSManaged public var tags: Set<Tag>!
     @NSManaged public var users: Set<User>!
-    @NSManaged public var postLists: Set<PostList>!
-    @NSManaged public var postListItems: Set<PostListItem>!
 
 }
 
@@ -74,6 +74,40 @@ extension Site {
 
 }
 
+// MARK: Generated accessors for mediaItems
+extension Site {
+
+    @objc(addMediaItemsObject:)
+    @NSManaged public func addToMediaItems(_ value: MediaItem)
+
+    @objc(removeMediaItemsObject:)
+    @NSManaged public func removeFromMediaItems(_ value: MediaItem)
+
+    @objc(addMediaItems:)
+    @NSManaged public func addToMediaItems(_ values: Set<MediaItem>)
+
+    @objc(removeMediaItems:)
+    @NSManaged public func removeFromMediaItems(_ values: Set<MediaItem>)
+
+}
+
+// MARK: Generated accessors for mediaQueries
+extension Site {
+
+    @objc(addMediaQueriesObject:)
+    @NSManaged public func addToMediaQueries(_ value: MediaQuery)
+
+    @objc(removeMediaQueriesObject:)
+    @NSManaged public func removeFromMediaQueries(_ value: MediaQuery)
+
+    @objc(addMediaQueries:)
+    @NSManaged public func addToMediaQueries(_ values: Set<MediaQuery>)
+
+    @objc(removeMediaQueries:)
+    @NSManaged public func removeFromMediaQueries(_ values: Set<MediaQuery>)
+
+}
+
 // MARK: Generated accessors for pages
 extension Site {
 
@@ -88,6 +122,40 @@ extension Site {
 
     @objc(removePages:)
     @NSManaged public func removeFromPages(_ values: Set<Page>)
+
+}
+
+// MARK: Generated accessors for postListItems
+extension Site {
+
+    @objc(addPostListItemsObject:)
+    @NSManaged public func addToPostListItems(_ value: PostListItem)
+
+    @objc(removePostListItemsObject:)
+    @NSManaged public func removeFromPostListItems(_ value: PostListItem)
+
+    @objc(addPostListItems:)
+    @NSManaged public func addToPostListItems(_ values: Set<PostListItem>)
+
+    @objc(removePostListItems:)
+    @NSManaged public func removeFromPostListItems(_ values: Set<PostListItem>)
+
+}
+
+// MARK: Generated accessors for postLists
+extension Site {
+
+    @objc(addPostListsObject:)
+    @NSManaged public func addToPostLists(_ value: PostList)
+
+    @objc(removePostListsObject:)
+    @NSManaged public func removeFromPostLists(_ value: PostList)
+
+    @objc(addPostLists:)
+    @NSManaged public func addToPostLists(_ values: Set<PostList>)
+
+    @objc(removePostLists:)
+    @NSManaged public func removeFromPostLists(_ values: Set<PostList>)
 
 }
 
@@ -156,75 +224,5 @@ extension Site {
 
     @objc(removeUsers:)
     @NSManaged public func removeFromUsers(_ values: Set<User>)
-
-}
-
-// MARK: Generated accessors for postLists
-extension Site {
-
-    @objc(addPostListsObject:)
-    @NSManaged public func addToPostLists(_ value: PostList)
-
-    @objc(removePostListsObject:)
-    @NSManaged public func removeFromPostLists(_ value: PostList)
-
-    @objc(addPostLists:)
-    @NSManaged public func addToPostLists(_ values: Set<PostList>)
-
-    @objc(removePostLists:)
-    @NSManaged public func removeFromPostLists(_ values: Set<PostList>)
-
-}
-
-
-// MARK: Generated accessors for postListsItems
-extension Site {
-
-    @objc(addPostListItemsObject:)
-    @NSManaged public func addToPostListItems(_ value: PostListItem)
-
-    @objc(removePostListItemsObject:)
-    @NSManaged public func removeFromPostListItems(_ value: PostListItem)
-
-    @objc(addPostListItems:)
-    @NSManaged public func addToPostListItems(_ values: Set<PostListItem>)
-
-    @objc(removePostListItems:)
-    @NSManaged public func removeFromPostListItems(_ values: Set<PostListItem>)
-
-}
-
-// MARK: Generated accessors for mediaQueries
-extension Site {
-
-    @objc(addPostListsObject:)
-    @NSManaged public func addToMediaQueries(_ value: MediaQuery)
-
-    @objc(removePostListsObject:)
-    @NSManaged public func removeFromMediaQueries(_ value: MediaQuery)
-
-    @objc(addPostLists:)
-    @NSManaged public func addToMediaQueries(_ values: Set<MediaQuery>)
-
-    @objc(removePostLists:)
-    @NSManaged public func removeFromMediaQueries(_ values: Set<MediaQuery>)
-
-}
-
-
-// MARK: Generated accessors for mediaItems
-extension Site {
-
-    @objc(addPostListItemsObject:)
-    @NSManaged public func addToMediaItems(_ value: MediaItem)
-
-    @objc(removePostListItemsObject:)
-    @NSManaged public func removeFromMediaItems(_ value: MediaItem)
-
-    @objc(addPostListItems:)
-    @NSManaged public func addToMediaItems(_ values: Set<MediaItem>)
-
-    @objc(removePostListItems:)
-    @NSManaged public func removeFromMediaItems(_ values: Set<MediaItem>)
 
 }
