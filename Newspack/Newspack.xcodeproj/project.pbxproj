@@ -71,6 +71,7 @@
 		E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C652235E16E000FEB33 /* AccountStore.swift */; };
 		E62C7C692235E73F000FEB33 /* AccountStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */; };
 		E62C7C6C2235F061000FEB33 /* AuthenticationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */; };
+		E632F9A123515116003737BF /* SiteMediaDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E632F9A023515116003737BF /* SiteMediaDataSource.swift */; };
 		E636C260234FBACC00564B63 /* MediaItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C25F234FBACC00564B63 /* MediaItemStore.swift */; };
 		E636C262234FBE6800564B63 /* RemoteMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C261234FBE6800564B63 /* RemoteMedia.swift */; };
 		E636C264234FD16F00564B63 /* MediaApiActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C263234FD16F00564B63 /* MediaApiActions.swift */; };
@@ -251,6 +252,7 @@
 		E62C7C652235E16E000FEB33 /* AccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStore.swift; sourceTree = "<group>"; };
 		E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStoreTests.swift; sourceTree = "<group>"; };
 		E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManagerTests.swift; sourceTree = "<group>"; };
+		E632F9A023515116003737BF /* SiteMediaDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMediaDataSource.swift; sourceTree = "<group>"; };
 		E636C25F234FBACC00564B63 /* MediaItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemStore.swift; sourceTree = "<group>"; };
 		E636C261234FBE6800564B63 /* RemoteMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMedia.swift; sourceTree = "<group>"; };
 		E636C263234FD16F00564B63 /* MediaApiActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaApiActions.swift; sourceTree = "<group>"; };
@@ -625,6 +627,7 @@
 				E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */,
 				E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */,
 				E6D44DEB234BC56C00B51438 /* MediaViewController.swift */,
+				E632F9A023515116003737BF /* SiteMediaDataSource.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1086,6 +1089,7 @@
 				E66CCA142303527D00F1CA59 /* AccountDetails+CoreDataProperties.swift in Sources */,
 				E602E68322C15EC100795CBA /* RemoteUser.swift in Sources */,
 				E6871F1B22C3FDE7008D3D46 /* PostListViewController.swift in Sources */,
+				E632F9A123515116003737BF /* SiteMediaDataSource.swift in Sources */,
 				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
 				E6E43EA4230F1D2B00A1974E /* EditAction.swift in Sources */,
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
