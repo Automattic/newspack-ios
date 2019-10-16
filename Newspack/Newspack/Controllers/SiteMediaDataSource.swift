@@ -40,7 +40,7 @@ extension MediaLibraryGroup: WPMediaGroup {
         }
 
         // TODO: Need the image loader for this.
-        let asset = MediaAsset(itemID: item.mediaID)
+        let asset = MediaAsset(item: item)
         return asset.image(with: size, completionHandler: completionHandler)
     }
 
@@ -74,6 +74,9 @@ class SiteMediaDataSource: NSObject {
         fetchRequest.predicate = NSPredicate(format: "queries contains %@", currentQuery)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+
+        super.init()
+
         resultsController.delegate = self
         try? resultsController.performFetch()
     }
@@ -114,7 +117,7 @@ extension SiteMediaDataSource: WPMediaCollectionDataSource {
 
     func media(at index: Int) -> WPMediaAsset {
         let item = resultsController.fetchedObjects![index]
-        return MediaAsset(itemID: item.mediaID)
+        return MediaAsset(item: item)
     }
 
     func media(withIdentifier identifier: String) -> WPMediaAsset? {
