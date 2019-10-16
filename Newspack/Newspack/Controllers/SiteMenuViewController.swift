@@ -1,5 +1,6 @@
 import UIKit
 import WordPressFlux
+import WPMediaPicker
 
 struct SiteMenuRow {
     let title: String
@@ -19,7 +20,11 @@ struct SiteMenuViewModel {
         }
 
         let mediaRow = SiteMenuRow(title: "Media") {
-            let controller = MediaViewController()
+            let options = WPMediaPickerOptions()
+            options.allowCaptureOfMedia = true
+            options.allowMultipleSelection = true
+            options.showMostRecentFirst = false
+            let controller = MediaViewController(options: options)
             presenter.navigationController?.pushViewController(controller, animated: true)
         }
 
