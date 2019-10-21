@@ -12,6 +12,8 @@ class StoreContainer {
     private(set) var siteStore = SiteStore()
     private(set) var postStore = PostStore()
     private(set) var postListStore = PostListStore()
+    private(set) var mediaStore = MediaStore()
+    private(set) var mediaItemStore = MediaItemStore()
 
     private init() {}
 
@@ -27,5 +29,7 @@ class StoreContainer {
         siteStore = SiteStore(dispatcher: dispatcher, siteID: site?.uuid)
         postStore = PostStore(dispatcher: dispatcher, siteID: site?.uuid)
         postListStore = PostListStore(dispatcher: dispatcher, siteID: site?.uuid)
+        mediaStore = MediaStore(dispatcher: dispatcher, siteID: site?.uuid)
+        mediaItemStore = MediaItemStore(dispatcher: dispatcher, siteID: site?.uuid)
     }
 }
