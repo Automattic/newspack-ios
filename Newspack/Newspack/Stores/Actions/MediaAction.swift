@@ -1,9 +1,8 @@
-//
-//  MediaAction.swift
-//  Newspack
-//
-//  Created by aerych on 10/16/19.
-//  Copyright © 2019 Automattic. All rights reserved.
-//
-
 import Foundation
+import WordPressFlux
+
+/// Supported Actions for changes to the MediaItemStore and MediaStore
+///
+enum MediaAction: Action {
+    case syncItems
+}
