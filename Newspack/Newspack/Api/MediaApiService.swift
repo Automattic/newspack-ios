@@ -6,7 +6,7 @@ class MediaApiService: ApiService {
     let remote: MediaServiceRemote
 
     deinit {
-        LogDebug(message: "PostApiService deinit")
+        LogDebug(message: "MediaApiService deinit")
     }
 
     override init(wordPressComRestApi api: WordPressCoreRestApi, dispatcher: ActionDispatcher) {
