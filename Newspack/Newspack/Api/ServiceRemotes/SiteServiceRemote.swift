@@ -60,7 +60,7 @@ extension SiteServiceRemote {
 
 
     private func siteURLforAPI() -> String {
-        return api.baseURLString.removingPrefix(WordPressCoreRestApi.apiBaseURLString)
+        return "https://" + api.baseURLString.removingPrefix(WordPressCoreRestApi.baseEndpoint)
     }
 
 }
