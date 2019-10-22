@@ -33,7 +33,7 @@ class WordPressCoreRestApi: WordPressComRestApi {
         if !endpoint.hasSuffix("/") {
             endpoint.append("/")
         }
-
+        DDLogInfo("API Endpoint: \(endpoint)")
         return endpoint
     }
 
