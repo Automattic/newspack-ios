@@ -310,15 +310,16 @@ extension PostListStore {
                 currentList = nil
                 return
         }
-        setupDefaultPostListsIfNeeded(siteUUID: site.uuid)
-        currentList = site.postLists.first
+        setupDefaultPostListsIfNeeded(siteUUID: site.uuid, onComplete: {
+            self.currentList = site.postLists.first
+        })
     }
 
     /// Checks for the presense of default lists.
     /// Creates any that are missing.
     /// Ideally this should be set up as part of an initial sync.
     ///
-    func setupDefaultPostListsIfNeeded(siteUUID: UUID) {
+    func setupDefaultPostListsIfNeeded(siteUUID: UUID, onComplete: @escaping () -> Void ) {
         let store = StoreContainer.shared.siteStore
         guard let siteObjID = store.getSiteByUUID(siteUUID)?.objectID else {
             // TODO: Handle no site.
@@ -350,6 +351,9 @@ extension PostListStore {
             }
 
             CoreDataManager.shared.saveContext(context: context)
+            DispatchQueue.main.async {
+                onComplete()
+            }
         }
     }
 }
