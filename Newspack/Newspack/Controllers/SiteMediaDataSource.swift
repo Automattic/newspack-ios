@@ -1,90 +1,135 @@
 import Foundation
 import CoreData
 import WPMediaPicker
+import WordPressFlux
 
-class MediaLibraryGroup: NSObject {
-    let currentQuery: MediaQuery
-
-    init(mediaQuery: MediaQuery) {
-        currentQuery = mediaQuery
-    }
-}
-extension MediaLibraryGroup: WPMediaGroup {
-    func baseGroup() -> Any {
-        self
-    }
-
-    func name() -> String {
-        return NSLocalizedString("WordPress Media", comment: "Media title.")
-    }
-
-    func identifier() -> String {
-        return "com.newspack.medialibrary"
-    }
-
-    func image(with size: CGSize, completionHandler: @escaping WPMediaImageBlock) -> WPMediaRequestID {
-        guard currentQuery.items.count > 0 else {
-            completionHandler(nil, nil)
-            return 0
-        }
-
-        // This would be the most recent photo as the group's image.
-        let fetchRequest = MediaItem.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "queries contains %@", currentQuery)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-        let context = CoreDataManager.shared.mainContext
-        guard let item = try? context.fetch(fetchRequest).first else {
-            let placeholderImage = UIImage(named: "media-library-group-placeholder")
-            completionHandler(placeholderImage, nil)
-            return 0
-        }
-
-        // TODO: Need the image loader for this.
-        let asset = MediaAsset(item: item)
-        return asset.image(with: size, completionHandler: completionHandler)
-    }
-
-    func cancelImageRequest(_ requestID: WPMediaRequestID) {
-        // noop?
-    }
-
-    func numberOfAssets(of mediaType: WPMediaType, completionHandler: WPMediaCountBlock? = nil) -> Int {
-        return currentQuery.items.count
-    }
-
-}
-
-
+/// Provides a bridge between the media stores and the media picker.
+///
 class SiteMediaDataSource: NSObject {
     private var currentIndex = 0
     private var ascendedOrder = false
     private var mediaFilter = WPMediaType.image
     private var observers = [NSUUID: WPMediaChangesBlock]()
     private var groupObservers = [NSUUID: WPMediaGroupChangesBlock]()
+    private let sortField = "dateGMT"
+
+    private var itemsInserted = NSMutableIndexSet()
+    private var itemsRemoved = NSMutableIndexSet()
+    private var itemsChanged = NSMutableIndexSet()
+    private var itemsMoved = [WPIndexMove]()
 
     var groups = [WPMediaGroup]()
-    let currentQuery: MediaQuery
-    let resultsController: NSFetchedResultsController<MediaItem>
-
-    init(mediaQuery: MediaQuery) {
-        currentQuery = mediaQuery
-
-        let context = CoreDataManager.shared.mainContext
+    lazy var resultsController: NSFetchedResultsController<MediaItem> = {
         let fetchRequest = MediaItem.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "queries contains %@", currentQuery)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-        resultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortField, ascending: false)]
+        return NSFetchedResultsController(fetchRequest: fetchRequest,
+                                          managedObjectContext: CoreDataManager.shared.mainContext,
+                                          sectionNameKeyPath: nil,
+                                          cacheName: nil)
+    }()
 
+    var mediaItemsReceipt: Receipt?
+
+    override init() {
         super.init()
 
+        mediaItemsReceipt = StoreContainer.shared.mediaItemStore.onStateChange({ [weak self] state in
+            self?.handleMediaItemsStateChanged(oldState: state.0, newState: state.1)
+        })
+
         resultsController.delegate = self
-        try? resultsController.performFetch()
+        configureResultsController()
     }
 
+    func handleMediaItemsStateChanged(oldState: MediaItemStoreState, newState: MediaItemStoreState) {
+        if oldState == .syncing {
+
+            // no op?
+        } else if oldState == .changingQuery {
+            configureResultsController()
+        }
+    }
+
+    func configureResultsController() {
+        if let mediaQuery = StoreContainer.shared.mediaItemStore.currentQuery {
+            resultsController.fetchRequest.predicate = NSPredicate(format: "queries contains %@", mediaQuery)
+        }
+        do {
+            try resultsController.performFetch()
+        } catch {
+            print(error)
+        }
+        configureGroups()
+    }
+
+    func configureGroups() {
+        let image = UIImage(named: "media-group-default")!
+        let count = resultsController.fetchedObjects?.count ?? 0
+        if count > 0 {
+            // todo: Use the first image.
+        }
+        let group = MediaLibraryGroup(name: NSLocalizedString("WordPress Media", comment: "Media title."),
+                                      identifier: "com.newspack.medialibrary",
+                                      numberofAssets: count,
+                                      image: image)
+        groups = [group]
+    }
+
+    func notifyGroupObservers() {
+        for callback in groupObservers.values {
+            callback()
+        }
+    }
+
+    func notifyObservers(incrementalChanges: Bool, removed: NSIndexSet, inserted: NSIndexSet, changed:NSIndexSet, moved: [WPMediaMove]) {
+        for callback in observers.values {
+            callback(incrementalChanges, removed as IndexSet, inserted as IndexSet, changed as IndexSet, moved)
+        }
+    }
+
+    func notifyObserversReloadData() {
+        notifyObservers(incrementalChanges: false,
+                        removed: NSIndexSet(),
+                        inserted: NSIndexSet(),
+                        changed: NSIndexSet(),
+                        moved: [WPMediaMove]())
+    }
 }
 
 extension SiteMediaDataSource: NSFetchedResultsControllerDelegate {
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        itemsInserted.removeAllIndexes()
+        itemsRemoved.removeAllIndexes()
+        itemsChanged.removeAllIndexes()
+        itemsMoved.removeAll()
+    }
 
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
+        switch type {
+        case .insert :
+            itemsInserted.add(newIndexPath!.row)
+        case .delete:
+            itemsRemoved.add(indexPath!.row)
+        case .update:
+            itemsChanged.add(indexPath!.row)
+        case .move:
+            let moved = WPIndexMove(UInt(indexPath!.row), to: UInt(newIndexPath!.row))!
+            itemsMoved.append(moved)
+        default:
+            break
+        }
+    }
+
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        if itemsChanged.contains(0) || itemsRemoved.contains(0) || itemsInserted.contains(0) {
+            notifyGroupObservers()
+        }
+        notifyObservers(incrementalChanges: true, removed: itemsRemoved, inserted: itemsInserted, changed: itemsChanged, moved: itemsMoved)
+    }
 }
 
 extension SiteMediaDataSource: WPMediaCollectionDataSource {
@@ -155,7 +200,7 @@ extension SiteMediaDataSource: WPMediaCollectionDataSource {
     }
 
     func loadData(with options: WPMediaLoadOptions, success successBlock: WPMediaSuccessBlock?, failure failureBlock: WPMediaFailureBlock? = nil) {
-        // TODO: Dispatch action to sync media.
+        successBlock?()
     }
 
     func add(_ image: UIImage, metadata: [AnyHashable : Any]?, completionBlock: WPMediaAddedBlock? = nil) {
@@ -184,6 +229,49 @@ extension SiteMediaDataSource: WPMediaCollectionDataSource {
 
 }
 
+class MediaLibraryGroup: NSObject {
+    var groupName: String
+    var groupID: String
+    var groupImage: UIImage
+    var groupAssetCount: Int
+
+    init(name:String, identifier: String, numberofAssets: Int, image: UIImage) {
+        groupName = name
+        groupID = identifier
+        groupAssetCount = numberofAssets
+        groupImage = image
+
+        super.init()
+    }
+}
+
+extension MediaLibraryGroup: WPMediaGroup {
+    func baseGroup() -> Any {
+        self
+    }
+
+    func name() -> String {
+        return groupName
+    }
+
+    func identifier() -> String {
+        return groupID
+    }
+
+    func image(with size: CGSize, completionHandler: @escaping WPMediaImageBlock) -> WPMediaRequestID {
+        completionHandler(groupImage, nil)
+        return 0
+    }
+
+    func cancelImageRequest(_ requestID: WPMediaRequestID) {
+        // noop?
+    }
+
+    func numberOfAssets(of mediaType: WPMediaType, completionHandler: WPMediaCountBlock? = nil) -> Int {
+        return groupAssetCount
+    }
+}
+
 // Should wrap a MediaItem / Media object
 class MediaAsset: NSObject, WPMediaAsset {
     let mediaID: Int32
@@ -192,8 +280,8 @@ class MediaAsset: NSObject, WPMediaAsset {
     var mediaDuration: TimeInterval = 0
     var sourceURL = ""
     var dateCreated = Date()
-    var width = 0
-    var height = 0
+    var width = 40
+    var height = 40
 
     init(item: MediaItem) {
         mediaID = Int32(item.mediaID)
@@ -210,6 +298,8 @@ class MediaAsset: NSObject, WPMediaAsset {
 
     func image(with size: CGSize, completionHandler: @escaping WPMediaImageBlock) -> WPMediaRequestID {
         // TODO: Need the image loader
+        let image = UIImage(named: "media-group-default")!
+        completionHandler(image, nil)
         return mediaID
     }
 

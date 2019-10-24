@@ -51,6 +51,15 @@ class MediaItemStore: StatefulStore<MediaItemStoreState> {
     override func onDispatch(_ action: Action) {
         if let apiAction = action as? MediaItemsFetchedApiAction {
             handleMediaItemsFetched(action: apiAction)
+            return
+        }
+
+        if let action = action as? MediaAction {
+            switch action {
+            case .syncItems:
+                sync()
+            }
+            return
         }
     }
 
@@ -245,7 +254,7 @@ extension MediaItemStore {
             for remoteItem in remoteItems {
                 let item: MediaItem
                 let fetchRequest = MediaItem.defaultFetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "%@ IN mediaQueries AND mediaID = %ld", query, remoteItem.mediaID)
+                fetchRequest.predicate = NSPredicate(format: "%@ IN queries AND mediaID = %ld", query, remoteItem.mediaID)
 
                 do {
                     item = try context.fetch(fetchRequest).first ?? MediaItem(context: context)
@@ -291,7 +300,7 @@ extension MediaItemStore {
     ///
     static func defaultMediaQueries() -> Array<MediaItemQuery> {
         return [
-            MediaItemQuery(title: "images", filter: ["media_type": ["image"] as AnyObject])
+            MediaItemQuery(title: "images", filter: ["media_type": "image" as AnyObject])
         ]
     }
 
@@ -313,15 +322,16 @@ extension MediaItemStore {
                 currentQuery = nil
                 return
         }
-        setupDefaultMediaQueriesIfNeeded(siteUUID: site.uuid)
-        currentQuery = site.mediaQueries.first
+        setupDefaultMediaQueriesIfNeeded(siteUUID: site.uuid, onComplete: {
+            self.currentQuery = site.mediaQueries.first
+        })
     }
 
     /// Checks for the presense of default queries.
     /// Creates any that are missing.
     /// Ideally this should be set up as part of an initial sync.
     ///
-    func setupDefaultMediaQueriesIfNeeded(siteUUID: UUID) {
+    func setupDefaultMediaQueriesIfNeeded(siteUUID: UUID, onComplete: @escaping () -> Void ) {
         let store = StoreContainer.shared.siteStore
         guard let siteObjID = store.getSiteByUUID(siteUUID)?.objectID else {
             // TODO: Handle no site.
@@ -353,6 +363,9 @@ extension MediaItemStore {
             }
 
             CoreDataManager.shared.saveContext(context: context)
+            DispatchQueue.main.async {
+                onComplete()
+            }
         }
     }
 }
