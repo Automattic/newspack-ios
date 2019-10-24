@@ -1338,6 +1338,7 @@
 				DEVELOPMENT_TEAM = PZYM8XX95Q;
 				INFOPLIST_FILE = "$(SRCROOT)/Newspack/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
@@ -1358,6 +1359,7 @@
 				DEVELOPMENT_TEAM = PZYM8XX95Q;
 				INFOPLIST_FILE = "$(SRCROOT)/Newspack/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
