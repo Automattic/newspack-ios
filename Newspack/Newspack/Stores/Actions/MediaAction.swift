@@ -5,4 +5,5 @@ import WordPressFlux
 ///
 enum MediaAction: Action {
     case syncItems
+    case syncMedia(mediaID: Int64)
 }
