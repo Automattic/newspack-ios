@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 
 @objc(MediaItem)
-public class MediaItem: NSManagedObject {
+public class MediaItem: NSManagedObject, MediaTypeDiscerner {
 
     @nonobjc public class func defaultFetchRequest() -> NSFetchRequest<MediaItem> {
         return NSFetchRequest<MediaItem>(entityName: "MediaItem")
