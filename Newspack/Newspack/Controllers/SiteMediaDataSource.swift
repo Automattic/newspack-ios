@@ -54,11 +54,9 @@ class SiteMediaDataSource: NSObject {
         if let mediaQuery = StoreContainer.shared.mediaItemStore.currentQuery {
             resultsController.fetchRequest.predicate = NSPredicate(format: "queries contains %@", mediaQuery)
         }
-        do {
-            try resultsController.performFetch()
-        } catch {
-            print(error)
-        }
+
+        try? resultsController.performFetch()
+
         configureGroups()
     }
 
@@ -162,6 +160,10 @@ extension SiteMediaDataSource: WPMediaCollectionDataSource {
 
     func media(at index: Int) -> WPMediaAsset {
         let item = resultsController.fetchedObjects![index]
+
+        let dispatcher = SessionManager.shared.sessionDispatcher
+        dispatcher.dispatch(MediaAction.syncMedia(mediaID: item.mediaID))
+
         return MediaAsset(item: item)
     }
 
@@ -288,7 +290,7 @@ class MediaAsset: NSObject, WPMediaAsset {
         guard let media = item.media else {
             return
         }
-        mediaType = media.type
+        mediaType = media.mediaType
         sourceURL = media.source
         dateCreated = media.dateGMT
         //width = media.width
@@ -345,4 +347,9 @@ class MediaAsset: NSObject, WPMediaAsset {
         return CGSize(width: width, height: height)
     }
 
+    // Note: This is marked as optional but if the assetType returns WPMediaType.other it is checked.
+    // An exception is thrown if not implemented in this case.
+    func filename() -> String? {
+        return "unknown"
+    }
 }
