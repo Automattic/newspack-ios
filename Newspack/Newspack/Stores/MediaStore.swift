@@ -25,6 +25,16 @@ class MediaStore: Store {
     override func onDispatch(_ action: Action) {
         if let apiAction = action as? MediaFetchedApiAction {
             handleMediaFetchedAction(action: apiAction)
+            return
+        }
+
+        if let action = action as? MediaAction {
+            switch action {
+            case .syncItems:
+                break
+            case .syncMedia(let mediaID):
+                syncMediaIfNecessary(mediaID: mediaID)
+            }
         }
     }
 }
