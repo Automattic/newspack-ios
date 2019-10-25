@@ -11,6 +11,7 @@ extension MediaItem {
     @NSManaged public var mediaID: Int64
     @NSManaged public var dateGMT: Date!
     @NSManaged public var modifiedGMT: Date!
+    @NSManaged public var mimeType: String!
     @NSManaged public var details: [String: AnyObject]
     @NSManaged public var sourceURL: String!
     @NSManaged public var syncing: Bool

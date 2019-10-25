@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="19A583" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19A583" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES">
         <attribute name="networkUrl" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
@@ -76,6 +76,7 @@
         <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="details" attributeType="Transformable"/>
         <attribute name="mediaID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="mimeType" optional="YES" attributeType="String"/>
         <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="sourceURL" attributeType="String"/>
         <attribute name="syncing" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
@@ -267,7 +268,7 @@
         <element name="AccountDetails" positionX="-1479.90625" positionY="-91.0390625" width="128" height="270"/>
         <element name="Category" positionX="-1341" positionY="-216" width="128" height="180"/>
         <element name="Media" positionX="-1314" positionY="-189" width="128" height="508"/>
-        <element name="MediaItem" positionX="-1359" positionY="-234" width="128" height="178"/>
+        <element name="MediaItem" positionX="-1359" positionY="-234" width="128" height="193"/>
         <element name="MediaQuery" positionX="-1350" positionY="-225" width="128" height="148"/>
         <element name="Page" positionX="-1323" positionY="-198" width="128" height="465"/>
         <element name="Post" positionX="-1359" positionY="-234" width="128" height="540"/>
