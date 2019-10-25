@@ -16,7 +16,7 @@ class MediaServiceRemote: ServiceRemoteCoreRest {
                       perPage: Int,
                       onComplete: @escaping (_ mediaItems: [RemoteMediaItem]?, _ error: Error?) -> Void) {
         let params = [
-            "_fields": "id,date_gmt,media_details,modified_gmt,source_url",
+            "_fields": "id,date_gmt,media_details,mime_type,modified_gmt,source_url",
             "page": page,
             "per_page": perPage
         ] as [String: AnyObject]

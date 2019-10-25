@@ -284,6 +284,7 @@ extension MediaItemStore {
         item.mediaID = remoteItem.mediaID
         item.dateGMT = remoteItem.dateGMT
         item.modifiedGMT = remoteItem.modifiedGMT
+        item.mimeType = remoteItem.mimeType
         item.sourceURL = remoteItem.sourceURL
         item.details = remoteItem.mediaDetails
     }

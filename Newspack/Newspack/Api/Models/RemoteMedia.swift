@@ -77,6 +77,7 @@ struct RemoteMediaItem {
     let mediaID: Int64
     let dateGMT: Date
     let mediaDetails: [String: AnyObject]
+    let mimeType: String
     let modifiedGMT: Date
     let sourceURL: String
 
@@ -84,6 +85,7 @@ struct RemoteMediaItem {
         mediaID = dict[intForKey: "id"]
         dateGMT = Date.dateFromGMTString(string: dict[stringForKey: "date_gmt"])!
         mediaDetails = dict["media_details"] as! [String: AnyObject]
+        mimeType = dict[stringForKey: "mime_type"]
         modifiedGMT = Date.dateFromGMTString(string: dict[stringForKey: "modified_gmt"])!
         sourceURL = dict[stringForKey: "source_url"]
     }
