@@ -73,6 +73,7 @@ target 'Newspack' do
 
     pod 'CocoaLumberjack/Swift', '3.5.3'
     pod 'KeychainAccess', '3.2.0'
+    pod 'AlamofireImage', '3.4.1'
 
     pod 'WordPressAuthenticator', '~> 1.9.0'
     pod 'WordPressKit', '~> 4.5.0'
