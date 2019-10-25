@@ -58,6 +58,8 @@ class MediaItemStore: StatefulStore<MediaItemStoreState> {
             switch action {
             case .syncItems:
                 sync()
+            case .syncMedia(_):
+                break
             }
             return
         }
