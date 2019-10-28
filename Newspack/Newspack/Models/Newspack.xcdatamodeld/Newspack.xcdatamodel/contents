@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19A583" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19A602" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES">
         <attribute name="networkUrl" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
@@ -7,12 +7,12 @@
         <relationship name="sites" toMany="YES" deletionRule="Cascade" destinationEntity="Site" inverseName="account" inverseEntity="Site"/>
     </entity>
     <entity name="AccountCapabilities" representedClassName="AccountCapabilities" syncable="YES">
-        <attribute name="capabilities" attributeType="Transformable"/>
-        <attribute name="roles" attributeType="Transformable"/>
+        <attribute name="capabilities" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
+        <attribute name="roles" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
         <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="capabilities" inverseEntity="Site"/>
     </entity>
     <entity name="AccountDetails" representedClassName="AccountDetails" syncable="YES">
-        <attribute name="avatarUrls" attributeType="Transformable"/>
+        <attribute name="avatarUrls" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
         <attribute name="email" attributeType="String"/>
         <attribute name="firstName" attributeType="String"/>
         <attribute name="lastName" attributeType="String"/>
@@ -49,7 +49,7 @@
         <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="descript" attributeType="String"/>
         <attribute name="descriptionRendered" attributeType="String"/>
-        <attribute name="details" attributeType="Transformable"/>
+        <attribute name="details" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
         <attribute name="generatedSlug" attributeType="String"/>
         <attribute name="guid" attributeType="String"/>
         <attribute name="guidRendered" attributeType="String"/>
@@ -72,20 +72,27 @@
         <relationship name="item" maxCount="1" deletionRule="Nullify" destinationEntity="MediaItem" inverseName="media" inverseEntity="MediaItem"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="media" inverseEntity="Site"/>
     </entity>
+    <entity name="MediaCache" representedClassName="MediaCache" syncable="YES">
+        <attribute name="data" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="dateCached" attributeType="Date" defaultDateTimeInterval="568018800" usesScalarValueType="NO"/>
+        <attribute name="sourceURL" attributeType="String"/>
+        <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MediaItem" inverseName="cached" inverseEntity="MediaItem"/>
+    </entity>
     <entity name="MediaItem" representedClassName="MediaItem" syncable="YES">
         <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="details" attributeType="Transformable"/>
+        <attribute name="details" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
         <attribute name="mediaID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="mimeType" optional="YES" attributeType="String"/>
+        <attribute name="mimeType" attributeType="String"/>
         <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="sourceURL" attributeType="String"/>
         <attribute name="syncing" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <relationship name="cached" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="MediaCache" inverseName="item" inverseEntity="MediaCache"/>
         <relationship name="media" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Media" inverseName="item" inverseEntity="Media"/>
         <relationship name="queries" toMany="YES" deletionRule="Nullify" destinationEntity="MediaQuery" inverseName="items" inverseEntity="MediaQuery"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="mediaItems" inverseEntity="Site"/>
     </entity>
     <entity name="MediaQuery" representedClassName="MediaQuery" syncable="YES">
-        <attribute name="filter" attributeType="Transformable"/>
+        <attribute name="filter" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
         <attribute name="hasMore" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="lastSync" attributeType="Date" defaultDateTimeInterval="568018800" usesScalarValueType="NO"/>
         <attribute name="title" attributeType="String"/>
@@ -125,7 +132,7 @@
     </entity>
     <entity name="Post" representedClassName="Post" syncable="YES">
         <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="categories" attributeType="Transformable"/>
+        <attribute name="categories" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
         <attribute name="commentStatus" attributeType="String"/>
         <attribute name="content" attributeType="String"/>
         <attribute name="contentRendered" attributeType="String"/>
@@ -149,7 +156,7 @@
         <attribute name="slug" attributeType="String"/>
         <attribute name="status" attributeType="String"/>
         <attribute name="sticky" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="tags" attributeType="Transformable"/>
+        <attribute name="tags" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
         <attribute name="template" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="titleRendered" attributeType="String"/>
@@ -159,7 +166,7 @@
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="posts" inverseEntity="Site"/>
     </entity>
     <entity name="PostList" representedClassName="PostList" syncable="YES">
-        <attribute name="filter" attributeType="Transformable"/>
+        <attribute name="filter" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
         <attribute name="hasMore" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="lastSync" attributeType="Date" defaultDateTimeInterval="568015200" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
@@ -253,7 +260,7 @@
         <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="tags" inverseEntity="Site"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
-        <attribute name="avatarUrls" optional="YES" attributeType="Transformable"/>
+        <attribute name="avatarUrls" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
         <attribute name="descript" optional="YES" attributeType="String"/>
         <attribute name="link" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -264,21 +271,22 @@
     </entity>
     <elements>
         <element name="Account" positionX="-1478.8671875" positionY="-295.10546875" width="128" height="103"/>
-        <element name="AccountCapabilities" positionX="-1215.9921875" positionY="-44.7890625" width="128" height="90"/>
-        <element name="AccountDetails" positionX="-1479.90625" positionY="-91.0390625" width="128" height="270"/>
+        <element name="AccountCapabilities" positionX="-1215.9921875" positionY="-44.7890625" width="128" height="88"/>
+        <element name="AccountDetails" positionX="-1479.90625" positionY="-91.0390625" width="128" height="268"/>
         <element name="Category" positionX="-1341" positionY="-216" width="128" height="180"/>
         <element name="Media" positionX="-1314" positionY="-189" width="128" height="508"/>
-        <element name="MediaItem" positionX="-1359" positionY="-234" width="128" height="193"/>
+        <element name="MediaItem" positionX="-1359" positionY="-234" width="128" height="208"/>
         <element name="MediaQuery" positionX="-1350" positionY="-225" width="128" height="148"/>
         <element name="Page" positionX="-1323" positionY="-198" width="128" height="465"/>
-        <element name="Post" positionX="-1359" positionY="-234" width="128" height="540"/>
-        <element name="PostList" positionX="-1341" positionY="-225" width="128" height="150"/>
+        <element name="Post" positionX="-1359" positionY="-234" width="128" height="538"/>
+        <element name="PostList" positionX="-1341" positionY="-225" width="128" height="148"/>
         <element name="PostListItem" positionX="-1350" positionY="-234" width="128" height="180"/>
         <element name="Revision" positionX="-1350" positionY="-225" width="128" height="270"/>
         <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="463"/>
         <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="120"/>
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
         <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>
-        <element name="User" positionX="-1305" positionY="-180" width="128" height="165"/>
+        <element name="User" positionX="-1305" positionY="-180" width="128" height="163"/>
+        <element name="MediaCache" positionX="-1359" positionY="-234" width="128" height="103"/>
     </elements>
 </model>

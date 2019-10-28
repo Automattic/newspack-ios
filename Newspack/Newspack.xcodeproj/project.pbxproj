@@ -128,6 +128,8 @@
 		E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */; };
 		E6710A1722CE9F040036156E /* FadeTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6710A1622CE9F040036156E /* FadeTransitionController.swift */; };
 		E67339A6232EFEA3007C5E45 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67339A5232EFEA3007C5E45 /* Logging.swift */; };
+		E67B9D60236775FC00860A6C /* MediaCache+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67B9D5E236775FB00860A6C /* MediaCache+CoreDataClass.swift */; };
+		E67B9D61236775FC00860A6C /* MediaCache+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67B9D5F236775FC00860A6C /* MediaCache+CoreDataProperties.swift */; };
 		E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67F56D42230914800BFD38B /* CoreDataManager.swift */; };
 		E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */; };
 		E6871F1B22C3FDE7008D3D46 /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */; };
@@ -314,6 +316,8 @@
 		E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
 		E6710A1622CE9F040036156E /* FadeTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeTransitionController.swift; sourceTree = "<group>"; };
 		E67339A5232EFEA3007C5E45 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		E67B9D5E236775FB00860A6C /* MediaCache+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MediaCache+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E67B9D5F236775FC00860A6C /* MediaCache+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MediaCache+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E67F56D42230914800BFD38B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = Newspack/System/CoreDataManager.swift; sourceTree = SOURCE_ROOT; };
 		E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMenuViewController.swift; sourceTree = "<group>"; };
 		E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
@@ -566,6 +570,8 @@
 				E66CC9E82303527600F1CA59 /* Category+CoreDataProperties.swift */,
 				E66CC9F02303527800F1CA59 /* Media+CoreDataClass.swift */,
 				E66CC9FD2303527C00F1CA59 /* Media+CoreDataProperties.swift */,
+				E67B9D5E236775FB00860A6C /* MediaCache+CoreDataClass.swift */,
+				E67B9D5F236775FC00860A6C /* MediaCache+CoreDataProperties.swift */,
 				E636C265234FEAD700564B63 /* MediaItem+CoreDataClass.swift */,
 				E636C266234FEAD800564B63 /* MediaItem+CoreDataProperties.swift */,
 				E636C267234FEAD800564B63 /* MediaQuery+CoreDataClass.swift */,
@@ -1074,12 +1080,14 @@
 				E636C26B234FEAD800564B63 /* MediaQuery+CoreDataClass.swift in Sources */,
 				E67339A6232EFEA3007C5E45 /* Logging.swift in Sources */,
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
+				E67B9D60236775FC00860A6C /* MediaCache+CoreDataClass.swift in Sources */,
 				E68B29FF23048C6C0021283C /* EditCoordinator.swift in Sources */,
 				E66CCA162303527D00F1CA59 /* Post+CoreDataProperties.swift in Sources */,
 				E63EECD9234289F700669FFC /* SiteApiService.swift in Sources */,
 				E6A4D743230A08A700929376 /* StagedEdits+CoreDataClass.swift in Sources */,
 				E602E69222C1666C00795CBA /* AccountAction.swift in Sources */,
 				E6D44DEC234BC56C00B51438 /* MediaViewController.swift in Sources */,
+				E67B9D61236775FC00860A6C /* MediaCache+CoreDataProperties.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E66CCA192303527D00F1CA59 /* Media+CoreDataProperties.swift in Sources */,
 				E66CCA1E2303527D00F1CA59 /* Status+CoreDataClass.swift in Sources */,
