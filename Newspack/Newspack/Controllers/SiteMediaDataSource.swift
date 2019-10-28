@@ -277,25 +277,26 @@ extension MediaLibraryGroup: WPMediaGroup {
 // Should wrap a MediaItem / Media object
 class MediaAsset: NSObject, WPMediaAsset {
     let mediaID: Int32
-
-    var mediaType = "image"
+    let mediaKind: MediaKind
+    let sourceURL: String
+    let dateCreated: Date
+    var width = 0
+    var height = 0
     var mediaDuration: TimeInterval = 0
-    var sourceURL = ""
-    var dateCreated = Date()
-    var width = 40
-    var height = 40
 
     init(item: MediaItem) {
         mediaID = Int32(item.mediaID)
+        mediaKind = item.mediaKind()
+        sourceURL = item.sourceURL
+        dateCreated = item.dateGMT
+
         guard let media = item.media else {
             return
         }
-        mediaType = media.mediaType
-        sourceURL = media.source
-        dateCreated = media.dateGMT
-        //width = media.width
-        //height = media.height
-        //mediaDuration = media.duration
+
+//        width = media.width
+//        height = media.height
+//        mediaDuration = media.duration
     }
 
     func image(with size: CGSize, completionHandler: @escaping WPMediaImageBlock) -> WPMediaRequestID {
@@ -315,13 +316,14 @@ class MediaAsset: NSObject, WPMediaAsset {
     }
 
     func assetType() -> WPMediaType {
-        if mediaType == "image" {
+        switch mediaKind {
+        case .image:
             return WPMediaType.image
-        } else if mediaType == "video" {
+        case .video:
             return WPMediaType.video
-        } else if mediaType == "audio" {
+        case .audio:
             return WPMediaType.audio
-        } else {
+        default:
             return WPMediaType.other
         }
     }
