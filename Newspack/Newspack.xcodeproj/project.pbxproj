@@ -85,7 +85,7 @@
 		E63EECD7234289DD00669FFC /* PostApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECD6234289DD00669FFC /* PostApiService.swift */; };
 		E63EECD9234289F700669FFC /* SiteApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECD8234289F700669FFC /* SiteApiService.swift */; };
 		E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECDA23428A0900669FFC /* UserApiService.swift */; };
-		E63F3F3C236350BE00DB760E /* MediaType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63F3F3B236350BE00DB760E /* MediaType.swift */; };
+		E63F3F3C236350BE00DB760E /* MediaTypeDiscerner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63F3F3B236350BE00DB760E /* MediaTypeDiscerner.swift */; };
 		E641A66122A71A83008BBD85 /* SiteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641A66022A71A83008BBD85 /* SiteStore.swift */; };
 		E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641A66222A7584A008BBD85 /* AccountDetailsStore.swift */; };
 		E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */; };
@@ -268,7 +268,7 @@
 		E63EECD6234289DD00669FFC /* PostApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostApiService.swift; sourceTree = "<group>"; };
 		E63EECD8234289F700669FFC /* SiteApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteApiService.swift; sourceTree = "<group>"; };
 		E63EECDA23428A0900669FFC /* UserApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiService.swift; sourceTree = "<group>"; };
-		E63F3F3B236350BE00DB760E /* MediaType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaType.swift; sourceTree = "<group>"; };
+		E63F3F3B236350BE00DB760E /* MediaTypeDiscerner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTypeDiscerner.swift; sourceTree = "<group>"; };
 		E641A66022A71A83008BBD85 /* SiteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStore.swift; sourceTree = "<group>"; };
 		E641A66222A7584A008BBD85 /* AccountDetailsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsStore.swift; sourceTree = "<group>"; };
 		E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStore.swift; sourceTree = "<group>"; };
@@ -740,7 +740,7 @@
 		E63F3F3D236350C600DB760E /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				E63F3F3B236350BE00DB760E /* MediaType.swift */,
+				E63F3F3B236350BE00DB760E /* MediaTypeDiscerner.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1142,7 +1142,7 @@
 				E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */,
 				E66CCA0D2303527C00F1CA59 /* Site+CoreDataProperties.swift in Sources */,
 				E66CCA0B2303527C00F1CA59 /* Account+CoreDataProperties.swift in Sources */,
-				E63F3F3C236350BE00DB760E /* MediaType.swift in Sources */,
+				E63F3F3C236350BE00DB760E /* MediaTypeDiscerner.swift in Sources */,
 				E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */,
 				E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */,
 				E636C262234FBE6800564B63 /* RemoteMedia.swift in Sources */,
