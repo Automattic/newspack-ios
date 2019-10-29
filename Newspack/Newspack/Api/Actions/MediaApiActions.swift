@@ -3,7 +3,9 @@ import WordPressFlux
 
 struct MediaFetchedApiAction: ApiAction {
     var payload: RemoteMedia?
+    var image: UIImage?
     var error: Error?
+    var previewURL: String
     var mediaID: Int64
 }
 

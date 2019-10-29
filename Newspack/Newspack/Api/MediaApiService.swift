@@ -1,9 +1,12 @@
 import Foundation
 import WordPressFlux
+import Alamofire
+import AlamofireImage
 
 class MediaApiService: ApiService {
 
     let remote: MediaServiceRemote
+    let downloader: ImageDownloader
 
     deinit {
         LogDebug(message: "MediaApiService deinit")
@@ -11,6 +14,7 @@ class MediaApiService: ApiService {
 
     override init(wordPressComRestApi api: WordPressCoreRestApi, dispatcher: ActionDispatcher) {
         remote = MediaServiceRemote(wordPressComRestApi: api)
+        downloader = ImageDownloader()
         super.init(wordPressComRestApi: api, dispatcher: dispatcher)
     }
 
@@ -38,9 +42,36 @@ class MediaApiService: ApiService {
         }
     }
 
-    func fetchMedia(mediaID: Int64) {
+    func fetchMedia(mediaID: Int64, having previewURL: String) {
+        var remoteMedia: RemoteMedia?
+        var remoteError: Error?
+        var remoteImage: UIImage?
+        let fetchGroup = DispatchGroup()
+
+        fetchGroup.enter()
         remote.fetchMedia(mediaID: mediaID) { (media, error) in
-            self.dispatch(action: MediaFetchedApiAction(payload: media, error: error, mediaID: mediaID))
+            remoteMedia = media
+            remoteError = error
+            fetchGroup.leave()
+        }
+
+        if let url = URL(string: previewURL) {
+            let req = URLRequest(url: url)
+            fetchGroup.enter()
+            downloader.download(req) { response in
+                if let image = response.result.value {
+                    remoteImage = image
+                }
+                fetchGroup.leave()
+            }
+        }
+
+        fetchGroup.notify(queue: .main) {
+            self.dispatch(action: MediaFetchedApiAction(payload: remoteMedia,
+                                                        image: remoteImage,
+                                                        error: remoteError,
+                                                        previewURL: previewURL,
+                                                        mediaID: mediaID))
         }
     }
 

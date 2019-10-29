@@ -89,8 +89,15 @@ extension MediaStore {
     ///
     func handleItemEnqueued(mediaID: Int64) {
         // TODO: For offline support, when coming back online see if there are enqueued items.
+        guard
+            let item = getMediaItemWithID(mediaID: mediaID),
+            let previewURL = item.previewURL()
+        else {
+            return
+        }
+
         let service = ApiService.mediaService()
-        service.fetchMedia(mediaID: mediaID)
+        service.fetchMedia(mediaID: mediaID, having: previewURL)
     }
 
     /// Handles the dispatched action from the remote post service.
@@ -110,6 +117,7 @@ extension MediaStore {
 
         guard
             let remoteMedia = action.payload,
+            let remoteImage = action.image,
             let siteID = currentSiteID,
             let siteObjID = siteStore.getSiteByUUID(siteID)?.objectID,
             let itemObjID = getMediaItemWithID(mediaID: remoteMedia.mediaID)?.objectID
@@ -141,6 +149,12 @@ extension MediaStore {
             self.updateMedia(media, with: remoteMedia)
             media.site = site
             media.item = mediaItem
+
+            if let image = action.image, let data = image.pngData() {
+                let imageStore = StoreContainer.shared.imageStore
+                let cached = imageStore.createOrUpdateCachedMedia(context: context, sourceURL: action.previewURL, data: data)
+                media.cached = cached
+            }
 
             CoreDataManager.shared.saveContext(context: context)
         }

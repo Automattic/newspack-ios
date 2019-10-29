@@ -280,9 +280,8 @@ class MediaAsset: NSObject, WPMediaAsset {
     let mediaKind: MediaKind
     let sourceURL: String
     let dateCreated: Date
-    var width = 0
-    var height = 0
     var mediaDuration: TimeInterval = 0
+    var image = UIImage(named: "media-group-default")!
 
     init(item: MediaItem) {
         mediaID = Int32(item.mediaID)
@@ -290,18 +289,19 @@ class MediaAsset: NSObject, WPMediaAsset {
         sourceURL = item.sourceURL
         dateCreated = item.dateGMT
 
-        guard let media = item.media else {
+        guard
+            let media = item.media,
+            let img = media.cached?.image()
+        else {
             return
         }
+        image = img
 
-//        width = media.width
-//        height = media.height
 //        mediaDuration = media.duration
     }
 
     func image(with size: CGSize, completionHandler: @escaping WPMediaImageBlock) -> WPMediaRequestID {
         // TODO: Need the image loader
-        let image = UIImage(named: "media-group-default")!
         completionHandler(image, nil)
         return mediaID
     }
@@ -346,7 +346,7 @@ class MediaAsset: NSObject, WPMediaAsset {
     }
 
     func pixelSize() -> CGSize {
-        return CGSize(width: width, height: height)
+        return CGSize(width: image.size.width, height: image.size.height)
     }
 
     // Note: This is marked as optional but if the assetType returns WPMediaType.other it is checked.
