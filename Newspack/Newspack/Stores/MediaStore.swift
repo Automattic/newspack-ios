@@ -150,7 +150,7 @@ extension MediaStore {
             media.site = site
             media.item = mediaItem
 
-            if let image = action.image, let data = image.pngData() {
+            if let data = remoteImage.pngData() {
                 let imageStore = StoreContainer.shared.imageStore
                 let cached = imageStore.createOrUpdateCachedMedia(context: context, sourceURL: action.previewURL, data: data)
                 media.cached = cached
