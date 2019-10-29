@@ -20,11 +20,7 @@ struct SiteMenuViewModel {
         }
 
         let mediaRow = SiteMenuRow(title: "Media") {
-            let options = WPMediaPickerOptions()
-            options.allowCaptureOfMedia = true
-            options.allowMultipleSelection = true
-            options.showMostRecentFirst = false
-            let controller = MediaViewController(options: options)
+            let controller = MediaViewController()
             presenter.navigationController?.pushViewController(controller, animated: true)
         }
 
