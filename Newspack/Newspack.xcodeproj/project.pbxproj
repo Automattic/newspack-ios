@@ -92,6 +92,7 @@
 		E6451AC22322F737005809E2 /* EditorSaveAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */; };
 		E64594A122B448C2003BF6C0 /* PostServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */; };
 		E6500F9A2368B63800CB8C6C /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6500F992368B63800CB8C6C /* ImageStore.swift */; };
+		E6500F9D2368F36500CB8C6C /* MediaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */; };
 		E66231CE22F52243004F6DEC /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66231CD22F52243004F6DEC /* PostCell.swift */; };
 		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
 		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
@@ -278,6 +279,7 @@
 		E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSaveAlertController.swift; sourceTree = "<group>"; };
 		E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostServiceRemote.swift; sourceTree = "<group>"; };
 		E6500F992368B63800CB8C6C /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
+		E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailViewController.swift; sourceTree = "<group>"; };
 		E66231CD22F52243004F6DEC /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
 		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
@@ -641,6 +643,7 @@
 				E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */,
 				E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */,
 				E6D44DEB234BC56C00B51438 /* MediaViewController.swift */,
+				E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */,
 				E632F9A023515116003737BF /* SiteMediaDataSource.swift */,
 			);
 			path = Controllers;
@@ -1083,6 +1086,7 @@
 				E636C26B234FEAD800564B63 /* MediaQuery+CoreDataClass.swift in Sources */,
 				E67339A6232EFEA3007C5E45 /* Logging.swift in Sources */,
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
+				E6500F9D2368F36500CB8C6C /* MediaDetailViewController.swift in Sources */,
 				E67B9D60236775FC00860A6C /* MediaCache+CoreDataClass.swift in Sources */,
 				E68B29FF23048C6C0021283C /* EditCoordinator.swift in Sources */,
 				E66CCA162303527D00F1CA59 /* Post+CoreDataProperties.swift in Sources */,

@@ -9,7 +9,7 @@ class MainStoryboard {
         case siteMenu = "SiteMenuViewController"
         case postList = "PostListViewController"
         case editor = "EditorViewController"
-
+        case mediaDetail = "MediaDetailViewController"
     }
 
     static func instantiateViewController(withIdentifier identifier: Identifier) -> UIViewController {
