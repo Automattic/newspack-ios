@@ -296,8 +296,6 @@ class MediaAsset: NSObject, WPMediaAsset {
             return
         }
         image = img
-
-//        mediaDuration = media.duration
     }
 
     func image(with size: CGSize, completionHandler: @escaping WPMediaImageBlock) -> WPMediaRequestID {
