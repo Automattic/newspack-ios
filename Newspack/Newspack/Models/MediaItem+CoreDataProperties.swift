@@ -18,7 +18,6 @@ extension MediaItem {
     @NSManaged public var queries: Set<MediaQuery>!
     @NSManaged public var site: Site!
     @NSManaged public var media: Media!
-    @NSManaged public var cached: MediaCache?
 
 }
 

@@ -40,5 +40,6 @@ extension Media {
 
     @NSManaged public var site: Site!
     @NSManaged public var item: MediaItem!
+    @NSManaged public var cached: MediaCache?
 
 }

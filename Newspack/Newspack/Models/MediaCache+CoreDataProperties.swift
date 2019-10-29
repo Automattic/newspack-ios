@@ -11,6 +11,6 @@ extension MediaCache {
     @NSManaged public var sourceURL: String!
     @NSManaged public var data: Data!
     @NSManaged public var dateCached: Date!
-    @NSManaged public var item: MediaItem?
+    @NSManaged public var media: Media?
 
 }

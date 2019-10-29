@@ -69,6 +69,7 @@
         <attribute name="title" attributeType="String"/>
         <attribute name="titleRendered" attributeType="String"/>
         <attribute name="type" attributeType="String"/>
+        <relationship name="cached" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="MediaCache" inverseName="media" inverseEntity="MediaCache"/>
         <relationship name="item" maxCount="1" deletionRule="Nullify" destinationEntity="MediaItem" inverseName="media" inverseEntity="MediaItem"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="media" inverseEntity="Site"/>
     </entity>
@@ -76,7 +77,7 @@
         <attribute name="data" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
         <attribute name="dateCached" attributeType="Date" defaultDateTimeInterval="568018800" usesScalarValueType="NO"/>
         <attribute name="sourceURL" attributeType="String"/>
-        <relationship name="item" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MediaItem" inverseName="cached" inverseEntity="MediaItem"/>
+        <relationship name="media" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Media" inverseName="cached" inverseEntity="Media"/>
     </entity>
     <entity name="MediaItem" representedClassName="MediaItem" syncable="YES">
         <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO"/>
@@ -86,7 +87,6 @@
         <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="sourceURL" attributeType="String"/>
         <attribute name="syncing" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <relationship name="cached" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="MediaCache" inverseName="item" inverseEntity="MediaCache"/>
         <relationship name="media" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Media" inverseName="item" inverseEntity="Media"/>
         <relationship name="queries" toMany="YES" deletionRule="Nullify" destinationEntity="MediaQuery" inverseName="items" inverseEntity="MediaQuery"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="mediaItems" inverseEntity="Site"/>
@@ -274,8 +274,9 @@
         <element name="AccountCapabilities" positionX="-1215.9921875" positionY="-44.7890625" width="128" height="88"/>
         <element name="AccountDetails" positionX="-1479.90625" positionY="-91.0390625" width="128" height="268"/>
         <element name="Category" positionX="-1341" positionY="-216" width="128" height="180"/>
-        <element name="Media" positionX="-1314" positionY="-189" width="128" height="508"/>
-        <element name="MediaItem" positionX="-1359" positionY="-234" width="128" height="208"/>
+        <element name="Media" positionX="-1314" positionY="-189" width="128" height="523"/>
+        <element name="MediaCache" positionX="-1359" positionY="-234" width="128" height="103"/>
+        <element name="MediaItem" positionX="-1359" positionY="-234" width="128" height="193"/>
         <element name="MediaQuery" positionX="-1350" positionY="-225" width="128" height="148"/>
         <element name="Page" positionX="-1323" positionY="-198" width="128" height="465"/>
         <element name="Post" positionX="-1359" positionY="-234" width="128" height="538"/>
@@ -287,6 +288,5 @@
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
         <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>
         <element name="User" positionX="-1305" positionY="-180" width="128" height="163"/>
-        <element name="MediaCache" positionX="-1359" positionY="-234" width="128" height="103"/>
     </elements>
 </model>
