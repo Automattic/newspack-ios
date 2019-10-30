@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         LogInfo(message: "Application did finish launching.")
 
+        Diagnostics.countEntitiesInCoreData()
+
         return true
     }
 
