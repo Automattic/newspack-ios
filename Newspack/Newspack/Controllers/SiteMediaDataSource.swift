@@ -299,8 +299,13 @@ class MediaAsset: NSObject, WPMediaAsset {
     }
 
     func image(with size: CGSize, completionHandler: @escaping WPMediaImageBlock) -> WPMediaRequestID {
-        // TODO: Need the image loader
-        completionHandler(image, nil)
+        // Its expected that this method would return before the completionHandler is executed.
+        // This is in order to match the WPMediaRequestID to a specific collection view cell.
+        // Ergo, we call the completion handler asynchronously.
+        let img = image
+        DispatchQueue.main.async {
+            completionHandler(img, nil)
+        }
         return mediaID
     }
 
