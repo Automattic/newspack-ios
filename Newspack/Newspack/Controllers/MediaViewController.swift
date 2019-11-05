@@ -23,6 +23,7 @@ class MediaViewController: WPMediaPickerViewController {
         self.mediaPickerDelegate = self
         self.dataSource = mediaDataSource
         self.selectionActionTitle = NSLocalizedString("Insert", comment:"Verb. Inserts selected photos into a post.")
+        navigationItem.title = NSLocalizedString("Media", comment: "Noun. Title of a screen that shows a site's media library.")
     }
 
     required init?(coder: NSCoder) {
@@ -36,7 +37,7 @@ class MediaViewController: WPMediaPickerViewController {
         collectionView?.backgroundView = nil
         collectionView?.backgroundColor = .white
 
-        navigationItem.title = NSLocalizedString("Media", comment: "Noun. Title of a screen that shows a site's media library.")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddTapped(sender:)))
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -50,6 +51,10 @@ class MediaViewController: WPMediaPickerViewController {
         dispatcher.dispatch(MediaAction.syncItems)
     }
 
+    @objc func handleAddTapped(sender: UIBarButtonItem) {
+        let controller = PhotoLibraryViewController()
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 extension MediaViewController: WPMediaPickerViewControllerDelegate {
@@ -63,7 +68,5 @@ extension MediaViewController: WPMediaPickerViewControllerDelegate {
         controller.previewURL = asset.sourceURL
         navigationController?.pushViewController(controller, animated: true)
     }
-
-
 
 }
