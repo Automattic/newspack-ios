@@ -34,6 +34,7 @@ extension Site {
     @NSManaged public var postListItems: Set<PostListItem>!
     @NSManaged public var postLists: Set<PostList>!
     @NSManaged public var posts: Set<Post>!
+    @NSManaged public var stagedMedia: Set<Status>!
     @NSManaged public var statuses: Set<Status>!
     @NSManaged public var tags: Set<Tag>!
     @NSManaged public var users: Set<User>!
@@ -173,6 +174,23 @@ extension Site {
 
     @objc(removePosts:)
     @NSManaged public func removeFromPosts(_ values: Set<Post>)
+
+}
+
+// MARK: Generated accessors for stagedMedia
+extension Site {
+
+    @objc(addStagedMediaObject:)
+    @NSManaged public func addToStagedMedia(_ value: StagedMedia)
+
+    @objc(removeStagedMediaObject:)
+    @NSManaged public func removeFromStagedMedia(_ value: StagedMedia)
+
+    @objc(addStagedMedias:)
+    @NSManaged public func addToStagedMedias(_ values: Set<StagedMedia>)
+
+    @objc(removeStagedMedias:)
+    @NSManaged public func removeFromStagedMedias(_ values: Set<StagedMedia>)
 
 }
 

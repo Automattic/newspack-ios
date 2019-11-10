@@ -228,6 +228,7 @@
         <relationship name="postListItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostListItem" inverseName="site" inverseEntity="PostListItem"/>
         <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostList" inverseName="site" inverseEntity="PostList"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Post" inverseName="site" inverseEntity="Post"/>
+        <relationship name="stagedMedia" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StagedMedia" inverseName="site" inverseEntity="StagedMedia"/>
         <relationship name="statuses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Status" inverseName="site" inverseEntity="Status"/>
         <relationship name="tags" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Tag" inverseName="site" inverseEntity="Tag"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="User" inverseName="site" inverseEntity="User"/>
@@ -238,6 +239,18 @@
         <attribute name="lastModified" attributeType="Date" defaultDateTimeInterval="-595929600" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="postListItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="stagedEdits" inverseEntity="PostListItem"/>
+    </entity>
+    <entity name="StagedMedia" representedClassName="StagedMedia" syncable="YES">
+        <attribute name="altText" optional="YES" attributeType="String"/>
+        <attribute name="assetIdentifier" attributeType="String"/>
+        <attribute name="caption" optional="YES" attributeType="String"/>
+        <attribute name="localFilePath" optional="YES" attributeType="String"/>
+        <attribute name="mediaType" optional="YES" attributeType="String"/>
+        <attribute name="mimeType" optional="YES" attributeType="String"/>
+        <attribute name="originalFileName" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="stagedMedia" inverseEntity="Site"/>
     </entity>
     <entity name="Status" representedClassName="Status" syncable="YES">
         <attribute name="isPrivate" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
@@ -283,10 +296,11 @@
         <element name="PostList" positionX="-1341" positionY="-225" width="128" height="148"/>
         <element name="PostListItem" positionX="-1350" positionY="-234" width="128" height="180"/>
         <element name="Revision" positionX="-1350" positionY="-225" width="128" height="270"/>
-        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="463"/>
+        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="478"/>
         <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="120"/>
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
         <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>
         <element name="User" positionX="-1305" positionY="-180" width="128" height="163"/>
+        <element name="StagedMedia" positionX="-1359" positionY="-234" width="128" height="193"/>
     </elements>
 </model>
