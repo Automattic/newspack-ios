@@ -7,3 +7,7 @@ enum MediaAction: Action {
     case syncItems
     case syncMedia(mediaID: Int64)
 }
+
+enum PendingMediaAction: Action {
+    case enqueueMedia(assetIdentifier: String)
+}
