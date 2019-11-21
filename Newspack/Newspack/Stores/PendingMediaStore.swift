@@ -10,7 +10,6 @@ enum WriteError: Error {
 
 class PendingMediaStore: Store {
 
-
     private class Constants {
         static let stagedMediaFolderName = "StagedMedia"
         static let utiHEIC = "public.heic"
@@ -27,8 +26,88 @@ class PendingMediaStore: Store {
         static let pngExt = ".png"
         static let heicExt = ".heic"
     }
+
+    private(set) var currentSiteID: UUID?
+
+    init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
+        currentSiteID = siteID
+    }
+
+    /// Action handler
+    ///
+    override func onDispatch(_ action: Action) {
+        if let action = action as? PendingMediaAction {
+            switch action {
+            case .enqueueMedia(let assetIdentifier):
+                enqueueAsset(identifier: assetIdentifier)
+            }
+        }
+    }
+
 }
 
+extension PendingMediaStore {
+
+    /// Creates a new StagedMedia instance for the specified PHAsset.identifier.
+    /// - Parameter identifier: A string representing a PHAsset.identifier
+    ///
+    func enqueueAsset(identifier: String) {
+        if let _ = getPendingMedia(assetIdentifier: identifier) {
+            LogWarn(message: "enqueueAsset: Attempted to enque and already enqueued asset.")
+            return
+        }
+
+        guard
+            let siteID = currentSiteID,
+            let siteObjID = StoreContainer.shared.siteStore.getSiteByUUID(siteID)?.objectID
+        else {
+            LogError(message: "handleMediaFetchedAction: A value was unexpectedly nil.")
+            return
+        }
+
+        CoreDataManager.shared.performOnWriteContext { (context) in
+            let site = context.object(with: siteObjID) as! Site
+            let stagedMedia = StagedMedia(context: context)
+
+            stagedMedia.uuid = UUID()
+            stagedMedia.assetIdentifier = identifier
+            stagedMedia.site = site
+
+            CoreDataManager.shared.saveContext(context: context)
+        }
+    }
+
+    /// Get a StagedMedia instance by its asset identifier.
+    /// - Parameter assetIdentifier: A string. Expected to be a PHAsset.identifier.
+    ///
+    func getPendingMedia(assetIdentifier: String) -> StagedMedia? {
+        guard
+            let siteID = currentSiteID,
+            let site = StoreContainer.shared.siteStore.getSiteByUUID(siteID)
+        else {
+            LogError(message: "getPendingMedia: could not retrieve current site.")
+            return nil
+        }
+
+        let request = StagedMedia.defaultFetchRequest()
+        request.predicate = NSPredicate(format: "assetIdentifier == %@ AND site == %@", assetIdentifier, site)
+
+        let context = CoreDataManager.shared.mainContext
+        do {
+            if let stagedMedia = try context.fetch(request).first {
+                return stagedMedia
+            }
+        } catch {
+            // TODO: Handle Error.
+            let error = error as NSError
+            LogError(message: "getPendingMedia: " + error.localizedDescription)
+        }
+        return nil
+    }
+}
+
+
+// MARK: - Asset Management
 extension PendingMediaStore {
 
     /// Delete any files staged for upload.
