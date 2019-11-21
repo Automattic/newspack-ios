@@ -38,9 +38,14 @@ class PhotoLibraryViewController: WPMediaPickerViewController {
     }
 }
 
+// MARK: - Enqueue Selected Media
 extension PhotoLibraryViewController: WPMediaPickerViewControllerDelegate {
     func mediaPickerController(_ picker: WPMediaPickerViewController, didFinishPicking assets: [WPMediaAsset]) {
-        print("picked")
+        let dispatcher = SessionManager.shared.sessionDispatcher
+        for asset in assets {
+            // Add assets to pending download queue.
+            let action = PendingMediaAction.enqueueMedia(assetIdentifier: asset.identifier())
+            dispatcher.dispatch(action)
+        }
     }
-
 }
