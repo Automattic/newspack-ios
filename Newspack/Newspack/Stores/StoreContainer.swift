@@ -15,6 +15,7 @@ class StoreContainer {
     private(set) var mediaStore = MediaStore()
     private(set) var mediaItemStore = MediaItemStore()
     private(set) var imageStore = ImageStore()
+    private(set) var stagedMediaStore = PendingMediaStore()
 
     private init() {}
 
@@ -33,5 +34,6 @@ class StoreContainer {
         mediaStore = MediaStore(dispatcher: dispatcher, siteID: site?.uuid)
         mediaItemStore = MediaItemStore(dispatcher: dispatcher, siteID: site?.uuid)
         imageStore = ImageStore(dispatcher: dispatcher)
+        stagedMediaStore = PendingMediaStore(dispatcher: dispatcher, siteID: site?.uuid)
     }
 }
