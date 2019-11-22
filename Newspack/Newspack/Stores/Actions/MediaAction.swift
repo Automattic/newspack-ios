@@ -9,5 +9,5 @@ enum MediaAction: Action {
 }
 
 enum PendingMediaAction: Action {
-    case enqueueMedia(assetIdentifier: String)
+    case enqueueMedia(assetIdentifiers: [String])
 }

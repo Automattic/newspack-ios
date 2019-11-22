@@ -41,11 +41,11 @@ class PhotoLibraryViewController: WPMediaPickerViewController {
 // MARK: - Enqueue Selected Media
 extension PhotoLibraryViewController: WPMediaPickerViewControllerDelegate {
     func mediaPickerController(_ picker: WPMediaPickerViewController, didFinishPicking assets: [WPMediaAsset]) {
-        let dispatcher = SessionManager.shared.sessionDispatcher
-        for asset in assets {
-            // Add assets to pending download queue.
-            let action = PendingMediaAction.enqueueMedia(assetIdentifier: asset.identifier())
-            dispatcher.dispatch(action)
+        let identifiers = assets.map { (asset) -> String in
+            return asset.identifier()
         }
+        let dispatcher = SessionManager.shared.sessionDispatcher
+        let action = PendingMediaAction.enqueueMedia(assetIdentifiers: identifiers)
+        dispatcher.dispatch(action)
     }
 }

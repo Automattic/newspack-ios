@@ -38,25 +38,78 @@ class PendingMediaStore: Store {
     override func onDispatch(_ action: Action) {
         if let action = action as? PendingMediaAction {
             switch action {
-            case .enqueueMedia(let assetIdentifier):
-                enqueueAsset(identifier: assetIdentifier)
+            case .enqueueMedia(let assetIdentifiers):
+                enqueueAssets(identifiers: assetIdentifiers)
             }
         }
     }
 
-}
-
-extension PendingMediaStore {
-
-    /// Creates a new StagedMedia instance for the specified PHAsset.identifier.
-    /// - Parameter identifier: A string representing a PHAsset.identifier
+    /// Get existing staged media matching any of the specified PHAsset.identifiers
+    /// - Parameter identifiers: An array of PHAsset.identifiers
     ///
-    func enqueueAsset(identifier: String) {
-        if let _ = getPendingMedia(assetIdentifier: identifier) {
-            LogWarn(message: "enqueueAsset: Attempted to enque and already enqueued asset.")
-            return
+    func getStagedMediaMatchingIdentifiers(identifiers: [String]) -> [StagedMedia] {
+        guard
+            let siteID = currentSiteID,
+            let site = StoreContainer.shared.siteStore.getSiteByUUID(siteID)
+        else {
+            LogError(message: "handleMediaFetchedAction: A value was unexpectedly nil.")
+            return [StagedMedia]()
         }
 
+        let context = CoreDataManager.shared.mainContext
+
+        // Remove any duplicates
+        let request = StagedMedia.defaultFetchRequest()
+        request.predicate = NSPredicate(format: "assetIdentifier IN %@ AND site == %@", identifiers, site)
+        do {
+            return try context.fetch(request)
+        } catch {
+            let error = error as NSError
+            LogError(message: "getStagedMediaMatchingIdentifiers: " + error.localizedDescription)
+        }
+
+        return [StagedMedia]()
+    }
+
+}
+
+// MARK: - Fetch and Enqueue StagedMedia
+extension PendingMediaStore {
+
+    /// Creates a new StagedMedia instance for the specified PHAsset.identifiers.
+    /// - Parameter identifiers: An array of PHAsset.identifiers
+    ///
+    func enqueueAssets(identifiers: [String]) {
+        let identifiers = removeDuplicateAssetIdentifiers(identifiers: identifiers)
+        createStagedMediaForIdentifiers(identifiers: identifiers) {
+            self.processStagedMedia()
+        }
+    }
+
+    /// Removes any identifiers matching assetIdentifiers of existing stagedMedia, returning a new array.
+    /// - Parameter identifiers: An array of PHAsset.identifiers
+    ///
+    func removeDuplicateAssetIdentifiers(identifiers: [String]) -> [String] {
+        var filteredIdentifiers = identifiers
+
+        let stagedMedia = getStagedMediaMatchingIdentifiers(identifiers: identifiers)
+        let existing = stagedMedia.compactMap({ (item) -> String in
+            return item.assetIdentifier!
+        })
+
+        filteredIdentifiers = identifiers.filter { (identifier) -> Bool in
+            return !existing.contains(identifier)
+        }
+
+        return filteredIdentifiers
+    }
+
+    /// Creates a new StagedMedia object in core data for each identifier passed.
+    /// - Parameters:
+    ///   - identifiers: An array of PHAsset.identifiers
+    ///   - onComplete: A call back to execute on the main thread when complete.
+    ///
+    func createStagedMediaForIdentifiers(identifiers: [String], onComplete: @escaping () -> Void) {
         guard
             let siteID = currentSiteID,
             let siteObjID = StoreContainer.shared.siteStore.getSiteByUUID(siteID)?.objectID
@@ -67,47 +120,46 @@ extension PendingMediaStore {
 
         CoreDataManager.shared.performOnWriteContext { (context) in
             let site = context.object(with: siteObjID) as! Site
-            let stagedMedia = StagedMedia(context: context)
 
-            stagedMedia.uuid = UUID()
-            stagedMedia.assetIdentifier = identifier
-            stagedMedia.site = site
+            for identifier in identifiers {
+                let stagedMedia = StagedMedia(context: context)
+                stagedMedia.uuid = UUID()
+                stagedMedia.assetIdentifier = identifier
+                stagedMedia.site = site
+            }
 
             CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete()
+            }
         }
     }
 
-    /// Get a StagedMedia instance by its asset identifier.
-    /// - Parameter assetIdentifier: A string. Expected to be a PHAsset.identifier.
-    ///
-    func getPendingMedia(assetIdentifier: String) -> StagedMedia? {
-        guard
-            let siteID = currentSiteID,
-            let site = StoreContainer.shared.siteStore.getSiteByUUID(siteID)
-        else {
-            LogError(message: "getPendingMedia: could not retrieve current site.")
-            return nil
-        }
+}
 
-        let request = StagedMedia.defaultFetchRequest()
-        request.predicate = NSPredicate(format: "assetIdentifier == %@ AND site == %@", assetIdentifier, site)
+// MARK: - Process enqueued media
+extension PendingMediaStore {
 
-        let context = CoreDataManager.shared.mainContext
-        do {
-            if let stagedMedia = try context.fetch(request).first {
-                return stagedMedia
-            }
-        } catch {
-            // TODO: Handle Error.
-            let error = error as NSError
-            LogError(message: "getPendingMedia: " + error.localizedDescription)
-        }
-        return nil
+    /*
+     Fetch newly added staged media.  Process each individually to import the
+     asset's image data and save to a local file. Update accordingly
+     */
+    func processStagedMedia() {
+
+
+    }
+
+    /*
+     Fetch staged media that have been processed and are ready for upload.
+     For each individually, call the service to upload the image file.
+     */
+    func uploadStagedMedia() {
+
     }
 }
 
-
-// MARK: - Asset Management
+// MARK: - Asset File Management
 extension PendingMediaStore {
 
     /// Delete any files staged for upload.
