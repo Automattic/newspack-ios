@@ -33,6 +33,7 @@ class StagedMediaImporter: NSObject {
     init(site: Site) {
         let request = StagedMedia.defaultFetchRequest()
         request.predicate = NSPredicate(format: "assetIdentifier != NULL AND localFilePath == NULL AND site == %@", site)
+        request.sortDescriptors = [NSSortDescriptor(key: "lastModified", ascending: true)]
 
         let context = CoreDataManager.shared.mainContext
         resultsController = NSFetchedResultsController(fetchRequest: request,
