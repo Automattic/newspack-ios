@@ -69,7 +69,7 @@ class StagedMediaImporter: NSObject {
 
 
         currentImportID = nextMedia.uuid
-        importAsset(asset: asset) { (asset, fileURL, filename, error) in
+        importAsset(asset: asset) { (asset, fileURL, filename, mimeType, error) in
             if let error = error {
                 // TODO: handle error.
                 // If networking, we can just abort.
@@ -77,12 +77,14 @@ class StagedMediaImporter: NSObject {
                 StoreContainer.shared.stagedMediaStore.deleteStagedMedia(objectID: objectID)
                 return
             }
+
             self.currentImportID = nil
             // Update record.
             CoreDataManager.shared.performOnWriteContext { (context) in
                 let media = context.object(with: objectID) as! StagedMedia
                 media.localFilePath = fileURL?.absoluteString
                 media.originalFileName = filename
+                media.mimeType = mimeType
                 CoreDataManager.shared.saveContext(context: context)
             }
         }
@@ -122,26 +124,42 @@ extension StagedMediaImporter {
     /// - Parameter asset: A PHAsset instance.
     /// - Parameter onComplete: A completion handler called when the import is complete.
     ///
-    func importAsset(asset: PHAsset, onComplete: @escaping ((PHAsset, URL?, String?, Error?) -> Void)) {
+    func importAsset(asset: PHAsset, onComplete: @escaping ((PHAsset, URL?, String?, String?, Error?) -> Void)) {
         // TODO: Need to segment on mediaType. For now, assume image.
 
         let options = PHContentEditingInputRequestOptions()
         options.isNetworkAccessAllowed = true
 
         asset.requestContentEditingInput(with: options) { (contentEditingInput, info) in
-            guard let contentEditingInput = contentEditingInput else {
-                onComplete(asset, nil, nil, nil)
+            guard
+                let contentEditingInput = contentEditingInput,
+                let uniformTypeIdentifier = contentEditingInput.uniformTypeIdentifier
+            else {
+                onComplete(asset, nil, nil, nil, nil)
                 return
             }
 
             do {
                 let originalFileName = contentEditingInput.fullSizeImageURL?.pathComponents.last
                 let fileURL = try self.copyAssetToFile(asset: asset, contentEditingInput: contentEditingInput)
-                onComplete(asset, fileURL, originalFileName, nil)
+                let mime = self.mimeTypeFromUTI(identifier: uniformTypeIdentifier)
+                onComplete(asset, fileURL, originalFileName, mime, nil)
             } catch {
-                onComplete(asset, nil, nil, error)
+                onComplete(asset, nil, nil, nil, error)
             }
         }
+    }
+
+    /// Attempt to get an asset's mime type from its uniform type identifier.
+    /// - Parameter identifier: A unitform type identifier.
+    ///
+    func mimeTypeFromUTI(identifier: String) -> String {
+        let uti = identifier as CFString
+        guard let unretainedMime = UTTypeCopyPreferredTagWithClass(uti, kUTTagClassMIMEType) else {
+            return "application/octet-stream"
+        }
+        let mime = unretainedMime.takeRetainedValue() as String
+        return mime as String
     }
 
     /// Removes GPS data.
