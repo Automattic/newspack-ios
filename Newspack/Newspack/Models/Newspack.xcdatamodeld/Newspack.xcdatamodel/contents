@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15400" systemVersion="19A602" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15508" systemVersion="19B88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES">
         <attribute name="networkUrl" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
@@ -244,6 +244,7 @@
         <attribute name="altText" optional="YES" attributeType="String"/>
         <attribute name="assetIdentifier" attributeType="String"/>
         <attribute name="caption" optional="YES" attributeType="String"/>
+        <attribute name="lastModified" attributeType="Date" defaultDateTimeInterval="568018800" usesScalarValueType="NO"/>
         <attribute name="localFilePath" optional="YES" attributeType="String"/>
         <attribute name="mediaType" optional="YES" attributeType="String"/>
         <attribute name="mimeType" optional="YES" attributeType="String"/>
@@ -298,9 +299,9 @@
         <element name="Revision" positionX="-1350" positionY="-225" width="128" height="270"/>
         <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="478"/>
         <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="120"/>
+        <element name="StagedMedia" positionX="-1359" positionY="-234" width="128" height="208"/>
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
         <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>
         <element name="User" positionX="-1305" positionY="-180" width="128" height="163"/>
-        <element name="StagedMedia" positionX="-1359" positionY="-234" width="128" height="193"/>
     </elements>
 </model>

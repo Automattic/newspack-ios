@@ -9,6 +9,7 @@ extension StagedMedia {
     }
 
     @NSManaged public var uuid: UUID!
+    @NSManaged public var lastModified: Date
     @NSManaged public var localFilePath: String?
     @NSManaged public var assetIdentifier: String?
     @NSManaged public var mediaType: String?
