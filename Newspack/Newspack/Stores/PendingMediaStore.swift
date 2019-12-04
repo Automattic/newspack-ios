@@ -10,6 +10,8 @@ class PendingMediaStore: Store {
     init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
         currentSiteID = siteID
 
+        super.init(dispatcher: dispatcher)
+
         guard
             let siteID = siteID,
             let site = StoreContainer.shared.siteStore.getSiteByUUID(siteID) else {
@@ -117,6 +119,7 @@ extension PendingMediaStore {
             for identifier in identifiers {
                 let stagedMedia = StagedMedia(context: context)
                 stagedMedia.uuid = UUID()
+                stagedMedia.lastModified = Date()
                 stagedMedia.assetIdentifier = identifier
                 stagedMedia.site = site
             }
