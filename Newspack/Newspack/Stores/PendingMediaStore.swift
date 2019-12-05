@@ -6,6 +6,7 @@ class PendingMediaStore: Store {
 
     private(set) var currentSiteID: UUID?
     private(set) var mediaImporter: StagedMediaImporter?
+    private(set) var mediaUploader: StagedMediaUploader?
 
     init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
         currentSiteID = siteID
@@ -18,6 +19,11 @@ class PendingMediaStore: Store {
             return
         }
         mediaImporter = StagedMediaImporter(site: site)
+        mediaUploader = StagedMediaUploader(site: site)
+
+        if site.stagedMedia.count == 0 {
+            mediaImporter?.purgeStagedMediaFiles()
+        }
     }
 
     /// Action handler
@@ -27,6 +33,10 @@ class PendingMediaStore: Store {
             switch action {
             case .enqueueMedia(let assetIdentifiers):
                 enqueueAssets(identifiers: assetIdentifiers)
+            }
+        } else if let action = action as? MediaCreatedApiAction {
+            if !action.isError() {
+                deleteStagedMedia(uuid: action.uuid)
             }
         }
     }
@@ -67,6 +77,24 @@ class PendingMediaStore: Store {
             let media = context.object(with: objectID)
             context.delete(media)
             CoreDataManager.shared.saveContext(context: context)
+        }
+    }
+
+
+    func deleteStagedMedia(uuid: UUID) {
+        CoreDataManager.shared.performOnWriteContext { (context) in
+            let request = StagedMedia.defaultFetchRequest()
+            request.predicate = NSPredicate(format: "uuid == %@", uuid as CVarArg)
+
+            do {
+                if let media = try context.fetch(request).first {
+                    context.delete(media)
+                    CoreDataManager.shared.saveContext(context: context)
+                }
+            } catch {
+                let err = error as NSError
+                LogError(message: "deleteStagedMedia: Error deleting staged media. \(err)")
+            }
         }
     }
 }
