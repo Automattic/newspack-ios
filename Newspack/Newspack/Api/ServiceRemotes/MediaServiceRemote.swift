@@ -1,4 +1,5 @@
 import Foundation
+import WordPressKit
 
 /// Media endpoint wrangling
 ///
@@ -51,6 +52,39 @@ class MediaServiceRemote: ServiceRemoteCoreRest {
         }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
             onComplete(nil, error)
         })
+    }
+
+
+    func createMedia(mediaParameters: [String: AnyObject],
+                     localURL: URL,
+                     filename: String,
+                     mimeType: String,
+                     onComplete: @escaping (_ media: RemoteMedia?, _ error: Error?) -> Void) {
+
+        // TODO: validate mime type
+
+        let fileParameterName = "file" // TODO: Confirm this is the right param
+        let filePart = FilePart(parameterName: fileParameterName, url: localURL, filename: filename, mimeType: mimeType)
+        let parameters = sanitizeMediaParameters(parameters: mediaParameters)
+        let path = "media"
+        api.multipartPOST(path, parameters: parameters, fileParts: [filePart], success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
+            let dict = response as! [String: AnyObject]
+            let media = self.remoteMediaFromResponse(response: dict)
+            onComplete(media, nil)
+
+        }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
+            onComplete(nil, error)
+        })
+
+    }
+
+
+    func sanitizeMediaParameters(parameters: [String: AnyObject]) -> [String: AnyObject] {
+        // filter based on accepted parameters
+        let allowedKeys = ["title", "alt_text", "caption"]
+        return parameters.filter { (key: String, value: AnyObject) -> Bool in
+            return allowedKeys.contains(key)
+        }
     }
 
 }

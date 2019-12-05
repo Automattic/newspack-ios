@@ -1,7 +1,7 @@
 import Foundation
-import WordPressFlux
 import Alamofire
 import AlamofireImage
+import WordPressFlux
 
 class MediaApiService: ApiService {
 
@@ -68,11 +68,33 @@ class MediaApiService: ApiService {
 
         fetchGroup.notify(queue: .main) {
             self.dispatch(action: MediaFetchedApiAction(payload: remoteMedia,
-                                                        image: remoteImage,
                                                         error: remoteError,
+                                                        image: remoteImage,
                                                         previewURL: previewURL,
                                                         mediaID: mediaID))
         }
+    }
+
+
+    func createMedia(stagedUUID: UUID, localFilePath: String, filename: String, mimeType: String, title: String?, altText: String?, caption: String?) {
+        let url = URL(string: localFilePath)!
+
+        var parameters = [String: String]()
+
+        if let title = title {
+            parameters["title"] = title
+        }
+        if let altText = altText {
+            parameters["alt_text"] = altText
+        }
+        if let caption = caption {
+            parameters["caption"] = caption
+        }
+
+        remote.createMedia(mediaParameters: parameters as [String : AnyObject], localURL: url, filename: filename, mimeType: mimeType) { (media, error) in
+            self.dispatch(action: MediaCreatedApiAction(payload: media, error: error, uuid: stagedUUID))
+        }
+
     }
 
 }
