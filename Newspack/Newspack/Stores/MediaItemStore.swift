@@ -54,6 +54,11 @@ class MediaItemStore: StatefulStore<MediaItemStoreState> {
             return
         }
 
+        if let _ = action as? MediaCreatedApiAction {
+            sync(force: true, firstPageOnly: true)
+            return
+        }
+
         if let action = action as? MediaAction {
             switch action {
             case .syncItems:
@@ -152,9 +157,11 @@ extension MediaItemStore {
     /// Checks the date the query was last synced before syncing unless the force
     /// parameter is true.
     ///
-    /// - Parameter force: Whether to force a sync, ignoring the last synced date.
+    /// - Parameters:
+    ///   - force: Whether to force a sync, ignoring the last synced date
+    ///   - firstPageOnly: Whether to sync just the first page.
     ///
-    func sync(force:Bool = false) {
+    func sync(force: Bool = false, firstPageOnly: Bool = false) {
         guard
             let query = currentQuery,
             state != .syncing
@@ -166,7 +173,7 @@ extension MediaItemStore {
             return
         }
 
-        let pages = numberOfPagesSyncedForQuery(query: query)
+        let pages = firstPageOnly ? 1 : numberOfPagesSyncedForQuery(query: query)
         queue = pages > 1 ? [Int](1...pages) : [1]
         queue.reverse()
         syncItemsForQuery(query: query, page: queue.popLast()!)
