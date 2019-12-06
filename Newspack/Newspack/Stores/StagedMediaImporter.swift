@@ -4,8 +4,10 @@ import CoreImage
 import MobileCoreServices
 import Photos
 
-enum WriteError: Error {
-    case unableToWrite
+enum ImporterError: Error {
+    case unableToWriteFile
+    case unableToCreateDirectory
+    case missingUniformTypeIdentifier
 }
 
 class StagedMediaImporter: NSObject {
@@ -49,6 +51,7 @@ class StagedMediaImporter: NSObject {
     func importNext() {
         guard currentImportID == nil else {
             // Busy.
+            LogDebug(message: "importNext: Busy")
             return
         }
 
@@ -63,7 +66,6 @@ class StagedMediaImporter: NSObject {
             let identifier = nextMedia.assetIdentifier,
             let asset = fetchAssetByIdentifier(identifier: identifier)
         else {
-            // TODO: Delete record. The asset is unavailable.
             StoreContainer.shared.stagedMediaStore.deleteStagedMedia(objectID: objectID)
             LogWarn(message: "importNext: Unable to fetch asset by identifier.")
             return
@@ -135,18 +137,24 @@ extension StagedMediaImporter {
         options.isNetworkAccessAllowed = true
 
         asset.requestContentEditingInput(with: options) { (contentEditingInput, info) in
+            if let error = info[PHContentEditingInputErrorKey] as? NSError {
+                onComplete(asset, nil, nil, nil, error)
+                return
+            }
+
             guard
                 let contentEditingInput = contentEditingInput,
                 let uniformTypeIdentifier = contentEditingInput.uniformTypeIdentifier
             else {
-                onComplete(asset, nil, nil, nil, nil)
+                let error = ImporterError.missingUniformTypeIdentifier as NSError
+                onComplete(asset, nil, nil, nil, error)
                 return
             }
 
             do {
                 let originalFileName = contentEditingInput.fullSizeImageURL?.pathComponents.last
-                let fileURL = try self.copyAssetToFile(asset: asset, contentEditingInput: contentEditingInput)
                 let mime = self.mimeTypeFromUTI(identifier: uniformTypeIdentifier)
+                let fileURL = try self.copyAssetToFile(asset: asset, contentEditingInput: contentEditingInput)
                 onComplete(asset, fileURL, originalFileName, mime, nil)
             } catch {
                 onComplete(asset, nil, nil, nil, error)
@@ -204,6 +212,7 @@ extension StagedMediaImporter {
         var isDirectory: ObjCBool = false
 
         guard let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            LogError(message: "directoryPath: Unable to read document directory")
             return nil
         }
 
@@ -212,7 +221,7 @@ extension StagedMediaImporter {
             do {
                 try fileManager.createDirectory(at: directoryPath, withIntermediateDirectories: true, attributes: nil)
             } catch {
-                // TODO:
+                LogError(message: "directoryPath: Unable to create directory")
                 return nil
             }
         }
@@ -231,7 +240,7 @@ extension StagedMediaImporter {
             let originalImage = CIImage(contentsOf: originalFileURL),
             let uti = contentEditingInput.uniformTypeIdentifier
         else {
-            throw WriteError.unableToWrite
+            throw ImporterError.unableToWriteFile
         }
 
         let image = prepareImage(image: originalImage)
