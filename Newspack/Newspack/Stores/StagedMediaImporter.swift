@@ -43,6 +43,7 @@ class StagedMediaImporter: NSObject {
         super.init()
         resultsController.delegate = self
         try? resultsController.performFetch()
+        importNext()
     }
 
     func importNext() {
@@ -68,10 +69,11 @@ class StagedMediaImporter: NSObject {
             return
         }
 
-
+        LogDebug(message: "Import Next: \(nextMedia)")
         currentImportID = nextMedia.uuid
         importAsset(asset: asset) { (asset, fileURL, filename, mimeType, error) in
             if let error = error {
+                LogError(message: "Error importing asset: \(error)")
                 // TODO: handle error.
                 // If networking, we can just abort.
                 // If no longer exsting we should remove the record.
@@ -87,6 +89,7 @@ class StagedMediaImporter: NSObject {
                 media.originalFileName = filename
                 media.mimeType = mimeType
                 CoreDataManager.shared.saveContext(context: context)
+                LogDebug(message: "ImportAsset: Saved")
             }
         }
     }
@@ -232,7 +235,7 @@ extension StagedMediaImporter {
         }
 
         let image = prepareImage(image: originalImage)
-        let fileURL = directoryPath.appendingPathExtension(UUID().uuidString)
+        let fileURL = directoryPath.appendingPathComponent(UUID().uuidString).appendingPathExtension(originalFileURL.pathExtension)
 
         try writeImage(image: image, withUTI: uti, toFile: fileURL)
 
@@ -275,7 +278,7 @@ extension StagedMediaImporter {
         let options = [CIImageRepresentationOption: Any]()
 
         try context.writeJPEGRepresentation(of: image,
-                                            to: fileURL.appendingPathExtension(Constants.jpgExt),
+                                            to: fileURL,
                                             colorSpace: image.colorSpace!,
                                             options: options)
     }
@@ -289,7 +292,7 @@ extension StagedMediaImporter {
         let options = [CIImageRepresentationOption: Any]()
 
         try context.writePNGRepresentation(of: image,
-                                           to: fileURL.appendingPathExtension(Constants.pngExt),
+                                           to: fileURL,
                                            format: CIFormat.RGBA8,
                                            colorSpace: image.colorSpace!,
                                            options: options)
@@ -304,7 +307,7 @@ extension StagedMediaImporter {
         let options = [CIImageRepresentationOption: Any]()
 
         try context.writeHEIFRepresentation(of: image,
-                                            to: fileURL.appendingPathExtension(Constants.heicExt),
+                                            to: fileURL,
                                             format: CIFormat.RGBA8,
                                             colorSpace: context.workingColorSpace!,
                                             options: options)
