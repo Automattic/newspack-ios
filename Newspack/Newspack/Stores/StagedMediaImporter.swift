@@ -24,9 +24,6 @@ class StagedMediaImporter: NSObject {
         static let gpsDictionaryKey = kCGImagePropertyGPSDictionary as String
         static let iptcOrientationKey = kCGImagePropertyIPTCImageOrientation as String
         static let tiffOrientationKey = kCGImagePropertyTIFFOrientation as String
-        static let jpgExt = ".jpg"
-        static let pngExt = ".png"
-        static let heicExt = ".heic"
     }
 
     let resultsController: NSFetchedResultsController<StagedMedia>
