@@ -45,7 +45,7 @@ extension PhotoLibraryViewController: WPMediaPickerViewControllerDelegate {
             return asset.identifier()
         }
         let dispatcher = SessionManager.shared.sessionDispatcher
-        let action = PendingMediaAction.enqueueMedia(assetIdentifiers: identifiers)
+        let action = StagedMediaAction.enqueueMedia(assetIdentifiers: identifiers)
         dispatcher.dispatch(action)
 
         navigationController?.popViewController(animated: true)

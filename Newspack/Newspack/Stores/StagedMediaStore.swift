@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 import WordPressFlux
 
-class PendingMediaStore: Store {
+class StagedMediaStore: Store {
 
     private(set) var currentSiteID: UUID?
     private(set) var mediaImporter: StagedMediaImporter?
@@ -29,7 +29,7 @@ class PendingMediaStore: Store {
     /// Action handler
     ///
     override func onDispatch(_ action: Action) {
-        if let action = action as? PendingMediaAction {
+        if let action = action as? StagedMediaAction {
             switch action {
             case .enqueueMedia(let assetIdentifiers):
                 enqueueAssets(identifiers: assetIdentifiers)
@@ -101,7 +101,7 @@ class PendingMediaStore: Store {
 }
 
 // MARK: - Fetch and Enqueue StagedMedia
-extension PendingMediaStore {
+extension StagedMediaStore {
 
     /// Creates a new StagedMedia instance for the specified PHAsset.identifiers.
     /// - Parameter identifiers: An array of PHAsset.identifiers
