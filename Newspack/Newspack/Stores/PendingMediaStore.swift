@@ -19,7 +19,7 @@ class PendingMediaStore: Store {
             return
         }
         mediaImporter = StagedMediaImporter(site: site)
-        mediaUploader = StagedMediaUploader(site: site)
+        mediaUploader = StagedMediaUploader(site: site, dispatcher: dispatcher)
 
         if site.stagedMedia.count == 0 {
             mediaImporter?.purgeStagedMediaFiles()
@@ -90,6 +90,7 @@ class PendingMediaStore: Store {
                 if let media = try context.fetch(request).first {
                     context.delete(media)
                     CoreDataManager.shared.saveContext(context: context)
+                    LogDebug(message: "Delete Staged Media")
                 }
             } catch {
                 let err = error as NSError
@@ -153,6 +154,7 @@ extension PendingMediaStore {
             }
 
             CoreDataManager.shared.saveContext(context: context)
+            LogDebug(message: "createStagedMediaForIdentifiers: Saved")
         }
     }
 
