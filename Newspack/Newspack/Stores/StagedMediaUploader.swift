@@ -4,7 +4,6 @@ import WordPressFlux
 
 class StagedMediaUploader: NSObject {
 
-
     let resultsController: NSFetchedResultsController<StagedMedia>
     var currentUploadID: UUID?
     let dispatcher: ActionDispatcher
@@ -70,7 +69,7 @@ class StagedMediaUploader: NSObject {
         service.createMedia(stagedUUID: nextMedia.uuid,
                             localFilePath: localFilePath,
                             filename: filename,
-                            mimeType: mimeType, // TODO: Check that this is the correct format
+                            mimeType: mimeType,
                             title: nextMedia.title,
                             altText: nextMedia.altText,
                             caption: nextMedia.caption)
