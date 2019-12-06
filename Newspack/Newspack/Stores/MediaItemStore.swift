@@ -55,6 +55,7 @@ class MediaItemStore: StatefulStore<MediaItemStoreState> {
         }
 
         if let _ = action as? MediaCreatedApiAction {
+            LogDebug(message: "Sync first page only")
             sync(force: true, firstPageOnly: true)
             return
         }
