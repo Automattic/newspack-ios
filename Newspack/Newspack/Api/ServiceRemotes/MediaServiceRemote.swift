@@ -55,15 +55,21 @@ class MediaServiceRemote: ServiceRemoteCoreRest {
     }
 
 
+    /// Create a new media object and upload the associated file.
+    ///
+    /// - Parameters:
+    ///   - mediaParameters: Parameters for the api call, e.g. title, caption, alt_text.
+    ///   - localURL: The URL to the local media file that will be uploaded.
+    ///   - filename: The filename to use for the uploaded media.  Not guarenteed to be used on the server.
+    ///   - mimeType: The mime type of the file to upload.
+    ///   - onComplete: Callback to handle success or an error.
+    ///
     func createMedia(mediaParameters: [String: AnyObject],
                      localURL: URL,
                      filename: String,
                      mimeType: String,
                      onComplete: @escaping (_ media: RemoteMedia?, _ error: Error?) -> Void) {
-
-        // TODO: validate mime type
-
-        let fileParameterName = "file" // TODO: Confirm this is the right param
+        let fileParameterName = "file"
         let filePart = FilePart(parameterName: fileParameterName, url: localURL, filename: filename, mimeType: mimeType)
         let parameters = sanitizeMediaParameters(parameters: mediaParameters)
         let path = "media"
@@ -79,6 +85,10 @@ class MediaServiceRemote: ServiceRemoteCoreRest {
     }
 
 
+    /// Sanitize the passed array of parameters. Removes unsupported parameters.
+    ///
+    /// - Parameter parameters: A dictionary of parameters to sanitize.
+    ///
     func sanitizeMediaParameters(parameters: [String: AnyObject]) -> [String: AnyObject] {
         // filter based on accepted parameters
         let allowedKeys = ["title", "alt_text", "caption"]
