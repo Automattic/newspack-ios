@@ -21,7 +21,7 @@ class SiteMediaDataSource: NSObject {
     var groups = [WPMediaGroup]()
     lazy var resultsController: NSFetchedResultsController<MediaItem> = {
         let fetchRequest = MediaItem.defaultFetchRequest()
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortField, ascending: false)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortField, ascending: false), NSSortDescriptor(key: "mediaID", ascending: false)]
         return NSFetchedResultsController(fetchRequest: fetchRequest,
                                           managedObjectContext: CoreDataManager.shared.mainContext,
                                           sectionNameKeyPath: nil,
