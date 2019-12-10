@@ -49,7 +49,7 @@ def gutenberg_dependencies(options)
         'react-native-safe-area',
         'react-native-video',
         'RNSVG',
-        'ReactNativeDarkMode',
+        'ReactNativeDarkMode'
     ]
     if options[:path]
         podspec_prefix = options[:path]
@@ -77,14 +77,14 @@ target 'Newspack' do
 
     pod 'WordPressAuthenticator', '~> 1.9.0'
     pod 'WordPressKit', '~> 4.5.0'
-    pod 'WPMediaPicker', '~> 1.5.0'
+    pod 'WPMediaPicker', '~> 1.6.0'
     pod 'WordPressFlux', '1.0.0'
     pod 'WordPressUI', '~> 1.3.0'
     pod 'WordPress-Editor-iOS', '~> 1.8.0' # A gutenberg dependency.
 
     ## Gutenberg
     ##
-    gutenberg :tag => 'v1.14.0'
+    gutenberg :tag => 'v1.18.0'
 
     target 'NewspackTests' do
         inherit! :search_paths
