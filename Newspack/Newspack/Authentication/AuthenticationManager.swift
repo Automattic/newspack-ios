@@ -113,6 +113,11 @@ class AuthenticationManager {
 
 
 extension AuthenticationManager: WordPressAuthenticatorDelegate {
+
+    func userAuthenticatedWithAppleUserID(_ appleUserID: String) {
+        // No op
+    }
+
     func shouldPresentUsernamePasswordController(for siteInfo: WordPressComSiteInfo?, onCompletion: @escaping (Error?, Bool) -> Void) {
         onCompletion(nil, true)
     }

@@ -111,6 +111,18 @@ extension EditorViewController {
 
 extension EditorViewController: GutenbergBridgeDelegate {
 
+    func gutenbergDidRequestImport(from url: URL, with callback: @escaping MediaImportCallback) {
+
+    }
+
+    func gutenbergDidRequestFetch(path: String, completion: @escaping (Result<Any, NSError>) -> Void) {
+
+    }
+
+    func gutenbergDidRequestFullscreenImage(with mediaUrl: URL) {
+
+    }
+
     func editorDidAutosave() {
 
     }
@@ -132,11 +144,7 @@ extension EditorViewController: GutenbergBridgeDelegate {
         dispatcher.dispatch(EditAction.stageChanges(title: title, content: html))
     }
 
-    func gutenbergDidRequestMedia(from source: MediaPickerSource, filter: [MediaFilter]?, with callback: @escaping MediaPickerDidPickMediaCallback) {
-
-    }
-
-    func gutenbergDidRequestImport(from url: URL, with callback: @escaping MediaPickerDidPickMediaCallback) {
+    func gutenbergDidRequestMedia(from source: Gutenberg.MediaSource, filter: [Gutenberg.MediaType], allowMultipleSelection: Bool, with callback: @escaping MediaPickerDidPickMediaCallback) {
 
     }
 
