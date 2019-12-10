@@ -331,6 +331,11 @@ extension PostListStore {
             let site = context.object(with: siteObjID) as! Site
             let fetchRequest = PostList.defaultFetchRequest()
 
+            defer {
+                DispatchQueue.main.async {
+                    onComplete()
+                }
+            }
             guard let count = try? context.count(for: fetchRequest) else {
                 // TODO: Handle core data error.
                 LogError(message: "setupDefaultPostListsIfNeeded: Unable to get count from NSManagedObjectContext.")
@@ -351,9 +356,6 @@ extension PostListStore {
             }
 
             CoreDataManager.shared.saveContext(context: context)
-            DispatchQueue.main.async {
-                onComplete()
-            }
         }
     }
 }
