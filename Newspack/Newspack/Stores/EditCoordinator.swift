@@ -177,10 +177,15 @@ extension EditCoordinator {
 
     func parametersFromPost(post: Post) -> [String: AnyObject] {
         var dict = [String: Any]()
-        dict["title"] = post.title
-        dict["content"] = post.content
-        dict["date"] = post.date
         // TODO: Flesh this out as other properties are editable.
+        if let stagedEdits = post.item.stagedEdits {
+            dict["title"] = stagedEdits.title
+            dict["content"] = stagedEdits.content
+        } else {
+            dict["title"] = post.title
+            dict["content"] = post.content
+        }
+        dict["date"] = post.date
         return dict as [String: AnyObject]
     }
 }
@@ -210,7 +215,7 @@ extension EditCoordinator {
             // we're updating a draft/pending post directly.
             updateAndSavePost(post: post, with: remoteRevision)
 
-        } else if remoteRevision.revisionID == post.postID {
+        } else if remoteRevision.parentID == post.postID {
             // we're updating an autosave on published/scheduled/private post.
             createOrUpdateAutosaveRevisionForPost(post: post, with: remoteRevision)
         } else {
