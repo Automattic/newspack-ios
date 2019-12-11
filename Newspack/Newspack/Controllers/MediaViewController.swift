@@ -37,13 +37,17 @@ class MediaViewController: WPMediaPickerViewController {
         collectionView?.backgroundView = nil
         collectionView?.backgroundColor = .white
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddTapped(sender:)))
+        configureRightBarButton()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         syncIfNeeded()
+    }
+
+    func configureRightBarButton() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddTapped(sender:)))
     }
 
     func syncIfNeeded() {
@@ -55,6 +59,12 @@ class MediaViewController: WPMediaPickerViewController {
         let controller = PhotoLibraryViewController()
         navigationController?.pushViewController(controller, animated: true)
     }
+
+    func handleSelectedMediaAsset(asset: MediaAsset) {
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .mediaDetail) as! MediaDetailViewController
+        controller.previewURL = asset.sourceURL
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 extension MediaViewController: WPMediaPickerViewControllerDelegate {
@@ -64,9 +74,7 @@ extension MediaViewController: WPMediaPickerViewControllerDelegate {
         }
         picker.clearSelectedAssets(false)
 
-        let controller = MainStoryboard.instantiateViewController(withIdentifier: .mediaDetail) as! MediaDetailViewController
-        controller.previewURL = asset.sourceURL
-        navigationController?.pushViewController(controller, animated: true)
+        handleSelectedMediaAsset(asset: asset)
     }
 
 }
