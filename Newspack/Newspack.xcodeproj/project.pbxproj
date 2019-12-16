@@ -100,6 +100,12 @@
 		E64594A122B448C2003BF6C0 /* PostServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */; };
 		E6500F9A2368B63800CB8C6C /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6500F992368B63800CB8C6C /* ImageStore.swift */; };
 		E6500F9D2368F36500CB8C6C /* MediaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */; };
+		E65875A223A80A1300185C75 /* MediaServiceRemoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A123A80A1300185C75 /* MediaServiceRemoteTests.swift */; };
+		E65875A423A80F9800185C75 /* MediaServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A323A80F9800185C75 /* MediaServiceTests.swift */; };
+		E65875A623A811A400185C75 /* MediaStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A523A811A400185C75 /* MediaStoreTests.swift */; };
+		E65875A823A811F100185C75 /* MediaItemStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A723A811F100185C75 /* MediaItemStoreTests.swift */; };
+		E65875AA23A8139500185C75 /* StagedMediaImporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */; };
+		E65875AC23A813EA00185C75 /* StagedMediaStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875AB23A813EA00185C75 /* StagedMediaStoreTests.swift */; };
 		E66231CE22F52243004F6DEC /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66231CD22F52243004F6DEC /* PostCell.swift */; };
 		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
 		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
@@ -295,6 +301,12 @@
 		E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostServiceRemote.swift; sourceTree = "<group>"; };
 		E6500F992368B63800CB8C6C /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 		E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailViewController.swift; sourceTree = "<group>"; };
+		E65875A123A80A1300185C75 /* MediaServiceRemoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceRemoteTests.swift; sourceTree = "<group>"; };
+		E65875A323A80F9800185C75 /* MediaServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceTests.swift; sourceTree = "<group>"; };
+		E65875A523A811A400185C75 /* MediaStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStoreTests.swift; sourceTree = "<group>"; };
+		E65875A723A811F100185C75 /* MediaItemStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemStoreTests.swift; sourceTree = "<group>"; };
+		E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedMediaImporterTests.swift; sourceTree = "<group>"; };
+		E65875AB23A813EA00185C75 /* StagedMediaStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedMediaStoreTests.swift; sourceTree = "<group>"; };
 		E66231CD22F52243004F6DEC /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
 		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
@@ -569,10 +581,10 @@
 				E602E68822C1615C00795CBA /* Actions */,
 				E602E68122C15EAB00795CBA /* Models */,
 				E63EECDC23428B3E00669FFC /* ServiceRemotes */,
+				E6D44DF0234BDBA000B51438 /* MediaApiService.swift */,
 				E63EECD6234289DD00669FFC /* PostApiService.swift */,
 				E63EECD8234289F700669FFC /* SiteApiService.swift */,
 				E63EECDA23428A0900669FFC /* UserApiService.swift */,
-				E6D44DF0234BDBA000B51438 /* MediaApiService.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -674,9 +686,10 @@
 			isa = PBXGroup;
 			children = (
 				E69EB27D22BAE2E2004A92FA /* CoreRestApiTests.swift */,
+				E65875A123A80A1300185C75 /* MediaServiceRemoteTests.swift */,
+				E61A28CE22D53EFD003E214F /* PostServiceRemoteTests.swift */,
 				E61FC604229F2F10009E1748 /* SiteServiceRemoteTests.swift */,
 				E61FC602229F2EEE009E1748 /* UserServiceRemoteTests.swift */,
-				E61A28CE22D53EFD003E214F /* PostServiceRemoteTests.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -746,10 +759,14 @@
 			isa = PBXGroup;
 			children = (
 				E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */,
-				E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */,
 				E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */,
 				E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */,
+				E65875A523A811A400185C75 /* MediaStoreTests.swift */,
+				E65875A723A811F100185C75 /* MediaItemStoreTests.swift */,
 				E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */,
+				E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */,
+				E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */,
+				E65875AB23A813EA00185C75 /* StagedMediaStoreTests.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -758,6 +775,7 @@
 			isa = PBXGroup;
 			children = (
 				E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */,
+				E65875A323A80F9800185C75 /* MediaServiceTests.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -765,10 +783,10 @@
 		E63EECDC23428B3E00669FFC /* ServiceRemotes */ = {
 			isa = PBXGroup;
 			children = (
+				E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */,
 				E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */,
 				E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */,
 				E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */,
-				E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */,
 			);
 			path = ServiceRemotes;
 			sourceTree = "<group>";
@@ -1217,16 +1235,22 @@
 				E69EB27E22BAE2E2004A92FA /* CoreRestApiTests.swift in Sources */,
 				E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */,
 				E6E1835022D79473009C2D0A /* RemoteTestCase.swift in Sources */,
+				E65875A223A80A1300185C75 /* MediaServiceRemoteTests.swift in Sources */,
 				E6051DF123076191005AAF0B /* DictionaryMergeTests.swift in Sources */,
 				E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */,
+				E65875A823A811F100185C75 /* MediaItemStoreTests.swift in Sources */,
+				E65875A423A80F9800185C75 /* MediaServiceTests.swift in Sources */,
 				E637A6E422F0EE1500229C1D /* RequestQueueTests.swift in Sources */,
+				E65875AA23A8139500185C75 /* StagedMediaImporterTests.swift in Sources */,
 				E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */,
 				E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */,
 				E61A28CF22D53EFD003E214F /* PostServiceRemoteTests.swift in Sources */,
 				E61FC603229F2EEE009E1748 /* UserServiceRemoteTests.swift in Sources */,
 				E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */,
 				E6051DEF23075F8A005AAF0B /* DateTests.swift in Sources */,
+				E65875AC23A813EA00185C75 /* StagedMediaStoreTests.swift in Sources */,
 				E61FC605229F2F10009E1748 /* SiteServiceRemoteTests.swift in Sources */,
+				E65875A623A811A400185C75 /* MediaStoreTests.swift in Sources */,
 				E61FC609229F329A009E1748 /* Loader.swift in Sources */,
 				E607386122A9A5EF00504EA4 /* AccountDetailsStoreTests.swift in Sources */,
 				E62C7C692235E73F000FEB33 /* AccountStoreTests.swift in Sources */,
