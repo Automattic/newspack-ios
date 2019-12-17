@@ -1,0 +1,143 @@
+
+{
+    "id": 1,
+    "date": "2017-05-02T19:09:35",
+    "date_gmt": "2017-05-02T19:09:35",
+    "guid": {
+        "rendered": "http://example.com/2017/05/img_1.jpg",
+        "raw": "http://example.com/2017/05/img_1.jpg"
+    },
+    "modified": "2017-05-02T19:09:35",
+    "modified_gmt": "2017-05-02T19:09:35",
+    "slug": "img_1",
+    "status": "inherit",
+    "type": "attachment",
+    "link": "https://example.com/img_1/",
+    "title": {
+        "raw": "img_1",
+        "rendered": "img_1"
+    },
+    "author": 31559706,
+    "comment_status": "open",
+    "ping_status": "closed",
+    "template": "",
+    "meta": {
+        "_coblocks_attr": "",
+        "_coblocks_dimensions": "",
+        "_coblocks_responsive_height": "",
+        "_coblocks_accordion_ie_support": "",
+        "advanced_seo_description": "",
+        "amp_status": "",
+        "spay_email": ""
+    },
+    "permalink_template": "https://example.com/?attachment_id=1402",
+    "generated_slug": "img_1",
+    "jetpack_shortlink": "https://wp.me/a2pwqs-mC",
+    "jetpack_sharing_enabled": true,
+    "jetpack_likes_enabled": true,
+    "description": {
+        "raw": "",
+        "rendered": "<p class=\"attachment\"><a href='https://example.com/2017/05/img_1.jpg'><img width=\"113\" height=\"150\" src=\"https://example.com/2017/05/img_1.jpg?w=113&#038;h=150\" class=\"attachment-medium size-medium\" alt=\"\" srcset=\"https://example.com/2017/05/img_1.jpg?w=113 113w, https://example.com/2017/05/img_1.jpg?w=226 226w, https://example.com/2017/05/img_1.jpg?w=38 38w\" sizes=\"(max-width: 113px) 100vw, 113px\" data-attachment-id=\"1402\" data-permalink=\"https://example.com/img_1/\" data-orig-file=\"https://example.com/2017/05/img_1.jpg\" data-orig-size=\"3024,4032\" data-comments-opened=\"1\" data-image-meta=\"{&quot;aperture&quot;:&quot;2.2&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;iPhone 6s&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1493041502&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;4.15&quot;,&quot;iso&quot;:&quot;25&quot;,&quot;shutter_speed&quot;:&quot;0.0011185682326622&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}\" data-image-title=\"img_1\" data-image-description=\"\" data-medium-file=\"https://example.com/2017/05/img_1.jpg?w=113\" data-large-file=\"https://example.com/2017/05/img_1.jpg?w=225\" /></a></p>\n"
+    },
+    "caption": {
+        "raw": "",
+        "rendered": ""
+    },
+    "alt_text": "",
+    "media_type": "image",
+    "mime_type": "image/jpeg",
+    "media_details": {
+        "width": 3024,
+        "height": 4032,
+        "file": "2017/05/img_1.jpg",
+        "sizes": {
+            "thumbnail": {
+                "file": "img_1.jpg?w=38",
+                "width": 38,
+                "height": 50,
+                "mime_type": "image/jpeg",
+                "source_url": "https://example.com/2017/05/img_1.jpg?w=38"
+            },
+            "medium": {
+                "file": "img_1.jpg?w=113",
+                "width": 113,
+                "height": 150,
+                "mime_type": "image/jpeg",
+                "source_url": "https://example.com/2017/05/img_1.jpg?w=113"
+            },
+            "large": {
+                "file": "img_1.jpg?w=225",
+                "width": 225,
+                "height": 300,
+                "mime_type": "image/jpeg",
+                "source_url": "https://example.com/2017/05/img_1.jpg?w=225"
+            },
+            "full": {
+                "file": "img_1.jpg",
+                "width": 1024,
+                "height": 1365,
+                "mime_type": "image/jpeg",
+                "source_url": "https://example.com/2017/05/img_1.jpg"
+            }
+        },
+        "image_meta": {
+            "aperture": "2.2",
+            "credit": "",
+            "camera": "iPhone 6s",
+            "caption": "",
+            "created_timestamp": "1493041502",
+            "copyright": "",
+            "focal_length": "4.15",
+            "iso": "25",
+            "shutter_speed": "0.0011185682326622",
+            "title": "",
+            "orientation": "1",
+            "keywords": []
+        },
+        "filesize": 2210621
+    },
+    "post": null,
+    "source_url": "https://example.com/2017/05/img_1.jpg",
+    "missing_image_sizes": [],
+    "_links": {
+        "self": [
+            {
+                "href": "https://public-api.wordpress.com/wp/v2/sites/example.com/media/1402"
+            }
+        ],
+        "collection": [
+            {
+                "href": "https://public-api.wordpress.com/wp/v2/sites/example.com/media"
+            }
+        ],
+        "about": [
+            {
+                "href": "https://public-api.wordpress.com/wp/v2/sites/example.com/types/attachment"
+            }
+        ],
+        "author": [
+            {
+                "embeddable": true,
+                "href": "https://public-api.wordpress.com/wp/v2/sites/example.com/users/31559706"
+            }
+        ],
+        "replies": [
+            {
+                "embeddable": true,
+                "href": "https://public-api.wordpress.com/wp/v2/sites/example.com/comments?post=1402"
+            }
+        ],
+        "wp:action-assign-author": [
+            {
+                "href": "https://public-api.wordpress.com/wp/v2/sites/example.com/media/1402"
+            }
+        ],
+        "curies": [
+            {
+                "name": "wp",
+                "href": "https://api.w.org/{rel}",
+                "templated": true
+            }
+        ]
+    }
+}

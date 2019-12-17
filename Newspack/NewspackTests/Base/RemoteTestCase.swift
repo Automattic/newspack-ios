@@ -15,6 +15,7 @@ class RemoteTestCase: XCTestCase {
         case JavaScript      = "text/javascript;charset=utf-8"
         case ApplicationHTML = "application/html"
         case XML             = "text/xml"
+        case imagePNG        = "image/png"
         case NoContentType   = ""
     }
 
