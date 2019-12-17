@@ -14,6 +14,7 @@ class StagedMediaImporter: NSObject {
 
     private class Constants {
         static let stagedMediaFolderName = "StagedMedia"
+        static let stagedMediaFolderTestingName = "StagedMediaTesting"
         static let utiHEIC = "public.heic"
         static let utiJPG = kUTTypeJPEG as String
         static let utiPNG = kUTTypePDF as String
@@ -111,8 +112,13 @@ extension StagedMediaImporter {
             return
         }
         let fileManager = FileManager()
-        if fileManager.fileExists(atPath: path.absoluteString) {
-            try? fileManager.removeItem(at: path)
+        do {
+            let files = try fileManager.contentsOfDirectory(at: path, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants)
+            for file in files {
+                try fileManager.removeItem(at: file)
+            }
+        } catch {
+            LogError(message: "Error puring staged media files: \(error)")
         }
     }
 
@@ -213,7 +219,8 @@ extension StagedMediaImporter {
             return nil
         }
 
-        let directoryPath = documentDirectory.appendingPathComponent(Constants.stagedMediaFolderName, isDirectory: true)
+        let directoryName = Environment.isTesting() ? Constants.stagedMediaFolderTestingName : Constants.stagedMediaFolderName
+        let directoryPath = documentDirectory.appendingPathComponent(directoryName, isDirectory: true)
         if !fileManager.fileExists(atPath: directoryPath.path, isDirectory: &isDirectory) || !isDirectory.boolValue {
             do {
                 try fileManager.createDirectory(at: directoryPath, withIntermediateDirectories: true, attributes: nil)

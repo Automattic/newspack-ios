@@ -1,18 +1,26 @@
 import XCTest
 @testable import Newspack
 
-class StagedMediaImporterTests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+class StagedMediaImporterTests: BaseTest {
 
     func testPurgeStagedMediaFiles() {
+        let context = CoreDataManager.shared.mainContext
+        let site = ModelFactory.getTestSite(context: context)
+        let filename = "TEMP"
+        let importer = StagedMediaImporter(site: site)
+        guard let directoryPath = importer.directoryPath() else {
+            XCTAssert(false)
+            return
+        }
+        let filePath = directoryPath.appendingPathComponent(filename).appendingPathExtension("jpg")
+        let fileManager = FileManager.default
+        fileManager.createFile(atPath: filePath.path, contents: nil, attributes: nil)
 
+        XCTAssertTrue(fileManager.fileExists(atPath: filePath.path))
+
+        importer.purgeStagedMediaFiles()
+
+        XCTAssertFalse(fileManager.fileExists(atPath: filePath.path))
     }
 
 }
