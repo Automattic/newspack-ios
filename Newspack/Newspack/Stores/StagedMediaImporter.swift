@@ -47,6 +47,11 @@ class StagedMediaImporter: NSObject {
     }
 
     func importNext() {
+        // For now, skip when testing.
+        guard !Environment.isTesting() else {
+            return
+        }
+
         guard currentImportID == nil else {
             // Busy.
             LogDebug(message: "importNext: Busy")
