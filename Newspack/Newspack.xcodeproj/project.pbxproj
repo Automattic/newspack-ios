@@ -178,6 +178,7 @@
 		E6E2ACF722E10F3400A8E85D /* MainStoryboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E2ACF622E10F3400A8E85D /* MainStoryboard.swift */; };
 		E6E2ACF922E2840C00A8E85D /* Date+FormatGMTString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */; };
 		E6E43EA4230F1D2B00A1974E /* EditAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E43EA3230F1D2B00A1974E /* EditAction.swift */; };
+		E6E83BA923AD7A2A0015113B /* remote-medias-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E83BA823AD7A290015113B /* remote-medias-edit.json */; };
 		E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F1C52422C2A48600334003 /* ApiAction.swift */; };
 		E6FB520022B967910010FDF8 /* Dictionary+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */; };
 		E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB520522B973A60010FDF8 /* PostStore.swift */; };
@@ -384,6 +385,7 @@
 		E6E2ACF622E10F3400A8E85D /* MainStoryboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainStoryboard.swift; sourceTree = "<group>"; };
 		E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+FormatGMTString.swift"; sourceTree = "<group>"; };
 		E6E43EA3230F1D2B00A1974E /* EditAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAction.swift; sourceTree = "<group>"; };
+		E6E83BA823AD7A290015113B /* remote-medias-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-medias-edit.json"; sourceTree = "<group>"; };
 		E6F1C52422C2A48600334003 /* ApiAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiAction.swift; sourceTree = "<group>"; };
 		E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+KeyPath.swift"; sourceTree = "<group>"; };
 		E6FB520522B973A60010FDF8 /* PostStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStore.swift; sourceTree = "<group>"; };
@@ -716,6 +718,7 @@
 				E6051DE8230722FC005AAF0B /* remote-revision.json */,
 				E6051DE423072251005AAF0B /* remote-revisions.json */,
 				E69DE37323A97F1C00F87157 /* remote-media-edit.json */,
+				E6E83BA823AD7A290015113B /* remote-medias-edit.json */,
 				E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */,
 				E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */,
 				E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */,
@@ -972,6 +975,7 @@
 				E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */,
 				E6E1834E22D6D44D009C2D0A /* remote-post-id-edit.json in Resources */,
 				E6051DE9230722FC005AAF0B /* remote-revision.json in Resources */,
+				E6E83BA923AD7A2A0015113B /* remote-medias-edit.json in Resources */,
 				E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
