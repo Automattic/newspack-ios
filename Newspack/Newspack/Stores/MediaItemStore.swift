@@ -100,13 +100,13 @@ class MediaItemStore: StatefulStore<MediaItemStoreState> {
         }
     }
 
-    func mediaQueryByName(name: String, siteUUID: UUID) -> MediaQuery? {
+    func mediaQueryByTitle(title: String, siteUUID: UUID) -> MediaQuery? {
         let siteStore = StoreContainer.shared.siteStore
         guard let site = siteStore.getSiteByUUID(siteUUID) else {
             return nil
         }
         let fetchRequest = MediaQuery.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "name == 'all' AND site == %@", site)
+        fetchRequest.predicate = NSPredicate(format: "title == %@ AND site == %@", title, site)
 
         let context = CoreDataManager.shared.mainContext
         do {
