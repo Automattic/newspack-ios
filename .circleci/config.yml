@@ -27,7 +27,6 @@ jobs:
       name: ios/default
       xcode-version: "11.2.1"
     steps:
-      - fix-path
       - ios/boot-simulator:
           xcode-version: "11.2.1"
           device: iPhone 11
