@@ -210,6 +210,7 @@ PLATFORMS
 DEPENDENCIES
   cocoapods (~> 1.7.0)!
   cocoapods-repo-update (~> 0.0.3)!
+  dotenv!
   fastlane (= 2.133.0)!
   rake!
 
