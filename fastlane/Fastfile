@@ -38,7 +38,6 @@ platform :ios do
   ENV[GHHELPER_REPO="automattic/newspack-ios"]
   ENV["PROJECT_NAME"]="Newspack"
   ENV["PUBLIC_CONFIG_FILE"]="config/Version.Public.xcconfig"
-  ENV["DOWNLOAD_METADATA"]="fastlane/download_metadata.swift"
   ENV["PROJECT_ROOT_FOLDER"]="./"
 
   #####################################################################################
@@ -112,7 +111,7 @@ platform :ios do
       type: "enterprise",
       team_id: get_required_env("INT_EXPORT_TEAM_ID"),
       readonly: options[:readonly] || is_ci,
-      app_identifier: ["com.newspack"])
+      app_identifier: ["com.automattic.newspack"])
   end
 
 end
