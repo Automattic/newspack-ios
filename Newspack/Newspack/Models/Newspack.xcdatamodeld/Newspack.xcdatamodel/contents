@@ -37,7 +37,7 @@
         <attribute name="parentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="slug" attributeType="String"/>
         <attribute name="taxonomy" attributeType="String"/>
-        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="categories" inverseEntity="Site"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="categories" inverseEntity="Site"/>
     </entity>
     <entity name="Media" representedClassName="Media" syncable="YES">
         <attribute name="altText" attributeType="String"/>
@@ -183,7 +183,7 @@
         <attribute name="name" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostItem" inverseName="postQueries" inverseEntity="PostItem"/>
-        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postQueries" inverseEntity="Site"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postQueries" inverseEntity="Site"/>
     </entity>
     <entity name="Revision" representedClassName="Revision" syncable="YES">
         <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -271,7 +271,7 @@
         <attribute name="slug" attributeType="String"/>
         <attribute name="tagID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="taxonomy" attributeType="String"/>
-        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="tags" inverseEntity="Site"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="tags" inverseEntity="Site"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="avatarUrls" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
@@ -287,21 +287,21 @@
         <element name="Account" positionX="-1478.8671875" positionY="-295.10546875" width="128" height="103"/>
         <element name="AccountCapabilities" positionX="-1215.9921875" positionY="-44.7890625" width="128" height="88"/>
         <element name="AccountDetails" positionX="-1479.90625" positionY="-91.0390625" width="128" height="268"/>
-        <element name="Category" positionX="-1341" positionY="-216" width="128" height="180"/>
+        <element name="Category" positionX="-1341" positionY="-216" width="128" height="178"/>
         <element name="Media" positionX="-1314" positionY="-189" width="128" height="523"/>
         <element name="MediaCache" positionX="-1359" positionY="-234" width="128" height="103"/>
         <element name="MediaItem" positionX="-1359" positionY="-234" width="128" height="193"/>
         <element name="MediaQuery" positionX="-1350" positionY="-225" width="128" height="148"/>
         <element name="Page" positionX="-1323" positionY="-198" width="128" height="465"/>
         <element name="Post" positionX="-1359" positionY="-234" width="128" height="538"/>
-        <element name="PostQuery" positionX="-1341" positionY="-225" width="128" height="148"/>
         <element name="PostItem" positionX="-1350" positionY="-234" width="128" height="178"/>
+        <element name="PostQuery" positionX="-1341" positionY="-225" width="128" height="148"/>
         <element name="Revision" positionX="-1350" positionY="-225" width="128" height="270"/>
         <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="478"/>
         <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="118"/>
         <element name="StagedMedia" positionX="-1359" positionY="-234" width="128" height="208"/>
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
-        <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>
+        <element name="Tag" positionX="-1332" positionY="-207" width="128" height="163"/>
         <element name="User" positionX="-1305" positionY="-180" width="128" height="163"/>
     </elements>
 </model>

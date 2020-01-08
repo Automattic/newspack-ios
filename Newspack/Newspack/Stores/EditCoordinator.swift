@@ -28,6 +28,8 @@ class EditCoordinator: Store {
         self.currentSiteID = siteID
         self.postItem = postItem
         self.stagedEdits = postItem?.stagedEdits ?? StagedEdits(context: CoreDataManager.shared.mainContext)
+        self.stagedEdits.postItem = postItem
+
         super.init(dispatcher: dispatcher)
     }
 
