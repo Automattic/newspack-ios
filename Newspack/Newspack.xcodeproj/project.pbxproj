@@ -31,10 +31,7 @@
 		E602E68D22C1634900795CBA /* SiteApiActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68C22C1634900795CBA /* SiteApiActions.swift */; };
 		E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68E22C1637800795CBA /* PostApiActions.swift */; };
 		E602E69222C1666C00795CBA /* AccountAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69122C1666C00795CBA /* AccountAction.swift */; };
-		E602E69422C1669B00795CBA /* AccountCapabilitiesAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69322C1669B00795CBA /* AccountCapabilitiesAction.swift */; };
-		E602E69622C166C700795CBA /* AccountDetailsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69522C166C700795CBA /* AccountDetailsAction.swift */; };
 		E602E69822C1670800795CBA /* PostAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69722C1670800795CBA /* PostAction.swift */; };
-		E602E69A22C1676500795CBA /* SiteAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69922C1676500795CBA /* SiteAction.swift */; };
 		E602E69F22C1747D00795CBA /* Dictionary+Unwrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */; };
 		E6034B1422529414007DB6DD /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6034B1322529414007DB6DD /* UserAgent.swift */; };
 		E6051DE323071A3A005AAF0B /* RemoteRevision.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6051DE223071A3A005AAF0B /* RemoteRevision.swift */; };
@@ -230,10 +227,7 @@
 		E602E68C22C1634900795CBA /* SiteApiActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteApiActions.swift; sourceTree = "<group>"; };
 		E602E68E22C1637800795CBA /* PostApiActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostApiActions.swift; sourceTree = "<group>"; };
 		E602E69122C1666C00795CBA /* AccountAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAction.swift; sourceTree = "<group>"; };
-		E602E69322C1669B00795CBA /* AccountCapabilitiesAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesAction.swift; sourceTree = "<group>"; };
-		E602E69522C166C700795CBA /* AccountDetailsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsAction.swift; sourceTree = "<group>"; };
 		E602E69722C1670800795CBA /* PostAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAction.swift; sourceTree = "<group>"; };
-		E602E69922C1676500795CBA /* SiteAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteAction.swift; sourceTree = "<group>"; };
 		E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Unwrappers.swift"; sourceTree = "<group>"; };
 		E6034B1322529414007DB6DD /* UserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
 		E6051DE223071A3A005AAF0B /* RemoteRevision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRevision.swift; sourceTree = "<group>"; };
@@ -480,10 +474,7 @@
 			isa = PBXGroup;
 			children = (
 				E602E69122C1666C00795CBA /* AccountAction.swift */,
-				E602E69322C1669B00795CBA /* AccountCapabilitiesAction.swift */,
-				E602E69522C166C700795CBA /* AccountDetailsAction.swift */,
 				E602E69722C1670800795CBA /* PostAction.swift */,
-				E602E69922C1676500795CBA /* SiteAction.swift */,
 				E6E43EA3230F1D2B00A1974E /* EditAction.swift */,
 				E6A10C6223579CE300435670 /* MediaAction.swift */,
 			);
@@ -1129,7 +1120,6 @@
 				E636C26A234FEAD800564B63 /* MediaItem+CoreDataProperties.swift in Sources */,
 				E6FB520022B967910010FDF8 /* Dictionary+KeyPath.swift in Sources */,
 				E637A6E222F0ED5D00229C1D /* RequestQueue.swift in Sources */,
-				E602E69422C1669B00795CBA /* AccountCapabilitiesAction.swift in Sources */,
 				E66CCA122303527C00F1CA59 /* PostList+CoreDataProperties.swift in Sources */,
 				E636C260234FBACC00564B63 /* MediaItemStore.swift in Sources */,
 				E61D8F6F2378C95B005FECED /* StagedMedia+CoreDataProperties.swift in Sources */,
@@ -1156,10 +1146,8 @@
 				E66CCA1E2303527D00F1CA59 /* Status+CoreDataClass.swift in Sources */,
 				E6051DEC23075A3A005AAF0B /* Dictionary+Merge.swift in Sources */,
 				E6343ADF23A077C80033D369 /* MediaSelectViewController.swift in Sources */,
-				E602E69622C166C700795CBA /* AccountDetailsAction.swift in Sources */,
 				E61BBD6822FA0470008A6D4C /* StartupHelper.swift in Sources */,
 				E636C26C234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift in Sources */,
-				E602E69A22C1676500795CBA /* SiteAction.swift in Sources */,
 				E66CCA112303527C00F1CA59 /* AccountCapabilities+CoreDataClass.swift in Sources */,
 				E66CCA152303527D00F1CA59 /* AccountCapabilities+CoreDataProperties.swift in Sources */,
 				E638804E22DFC07900B3C16A /* PostListStore.swift in Sources */,
