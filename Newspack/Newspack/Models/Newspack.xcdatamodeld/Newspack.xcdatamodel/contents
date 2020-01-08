@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15508" systemVersion="19B88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19B88" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES">
         <attribute name="networkUrl" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
@@ -161,29 +161,29 @@
         <attribute name="title" attributeType="String"/>
         <attribute name="titleRendered" attributeType="String"/>
         <attribute name="type" attributeType="String"/>
-        <relationship name="item" maxCount="1" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="post" inverseEntity="PostListItem"/>
+        <relationship name="item" maxCount="1" deletionRule="Nullify" destinationEntity="PostItem" inverseName="post" inverseEntity="PostItem"/>
         <relationship name="revisions" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Revision" inverseName="post" inverseEntity="Revision"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="posts" inverseEntity="Site"/>
     </entity>
-    <entity name="PostList" representedClassName="PostList" syncable="YES">
-        <attribute name="filter" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
-        <attribute name="hasMore" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
-        <attribute name="lastSync" attributeType="Date" defaultDateTimeInterval="568015200" usesScalarValueType="NO"/>
-        <attribute name="name" attributeType="String"/>
-        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
-        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="postLists" inverseEntity="PostListItem"/>
-        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postLists" inverseEntity="Site"/>
-    </entity>
-    <entity name="PostListItem" representedClassName="PostListItem" syncable="YES">
+    <entity name="PostItem" representedClassName="PostItem" syncable="YES">
         <attribute name="dateGMT" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="modifiedGMT" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="postID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="revisionCount" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="syncing" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <relationship name="post" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Post" inverseName="item" inverseEntity="Post"/>
-        <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostList" inverseName="items" inverseEntity="PostList"/>
-        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postListItems" inverseEntity="Site"/>
-        <relationship name="stagedEdits" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="StagedEdits" inverseName="postListItem" inverseEntity="StagedEdits"/>
+        <relationship name="postQueries" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostQuery" inverseName="items" inverseEntity="PostQuery"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postItems" inverseEntity="Site"/>
+        <relationship name="stagedEdits" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="StagedEdits" inverseName="postItem" inverseEntity="StagedEdits"/>
+    </entity>
+    <entity name="PostQuery" representedClassName="PostQuery" syncable="YES">
+        <attribute name="filter" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
+        <attribute name="hasMore" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
+        <attribute name="lastSync" attributeType="Date" defaultDateTimeInterval="568015200" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="PostItem" inverseName="postQueries" inverseEntity="PostItem"/>
+        <relationship name="site" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="postQueries" inverseEntity="Site"/>
     </entity>
     <entity name="Revision" representedClassName="Revision" syncable="YES">
         <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -225,8 +225,8 @@
         <relationship name="mediaItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MediaItem" inverseName="site" inverseEntity="MediaItem"/>
         <relationship name="mediaQueries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MediaQuery" inverseName="site" inverseEntity="MediaQuery"/>
         <relationship name="pages" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Page" inverseName="site" inverseEntity="Page"/>
-        <relationship name="postListItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostListItem" inverseName="site" inverseEntity="PostListItem"/>
-        <relationship name="postLists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostList" inverseName="site" inverseEntity="PostList"/>
+        <relationship name="postItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostItem" inverseName="site" inverseEntity="PostItem"/>
+        <relationship name="postQueries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PostQuery" inverseName="site" inverseEntity="PostQuery"/>
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Post" inverseName="site" inverseEntity="Post"/>
         <relationship name="stagedMedia" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StagedMedia" inverseName="site" inverseEntity="StagedMedia"/>
         <relationship name="statuses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Status" inverseName="site" inverseEntity="Status"/>
@@ -238,7 +238,7 @@
         <attribute name="excerpt" optional="YES" attributeType="String"/>
         <attribute name="lastModified" attributeType="Date" defaultDateTimeInterval="-595929600" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="postListItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PostListItem" inverseName="stagedEdits" inverseEntity="PostListItem"/>
+        <relationship name="postItem" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PostItem" inverseName="stagedEdits" inverseEntity="PostItem"/>
     </entity>
     <entity name="StagedMedia" representedClassName="StagedMedia" syncable="YES">
         <attribute name="altText" optional="YES" attributeType="String"/>
@@ -294,11 +294,11 @@
         <element name="MediaQuery" positionX="-1350" positionY="-225" width="128" height="148"/>
         <element name="Page" positionX="-1323" positionY="-198" width="128" height="465"/>
         <element name="Post" positionX="-1359" positionY="-234" width="128" height="538"/>
-        <element name="PostList" positionX="-1341" positionY="-225" width="128" height="148"/>
-        <element name="PostListItem" positionX="-1350" positionY="-234" width="128" height="180"/>
+        <element name="PostQuery" positionX="-1341" positionY="-225" width="128" height="148"/>
+        <element name="PostItem" positionX="-1350" positionY="-234" width="128" height="178"/>
         <element name="Revision" positionX="-1350" positionY="-225" width="128" height="270"/>
         <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="478"/>
-        <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="120"/>
+        <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="118"/>
         <element name="StagedMedia" positionX="-1359" positionY="-234" width="128" height="208"/>
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
         <element name="Tag" positionX="-1332" positionY="-207" width="128" height="165"/>

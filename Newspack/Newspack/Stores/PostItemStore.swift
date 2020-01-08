@@ -2,15 +2,15 @@ import Foundation
 import CoreData
 import WordPressFlux
 
-enum PostListState {
+enum PostItemStoreState {
     case ready
     case syncing
-    case changingCurrentList
+    case changingCurrentQuery
 }
 
 /// Responsible for wrangling the current post list and other post list data.
 ///
-class PostListStore: StatefulStore<PostListState> {
+class PostItemStore: StatefulStore<PostItemStoreState> {
     private var sessionReceipt: Receipt?
 
     let pageSize = 100
@@ -19,10 +19,10 @@ class PostListStore: StatefulStore<PostListState> {
     var queue = [Int]()
     private(set) var currentSiteID: UUID?
 
-    var currentList: PostList? {
+    var currentQuery: PostQuery? {
         didSet {
-            if oldValue != currentList {
-                state = .changingCurrentList
+            if oldValue != currentQuery {
+                state = .changingCurrentQuery
                 state = .ready
                 sync()
             }
@@ -59,12 +59,12 @@ class PostListStore: StatefulStore<PostListState> {
     ///   - siteUUID: The uuid of the site that owns the list.
     /// - Returns: The list instance of found, or nil.
     ///
-    func postListByFilter(filter:[String: AnyObject], siteUUID: UUID) -> PostList? {
+    func postQueryByFilter(filter:[String: AnyObject], siteUUID: UUID) -> PostQuery? {
         let siteStore = StoreContainer.shared.siteStore
         guard let site = siteStore.getSiteByUUID(siteUUID) else {
             return nil
         }
-        let fetchRequest = PostList.defaultFetchRequest()
+        let fetchRequest = PostQuery.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "filter == %@ AND site == %@", filter as CVarArg, site)
 
         let context = CoreDataManager.shared.mainContext
@@ -76,29 +76,29 @@ class PostListStore: StatefulStore<PostListState> {
         } catch {
             // TODO: Handle error
             let error = error as NSError
-            LogError(message: "postListByFilter: " + error.localizedDescription)
+            LogError(message: "postQueryByFilter: " + error.localizedDescription)
             return nil
         }
     }
 
-    func postListByName(name: String, siteUUID: UUID) -> PostList? {
+    func postQueryByName(name: String, siteUUID: UUID) -> PostQuery? {
         let siteStore = StoreContainer.shared.siteStore
         guard let site = siteStore.getSiteByUUID(siteUUID) else {
             return nil
         }
-        let fetchRequest = PostList.defaultFetchRequest()
+        let fetchRequest = PostQuery.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "name == 'all' AND site == %@", site)
 
         let context = CoreDataManager.shared.mainContext
         do {
-            guard let list = try context.fetch(fetchRequest).first else {
+            guard let query = try context.fetch(fetchRequest).first else {
                 return nil
             }
-            return list
+            return query
         } catch {
             // TODO: Handle error
             let error = error as NSError
-            LogError(message: "postListByName: " + error.localizedDescription)
+            LogError(message: "postQueryByName: " + error.localizedDescription)
             return nil
         }
     }
@@ -109,27 +109,27 @@ class PostListStore: StatefulStore<PostListState> {
 
 /// Extension for wrangling API queries.
 ///
-extension PostListStore {
+extension PostItemStore {
 
     /// Get the number of pages for the specified list that are currently synced
     /// and cached
     ///
-    /// - Parameter list: The list in question.
+    /// - Parameter query: The list in question.
     /// - Returns: The number of pages
     ///
-    func numberOfPagesSyncedForList(list: PostList) -> Int {
-        return Int(ceil(Float(list.items.count) / Float(pageSize)))
+    func numberOfPagesSyncedForQuery(query: PostQuery) -> Int {
+        return Int(ceil(Float(query.items.count) / Float(pageSize)))
     }
 
     /// Checks to see if enough time has passed since the specified list's last
     /// sync for it to be synced again.
     ///
-    /// - Parameter list: The list in question.
+    /// - Parameter query: The list in question.
     /// - Returns: True if the list can be synced.
     ///
-    func timeForNextSyncForList(_ list: PostList) -> Bool {
+    func timeForNextSyncForQuery(_ query: PostQuery) -> Bool {
         let now = Date()
-        let then = list.lastSync.addingTimeInterval(syncInterval)
+        let then = query.lastSync.addingTimeInterval(syncInterval)
         return now > then
     }
 
@@ -141,47 +141,47 @@ extension PostListStore {
     ///
     /// - Parameter force: Whether to force a sync, ignoring the last synced date.
     ///
-    func sync(force:Bool = false) {
+    func sync(force: Bool = false) {
         guard
-            let list = currentList,
+            let query = currentQuery,
             state != .syncing
         else {
             return
         }
 
-        if !force && !timeForNextSyncForList(list) {
+        if !force && !timeForNextSyncForQuery(query) {
             return
         }
 
-        let pages = numberOfPagesSyncedForList(list: list)
+        let pages = numberOfPagesSyncedForQuery(query: query)
         queue = pages > 1 ? [Int](1...pages) : [1]
         queue.reverse()
-        syncItemsForList(list: list, page: queue.popLast()!)
+        syncItemsForQuery(query: query, page: queue.popLast()!)
     }
 
     /// Sync's the next unsynced page of items.
     ///
     func syncNextPage() {
         guard
-            let list = currentList,
-            list.hasMore
+            let query = currentQuery,
+            query.hasMore
         else {
             return
         }
 
-        let page = numberOfPagesSyncedForList(list: list)
+        let page = numberOfPagesSyncedForQuery(query: query)
         if page < maxPages  {
-            syncItemsForList(list: list, page: page + 1)
+            syncItemsForQuery(query: query, page: page + 1)
         }
     }
 
     /// Sync the post list items for the specified list.
     ///
     /// - Parameters:
-    ///   - list: A PostList instance
+    ///   - query: A PostQuery instance
     ///   - page: The page to sync. Default is 1.
     ///
-    func syncItemsForList(list: PostList, page: Int = 1) {
+    func syncItemsForQuery(query: PostQuery, page: Int = 1) {
         if state == .syncing {
             return
         }
@@ -189,7 +189,7 @@ extension PostListStore {
         state = .syncing
 
         let service = ApiService.postService()
-        service.fetchPostIDs(filter: list.filter, page: page)
+        service.fetchPostIDs(filter: query.filter, page: page)
     }
 
     /// Handles the postsFetched action.
@@ -201,7 +201,7 @@ extension PostListStore {
 
         guard
             let siteID = currentSiteID,
-            let list = postListByFilter(filter: action.filter, siteUUID: siteID)
+            let query = postQueryByFilter(filter: action.filter, siteUUID: siteID)
             else {
                 // TODO: Handle error.
                 LogError(message: "handlePostIDsFetched: A value was unexpectedly nil.")
@@ -212,14 +212,14 @@ extension PostListStore {
             state = .ready
 
             if let page = queue.popLast() {
-                syncItemsForList(list: list, page: page)
+                syncItemsForQuery(query: query, page: page)
             }
         }
 
         guard !action.isError() else {
             // TODO: Inspect and handle error.
             // For now assume we're out of pages.
-            list.hasMore = action.hasMore
+            query.hasMore = action.hasMore
             CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
             queue.removeAll()
             return
@@ -231,31 +231,31 @@ extension PostListStore {
             return
         }
 
-        let listObjID = list.objectID
+        let queryObjID = query.objectID
         CoreDataManager.shared.performOnWriteContext { (context) in
-            let list = context.object(with: listObjID) as! PostList
-            list.hasMore = remotePostIDs.count == self.pageSize
+            let query = context.object(with: queryObjID) as! PostQuery
+            query.hasMore = remotePostIDs.count == self.pageSize
 
             if action.page == 1 {
-                list.lastSync = Date()
+                query.lastSync = Date()
             }
 
             for remotePostID in remotePostIDs {
-                let item: PostListItem
-                let fetchRequest = PostListItem.defaultFetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "%@ IN postLists AND postID = %ld", list, remotePostID.postID)
+                let item: PostItem
+                let fetchRequest = PostItem.defaultFetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "%@ IN postQueries AND postID = %ld",query, remotePostID.postID)
 
                 do {
-                    item = try context.fetch(fetchRequest).first ?? PostListItem(context: context)
+                    item = try context.fetch(fetchRequest).first ?? PostItem(context: context)
                 } catch {
                     let error = error as NSError
                     LogError(message: "handlePostIDsFetched: " + error.localizedDescription)
                     continue
                 }
 
-                self.updatePostListItem(item, with: remotePostID)
-                item.site = list.site
-                list.addToItems(item)
+                self.updatePostItem(item, with: remotePostID)
+                item.site = query.site
+                query.addToItems(item)
             }
             CoreDataManager.shared.saveContext(context: context)
         }
@@ -267,7 +267,7 @@ extension PostListStore {
     /// - Parameters:
     ///   - item: the post list item to update
     ///   - remoteID: the remote post ID
-    func updatePostListItem(_ item: PostListItem, with remoteID: RemotePostID) {
+    func updatePostItem(_ item: PostItem, with remoteID: RemotePostID) {
         item.postID = remoteID.postID
         item.dateGMT = remoteID.dateGMT
         item.modifiedGMT = remoteID.modifiedGMT
@@ -280,13 +280,13 @@ extension PostListStore {
 
 /// Extension for grouping default post list related things.
 ///
-extension PostListStore {
+extension PostItemStore {
 
     /// Returns a default list of post lists for the app.
     ///
     /// - Returns: An array of PostListQuery instances.
     ///
-    static func defaultPostLists() -> Array<PostListQuery> {
+    static func defaultPostQueries() -> Array<PostListQuery> {
         return [
             PostListQuery(name: "all", filter: ["status": ["publish","draft","pending","private","future"] as AnyObject])
         ]
@@ -298,7 +298,7 @@ extension PostListStore {
     ///
     func handleSessionChanged() {
         guard SessionManager.shared.state == .initialized else {
-            currentList = nil
+            currentQuery = nil
             return
         }
         guard
@@ -307,11 +307,11 @@ extension PostListStore {
             else {
                 // TODO: Handle missing site error
                 LogError(message: "handleSessionChanged: A value was unexpectedly nil.")
-                currentList = nil
+                currentQuery = nil
                 return
         }
-        setupDefaultPostListsIfNeeded(siteUUID: site.uuid, onComplete: {
-            self.currentList = site.postLists.first
+        setupDefaultPostQueriesIfNeeded(siteUUID: site.uuid, onComplete: {
+            self.currentQuery = site.postQueries.first
         })
     }
 
@@ -319,17 +319,17 @@ extension PostListStore {
     /// Creates any that are missing.
     /// Ideally this should be set up as part of an initial sync.
     ///
-    func setupDefaultPostListsIfNeeded(siteUUID: UUID, onComplete: @escaping () -> Void ) {
+    func setupDefaultPostQueriesIfNeeded(siteUUID: UUID, onComplete: @escaping () -> Void ) {
         let store = StoreContainer.shared.siteStore
         guard let siteObjID = store.getSiteByUUID(siteUUID)?.objectID else {
             // TODO: Handle no site.
-            LogError(message: "setupDefaultPostListsIfNeeded: Unable to get site by UUID.")
+            LogError(message: "setupDefaultPostQueriesIfNeeded: Unable to get site by UUID.")
             return
         }
 
         CoreDataManager.shared.performOnWriteContext { (context) in
             let site = context.object(with: siteObjID) as! Site
-            let fetchRequest = PostList.defaultFetchRequest()
+            let fetchRequest = PostQuery.defaultFetchRequest()
 
             defer {
                 DispatchQueue.main.async {
@@ -338,7 +338,7 @@ extension PostListStore {
             }
             guard let count = try? context.count(for: fetchRequest) else {
                 // TODO: Handle core data error.
-                LogError(message: "setupDefaultPostListsIfNeeded: Unable to get count from NSManagedObjectContext.")
+                LogError(message: "setupDefaultPostQueriesIfNeeded: Unable to get count from NSManagedObjectContext.")
                 return
             }
 
@@ -347,12 +347,12 @@ extension PostListStore {
                 return
             }
 
-            for item in PostListStore.defaultPostLists() {
-                let list = PostList(context: context)
-                list.uuid = UUID()
-                list.name = item.name
-                list.filter = item.filter
-                list.site = site
+            for item in PostItemStore.defaultPostQueries() {
+                let query = PostQuery(context: context)
+                query.uuid = UUID()
+                query.name = item.name
+                query.filter = item.filter
+                query.site = site
             }
 
             CoreDataManager.shared.saveContext(context: context)

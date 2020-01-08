@@ -31,8 +31,8 @@ extension Site {
     @NSManaged public var mediaItems: Set<MediaItem>!
     @NSManaged public var mediaQueries: Set<MediaQuery>!
     @NSManaged public var pages: Set<Page>!
-    @NSManaged public var postListItems: Set<PostListItem>!
-    @NSManaged public var postLists: Set<PostList>!
+    @NSManaged public var postItems: Set<PostItem>!
+    @NSManaged public var postQueries: Set<PostQuery>!
     @NSManaged public var posts: Set<Post>!
     @NSManaged public var stagedMedia: Set<Status>!
     @NSManaged public var statuses: Set<Status>!
@@ -129,34 +129,34 @@ extension Site {
 // MARK: Generated accessors for postListItems
 extension Site {
 
-    @objc(addPostListItemsObject:)
-    @NSManaged public func addToPostListItems(_ value: PostListItem)
+    @objc(addPostItemsObject:)
+    @NSManaged public func addToPostItems(_ value: PostItem)
 
-    @objc(removePostListItemsObject:)
-    @NSManaged public func removeFromPostListItems(_ value: PostListItem)
+    @objc(removePostItemsObject:)
+    @NSManaged public func removeFromPostItems(_ value: PostItem)
 
-    @objc(addPostListItems:)
-    @NSManaged public func addToPostListItems(_ values: Set<PostListItem>)
+    @objc(addPostItems:)
+    @NSManaged public func addToPostItems(_ values: Set<PostItem>)
 
-    @objc(removePostListItems:)
-    @NSManaged public func removeFromPostListItems(_ values: Set<PostListItem>)
+    @objc(removePostItems:)
+    @NSManaged public func removeFromPostItems(_ values: Set<PostItem>)
 
 }
 
 // MARK: Generated accessors for postLists
 extension Site {
 
-    @objc(addPostListsObject:)
-    @NSManaged public func addToPostLists(_ value: PostList)
+    @objc(addPostQueriesObject:)
+    @NSManaged public func addToPostQueries(_ value: PostQuery)
 
-    @objc(removePostListsObject:)
-    @NSManaged public func removeFromPostLists(_ value: PostList)
+    @objc(removePostQueriesObject:)
+    @NSManaged public func removeFromPostQueries(_ value: PostQuery)
 
-    @objc(addPostLists:)
-    @NSManaged public func addToPostLists(_ values: Set<PostList>)
+    @objc(addPostQueries:)
+    @NSManaged public func addToPostQueries(_ values: Set<PostQuery>)
 
-    @objc(removePostLists:)
-    @NSManaged public func removeFromPostLists(_ values: Set<PostList>)
+    @objc(removePostQueries:)
+    @NSManaged public func removeFromPostQueries(_ values: Set<PostQuery>)
 
 }
 

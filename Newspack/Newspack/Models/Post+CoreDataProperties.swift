@@ -41,7 +41,7 @@ extension Post {
 
     @NSManaged public var revisions: Set<Revision>?
     @NSManaged public var site: Site!
-    @NSManaged public var item: PostListItem!
+    @NSManaged public var item: PostItem!
 
 }
 

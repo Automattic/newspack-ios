@@ -3,8 +3,8 @@ import CoreData
 import WordPressFlux
 import WordPressUI
 
-/// Displays a list of posts for the current PostList.
-/// State is divided between the PostListStore which is responsible for syncing,
+/// Displays a list of posts for the current PostQuery.
+/// State is divided between the PostItemStore which is responsible for syncing,
 /// and identifying the current post list being worked on, and CoreData via an
 /// NSFetchedResultsControllerDelegate which is responsible for detecting and
 /// responding to changes in the data model.
@@ -14,11 +14,11 @@ class PostListViewController: UITableViewController {
     let cellIdentifier = "PostCellIdentifier"
     let sortField = "postID"
 
-    // PostListStore receipt.
-    var postListReceipt: Receipt?
+    // PostItemStore receipt.
+    var postItemReceipt: Receipt?
 
-    lazy var resultsController: NSFetchedResultsController<PostListItem> = {
-        let fetchRequest = PostListItem.defaultFetchRequest()
+    lazy var resultsController: NSFetchedResultsController<PostItem> = {
+        let fetchRequest = PostItem.defaultFetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: sortField, ascending: false)]
         return NSFetchedResultsController(fetchRequest: fetchRequest,
                                           managedObjectContext: CoreDataManager.shared.mainContext,
@@ -30,8 +30,8 @@ class PostListViewController: UITableViewController {
         super.init(coder: aDecoder)
 
         resultsController.delegate = self
-        postListReceipt = StoreContainer.shared.postListStore.onStateChange({ [weak self] state in
-            self?.handlePostListStateChanged(oldState: state.0, newState: state.1)
+        postItemReceipt = StoreContainer.shared.postItemStore.onStateChange({ [weak self] state in
+            self?.handlePostItemStoreStateChanged(oldState: state.0, newState: state.1)
         })
     }
 
@@ -50,8 +50,8 @@ class PostListViewController: UITableViewController {
     }
 
     func configureResultsController() {
-        if let postList = StoreContainer.shared.postListStore.currentList {
-            resultsController.fetchRequest.predicate = NSPredicate(format: "%@ in postLists", postList)
+        if let postQuery = StoreContainer.shared.postItemStore.currentQuery {
+            resultsController.fetchRequest.predicate = NSPredicate(format: "%@ in postQueries", postQuery)
         }
         try? resultsController.performFetch()
 
@@ -63,7 +63,7 @@ class PostListViewController: UITableViewController {
     }
 
     @IBAction func handleCreatePostButtonTapped() {
-        guard let site = StoreContainer.shared.postListStore.currentList?.site else {
+        guard let site = StoreContainer.shared.postItemStore.currentQuery?.site else {
             return
         }
         let coordinator = EditCoordinator(postItem: nil, dispatcher: SessionManager.shared.sessionDispatcher, siteID: site.uuid)
@@ -78,24 +78,24 @@ extension PostListViewController {
 
     @objc func handleRefreshControl() {
         //TODO: Dispatch action rather than calling sync directly.
-        StoreContainer.shared.postListStore.sync(force: true)
+        StoreContainer.shared.postItemStore.sync(force: true)
     }
 
     func syncIfNeeded() {
         //TODO: Dispatch action rather than calling sync directly.
-        StoreContainer.shared.postListStore.sync()
+        StoreContainer.shared.postItemStore.sync()
     }
 }
 
 // MARK: - PostList State Related methods
 extension PostListViewController {
 
-    func handlePostListStateChanged(oldState: PostListState, newState: PostListState) {
+    func handlePostItemStoreStateChanged(oldState: PostItemStoreState, newState: PostItemStoreState) {
         if oldState == .syncing {
             refreshControl?.endRefreshing()
             tableView.removeGhostContent()
 
-        } else if oldState == .changingCurrentList {
+        } else if oldState == .changingCurrentQuery {
             configureResultsController()
         }
     }
@@ -120,7 +120,7 @@ extension PostListViewController {
 
         let count = resultsController.fetchedObjects?.count ?? 0
         if count > 0 && indexPath.row > (count - 5)  {
-            StoreContainer.shared.postListStore.syncNextPage()
+            StoreContainer.shared.postItemStore.syncNextPage()
         }
     }
 

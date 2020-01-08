@@ -8,7 +8,7 @@ import Aztec
 class EditCoordinator: Store {
 
     private let currentSiteID: UUID
-    var postItem: PostListItem?
+    var postItem: PostItem?
     let stagedEdits: StagedEdits
     var createdPostUUID: UUID? // An identifier used to pair an api action to edits being made.
 
@@ -17,14 +17,14 @@ class EditCoordinator: Store {
             return false
         }
 
-        if let post = stagedEdits.postListItem?.post {
+        if let post = stagedEdits.postItem?.post {
             return stagedEdits.title != post.title || stagedEdits.content != post.content
         }
 
         return true
     }
 
-    init(postItem: PostListItem?, dispatcher: ActionDispatcher, siteID: UUID) {
+    init(postItem: PostItem?, dispatcher: ActionDispatcher, siteID: UUID) {
         self.currentSiteID = siteID
         self.postItem = postItem
         self.stagedEdits = postItem?.stagedEdits ?? StagedEdits(context: CoreDataManager.shared.mainContext)
@@ -104,7 +104,7 @@ extension EditCoordinator {
     func handleAutosaveAction(title: String, content: String) {
         handleStageChangesAction(title: title, content: content)
 
-        guard let item = stagedEdits.postListItem else {
+        guard let item = stagedEdits.postItem else {
             // This is our first remote autosave, so create a new draft post and post list item.
             createPostWithStatus(status: "draft")
             return
@@ -133,7 +133,7 @@ extension EditCoordinator {
 extension EditCoordinator {
 
     func autosave() {
-        guard let postID = stagedEdits.postListItem?.postID else {
+        guard let postID = stagedEdits.postItem?.postID else {
             // TODO: Log this
             LogError(message: "autosave: Unable to get post by postID.")
             return
@@ -146,7 +146,7 @@ extension EditCoordinator {
     }
 
     func createOrUpdatePostWithStatus(status: String) {
-        guard let post = stagedEdits.postListItem?.post else {
+        guard let post = stagedEdits.postItem?.post else {
             createPostWithStatus(status: status)
             return
         }
@@ -204,7 +204,7 @@ extension EditCoordinator {
 
         guard
             let remoteRevision = action.payload,
-            let post = stagedEdits.postListItem?.post
+            let post = stagedEdits.postItem?.post
         else {
             // This is a critical error and should not be able to happen.
             LogError(message: "handleAutosaveApiAction: Critical Error. A value was unexpectedly nil.")
@@ -304,22 +304,22 @@ extension EditCoordinator {
         // Use the payload to create a new Post and PostListItem.
         // The item should be assigned to the "ALL" PostList.
 
-        guard let listObjID = StoreContainer.shared.postListStore.postListByName(name: "all", siteUUID: currentSiteID)?.objectID else {
+        guard let queryObjID = StoreContainer.shared.postItemStore.postQueryByName(name: "all", siteUUID: currentSiteID)?.objectID else {
             LogError(message: "handlePostCreatedApiAction: A value was unexpectedly nil.")
             return
         }
         let editsID = stagedEdits.objectID
 
         CoreDataManager.shared.performOnWriteContext { (context) in
-            let list = context.object(with: listObjID) as! PostList
+            let query = context.object(with: queryObjID) as! PostQuery
             let stagedEdits = context.object(with: editsID) as! StagedEdits
 
             let postStore = StoreContainer.shared.postStore
             let post = Post(context: context)
             postStore.updatePost(post, with: remotePost)
-            post.site = list.site
+            post.site = query.site
 
-            let postItem = PostListItem(context: context)
+            let postItem = PostItem(context: context)
             postItem.postID = post.postID
             postItem.dateGMT = post.dateGMT
             postItem.modifiedGMT = post.modifiedGMT
@@ -327,8 +327,8 @@ extension EditCoordinator {
 
             postItem.stagedEdits = stagedEdits
             postItem.post = post
-            postItem.site = list.site
-            postItem.addToPostLists(list)
+            postItem.site = query.site
+            postItem.addToPostQueries(query)
 
             CoreDataManager.shared.saveContext(context: context)
         }
@@ -357,7 +357,7 @@ extension EditCoordinator {
         let itemObjID = postItem.objectID
         CoreDataManager.shared.performOnWriteContext { (context) in
             let post = context.object(with: postObjID) as! Post
-            let postItem = context.object(with: itemObjID) as! PostListItem
+            let postItem = context.object(with: itemObjID) as! PostItem
 
             let postStore = StoreContainer.shared.postStore
             postStore.updatePost(post, with: remotePost)
