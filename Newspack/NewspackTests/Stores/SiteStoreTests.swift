@@ -52,7 +52,6 @@ class SiteStoreTests: BaseTest {
     func testUpdateSite() {
         let account = self.account!
         var remoteSettings = self.remoteSettings!
-        let dispatcher = ActionDispatcher()
         let testTitle = "Test Title"
         var site: Site?
 
@@ -71,7 +70,7 @@ class SiteStoreTests: BaseTest {
         wait(for: [expect1], timeout: 1)
 
         site = account.sites.first
-        siteStore = SiteStore(dispatcher: dispatcher, siteID: site!.uuid)
+        siteStore = SiteStore(dispatcher: testDispatcher, siteID: site!.uuid)
         let receipt = siteStore.onChange {}
 
         var dict = Loader.jsonObject(for: "remote-site-settings") as! [String: AnyObject]
@@ -80,7 +79,7 @@ class SiteStoreTests: BaseTest {
 
         // Error when missing account
         let action = SiteFetchedApiAction(payload: remoteSettings, error: nil)
-        dispatcher.dispatch(action)
+        testDispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
 

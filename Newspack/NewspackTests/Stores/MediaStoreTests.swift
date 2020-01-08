@@ -22,7 +22,7 @@ class MediaStoreTests: BaseTest {
         site!.account = account
 
         // Test store
-        store = MediaStore(dispatcher: .global, siteID: site!.uuid)
+        store = MediaStore(dispatcher: testDispatcher, siteID: site!.uuid)
         CoreDataManager.shared.saveContext(context: context)
     }
 

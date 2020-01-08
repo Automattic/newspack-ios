@@ -15,7 +15,7 @@ class AccountDetailsStoreTests: BaseTest {
         // Test account
         account = accountStore!.createAccount(authToken: "testToken", forNetworkAt: "example.com")
 
-        store = AccountDetailsStore(dispatcher: .global, accountID: account!.uuid)
+        store = AccountDetailsStore(dispatcher: testDispatcher, accountID: account!.uuid)
 
         // Test remote user
         let response = Loader.jsonObject(for: "remote-user-edit") as! [String: AnyObject]
@@ -31,7 +31,6 @@ class AccountDetailsStoreTests: BaseTest {
     }
 
     func testUpdateAccountDetailsCreatesDetails() {
-        let dispatcher = ActionDispatcher.global
         let account = self.account!
         let remoteUser = self.remoteUser!
 
@@ -39,7 +38,7 @@ class AccountDetailsStoreTests: BaseTest {
 
         let receipt = store?.onChange{}
         let action = AccountFetchedApiAction(payload: remoteUser, error: nil)
-        dispatcher.dispatch(action)
+        testDispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
 
@@ -53,13 +52,12 @@ class AccountDetailsStoreTests: BaseTest {
     }
 
     func testUpdateAccountDetailsUpdatesExistingDetails() {
-        let dispatcher = ActionDispatcher.global
         let account = self.account!
         var remoteUser = self.remoteUser!
 
         let receipt = store?.onChange{}
         var action = AccountFetchedApiAction(payload: remoteUser, error: nil)
-        dispatcher.dispatch(action)
+        testDispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
 
@@ -77,7 +75,7 @@ class AccountDetailsStoreTests: BaseTest {
         remoteUser = RemoteUser(dict: dict)
 
         action = AccountFetchedApiAction(payload: remoteUser, error: nil)
-        dispatcher.dispatch(action)
+        testDispatcher.dispatch(action)
 
         let expect2 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
             XCTAssertNotNil(account.details)

@@ -19,7 +19,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         // Test site
         var response = Loader.jsonObject(for: "remote-site-settings") as! [String: AnyObject]
         let settings = RemoteSiteSettings(dict: response)
-        let siteStore = SiteStore(dispatcher: .global)
+        let siteStore = SiteStore(dispatcher: testDispatcher)
 
         let context = account!.managedObjectContext!
         let site = Site(context: context)
@@ -29,7 +29,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         siteStore.updateSite(site: site, withSettings: settings)
         CoreDataManager.shared.saveContext(context: context)
 
-        store = AccountCapabilitiesStore(dispatcher: .global, siteID: account!.sites.first!.uuid)
+        store = AccountCapabilitiesStore(dispatcher: testDispatcher, siteID: account!.sites.first!.uuid)
 
         // Test remote user
         response = Loader.jsonObject(for: "remote-user-edit") as! [String: AnyObject]
@@ -55,8 +55,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         XCTAssertNil(site.capabilities)
 
         let action = AccountFetchedApiAction(payload: remoteUser, error: nil)
-        let dispatcher = ActionDispatcher.global
-        dispatcher.dispatch(action)
+        testDispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
 
@@ -71,7 +70,6 @@ class AccountCapabilitiesStoreTests: BaseTest {
     }
 
     func testUpdateAccountCapabilitiesUpdatesExistingCapabilities() {
-        let dispatcher = ActionDispatcher.global
         let account = self.account!
         var remoteUser = self.remoteUser!
         let site = account.sites.first!
@@ -79,7 +77,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
 
         let receipt = store?.onChange{}
         var action = AccountFetchedApiAction(payload: remoteUser, error: nil)
-        dispatcher.dispatch(action)
+        testDispatcher.dispatch(action)
 
         XCTAssertNotNil(receipt)
         let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
@@ -95,7 +93,7 @@ class AccountCapabilitiesStoreTests: BaseTest {
         remoteUser = RemoteUser(dict: dict)
 
         action = AccountFetchedApiAction(payload: remoteUser, error: nil)
-        dispatcher.dispatch(action)
+        testDispatcher.dispatch(action)
 
         let expect2 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
             XCTAssertNotNil(site.capabilities)
@@ -177,10 +175,9 @@ class AccountCapabilitiesStoreTests: BaseTest {
         let account = self.account!
         let site = account.sites.first!
         let remoteUser = self.remoteUser!
-        let dispatcher = ActionDispatcher.global
 
         let action = AccountFetchedApiAction(payload: remoteUser, error: nil)
-        dispatcher.dispatch(action)
+        testDispatcher.dispatch(action)
 
         let expect = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
             XCTAssertTrue(site.hasCapability(string: "moderate_comments"))
@@ -196,10 +193,9 @@ class AccountCapabilitiesStoreTests: BaseTest {
         let account = self.account!
         let site = account.sites.first!
         let remoteUser = self.remoteUser!
-        let dispatcher = ActionDispatcher.global
 
         let action = AccountFetchedApiAction(payload: remoteUser, error: nil)
-        dispatcher.dispatch(action)
+        testDispatcher.dispatch(action)
 
         let expect = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
             XCTAssertTrue(site.hasRole(string: "editor"))

@@ -6,7 +6,7 @@ import OHHTTPStubs
 /// Base class for all remote unit tests.
 /// Borrowed from WordPressKit-iOS.
 ///
-class RemoteTestCase: XCTestCase {
+class RemoteTestCase: BaseTest {
 
     /// Response content types
     ///

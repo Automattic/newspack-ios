@@ -20,7 +20,7 @@ class StagedMediaStoreTests: BaseTest {
         site!.account = account
 
         // Test store
-        store = StagedMediaStore(dispatcher: .global, siteID: site!.uuid)
+        store = StagedMediaStore(dispatcher: testDispatcher, siteID: site!.uuid)
         CoreDataManager.shared.saveContext(context: context)
     }
 
