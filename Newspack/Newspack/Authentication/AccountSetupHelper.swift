@@ -14,8 +14,7 @@ class AccountSetupHelper {
     private let network: String
 
     deinit {
-        // TODO: remove this after confirming de initialization when finished.
-        print("Network Service Remote: deinit")
+        LogDebug(message: "AccountSetupHelper: deinit")
     }
 
     init(token: String, network: String) {
