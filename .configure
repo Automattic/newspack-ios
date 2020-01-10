@@ -1,11 +1,16 @@
 {
   "project_name": "newspack",
   "branch": "master",
-  "pinned_hash": "5a3a9299cdf90ff3ca93dcf8f9d3fd703ad47cc6",
+  "pinned_hash": "ef38654e2e547367180949304ea2d6a8d88263d9",
   "files_to_copy": [
     {
       "file": "iOS/newspack/newspack_app_credentials.json",
       "destination": ".configure-files/newspack_app_credentials.json",
+      "encrypt": true
+    },
+    {
+      "file": "iOS/newspack/project.env",
+      "destination": ".configure-files/project.env",
       "encrypt": true
     },
     {
