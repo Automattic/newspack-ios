@@ -57,7 +57,7 @@ jobs:
           name: Prepare Artifacts
           command: |
             mkdir -p Artifacts
-            mv "Scripts/fastlane/comment.json" "Artifacts/comment.json"
+            mv "fastlane/comment.json" "Artifacts/comment.json"
       - store_artifacts:
           path: Artifacts
           destination: Artifacts
