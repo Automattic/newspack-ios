@@ -162,6 +162,7 @@
 		E6A4D742230A08A700929376 /* StagedEdits+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A4D740230A08A600929376 /* StagedEdits+CoreDataProperties.swift */; };
 		E6A4D743230A08A700929376 /* StagedEdits+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A4D741230A08A700929376 /* StagedEdits+CoreDataClass.swift */; };
 		E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */; };
+		E6AC98B823CCD5DE00E95381 /* MainNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AC98B723CCD5DE00E95381 /* MainNavController.swift */; };
 		E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */; };
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
 		E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE56AE22B19001004895E5 /* ModelFactory.swift */; };
@@ -366,6 +367,7 @@
 		E6A4D740230A08A600929376 /* StagedEdits+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StagedEdits+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E6A4D741230A08A700929376 /* StagedEdits+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StagedEdits+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceRemote.swift; sourceTree = "<group>"; };
+		E6AC98B723CCD5DE00E95381 /* MainNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavController.swift; sourceTree = "<group>"; };
 		E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-ids-edit.json"; sourceTree = "<group>"; };
 		E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-edit.json"; sourceTree = "<group>"; };
 		E6CE56AE22B19001004895E5 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
@@ -662,6 +664,7 @@
 			isa = PBXGroup;
 			children = (
 				E6710A1522CE9ED00036156E /* Transitions */,
+				E6AC98B723CCD5DE00E95381 /* MainNavController.swift */,
 				E6138FD32211FE86004E5B91 /* InitialViewController.swift */,
 				E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */,
 				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
@@ -1217,6 +1220,7 @@
 				E66CCA0A2303527C00F1CA59 /* Page+CoreDataProperties.swift in Sources */,
 				E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */,
 				E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */,
+				E6AC98B823CCD5DE00E95381 /* MainNavController.swift in Sources */,
 				E68B2A0123048E050021283C /* EditorAttachmentImageProvider.swift in Sources */,
 				E66CCA0E2303527C00F1CA59 /* Tag+CoreDataProperties.swift in Sources */,
 				E6500F9A2368B63800CB8C6C /* ImageStore.swift in Sources */,

@@ -65,36 +65,13 @@ extension AppDelegate {
     }
 
     func handleSessionChange() {
-        guard let navController = window?.rootViewController as? UINavigationController else {
-            return
-        }
-        defer {
-            navController.popToRootViewController(animated: true)
-        }
         let sessionState = SessionManager.shared.state
-        if sessionState == .uninitialized {
-            handleUnauthenticatedSession()
-        } else if sessionState == .initialized {
+        if sessionState == .initialized {
             StartupHelper.resetSyncFlags()
             StartupHelper.purgeStaleStagedEdits()
         }
-
     }
 
-    func handleUnauthenticatedSession() {
-        guard let navController = window?.rootViewController as? UINavigationController else {
-            return
-        }
-
-        if navController.viewControllers.first is InitialViewController {
-            return
-        }
-
-        let controller = MainStoryboard.instantiateViewController(withIdentifier: .initial)
-        var controllers = navController.viewControllers
-        controllers.insert(controller, at: 0)
-        navController.setViewControllers(controllers, animated: false)
-    }
 }
 
 extension AppDelegate {
