@@ -103,7 +103,6 @@
 		E65875A823A811F100185C75 /* MediaItemStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A723A811F100185C75 /* MediaItemStoreTests.swift */; };
 		E65875AA23A8139500185C75 /* StagedMediaImporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */; };
 		E65875AC23A813EA00185C75 /* StagedMediaStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875AB23A813EA00185C75 /* StagedMediaStoreTests.swift */; };
-		E66231CE22F52243004F6DEC /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66231CD22F52243004F6DEC /* PostCell.swift */; };
 		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
 		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
 		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
@@ -305,7 +304,6 @@
 		E65875A723A811F100185C75 /* MediaItemStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemStoreTests.swift; sourceTree = "<group>"; };
 		E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedMediaImporterTests.swift; sourceTree = "<group>"; };
 		E65875AB23A813EA00185C75 /* StagedMediaStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedMediaStoreTests.swift; sourceTree = "<group>"; };
-		E66231CD22F52243004F6DEC /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
 		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
 		E66B7D4422162754004355D3 /* replace_secrets.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = replace_secrets.rb; sourceTree = "<group>"; };
@@ -668,7 +666,6 @@
 				E6138FD32211FE86004E5B91 /* InitialViewController.swift */,
 				E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */,
 				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
-				E66231CD22F52243004F6DEC /* PostCell.swift */,
 				E62982292303667E00E8CEC7 /* EditorViewController.swift */,
 				E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */,
 				E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */,
@@ -1190,7 +1187,6 @@
 				E629822A2303667E00E8CEC7 /* EditorViewController.swift in Sources */,
 				E66CCA1B2303527D00F1CA59 /* User+CoreDataClass.swift in Sources */,
 				E6051DE323071A3A005AAF0B /* RemoteRevision.swift in Sources */,
-				E66231CE22F52243004F6DEC /* PostCell.swift in Sources */,
 				E66CCA0F2303527C00F1CA59 /* Revision+CoreDataProperties.swift in Sources */,
 				E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */,
 				E602E68D22C1634900795CBA /* SiteApiActions.swift in Sources */,

@@ -55,10 +55,6 @@ class PostListViewController: UITableViewController {
         }
         try? resultsController.performFetch()
 
-        if resultsController.fetchedObjects?.count == 0 {
-            let options = GhostOptions(reuseIdentifier: cellIdentifier, rowsPerSection: [3])
-            tableView.displayGhostContent(options: options)
-        }
         tableView.reloadData()
     }
 
@@ -93,7 +89,6 @@ extension PostListViewController {
     func handlePostItemStoreStateChanged(oldState: PostItemStoreState, newState: PostItemStoreState) {
         if oldState == .syncing {
             refreshControl?.endRefreshing()
-            tableView.removeGhostContent()
 
         } else if oldState == .changingCurrentQuery {
             configureResultsController()
@@ -139,18 +134,11 @@ extension PostListViewController {
         cell.accessoryType = .disclosureIndicator
 
         if let post = listItem.post {
-            cell.stopGhostAnimation()
-            cell.isGhostableDisabled = true
-
             cell.textLabel?.text = post.titleRendered
             if listItem.syncing {
                 cell.accessoryView = UIActivityIndicatorView(style: .medium)
             }
         } else {
-            cell.isGhostableDisabled = false
-            (cell as? PostCell)?.ghostAnimationWillStart()
-            cell.startGhostAnimation()
-
             cell.textLabel?.text = ""
         }
     }
