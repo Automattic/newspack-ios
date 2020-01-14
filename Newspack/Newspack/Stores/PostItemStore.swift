@@ -50,6 +50,17 @@ class PostItemStore: StatefulStore<PostItemStoreState> {
         if let apiAction = action as? PostIDsFetchedApiAction {
             handlePostIDsFetched(action: apiAction)
         }
+
+        if let action = action as? PostAction {
+            switch action {
+            case .syncItems(_):
+                sync()
+            case .syncNextPage:
+                syncNextPage()
+            case .syncPost(_):
+                break
+            }
+        }
     }
 
     /// Convenience method for retrieving the post list for the specified filter.

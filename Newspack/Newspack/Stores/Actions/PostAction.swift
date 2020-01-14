@@ -4,5 +4,7 @@ import WordPressFlux
 /// Supported Actions for changes to the PostStore
 ///
 enum PostAction: Action {
-    case syncPosts(posts: [RemotePost], site: Site)
+    case syncItems(force: Bool)
+    case syncNextPage
+    case syncPost(postID: Int64)
 }

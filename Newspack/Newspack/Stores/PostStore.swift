@@ -25,6 +25,18 @@ class PostStore: Store {
     override func onDispatch(_ action: Action) {
         if let apiAction = action as? PostFetchedApiAction {
             handlePostFetchedAction(action: apiAction)
+            return
+        }
+
+        if let action = action as? PostAction {
+            switch action {
+            case .syncItems(_):
+                break
+            case .syncNextPage:
+                break
+            case .syncPost(let postID):
+                syncPostIfNecessary(postID: postID)
+            }
         }
     }
 }

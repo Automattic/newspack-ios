@@ -73,13 +73,13 @@ class PostListViewController: UITableViewController {
 extension PostListViewController {
 
     @objc func handleRefreshControl() {
-        //TODO: Dispatch action rather than calling sync directly.
-        StoreContainer.shared.postItemStore.sync(force: true)
+        let dispatcher = SessionManager.shared.sessionDispatcher
+        dispatcher.dispatch(PostAction.syncItems(force: true))
     }
 
     func syncIfNeeded() {
-        //TODO: Dispatch action rather than calling sync directly.
-        StoreContainer.shared.postItemStore.sync()
+        let dispatcher = SessionManager.shared.sessionDispatcher
+        dispatcher.dispatch(PostAction.syncItems(force: false))
     }
 }
 
@@ -111,11 +111,12 @@ extension PostListViewController {
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let listItem = resultsController.object(at: indexPath)
-        StoreContainer.shared.postStore.syncPostIfNecessary(postID: listItem.postID)
+        let dispatcher = SessionManager.shared.sessionDispatcher
+        dispatcher.dispatch(PostAction.syncPost(postID: listItem.postID))
 
         let count = resultsController.fetchedObjects?.count ?? 0
         if count > 0 && indexPath.row > (count - 5)  {
-            StoreContainer.shared.postItemStore.syncNextPage()
+            dispatcher.dispatch(PostAction.syncNextPage)
         }
     }
 
