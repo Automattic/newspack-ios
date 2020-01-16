@@ -218,8 +218,10 @@
 
 /* Begin PBXFileReference section */
 		14A3A0B3208C917FD7CE794E /* Pods_NewspackTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NewspackTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7151E45E50E707D0E465B92D /* Pods-NewspackTests.release-alpha.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewspackTests.release-alpha.xcconfig"; path = "../Pods/Target Support Files/Pods-NewspackTests/Pods-NewspackTests.release-alpha.xcconfig"; sourceTree = "<group>"; };
 		8EDB59DB68FD7578F7CF8D30 /* Pods_Newspack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Newspack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3C6109B65774AD2159D9E5E /* Pods-Newspack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Newspack.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-Newspack/Pods-Newspack.debug.xcconfig"; sourceTree = "<group>"; };
+		C8EFCDEC9FEBA43B6C3ACE17 /* Pods-Newspack.release-alpha.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Newspack.release-alpha.xcconfig"; path = "../Pods/Target Support Files/Pods-Newspack/Pods-Newspack.release-alpha.xcconfig"; sourceTree = "<group>"; };
 		D3966851BD08B54434F91358 /* Pods-NewspackTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NewspackTests.release.xcconfig"; path = "../Pods/Target Support Files/Pods-NewspackTests/Pods-NewspackTests.release.xcconfig"; sourceTree = "<group>"; };
 		DFC0543D82050B0CDC7390DB /* Pods-Newspack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Newspack.release.xcconfig"; path = "../Pods/Target Support Files/Pods-Newspack/Pods-Newspack.release.xcconfig"; sourceTree = "<group>"; };
 		E602E67F22C1588600795CBA /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
@@ -439,6 +441,8 @@
 				DFC0543D82050B0CDC7390DB /* Pods-Newspack.release.xcconfig */,
 				EDB5819DB11C68775E987AB2 /* Pods-NewspackTests.debug.xcconfig */,
 				D3966851BD08B54434F91358 /* Pods-NewspackTests.release.xcconfig */,
+				C8EFCDEC9FEBA43B6C3ACE17 /* Pods-Newspack.release-alpha.xcconfig */,
+				7151E45E50E707D0E465B92D /* Pods-NewspackTests.release-alpha.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1589,7 +1593,7 @@
 		};
 		E6EB323623D0A768008B33DF /* Release-Alpha */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DFC0543D82050B0CDC7390DB /* Pods-Newspack.release.xcconfig */;
+			baseConfigurationReference = C8EFCDEC9FEBA43B6C3ACE17 /* Pods-Newspack.release-alpha.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1610,7 +1614,7 @@
 		};
 		E6EB323723D0A768008B33DF /* Release-Alpha */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D3966851BD08B54434F91358 /* Pods-NewspackTests.release.xcconfig */;
+			baseConfigurationReference = 7151E45E50E707D0E465B92D /* Pods-NewspackTests.release-alpha.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
