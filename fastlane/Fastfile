@@ -111,7 +111,7 @@ platform :ios do
       type: "enterprise",
       team_id: get_required_env("INT_EXPORT_TEAM_ID"),
       readonly: options[:readonly] || is_ci,
-      app_identifier: ["com.automattic.newspack"])
+      app_identifier: ["com.automattic.newspack.alpha"])
   end
 
 end
