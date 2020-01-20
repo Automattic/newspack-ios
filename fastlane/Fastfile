@@ -72,7 +72,7 @@ platform :ios do
     end
 
     gym(
-      scheme: "Newspack Alpha",
+      scheme: "Newspack-Alpha",
       workspace: "Newspack.xcworkspace",
       export_method: "enterprise",
       clean: true,
@@ -80,7 +80,7 @@ platform :ios do
       export_team_id: ENV["INT_EXPORT_TEAM_ID"],
       export_options: { method: "enterprise", iCloudContainerEnvironment: 'Production' })
 
-    sh("mv ../build/Newspack.ipa \"../build/Newspack Alpha.ipa\"")
+    sh("mv ../build/Newspack.ipa \"../build/Newspack-Alpha.ipa\"")
 
     # NOTE: "ipa" parameter is deprecated in appcenter_upload 1.6.0, but there's a bug in the action that
     # makes the default gym output override the "file" parameter.
@@ -89,7 +89,7 @@ platform :ios do
       owner_name: "automattic",
       owner_type: "organization",
       app_name: "Newspack-Installable-Builds",
-      ipa: "build/Newspack Alpha.ipa",
+      ipa: "build/Newspack-Alpha.ipa",
       destinations: "All-users-of-Newspack-Installable-Builds",
       notify_testers: false
     )
