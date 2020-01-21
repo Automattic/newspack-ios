@@ -95,6 +95,8 @@
 		E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */; };
 		E6451AC22322F737005809E2 /* EditorSaveAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */; };
 		E64594A122B448C2003BF6C0 /* PostServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */; };
+		E64D9FBB23D667760075A60E /* PostStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64D9FBA23D667760075A60E /* PostStoreTests.swift */; };
+		E64D9FBD23D667D80075A60E /* PostItemStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64D9FBC23D667D80075A60E /* PostItemStoreTests.swift */; };
 		E6500F9A2368B63800CB8C6C /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6500F992368B63800CB8C6C /* ImageStore.swift */; };
 		E6500F9D2368F36500CB8C6C /* MediaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */; };
 		E65875A223A80A1300185C75 /* MediaServiceRemoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A123A80A1300185C75 /* MediaServiceRemoteTests.swift */; };
@@ -296,6 +298,8 @@
 		E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStore.swift; sourceTree = "<group>"; };
 		E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSaveAlertController.swift; sourceTree = "<group>"; };
 		E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostServiceRemote.swift; sourceTree = "<group>"; };
+		E64D9FBA23D667760075A60E /* PostStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStoreTests.swift; sourceTree = "<group>"; };
+		E64D9FBC23D667D80075A60E /* PostItemStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostItemStoreTests.swift; sourceTree = "<group>"; };
 		E6500F992368B63800CB8C6C /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 		E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailViewController.swift; sourceTree = "<group>"; };
 		E65875A123A80A1300185C75 /* MediaServiceRemoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceRemoteTests.swift; sourceTree = "<group>"; };
@@ -763,6 +767,8 @@
 				E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */,
 				E65875A523A811A400185C75 /* MediaStoreTests.swift */,
 				E65875A723A811F100185C75 /* MediaItemStoreTests.swift */,
+				E64D9FBA23D667760075A60E /* PostStoreTests.swift */,
+				E64D9FBC23D667D80075A60E /* PostItemStoreTests.swift */,
 				E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */,
 				E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */,
 				E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */,
@@ -1236,6 +1242,7 @@
 				E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */,
 				E6E1835022D79473009C2D0A /* RemoteTestCase.swift in Sources */,
 				E65875A223A80A1300185C75 /* MediaServiceRemoteTests.swift in Sources */,
+				E64D9FBB23D667760075A60E /* PostStoreTests.swift in Sources */,
 				E6051DF123076191005AAF0B /* DictionaryMergeTests.swift in Sources */,
 				E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */,
 				E65875A823A811F100185C75 /* MediaItemStoreTests.swift in Sources */,
@@ -1243,6 +1250,7 @@
 				E637A6E422F0EE1500229C1D /* RequestQueueTests.swift in Sources */,
 				E65875AA23A8139500185C75 /* StagedMediaImporterTests.swift in Sources */,
 				E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */,
+				E64D9FBD23D667D80075A60E /* PostItemStoreTests.swift in Sources */,
 				E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */,
 				E61A28CF22D53EFD003E214F /* PostServiceRemoteTests.swift in Sources */,
 				E61FC603229F2EEE009E1748 /* UserServiceRemoteTests.swift in Sources */,

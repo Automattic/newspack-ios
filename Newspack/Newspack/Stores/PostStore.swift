@@ -56,7 +56,7 @@ extension PostStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = PostItem.defaultFetchRequest()
         fetchRequest.fetchLimit = 1
-        fetchRequest.predicate = NSPredicate(format: "site.siteID = @", siteID as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "postID", ascending: false)]
 
         if let results = try? context.fetch(fetchRequest) {
@@ -67,15 +67,19 @@ extension PostStore {
         return 0
     }
 
-    /// Gets the PostListItem from core data for the specified post ID.
+    /// Gets the PostItem from core data for the specified post ID.
     ///
     /// - Parameter postID: The post ID of the item.
     /// - Returns: The model object, or nil if not found.
     ///
     func getPostItemWithID(postID: Int64) -> PostItem? {
+        guard let siteID = currentSiteID else {
+            return nil
+        }
+
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = PostItem.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "postID = %ld", postID)
+        fetchRequest.predicate = NSPredicate(format: "postID = %ld AND site.uuid = %@", postID, siteID as CVarArg)
         do {
             return try context.fetch(fetchRequest).first
         } catch {
@@ -86,7 +90,7 @@ extension PostStore {
         return nil
     }
 
-    /// Syncs the Post for the spcified post ID if its associated PostListItem if
+    /// Syncs the Post for the spcified post ID if its associated PostItem if
     /// the post is absent or its data is stale.  Internally this method appends
     /// the post id to a queue of post ids that need to be synced.
     ///
