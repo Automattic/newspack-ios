@@ -53,8 +53,8 @@ class PostItemStore: StatefulStore<PostItemStoreState> {
 
         if let action = action as? PostAction {
             switch action {
-            case .syncItems(_):
-                sync()
+            case .syncItems(let force):
+                sync(force: force)
             case .syncNextPage:
                 syncNextPage()
             case .syncPost(_):
