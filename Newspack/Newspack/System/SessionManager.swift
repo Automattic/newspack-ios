@@ -19,7 +19,9 @@ class SessionManager: StatefulStore<SessionState> {
 
     /// Used with UserDefaults to store the current site's uuid for later recovery.
     ///
-    private let currentSiteIDKey = "currentSiteIDKey"
+    private var currentSiteIDKey: String {
+        return Environment.isTesting() ? "testingCurrentSiteIDKey" :  "currentSiteIDKey"
+    }
 
     /// Read only.  The ActionDispatcher for the current session.
     ///
