@@ -78,8 +78,13 @@ class MediaStoreTests: BaseTest {
 
         store?.handleMediaFetchedAction(action: action)
 
-        let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
-            return true
+        let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (notification) -> Bool in
+            guard let insertedObjects = notification.userInfo![NSInsertedObjectsKey] as? NSSet else {
+                return false
+            }
+            return insertedObjects.contains { (object) -> Bool in
+                return object is Media
+            }
         }
         wait(for: [expect1], timeout: 1)
 
