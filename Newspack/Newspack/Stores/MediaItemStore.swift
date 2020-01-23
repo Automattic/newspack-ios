@@ -240,8 +240,12 @@ extension MediaItemStore {
         guard !action.isError() else {
             // TODO: Inspect and handle error.
             // For now assume we're out of pages.
-            query.hasMore = action.hasMore
-            CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
+            let queryObjID = query.objectID
+            CoreDataManager.shared.performOnWriteContext { (context) in
+                let query = context.object(with: queryObjID) as! MediaQuery
+                query.hasMore = action.hasMore
+                CoreDataManager.shared.saveContext(context: context)
+            }
             queue.removeAll()
             return
         }
