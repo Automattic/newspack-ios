@@ -46,11 +46,24 @@ class CoreDataManager {
     /// A convenience method for performing work on a persistent write context.  Useful when multiple
     /// units of work need to happen in order on a single background queue.
     ///
-    /// - Parameter block:An anonymous block. accepting a reference to the write context as a
-    /// parameter,  executed on the background "write" thread.
+    /// - Parameter block:An anonymous block. accepting a reference to the write context as aparameter.
     ///
     public func performOnWriteContext(_ block: @escaping (NSManagedObjectContext) -> Void) {
         writeContext.perform { [unowned writeContext] in
+            block(writeContext)
+        }
+    }
+
+    /// A convenience method for synchronously performing work on a persistent write context.  Useful when multiple
+    /// units of work need to happen in order.
+    ///
+    /// NOTE: The block will be executed on the _calling_ thread, which is not necessarily a background
+    /// thread. Be wary of its usage!
+    ///
+    /// - Parameter block:An anonymous block. accepting a reference to the write context as a parameter.
+    ///
+    public func performOnWriteContextAndWait(_ block: @escaping (NSManagedObjectContext) -> Void) {
+        writeContext.performAndWait { [unowned writeContext] in
             block(writeContext)
         }
     }
