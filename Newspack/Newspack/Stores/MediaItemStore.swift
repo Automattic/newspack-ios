@@ -276,38 +276,39 @@ extension MediaItemStore {
                 return
         }
 
-        defer {
-            state = .ready
-
-            if let page = queue.popLast() {
-                syncItemsForQuery(query: query, page: page)
-            } else {
-                cleanupAfterSync()
-            }
-        }
-
-        guard !action.isError() else {
-            // TODO: Inspect and handle error.
-            // For now assume we're out of pages.
-            let queryObjID = query.objectID
-            CoreDataManager.shared.performOnWriteContext { (context) in
-                let query = context.object(with: queryObjID) as! MediaQuery
-                query.hasMore = action.hasMore
-                CoreDataManager.shared.saveContext(context: context)
-            }
-            queue.removeAll()
-            return
-        }
-
-        guard let remoteItems = action.payload else {
-            queue.removeAll()
-            LogWarn(message: "handleMediaItemsFetched: A value was unexpectedly nil.")
-            return
-        }
-
         let objID = query.objectID
         CoreDataManager.shared.performOnWriteContext { (context) in
             let query = context.object(with: objID) as! MediaQuery
+            defer {
+                DispatchQueue.main.async {
+                    self.state = .ready
+
+                    if let page = self.queue.popLast() {
+                        self.syncItemsForQuery(query: query, page: page)
+                    } else {
+                        self.cleanupAfterSync()
+                    }
+                }
+            }
+
+            guard !action.isError() else {
+                // TODO: Inspect and handle error.
+                // For now assume we're out of pages.
+
+                let query = context.object(with: objID) as! MediaQuery
+                query.hasMore = action.hasMore
+                CoreDataManager.shared.saveContext(context: context)
+
+                self.queue.removeAll()
+                return
+            }
+
+            guard let remoteItems = action.payload else {
+                self.queue.removeAll()
+                LogWarn(message: "handleMediaItemsFetched: A value was unexpectedly nil.")
+                return
+            }
+
             query.hasMore = remoteItems.count == self.pageSize
 
             if action.page == 1 {

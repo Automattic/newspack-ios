@@ -20,6 +20,7 @@ class SiteMediaDataSource: NSObject {
 
     private var syncSuccessBlock: WPMediaSuccessBlock?
     private var syncFailureBlock: WPMediaFailureBlock?
+    private var firstDataLoad = true
 
     var groups = [WPMediaGroup]()
     lazy var resultsController: NSFetchedResultsController<MediaItem> = {
@@ -213,6 +214,18 @@ extension SiteMediaDataSource: WPMediaCollectionDataSource {
     }
 
     func loadData(with options: WPMediaLoadOptions, success successBlock: WPMediaSuccessBlock?, failure failureBlock: WPMediaFailureBlock? = nil) {
+        // loadData is called by WPMediaPickerViewController when it loads its view.
+        // This leaves the viewcontroller empty until the sync completes.
+        // For now, as a work around, call the success block the first time so
+        // cached data is immediately available. Let MediaViewController call
+        // syncIfNeeded to load data in the background.
+        // loadData can be exclusive to pull to refresh behavior.
+        if firstDataLoad {
+            firstDataLoad = false
+            successBlock?()
+            return
+        }
+
         syncSuccessBlock = successBlock
         syncFailureBlock = failureBlock
 
