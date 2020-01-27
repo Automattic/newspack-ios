@@ -17,7 +17,7 @@ class PostItemStore: StatefulStore<PostItemStoreState> {
     let maxPages = 10
     let syncInterval: TimeInterval = 600 // 10 minutes.
     var queue = [Int]()
-    private var syncedItemIDs = [Int64]()
+    private var itemsToRemoveAfterSync = [Int64]()
     private(set) var currentSiteID: UUID?
 
     var currentQuery: PostQuery? {
@@ -165,7 +165,7 @@ extension PostItemStore {
             return
         }
 
-        syncedItemIDs = syncedItemIDs(query: query)
+        itemsToRemoveAfterSync = syncedItemIDs(query: query)
 
         let pages = numberOfPagesSyncedForQuery(query: query)
         queue = pages > 1 ? [Int](1...pages) : [1]
@@ -228,11 +228,11 @@ extension PostItemStore {
     /// Post sync clean up of missing items.
     ///
     func cleanupAfterSync() {
-        guard syncedItemIDs.count > 0,
+        guard itemsToRemoveAfterSync.count > 0,
             let queryObjID = currentQuery?.objectID else {
             return
         }
-        let itemIDs = syncedItemIDs
+        let itemIDs = itemsToRemoveAfterSync
         CoreDataManager.shared.performOnWriteContext { (context) in
             let query = context.object(with: queryObjID) as! PostQuery
             let request = PostItem.defaultFetchRequest()
@@ -241,13 +241,13 @@ extension PostItemStore {
             let result = try! context.fetch(request)
 
             for item in result {
-                context.delete(item)
+                item.removeFromPostQueries(query)
             }
 
             CoreDataManager.shared.saveContext(context: context)
         }
 
-        syncedItemIDs.removeAll()
+        itemsToRemoveAfterSync.removeAll()
     }
 
     /// Handles the postsFetched action.
@@ -304,8 +304,8 @@ extension PostItemStore {
             }
 
             for remotePostID in remotePostIDs {
-                if let idx = self.syncedItemIDs.firstIndex(of: remotePostID.postID) {
-                    self.syncedItemIDs.remove(at: idx)
+                if let idx = self.itemsToRemoveAfterSync.firstIndex(of: remotePostID.postID) {
+                    self.itemsToRemoveAfterSync.remove(at: idx)
                 }
 
                 let item: PostItem
