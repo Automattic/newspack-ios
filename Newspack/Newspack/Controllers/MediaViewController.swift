@@ -40,19 +40,8 @@ class MediaViewController: WPMediaPickerViewController {
         configureRightBarButton()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        syncIfNeeded()
-    }
-
     func configureRightBarButton() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleAddTapped(sender:)))
-    }
-
-    func syncIfNeeded() {
-        let dispatcher = SessionManager.shared.sessionDispatcher
-        dispatcher.dispatch(MediaAction.syncItems)
     }
 
     @objc func handleAddTapped(sender: UIBarButtonItem) {
