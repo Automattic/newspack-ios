@@ -17,6 +17,7 @@ class PostItemStore: StatefulStore<PostItemStoreState> {
     let maxPages = 10
     let syncInterval: TimeInterval = 600 // 10 minutes.
     var queue = [Int]()
+    private var syncedItemIDs = [Int64]()
     private(set) var currentSiteID: UUID?
 
     var currentQuery: PostQuery? {
@@ -164,6 +165,8 @@ extension PostItemStore {
             return
         }
 
+        syncedItemIDs = syncedItemIDs(query: query)
+
         let pages = numberOfPagesSyncedForQuery(query: query)
         queue = pages > 1 ? [Int](1...pages) : [1]
         queue.reverse()
@@ -203,13 +206,56 @@ extension PostItemStore {
         service.fetchPostIDs(filter: query.filter, page: page)
     }
 
+    /// Returns an array containing the values of the postID for all synced PostItems.
+    ///
+    /// - Parameter query: A PostQuery instance.
+    ///
+    func syncedItemIDs(query: PostQuery) -> [Int64] {
+        let propertyName = "postID"
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PostItem")
+        request.predicate = NSPredicate(format: "postQueries contains %@", query)
+        request.propertiesToFetch = [propertyName]
+        request.resultType = .dictionaryResultType
+        request.sortDescriptors = [NSSortDescriptor(key: "modifiedGMT", ascending: false)];
+
+        guard let result = try? CoreDataManager.shared.mainContext.fetch(request) as? [[String: Int64]] else {
+            return [Int64]()
+        }
+
+        return result.compactMap({$0[propertyName]})
+    }
+
+    /// Post sync clean up of missing items.
+    ///
+    func cleanupAfterSync() {
+        guard syncedItemIDs.count > 0,
+            let queryObjID = currentQuery?.objectID else {
+            return
+        }
+        let itemIDs = syncedItemIDs
+        CoreDataManager.shared.performOnWriteContext { (context) in
+            let query = context.object(with: queryObjID) as! PostQuery
+            let request = PostItem.defaultFetchRequest()
+            request.predicate = NSPredicate(format: "postID in %@ AND postQueries contains %@", itemIDs, query)
+
+            let result = try! context.fetch(request)
+
+            for item in result {
+                context.delete(item)
+            }
+
+            CoreDataManager.shared.saveContext(context: context)
+        }
+
+        syncedItemIDs.removeAll()
+    }
+
     /// Handles the postsFetched action.
     ///
     /// - Parameters:
     ///     - action: Instance of the action to handle.
     ///
     func handlePostIDsFetched(action: PostIDsFetchedApiAction) {
-
         guard
             let siteID = currentSiteID,
             let query = postQueryByFilter(filter: action.filter, siteUUID: siteID)
@@ -224,6 +270,8 @@ extension PostItemStore {
 
             if let page = queue.popLast() {
                 syncItemsForQuery(query: query, page: page)
+            } else {
+                cleanupAfterSync()
             }
         }
 
@@ -256,6 +304,10 @@ extension PostItemStore {
             }
 
             for remotePostID in remotePostIDs {
+                if let idx = self.syncedItemIDs.firstIndex(of: remotePostID.postID) {
+                    self.syncedItemIDs.remove(at: idx)
+                }
+
                 let item: PostItem
                 let fetchRequest = PostItem.defaultFetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "%@ IN postQueries AND postID = %ld",query, remotePostID.postID)
