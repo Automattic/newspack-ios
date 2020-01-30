@@ -105,19 +105,24 @@ extension AccountStore {
     ///
     @discardableResult
     func createAccount(authToken: String, forNetworkAt url: String) -> Account {
-        // We'll do this on the main context since we have to create an account
-        // when authentiating. 
-        let context = CoreDataManager.shared.mainContext
-        let account = Account(context: context)
-        account.uuid = UUID()
-        account.networkUrl = url
+        let uuid = UUID()
 
-        CoreDataManager.shared.saveContext(context: context)
+        // This block passed to performOnWriteContextAndWait will be executed
+        // on the calling thread, which is the main thread in this case, even
+        // tho writeContext will be the NSManagedObjectContext used.
+        CoreDataManager.shared.performOnWriteContextAndWait { (context) in
+            assert(Thread.isMainThread)
+            let account = Account(context: context)
+            account.uuid = uuid
+            account.networkUrl = url
+            CoreDataManager.shared.saveContext(context: context)
+        }
 
+        let account = getAccountByUUID(uuid)!
         setAuthToken(authToken, for: account)
-
         return account
     }
+
 
     /// Handles the .removeAccount action. Sets currentAccount to a remaining account or nil.
     ///

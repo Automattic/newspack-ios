@@ -8,12 +8,4 @@ public class Post: NSManagedObject {
         return NSFetchRequest<Post>(entityName: "Post")
     }
 
-// Commented out until we're properly creating post lists, post list items, then posts.
-//    public override func willSave() {
-//        /// Prevent orphaned entities. If we ever save without a relationship
-//        /// to a PostListItem just delete.
-//        if items.count == 0 && !isDeleted {
-//            managedObjectContext?.delete(self)
-//        }
-//    }
 }

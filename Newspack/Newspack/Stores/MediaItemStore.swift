@@ -20,6 +20,7 @@ class MediaItemStore: StatefulStore<MediaItemStoreState> {
     let syncInterval: TimeInterval = 600 // 10 minutes.
     var queue = [Int]()
     private(set) var currentSiteID: UUID?
+    private var itemsToRemoveAfterSync = [Int64]()
 
     var currentQuery: MediaQuery? {
         didSet {
@@ -62,8 +63,8 @@ class MediaItemStore: StatefulStore<MediaItemStoreState> {
 
         if let action = action as? MediaAction {
             switch action {
-            case .syncItems:
-                sync()
+            case .syncItems(let force):
+                sync(force: force)
             case .syncMedia(_):
                 break
             }
@@ -174,6 +175,8 @@ extension MediaItemStore {
             return
         }
 
+        itemsToRemoveAfterSync = syncedItemIDs(query: query)
+
         let pages = firstPageOnly ? 1 : numberOfPagesSyncedForQuery(query: query)
         queue = pages > 1 ? [Int](1...pages) : [1]
         queue.reverse()
@@ -213,6 +216,50 @@ extension MediaItemStore {
         service.fetchMediaItems(filter: query.filter, page: page)
     }
 
+    /// Returns an array containing the values of the mediaID for all synced MediaItems.
+    ///
+    /// - Parameter query: A MediaQuery instance.
+    ///
+    func syncedItemIDs(query: MediaQuery) -> [Int64] {
+        let propertyName = "mediaID"
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "MediaItem")
+        request.predicate = NSPredicate(format: "queries contains %@", query)
+        request.propertiesToFetch = [propertyName]
+        request.resultType = .dictionaryResultType
+        request.sortDescriptors = [NSSortDescriptor(key: "modifiedGMT", ascending: false)];
+
+        guard let result = try? CoreDataManager.shared.mainContext.fetch(request) as? [[String: Int64]] else {
+            return [Int64]()
+        }
+
+        return result.compactMap({$0[propertyName]})
+    }
+
+    /// Media sync clean up of missing items.
+    ///
+    func cleanupAfterSync() {
+        guard itemsToRemoveAfterSync.count > 0,
+            let queryObjID = currentQuery?.objectID else {
+            return
+        }
+        let itemIDs = itemsToRemoveAfterSync
+        CoreDataManager.shared.performOnWriteContext { (context) in
+            let query = context.object(with: queryObjID) as! MediaQuery
+            let request = MediaItem.defaultFetchRequest()
+            request.predicate = NSPredicate(format: "mediaID in %@ AND queries contains %@", itemIDs, query)
+
+            let result = try! context.fetch(request)
+
+            for item in result {
+                context.delete(item)
+            }
+
+            CoreDataManager.shared.saveContext(context: context)
+        }
+
+        itemsToRemoveAfterSync.removeAll()
+    }
+
     /// Handles the MediaItemsFetched action.
     ///
     /// - Parameters:
@@ -229,32 +276,39 @@ extension MediaItemStore {
                 return
         }
 
-        defer {
-            state = .ready
-
-            if let page = queue.popLast() {
-                syncItemsForQuery(query: query, page: page)
-            }
-        }
-
-        guard !action.isError() else {
-            // TODO: Inspect and handle error.
-            // For now assume we're out of pages.
-            query.hasMore = action.hasMore
-            CoreDataManager.shared.saveContext(context: CoreDataManager.shared.mainContext)
-            queue.removeAll()
-            return
-        }
-
-        guard let remoteItems = action.payload else {
-            queue.removeAll()
-            LogWarn(message: "handleMediaItemsFetched: A value was unexpectedly nil.")
-            return
-        }
-
         let objID = query.objectID
         CoreDataManager.shared.performOnWriteContext { (context) in
             let query = context.object(with: objID) as! MediaQuery
+            defer {
+                DispatchQueue.main.async {
+                    self.state = .ready
+
+                    if let page = self.queue.popLast() {
+                        self.syncItemsForQuery(query: query, page: page)
+                    } else {
+                        self.cleanupAfterSync()
+                    }
+                }
+            }
+
+            guard !action.isError() else {
+                // TODO: Inspect and handle error.
+                // For now assume we're out of pages.
+
+                let query = context.object(with: objID) as! MediaQuery
+                query.hasMore = action.hasMore
+                CoreDataManager.shared.saveContext(context: context)
+
+                self.queue.removeAll()
+                return
+            }
+
+            guard let remoteItems = action.payload else {
+                self.queue.removeAll()
+                LogWarn(message: "handleMediaItemsFetched: A value was unexpectedly nil.")
+                return
+            }
+
             query.hasMore = remoteItems.count == self.pageSize
 
             if action.page == 1 {
@@ -262,6 +316,10 @@ extension MediaItemStore {
             }
 
             for remoteItem in remoteItems {
+                if let idx = self.itemsToRemoveAfterSync.firstIndex(of: remoteItem.mediaID) {
+                    self.itemsToRemoveAfterSync.remove(at: idx)
+                }
+
                 let item: MediaItem
                 let fetchRequest = MediaItem.defaultFetchRequest()
                 fetchRequest.predicate = NSPredicate(format: "%@ IN queries AND mediaID = %ld", query, remoteItem.mediaID)
@@ -354,6 +412,11 @@ extension MediaItemStore {
             let site = context.object(with: siteObjID) as! Site
             let fetchRequest = MediaQuery.defaultFetchRequest()
 
+            defer {
+                DispatchQueue.main.async {
+                    onComplete()
+                }
+            }
             guard let count = try? context.count(for: fetchRequest) else {
                 // TODO: Handle core data error.
                 LogError(message: "setupDefaultMediaQueriesIfNeeded: Unable to get count from NSManagedObjectContext.")
@@ -374,9 +437,6 @@ extension MediaItemStore {
             }
 
             CoreDataManager.shared.saveContext(context: context)
-            DispatchQueue.main.async {
-                onComplete()
-            }
         }
     }
 }

@@ -25,6 +25,18 @@ class PostStore: Store {
     override func onDispatch(_ action: Action) {
         if let apiAction = action as? PostFetchedApiAction {
             handlePostFetchedAction(action: apiAction)
+            return
+        }
+
+        if let action = action as? PostAction {
+            switch action {
+            case .syncItems(_):
+                break
+            case .syncNextPage:
+                break
+            case .syncPost(let postID):
+                syncPostIfNecessary(postID: postID)
+            }
         }
     }
 }
@@ -42,9 +54,9 @@ extension PostStore {
             return 0
         }
         let context = CoreDataManager.shared.mainContext
-        let fetchRequest = PostListItem.defaultFetchRequest()
+        let fetchRequest = PostItem.defaultFetchRequest()
         fetchRequest.fetchLimit = 1
-        fetchRequest.predicate = NSPredicate(format: "site.siteID = @", siteID as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "postID", ascending: false)]
 
         if let results = try? context.fetch(fetchRequest) {
@@ -55,33 +67,37 @@ extension PostStore {
         return 0
     }
 
-    /// Gets the PostListItem from core data for the specified post ID.
+    /// Gets the PostItem from core data for the specified post ID.
     ///
     /// - Parameter postID: The post ID of the item.
     /// - Returns: The model object, or nil if not found.
     ///
-    func getPostListItemWithID(postID: Int64) -> PostListItem? {
+    func getPostItemWithID(postID: Int64) -> PostItem? {
+        guard let siteID = currentSiteID else {
+            return nil
+        }
+
         let context = CoreDataManager.shared.mainContext
-        let fetchRequest = PostListItem.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "postID = %ld", postID)
+        let fetchRequest = PostItem.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "postID = %ld AND site.uuid = %@", postID, siteID as CVarArg)
         do {
             return try context.fetch(fetchRequest).first
         } catch {
             // TODO: Handle Error.
             let error = error as NSError
-            LogError(message: "getPostListItemWithID: " + error.localizedDescription)
+            LogError(message: "getPostItemWithID: " + error.localizedDescription)
         }
         return nil
     }
 
-    /// Syncs the Post for the spcified post ID if its associated PostListItem if
+    /// Syncs the Post for the spcified post ID if its associated PostItem if
     /// the post is absent or its data is stale.  Internally this method appends
     /// the post id to a queue of post ids that need to be synced.
     ///
     /// - Parameter postID: The specified post ID
     ///
     func syncPostIfNecessary(postID: Int64) {
-        guard let postItem = getPostListItemWithID(postID: postID) else {
+        guard let postItem = getPostItemWithID(postID: postID) else {
             LogWarn(message: "syncPostIfNecessary: Unable to find post list by ID.")
             return
         }
@@ -120,7 +136,7 @@ extension PostStore {
             let remotePost = action.payload,
             let siteID = currentSiteID,
             let siteObjID = siteStore.getSiteByUUID(siteID)?.objectID,
-            let listItemObjID = getPostListItemWithID(postID: remotePost.postID)?.objectID
+            let listItemObjID = getPostItemWithID(postID: remotePost.postID)?.objectID
         else {
             LogError(message: "handlePostFetchedAction: A value was unexpectedly nil.")
             return
@@ -132,7 +148,7 @@ extension PostStore {
 
         CoreDataManager.shared.performOnWriteContext { (context) in
             let site = context.object(with: siteObjID) as! Site
-            let listItem = context.object(with: listItemObjID) as! PostListItem
+            let listItem = context.object(with: listItemObjID) as! PostItem
 
             let fetchRequest = Post.defaultFetchRequest()
             fetchRequest.predicate = NSPredicate(format: "site = %@ AND postID = %ld", site, remotePost.postID)

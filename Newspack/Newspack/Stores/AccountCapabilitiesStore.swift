@@ -51,15 +51,19 @@ extension AccountCapabilitiesStore {
         CoreDataManager.shared.performOnWriteContext { [weak self] context in
             let site = context.object(with: siteObjID) as! Site
             let capabilities = site.capabilities ?? AccountCapabilities(context: context)
-            capabilities.roles = user.roles
-            capabilities.capabilities = user.capabilities
-            capabilities.site = site
 
+            self?.updateCapabilities(capabilities, with: user)
+            capabilities.site = site
             CoreDataManager.shared.saveContext(context: context)
 
             DispatchQueue.main.async {
                 self?.emitChange()
             }
         }
+    }
+
+    func updateCapabilities(_ capabilities: AccountCapabilities, with remoteUser: RemoteUser) {
+        capabilities.roles = remoteUser.roles
+        capabilities.capabilities = remoteUser.capabilities
     }
 }

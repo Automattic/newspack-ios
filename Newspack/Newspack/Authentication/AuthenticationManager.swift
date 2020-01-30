@@ -74,7 +74,6 @@ class AuthenticationManager {
     ///
     func showAuthenticator(controller: UIViewController) {
         guard let _ = WordPressAuthenticator.shared.delegate as? AuthenticationManager else {
-            // TODO: Log that we're not initialized.
             LogWarn(message: "showAuthenticator: Tried to show authenticator flow before authenticator was initialized.")
             return
         }

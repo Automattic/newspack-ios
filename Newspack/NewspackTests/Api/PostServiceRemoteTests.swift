@@ -24,8 +24,8 @@ class PostServiceRemoteTests: RemoteTestCase {
 
     func testFetchPost() {
         let expect = expectation(description: "fetch post")
-        let dispatcher = ActionDispatcher()
-        receipt = dispatcher.subscribe { action in
+
+        receipt = testDispatcher.subscribe { action in
             defer {
                 expect.fulfill()
             }
@@ -40,7 +40,7 @@ class PostServiceRemoteTests: RemoteTestCase {
 
         stubRemoteResponse("posts", filename: remotePostEditFile, contentType: .ApplicationJSON)
 
-        let remote = PostApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: dispatcher )
+        let remote = PostApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: testDispatcher )
         remote.fetchPost(postID: 1)
 
         waitForExpectations(timeout: timeout, handler: nil)
@@ -49,7 +49,7 @@ class PostServiceRemoteTests: RemoteTestCase {
     func testFetchPostIDs() {
         let expect = expectation(description: "fetch post IDs")
 
-        receipt = ActionDispatcher.global.subscribe { action in
+        receipt = testDispatcher.subscribe { action in
             defer {
                 expect.fulfill()
             }
@@ -64,7 +64,7 @@ class PostServiceRemoteTests: RemoteTestCase {
 
         stubRemoteResponse("posts", filename: remotePostsIDsEditFile, contentType: .ApplicationJSON)
 
-        let remote = PostApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: ActionDispatcher.global )
+        let remote = PostApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: testDispatcher )
         remote.fetchPostIDs(filter: [:], page: 1)
 
         waitForExpectations(timeout: timeout, handler: nil)
@@ -73,7 +73,7 @@ class PostServiceRemoteTests: RemoteTestCase {
     func testAutosave() {
         let expect = expectation(description: "autosaves POST result")
 
-        receipt = ActionDispatcher.global.subscribe { action in
+        receipt = testDispatcher.subscribe { action in
             defer {
                 expect.fulfill()
             }
@@ -88,7 +88,7 @@ class PostServiceRemoteTests: RemoteTestCase {
 
         stubRemoteResponse("posts/1/autosaves", filename: remoteAutosaveFile, contentType: .ApplicationJSON)
 
-        let remote = PostApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: ActionDispatcher.global )
+        let remote = PostApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: testDispatcher )
         remote.autosave(postID: 1, title: "Testing", content: "Testing")
 
         waitForExpectations(timeout: timeout, handler: nil)
@@ -98,7 +98,7 @@ class PostServiceRemoteTests: RemoteTestCase {
         let expect = expectation(description: "create POST result")
         let uuid = UUID()
 
-        receipt = ActionDispatcher.global.subscribe { action in
+        receipt = testDispatcher.subscribe { action in
             defer {
                 expect.fulfill()
             }
@@ -114,7 +114,7 @@ class PostServiceRemoteTests: RemoteTestCase {
 
         stubRemoteResponse("posts", filename: remotePostsCreateFile, contentType: .ApplicationJSON)
 
-        let remote = PostApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: ActionDispatcher.global )
+        let remote = PostApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: testDispatcher )
         remote.createPost(uuid: uuid, postParams: [String: AnyObject]())
 
         waitForExpectations(timeout: timeout, handler: nil)
@@ -123,7 +123,7 @@ class PostServiceRemoteTests: RemoteTestCase {
     func testEditPost() {
         let expect = expectation(description: "Update POST result")
 
-        receipt = ActionDispatcher.global.subscribe { action in
+        receipt = testDispatcher.subscribe { action in
             defer {
                 expect.fulfill()
             }
@@ -138,7 +138,7 @@ class PostServiceRemoteTests: RemoteTestCase {
 
         stubRemoteResponse("posts/1", filename: remotePostsUpdateFile, contentType: .ApplicationJSON)
 
-        let remote = PostApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: ActionDispatcher.global )
+        let remote = PostApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: testDispatcher )
         remote.updatePost(postID: 1, postParams: [String: AnyObject]())
 
         waitForExpectations(timeout: timeout, handler: nil)

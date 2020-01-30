@@ -18,6 +18,10 @@ class SiteMediaDataSource: NSObject {
     private var itemsChanged = NSMutableIndexSet()
     private var itemsMoved = [WPIndexMove]()
 
+    private var syncSuccessBlock: WPMediaSuccessBlock?
+    private var syncFailureBlock: WPMediaFailureBlock?
+    private var firstDataLoad = true
+
     var groups = [WPMediaGroup]()
     lazy var resultsController: NSFetchedResultsController<MediaItem> = {
         let fetchRequest = MediaItem.defaultFetchRequest()
@@ -41,10 +45,18 @@ class SiteMediaDataSource: NSObject {
         configureResultsController()
     }
 
+    func syncIfNeeded(force: Bool = false) {
+        let dispatcher = SessionManager.shared.sessionDispatcher
+        dispatcher.dispatch(MediaAction.syncItems(force: force))
+    }
+
     func handleMediaItemsStateChanged(oldState: MediaItemStoreState, newState: MediaItemStoreState) {
         if oldState == .syncing {
+            // TODO: Figure out error handling.
+            syncSuccessBlock?()
 
-            // no op?
+            syncSuccessBlock = nil
+            syncFailureBlock = nil
         } else if oldState == .changingQuery {
             configureResultsController()
         }
@@ -202,7 +214,22 @@ extension SiteMediaDataSource: WPMediaCollectionDataSource {
     }
 
     func loadData(with options: WPMediaLoadOptions, success successBlock: WPMediaSuccessBlock?, failure failureBlock: WPMediaFailureBlock? = nil) {
-        successBlock?()
+        // loadData is called by WPMediaPickerViewController when it loads its view.
+        // This leaves the viewcontroller empty until the sync completes.
+        // For now, as a work around, call the success block the first time so
+        // cached data is immediately available. Let MediaViewController call
+        // syncIfNeeded to load data in the background.
+        // loadData can be exclusive to pull to refresh behavior.
+        if firstDataLoad {
+            firstDataLoad = false
+            successBlock?()
+            return
+        }
+
+        syncSuccessBlock = successBlock
+        syncFailureBlock = failureBlock
+
+        syncIfNeeded(force: true)
     }
 
     func add(_ image: UIImage, metadata: [AnyHashable : Any]?, completionBlock: WPMediaAddedBlock? = nil) {

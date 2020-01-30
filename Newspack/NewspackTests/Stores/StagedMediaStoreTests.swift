@@ -20,7 +20,7 @@ class StagedMediaStoreTests: BaseTest {
         site!.account = account
 
         // Test store
-        store = StagedMediaStore(dispatcher: .global, siteID: site!.uuid)
+        store = StagedMediaStore(dispatcher: testDispatcher, siteID: site!.uuid)
         CoreDataManager.shared.saveContext(context: context)
     }
 
@@ -48,7 +48,16 @@ class StagedMediaStoreTests: BaseTest {
 
         store?.deleteStagedMedia(uuid: stagedMedia.uuid)
 
-        let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+        let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (notification) -> Bool in
+            guard
+                let objects = notification.userInfo![NSDeletedObjectsKey] as? NSSet,
+                (objects.contains { (object) -> Bool in
+                    return object is StagedMedia
+                })
+            else {
+                return false
+            }
+
             XCTAssertTrue(stagedMedia.isDeleted)
             return true
         }
@@ -69,6 +78,7 @@ class StagedMediaStoreTests: BaseTest {
         store?.deleteStagedMedia(objectID: stagedMedia.objectID)
 
         let expect2 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+            CoreDataManager.shared.mainContext.refreshAllObjects()
             XCTAssertTrue(stagedMedia.isDeleted)
             return true
         }
@@ -104,19 +114,26 @@ class StagedMediaStoreTests: BaseTest {
     func testCreateStagedMediaForIdentifiers() {
         let identifier = "identifier"
 
-        let context = CoreDataManager.shared.mainContext
-
         store!.createStagedMediaForIdentifiers(identifiers: [identifier])
-        let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: context) { (_) -> Bool in
 
-            let context = CoreDataManager.shared.mainContext
-            let fetchRequest = StagedMedia.defaultFetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "assetIdentifier = %@", identifier)
-            let count = try! context.count(for: fetchRequest)
-
-            XCTAssertTrue(count == 1)
+        let context = CoreDataManager.shared.mainContext
+        let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: context) { (notification) -> Bool in
+            guard
+                let objects = notification.userInfo![NSInsertedObjectsKey] as? NSSet,
+                (objects.contains { (object) -> Bool in
+                    return object is StagedMedia
+                })
+            else {
+                return false
+            }
             return true
         }
         wait(for: [expect1], timeout: 1)
+
+        let fetchRequest = StagedMedia.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "assetIdentifier = %@", identifier)
+        let count = try! context.count(for: fetchRequest)
+
+        XCTAssertTrue(count == 1)
     }
 }

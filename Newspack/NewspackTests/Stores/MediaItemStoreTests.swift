@@ -24,7 +24,7 @@ class MediaItemStoreTests: BaseTest {
         CoreDataManager.shared.saveContext(context: context)
 
         // Test store
-        store = MediaItemStore(dispatcher: .global, siteID: site!.uuid)
+        store = MediaItemStore(dispatcher: testDispatcher, siteID: site!.uuid)
 
         let expect = expectation(description: "Default media queries saved.")
         store?.setupDefaultMediaQueriesIfNeeded(siteUUID: site!.uuid, onComplete: {

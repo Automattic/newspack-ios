@@ -21,8 +21,7 @@ class MediaServiceTests: RemoteTestCase {
     func testFetchMedia() {
         // Confirm RemoteMedia ad Image are both acquired.
         let expect = expectation(description: "fetch media")
-        let dispatcher = ActionDispatcher()
-        receipt = dispatcher.subscribe { action in
+        receipt = testDispatcher.subscribe { action in
             defer {
                 expect.fulfill()
             }
@@ -39,7 +38,7 @@ class MediaServiceTests: RemoteTestCase {
         stubRemoteResponse("media", filename: remoteMediaEditFile, contentType: .ApplicationJSON)
         stubRemoteResponse("preview.png", filename: previewImage, contentType: .imagePNG)
 
-        let remote = MediaApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: dispatcher )
+        let remote = MediaApiService(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"), dispatcher: testDispatcher )
         remote.fetchMedia(mediaID: 1, having: "http://example.com/preview.png")
 
         waitForExpectations(timeout: timeout, handler: nil)

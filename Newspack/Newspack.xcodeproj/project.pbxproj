@@ -31,10 +31,7 @@
 		E602E68D22C1634900795CBA /* SiteApiActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68C22C1634900795CBA /* SiteApiActions.swift */; };
 		E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E68E22C1637800795CBA /* PostApiActions.swift */; };
 		E602E69222C1666C00795CBA /* AccountAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69122C1666C00795CBA /* AccountAction.swift */; };
-		E602E69422C1669B00795CBA /* AccountCapabilitiesAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69322C1669B00795CBA /* AccountCapabilitiesAction.swift */; };
-		E602E69622C166C700795CBA /* AccountDetailsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69522C166C700795CBA /* AccountDetailsAction.swift */; };
 		E602E69822C1670800795CBA /* PostAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69722C1670800795CBA /* PostAction.swift */; };
-		E602E69A22C1676500795CBA /* SiteAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69922C1676500795CBA /* SiteAction.swift */; };
 		E602E69F22C1747D00795CBA /* Dictionary+Unwrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */; };
 		E6034B1422529414007DB6DD /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6034B1322529414007DB6DD /* UserAgent.swift */; };
 		E6051DE323071A3A005AAF0B /* RemoteRevision.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6051DE223071A3A005AAF0B /* RemoteRevision.swift */; };
@@ -86,7 +83,7 @@
 		E636C26C234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C268234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift */; };
 		E637A6E222F0ED5D00229C1D /* RequestQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E637A6E122F0ED5D00229C1D /* RequestQueue.swift */; };
 		E637A6E422F0EE1500229C1D /* RequestQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */; };
-		E638804E22DFC07900B3C16A /* PostListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E638804D22DFC07900B3C16A /* PostListStore.swift */; };
+		E638804E22DFC07900B3C16A /* PostItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E638804D22DFC07900B3C16A /* PostItemStore.swift */; };
 		E63EECD7234289DD00669FFC /* PostApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECD6234289DD00669FFC /* PostApiService.swift */; };
 		E63EECD9234289F700669FFC /* SiteApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECD8234289F700669FFC /* SiteApiService.swift */; };
 		E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECDA23428A0900669FFC /* UserApiService.swift */; };
@@ -98,6 +95,8 @@
 		E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */; };
 		E6451AC22322F737005809E2 /* EditorSaveAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */; };
 		E64594A122B448C2003BF6C0 /* PostServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */; };
+		E64D9FBB23D667760075A60E /* PostStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64D9FBA23D667760075A60E /* PostStoreTests.swift */; };
+		E64D9FBD23D667D80075A60E /* PostItemStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E64D9FBC23D667D80075A60E /* PostItemStoreTests.swift */; };
 		E6500F9A2368B63800CB8C6C /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6500F992368B63800CB8C6C /* ImageStore.swift */; };
 		E6500F9D2368F36500CB8C6C /* MediaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */; };
 		E65875A223A80A1300185C75 /* MediaServiceRemoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A123A80A1300185C75 /* MediaServiceRemoteTests.swift */; };
@@ -106,7 +105,6 @@
 		E65875A823A811F100185C75 /* MediaItemStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A723A811F100185C75 /* MediaItemStoreTests.swift */; };
 		E65875AA23A8139500185C75 /* StagedMediaImporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */; };
 		E65875AC23A813EA00185C75 /* StagedMediaStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875AB23A813EA00185C75 /* StagedMediaStoreTests.swift */; };
-		E66231CE22F52243004F6DEC /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66231CD22F52243004F6DEC /* PostCell.swift */; };
 		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
 		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
 		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
@@ -114,8 +112,8 @@
 		E66CCA052303527C00F1CA59 /* Category+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9E92303527600F1CA59 /* Category+CoreDataClass.swift */; };
 		E66CCA062303527C00F1CA59 /* Site+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9EA2303527600F1CA59 /* Site+CoreDataClass.swift */; };
 		E66CCA072303527C00F1CA59 /* Account+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9EB2303527600F1CA59 /* Account+CoreDataClass.swift */; };
-		E66CCA082303527C00F1CA59 /* PostListItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9EC2303527600F1CA59 /* PostListItem+CoreDataProperties.swift */; };
-		E66CCA092303527C00F1CA59 /* PostList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9ED2303527600F1CA59 /* PostList+CoreDataClass.swift */; };
+		E66CCA082303527C00F1CA59 /* PostItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9EC2303527600F1CA59 /* PostItem+CoreDataProperties.swift */; };
+		E66CCA092303527C00F1CA59 /* PostQuery+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9ED2303527600F1CA59 /* PostQuery+CoreDataClass.swift */; };
 		E66CCA0A2303527C00F1CA59 /* Page+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9EE2303527700F1CA59 /* Page+CoreDataProperties.swift */; };
 		E66CCA0B2303527C00F1CA59 /* Account+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9EF2303527700F1CA59 /* Account+CoreDataProperties.swift */; };
 		E66CCA0C2303527C00F1CA59 /* Media+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F02303527800F1CA59 /* Media+CoreDataClass.swift */; };
@@ -124,12 +122,12 @@
 		E66CCA0F2303527C00F1CA59 /* Revision+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F32303527800F1CA59 /* Revision+CoreDataProperties.swift */; };
 		E66CCA102303527C00F1CA59 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F42303527800F1CA59 /* User+CoreDataProperties.swift */; };
 		E66CCA112303527C00F1CA59 /* AccountCapabilities+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F52303527800F1CA59 /* AccountCapabilities+CoreDataClass.swift */; };
-		E66CCA122303527C00F1CA59 /* PostList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F62303527900F1CA59 /* PostList+CoreDataProperties.swift */; };
+		E66CCA122303527C00F1CA59 /* PostQuery+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F62303527900F1CA59 /* PostQuery+CoreDataProperties.swift */; };
 		E66CCA132303527C00F1CA59 /* Status+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F72303527900F1CA59 /* Status+CoreDataProperties.swift */; };
 		E66CCA142303527D00F1CA59 /* AccountDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F82303527900F1CA59 /* AccountDetails+CoreDataProperties.swift */; };
 		E66CCA152303527D00F1CA59 /* AccountCapabilities+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9F92303527A00F1CA59 /* AccountCapabilities+CoreDataProperties.swift */; };
 		E66CCA162303527D00F1CA59 /* Post+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9FA2303527A00F1CA59 /* Post+CoreDataProperties.swift */; };
-		E66CCA172303527D00F1CA59 /* PostListItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9FB2303527B00F1CA59 /* PostListItem+CoreDataClass.swift */; };
+		E66CCA172303527D00F1CA59 /* PostItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9FB2303527B00F1CA59 /* PostItem+CoreDataClass.swift */; };
 		E66CCA182303527D00F1CA59 /* Page+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9FC2303527B00F1CA59 /* Page+CoreDataClass.swift */; };
 		E66CCA192303527D00F1CA59 /* Media+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9FD2303527C00F1CA59 /* Media+CoreDataProperties.swift */; };
 		E66CCA1A2303527D00F1CA59 /* Post+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CC9FE2303527C00F1CA59 /* Post+CoreDataClass.swift */; };
@@ -165,6 +163,7 @@
 		E6A4D742230A08A700929376 /* StagedEdits+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A4D740230A08A600929376 /* StagedEdits+CoreDataProperties.swift */; };
 		E6A4D743230A08A700929376 /* StagedEdits+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A4D741230A08A700929376 /* StagedEdits+CoreDataClass.swift */; };
 		E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */; };
+		E6AC98B823CCD5DE00E95381 /* MainNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AC98B723CCD5DE00E95381 /* MainNavController.swift */; };
 		E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */; };
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
 		E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE56AE22B19001004895E5 /* ModelFactory.swift */; };
@@ -232,10 +231,7 @@
 		E602E68C22C1634900795CBA /* SiteApiActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteApiActions.swift; sourceTree = "<group>"; };
 		E602E68E22C1637800795CBA /* PostApiActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostApiActions.swift; sourceTree = "<group>"; };
 		E602E69122C1666C00795CBA /* AccountAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAction.swift; sourceTree = "<group>"; };
-		E602E69322C1669B00795CBA /* AccountCapabilitiesAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesAction.swift; sourceTree = "<group>"; };
-		E602E69522C166C700795CBA /* AccountDetailsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsAction.swift; sourceTree = "<group>"; };
 		E602E69722C1670800795CBA /* PostAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAction.swift; sourceTree = "<group>"; };
-		E602E69922C1676500795CBA /* SiteAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteAction.swift; sourceTree = "<group>"; };
 		E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Unwrappers.swift"; sourceTree = "<group>"; };
 		E6034B1322529414007DB6DD /* UserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
 		E6051DE223071A3A005AAF0B /* RemoteRevision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRevision.swift; sourceTree = "<group>"; };
@@ -292,7 +288,7 @@
 		E636C268234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MediaQuery+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E637A6E122F0ED5D00229C1D /* RequestQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestQueue.swift; sourceTree = "<group>"; };
 		E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestQueueTests.swift; sourceTree = "<group>"; };
-		E638804D22DFC07900B3C16A /* PostListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListStore.swift; sourceTree = "<group>"; };
+		E638804D22DFC07900B3C16A /* PostItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostItemStore.swift; sourceTree = "<group>"; };
 		E63EECD6234289DD00669FFC /* PostApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostApiService.swift; sourceTree = "<group>"; };
 		E63EECD8234289F700669FFC /* SiteApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteApiService.swift; sourceTree = "<group>"; };
 		E63EECDA23428A0900669FFC /* UserApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiService.swift; sourceTree = "<group>"; };
@@ -304,6 +300,8 @@
 		E641A66422A75866008BBD85 /* AccountCapabilitiesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStore.swift; sourceTree = "<group>"; };
 		E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorSaveAlertController.swift; sourceTree = "<group>"; };
 		E64594A022B448C2003BF6C0 /* PostServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostServiceRemote.swift; sourceTree = "<group>"; };
+		E64D9FBA23D667760075A60E /* PostStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStoreTests.swift; sourceTree = "<group>"; };
+		E64D9FBC23D667D80075A60E /* PostItemStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostItemStoreTests.swift; sourceTree = "<group>"; };
 		E6500F992368B63800CB8C6C /* ImageStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 		E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailViewController.swift; sourceTree = "<group>"; };
 		E65875A123A80A1300185C75 /* MediaServiceRemoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceRemoteTests.swift; sourceTree = "<group>"; };
@@ -312,7 +310,6 @@
 		E65875A723A811F100185C75 /* MediaItemStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemStoreTests.swift; sourceTree = "<group>"; };
 		E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedMediaImporterTests.swift; sourceTree = "<group>"; };
 		E65875AB23A813EA00185C75 /* StagedMediaStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedMediaStoreTests.swift; sourceTree = "<group>"; };
-		E66231CD22F52243004F6DEC /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
 		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
 		E66B7D4422162754004355D3 /* replace_secrets.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = replace_secrets.rb; sourceTree = "<group>"; };
@@ -320,8 +317,8 @@
 		E66CC9E92303527600F1CA59 /* Category+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Category+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E66CC9EA2303527600F1CA59 /* Site+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Site+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E66CC9EB2303527600F1CA59 /* Account+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataClass.swift"; sourceTree = "<group>"; };
-		E66CC9EC2303527600F1CA59 /* PostListItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostListItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		E66CC9ED2303527600F1CA59 /* PostList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CC9EC2303527600F1CA59 /* PostItem+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostItem+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9ED2303527600F1CA59 /* PostQuery+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostQuery+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E66CC9EE2303527700F1CA59 /* Page+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Page+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66CC9EF2303527700F1CA59 /* Account+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Account+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66CC9F02303527800F1CA59 /* Media+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Media+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -330,12 +327,12 @@
 		E66CC9F32303527800F1CA59 /* Revision+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Revision+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66CC9F42303527800F1CA59 /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66CC9F52303527800F1CA59 /* AccountCapabilities+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountCapabilities+CoreDataClass.swift"; sourceTree = "<group>"; };
-		E66CC9F62303527900F1CA59 /* PostList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E66CC9F62303527900F1CA59 /* PostQuery+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostQuery+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66CC9F72303527900F1CA59 /* Status+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Status+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66CC9F82303527900F1CA59 /* AccountDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66CC9F92303527A00F1CA59 /* AccountCapabilities+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountCapabilities+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66CC9FA2303527A00F1CA59 /* Post+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		E66CC9FB2303527B00F1CA59 /* PostListItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostListItem+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66CC9FB2303527B00F1CA59 /* PostItem+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PostItem+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E66CC9FC2303527B00F1CA59 /* Page+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Page+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E66CC9FD2303527C00F1CA59 /* Media+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Media+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66CC9FE2303527C00F1CA59 /* Post+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -374,6 +371,7 @@
 		E6A4D740230A08A600929376 /* StagedEdits+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StagedEdits+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E6A4D741230A08A700929376 /* StagedEdits+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StagedEdits+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E6A7C06C2257A42400CC2191 /* UserServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceRemote.swift; sourceTree = "<group>"; };
+		E6AC98B723CCD5DE00E95381 /* MainNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavController.swift; sourceTree = "<group>"; };
 		E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-ids-edit.json"; sourceTree = "<group>"; };
 		E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-edit.json"; sourceTree = "<group>"; };
 		E6CE56AE22B19001004895E5 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
@@ -484,10 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				E602E69122C1666C00795CBA /* AccountAction.swift */,
-				E602E69322C1669B00795CBA /* AccountCapabilitiesAction.swift */,
-				E602E69522C166C700795CBA /* AccountDetailsAction.swift */,
 				E602E69722C1670800795CBA /* PostAction.swift */,
-				E602E69922C1676500795CBA /* SiteAction.swift */,
 				E6E43EA3230F1D2B00A1974E /* EditAction.swift */,
 				E6A10C6223579CE300435670 /* MediaAction.swift */,
 			);
@@ -623,10 +618,10 @@
 				E66CC9EE2303527700F1CA59 /* Page+CoreDataProperties.swift */,
 				E66CC9FE2303527C00F1CA59 /* Post+CoreDataClass.swift */,
 				E66CC9FA2303527A00F1CA59 /* Post+CoreDataProperties.swift */,
-				E66CC9ED2303527600F1CA59 /* PostList+CoreDataClass.swift */,
-				E66CC9F62303527900F1CA59 /* PostList+CoreDataProperties.swift */,
-				E66CC9FB2303527B00F1CA59 /* PostListItem+CoreDataClass.swift */,
-				E66CC9EC2303527600F1CA59 /* PostListItem+CoreDataProperties.swift */,
+				E66CC9ED2303527600F1CA59 /* PostQuery+CoreDataClass.swift */,
+				E66CC9F62303527900F1CA59 /* PostQuery+CoreDataProperties.swift */,
+				E66CC9FB2303527B00F1CA59 /* PostItem+CoreDataClass.swift */,
+				E66CC9EC2303527600F1CA59 /* PostItem+CoreDataProperties.swift */,
 				E66CCA002303527C00F1CA59 /* Revision+CoreDataClass.swift */,
 				E66CC9F32303527800F1CA59 /* Revision+CoreDataProperties.swift */,
 				E66CC9EA2303527600F1CA59 /* Site+CoreDataClass.swift */,
@@ -675,10 +670,10 @@
 			isa = PBXGroup;
 			children = (
 				E6710A1522CE9ED00036156E /* Transitions */,
+				E6AC98B723CCD5DE00E95381 /* MainNavController.swift */,
 				E6138FD32211FE86004E5B91 /* InitialViewController.swift */,
 				E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */,
 				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
-				E66231CD22F52243004F6DEC /* PostCell.swift */,
 				E62982292303667E00E8CEC7 /* EditorViewController.swift */,
 				E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */,
 				E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */,
@@ -755,7 +750,7 @@
 				E641A66222A7584A008BBD85 /* AccountDetailsStore.swift */,
 				E68B29FE23048C6C0021283C /* EditCoordinator.swift */,
 				E6FB520522B973A60010FDF8 /* PostStore.swift */,
-				E638804D22DFC07900B3C16A /* PostListStore.swift */,
+				E638804D22DFC07900B3C16A /* PostItemStore.swift */,
 				E641A66022A71A83008BBD85 /* SiteStore.swift */,
 				E637A6E122F0ED5D00229C1D /* RequestQueue.swift */,
 				E6D44DEE234BDB8400B51438 /* MediaStore.swift */,
@@ -776,6 +771,8 @@
 				E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */,
 				E65875A523A811A400185C75 /* MediaStoreTests.swift */,
 				E65875A723A811F100185C75 /* MediaItemStoreTests.swift */,
+				E64D9FBA23D667760075A60E /* PostStoreTests.swift */,
+				E64D9FBC23D667D80075A60E /* PostItemStoreTests.swift */,
 				E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */,
 				E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */,
 				E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */,
@@ -1133,8 +1130,7 @@
 				E636C26A234FEAD800564B63 /* MediaItem+CoreDataProperties.swift in Sources */,
 				E6FB520022B967910010FDF8 /* Dictionary+KeyPath.swift in Sources */,
 				E637A6E222F0ED5D00229C1D /* RequestQueue.swift in Sources */,
-				E602E69422C1669B00795CBA /* AccountCapabilitiesAction.swift in Sources */,
-				E66CCA122303527C00F1CA59 /* PostList+CoreDataProperties.swift in Sources */,
+				E66CCA122303527C00F1CA59 /* PostQuery+CoreDataProperties.swift in Sources */,
 				E636C260234FBACC00564B63 /* MediaItemStore.swift in Sources */,
 				E61D8F6F2378C95B005FECED /* StagedMedia+CoreDataProperties.swift in Sources */,
 				E61D8F702378C95B005FECED /* StagedMedia+CoreDataClass.swift in Sources */,
@@ -1160,13 +1156,11 @@
 				E66CCA1E2303527D00F1CA59 /* Status+CoreDataClass.swift in Sources */,
 				E6051DEC23075A3A005AAF0B /* Dictionary+Merge.swift in Sources */,
 				E6343ADF23A077C80033D369 /* MediaSelectViewController.swift in Sources */,
-				E602E69622C166C700795CBA /* AccountDetailsAction.swift in Sources */,
 				E61BBD6822FA0470008A6D4C /* StartupHelper.swift in Sources */,
 				E636C26C234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift in Sources */,
-				E602E69A22C1676500795CBA /* SiteAction.swift in Sources */,
 				E66CCA112303527C00F1CA59 /* AccountCapabilities+CoreDataClass.swift in Sources */,
 				E66CCA152303527D00F1CA59 /* AccountCapabilities+CoreDataProperties.swift in Sources */,
-				E638804E22DFC07900B3C16A /* PostListStore.swift in Sources */,
+				E638804E22DFC07900B3C16A /* PostItemStore.swift in Sources */,
 				E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */,
 				E640D27A23883EE700887FD9 /* StagedMediaUploader.swift in Sources */,
 				E6D44DF3234BDBB500B51438 /* MediaServiceRemote.swift in Sources */,
@@ -1189,7 +1183,7 @@
 				E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */,
 				E6451AC22322F737005809E2 /* EditorSaveAlertController.swift in Sources */,
 				E6D44DEF234BDB8400B51438 /* MediaStore.swift in Sources */,
-				E66CCA172303527D00F1CA59 /* PostListItem+CoreDataClass.swift in Sources */,
+				E66CCA172303527D00F1CA59 /* PostItem+CoreDataClass.swift in Sources */,
 				E636C264234FD16F00564B63 /* MediaApiActions.swift in Sources */,
 				E690D57223722BB700676B1D /* PhotoLibraryViewController.swift in Sources */,
 				E602E68522C15ECC00795CBA /* RemoteSiteSettings.swift in Sources */,
@@ -1203,7 +1197,6 @@
 				E629822A2303667E00E8CEC7 /* EditorViewController.swift in Sources */,
 				E66CCA1B2303527D00F1CA59 /* User+CoreDataClass.swift in Sources */,
 				E6051DE323071A3A005AAF0B /* RemoteRevision.swift in Sources */,
-				E66231CE22F52243004F6DEC /* PostCell.swift in Sources */,
 				E66CCA0F2303527C00F1CA59 /* Revision+CoreDataProperties.swift in Sources */,
 				E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */,
 				E602E68D22C1634900795CBA /* SiteApiActions.swift in Sources */,
@@ -1212,7 +1205,7 @@
 				E66CCA1A2303527D00F1CA59 /* Post+CoreDataClass.swift in Sources */,
 				E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */,
 				E602E68722C15ED700795CBA /* RemotePost.swift in Sources */,
-				E66CCA082303527C00F1CA59 /* PostListItem+CoreDataProperties.swift in Sources */,
+				E66CCA082303527C00F1CA59 /* PostItem+CoreDataProperties.swift in Sources */,
 				E602E68B22C1632C00795CBA /* UserApiActions.swift in Sources */,
 				E66CCA132303527C00F1CA59 /* Status+CoreDataProperties.swift in Sources */,
 				E66CCA042303527C00F1CA59 /* Category+CoreDataProperties.swift in Sources */,
@@ -1233,13 +1226,14 @@
 				E66CCA0A2303527C00F1CA59 /* Page+CoreDataProperties.swift in Sources */,
 				E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */,
 				E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */,
+				E6AC98B823CCD5DE00E95381 /* MainNavController.swift in Sources */,
 				E68B2A0123048E050021283C /* EditorAttachmentImageProvider.swift in Sources */,
 				E66CCA0E2303527C00F1CA59 /* Tag+CoreDataProperties.swift in Sources */,
 				E6500F9A2368B63800CB8C6C /* ImageStore.swift in Sources */,
 				E6241B96224EC8CD00B578F5 /* SessionManager.swift in Sources */,
 				E641A66122A71A83008BBD85 /* SiteStore.swift in Sources */,
 				E6A10C6323579CE300435670 /* MediaAction.swift in Sources */,
-				E66CCA092303527C00F1CA59 /* PostList+CoreDataClass.swift in Sources */,
+				E66CCA092303527C00F1CA59 /* PostQuery+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1252,6 +1246,7 @@
 				E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */,
 				E6E1835022D79473009C2D0A /* RemoteTestCase.swift in Sources */,
 				E65875A223A80A1300185C75 /* MediaServiceRemoteTests.swift in Sources */,
+				E64D9FBB23D667760075A60E /* PostStoreTests.swift in Sources */,
 				E6051DF123076191005AAF0B /* DictionaryMergeTests.swift in Sources */,
 				E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */,
 				E65875A823A811F100185C75 /* MediaItemStoreTests.swift in Sources */,
@@ -1259,6 +1254,7 @@
 				E637A6E422F0EE1500229C1D /* RequestQueueTests.swift in Sources */,
 				E65875AA23A8139500185C75 /* StagedMediaImporterTests.swift in Sources */,
 				E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */,
+				E64D9FBD23D667D80075A60E /* PostItemStoreTests.swift in Sources */,
 				E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */,
 				E61A28CF22D53EFD003E214F /* PostServiceRemoteTests.swift in Sources */,
 				E61FC603229F2EEE009E1748 /* UserServiceRemoteTests.swift in Sources */,

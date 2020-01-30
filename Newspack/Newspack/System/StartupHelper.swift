@@ -9,13 +9,13 @@ class StartupHelper {
     /// Resets flags related to syncing on the PostList and PostListItem models.
     ///
     static func resetSyncFlags() {
-        let listRequest = NSBatchUpdateRequest(entityName: "PostList")
-        listRequest.propertiesToUpdate = ["hasMore": true]
+        let queryRequest = NSBatchUpdateRequest(entityName: "PostQuery")
+        queryRequest.propertiesToUpdate = ["hasMore": true]
 
-        let itemRequest = NSBatchUpdateRequest(entityName: "PostListItem")
+        let itemRequest = NSBatchUpdateRequest(entityName: "PostItem")
         itemRequest.propertiesToUpdate = ["syncing": false]
         do {
-            try CoreDataManager.shared.mainContext.execute(listRequest)
+            try CoreDataManager.shared.mainContext.execute(queryRequest)
             try CoreDataManager.shared.mainContext.execute(itemRequest)
         } catch {
             LogError(message: "resetSyncFlags: Error updating hasMore and/or syncing fields on lists and list items.")
@@ -31,7 +31,7 @@ class StartupHelper {
     ///
     static func purgeStaleStagedEdits() {
         let fetch = StagedEdits.defaultFetchRequest()
-        fetch.predicate = NSPredicate(format: "postListItem == NULL")
+        fetch.predicate = NSPredicate(format: "postItem == NULL")
         let req = NSBatchDeleteRequest(fetchRequest: fetch as! NSFetchRequest<NSFetchRequestResult>)
 
         let context = CoreDataManager.shared.mainContext

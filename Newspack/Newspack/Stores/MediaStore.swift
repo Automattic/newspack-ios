@@ -53,9 +53,12 @@ extension MediaStore {
     /// - Returns: The model object, or nil if not found.
     ///
     func getMediaItemWithID(mediaID: Int64) -> MediaItem? {
+        guard let siteID = currentSiteID else {
+            return nil
+        }
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = MediaItem.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "mediaID = %ld", mediaID)
+        fetchRequest.predicate = NSPredicate(format: "mediaID = %ld AND site.uuid = %@", mediaID, siteID as CVarArg)
         do {
             return try context.fetch(fetchRequest).first
         } catch {
