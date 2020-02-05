@@ -9,10 +9,10 @@ class ApiService {
     ///
     /// - Returns: UserApiService
     ///
-    static func userService() -> UserApiService {
+    static func userService() -> UserApiService{
         let api = SessionManager.shared.api
         let dispatcher = SessionManager.shared.sessionDispatcher
-        return UserApiService(wordPressComRestApi: api, dispatcher: dispatcher)
+        return UserApiService(wordPressComRestApi:   api, dispatcher : dispatcher)
     }
 
     /// Get an instance of the SiteApiService
