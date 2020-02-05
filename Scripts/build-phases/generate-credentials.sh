@@ -50,11 +50,11 @@ else
     ## Generate ApiCredentials.swift
     ##
     echo ">> Generating Credentials ${CREDS_OUTPUT_PATH}"
-    ruby ${SCRIPT_PATH} -i ${CREDS_INPUT_PATH} -s ${SECRETS_PATH} > ${CREDS_OUTPUT_PATH}
+    ruby ${SCRIPT_PATH} -i ${CREDS_INPUT_PATH} -s ${SECRETS_PATH} > "${CREDS_OUTPUT_PATH}"
 
     ## Generate InfoPlist.h
     ##
     echo ">> Generating Credentials ${PLIST_OUTPUT_PATH}"
-    ruby ${SCRIPT_PATH} -i ${PLIST_INPUT_PATH} -s ${SECRETS_PATH} > ${PLIST_OUTPUT_PATH}
+    ruby ${SCRIPT_PATH} -i ${PLIST_INPUT_PATH} -s ${SECRETS_PATH} > "${PLIST_OUTPUT_PATH}"
 
 fi

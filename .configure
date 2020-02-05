@@ -1,0 +1,25 @@
+{
+  "project_name": "newspack",
+  "branch": "master",
+  "pinned_hash": "ef38654e2e547367180949304ea2d6a8d88263d9",
+  "files_to_copy": [
+    {
+      "file": "iOS/newspack/newspack_app_credentials.json",
+      "destination": ".configure-files/newspack_app_credentials.json",
+      "encrypt": true
+    },
+    {
+      "file": "iOS/newspack/project.env",
+      "destination": ".configure-files/project.env",
+      "encrypt": true
+    },
+    {
+      "file": "shared/google_cloud_keys.json",
+      "destination": ".configure-files/google_cloud_keys.json",
+      "encrypt": true
+    }
+  ],
+  "file_dependencies": [
+
+  ]
+}
