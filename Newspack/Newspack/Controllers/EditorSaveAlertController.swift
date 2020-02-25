@@ -4,7 +4,7 @@ import UIKit
 class EditorSaveAlertControllerFactory {
 
     struct ActionTitles {
-        static let update = NSLocalizedString("Update", comment: "Update a post.")
+        static let update = NSLocalizedString( "Update", comment: "Update a post.")
         static let publish = NSLocalizedString("Publish", comment: "Publish a post.")
         static let privately = NSLocalizedString("Publish Privately", comment: "Publish a post giving it a Private post status.")
         static let makePublic = NSLocalizedString("Make Public", comment: "Make a private post public.")
@@ -16,7 +16,7 @@ class EditorSaveAlertControllerFactory {
         static let cancel = NSLocalizedString("Cancel", comment: "Cancel")
     }
 
-    func controllerForStagedEdits(stagedEdits: StagedEdits, canUpdate: Bool, for post: Post?) -> UIAlertController {
+    func controllerForStagedEdits(stagedEdits : StagedEdits, canUpdate: Bool, for post: Post?) -> UIAlertController {
 
         let controller = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let actions = availableSaveActions(stagedEdits: stagedEdits, canUpdate: canUpdate, for: post)
