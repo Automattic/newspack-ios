@@ -26,7 +26,6 @@ extension Site {
 
     @NSManaged public var account: Account!
     @NSManaged public var capabilities: AccountCapabilities?
-    @NSManaged public var categories: Set<Category>!
     @NSManaged public var media: Set<Media>!
     @NSManaged public var mediaItems: Set<MediaItem>!
     @NSManaged public var mediaQueries: Set<MediaQuery>!
@@ -36,25 +35,7 @@ extension Site {
     @NSManaged public var posts: Set<Post>!
     @NSManaged public var stagedMedia: Set<Status>!
     @NSManaged public var statuses: Set<Status>!
-    @NSManaged public var tags: Set<Tag>!
     @NSManaged public var users: Set<User>!
-
-}
-
-// MARK: Generated accessors for categories
-extension Site {
-
-    @objc(addCategoriesObject:)
-    @NSManaged public func addToCategories(_ value: Category)
-
-    @objc(removeCategoriesObject:)
-    @NSManaged public func removeFromCategories(_ value: Category)
-
-    @objc(addCategories:)
-    @NSManaged public func addToCategories(_ values: Set<Category>)
-
-    @objc(removeCategories:)
-    @NSManaged public func removeFromCategories(_ values: Set<Category>)
 
 }
 
@@ -208,23 +189,6 @@ extension Site {
 
     @objc(removeStatuses:)
     @NSManaged public func removeFromStatuses(_ values: Set<Status>)
-
-}
-
-// MARK: Generated accessors for tags
-extension Site {
-
-    @objc(addTagsObject:)
-    @NSManaged public func addToTags(_ value: Tag)
-
-    @objc(removeTagsObject:)
-    @NSManaged public func removeFromTags(_ value: Tag)
-
-    @objc(addTags:)
-    @NSManaged public func addToTags(_ values: Set<Tag>)
-
-    @objc(removeTags:)
-    @NSManaged public func removeFromTags(_ values: Set<Tag>)
 
 }
 
