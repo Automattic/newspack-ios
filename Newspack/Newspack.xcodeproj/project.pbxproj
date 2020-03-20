@@ -45,6 +45,9 @@
 		E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */; };
 		E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */; };
 		E607386122A9A5EF00504EA4 /* AccountDetailsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */; };
+		E60A250E2425418E003F3C81 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60A250D2425418E003F3C81 /* ShareViewController.swift */; };
+		E60A25112425418E003F3C81 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E60A250F2425418E003F3C81 /* MainInterface.storyboard */; };
+		E60A25152425418E003F3C81 /* NewspackShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E60A250B2425418E003F3C81 /* NewspackShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD12211FE86004E5B91 /* AppDelegate.swift */; };
 		E6138FD42211FE86004E5B91 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD32211FE86004E5B91 /* InitialViewController.swift */; };
 		E6138FD72211FE86004E5B91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6138FD52211FE86004E5B91 /* Main.storyboard */; };
@@ -182,6 +185,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		E60A25132425418E003F3C81 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E6138FC62211FE86004E5B91 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E60A250A2425418E003F3C81;
+			remoteInfo = NewspackShare;
+		};
 		E6138FE62211FE88004E5B91 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E6138FC62211FE86004E5B91 /* Project object */;
@@ -205,6 +215,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				E60A25152425418E003F3C81 /* NewspackShare.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,6 +252,10 @@
 		E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStoreTests.swift; sourceTree = "<group>"; };
 		E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStoreTests.swift; sourceTree = "<group>"; };
 		E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsStoreTests.swift; sourceTree = "<group>"; };
+		E60A250B2425418E003F3C81 /* NewspackShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NewspackShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E60A250D2425418E003F3C81 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		E60A25102425418E003F3C81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		E60A25122425418E003F3C81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6138FCE2211FE86004E5B91 /* Newspack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Newspack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6138FD12211FE86004E5B91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6138FD32211FE86004E5B91 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
@@ -386,6 +401,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		E60A25082425418E003F3C81 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E6138FCB2211FE86004E5B91 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -490,6 +512,16 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		E60A250C2425418E003F3C81 /* NewspackShare */ = {
+			isa = PBXGroup;
+			children = (
+				E60A250D2425418E003F3C81 /* ShareViewController.swift */,
+				E60A250F2425418E003F3C81 /* MainInterface.storyboard */,
+				E60A25122425418E003F3C81 /* Info.plist */,
+			);
+			path = NewspackShare;
+			sourceTree = "<group>";
+		};
 		E6138FC52211FE86004E5B91 = {
 			isa = PBXGroup;
 			children = (
@@ -497,6 +529,7 @@
 				E623C6F32220516600F9865C /* DerivedSources */,
 				E6138FD02211FE86004E5B91 /* Newspack */,
 				E6138FE82211FE88004E5B91 /* NewspackTests */,
+				E60A250C2425418E003F3C81 /* NewspackShare */,
 				E6138FCF2211FE86004E5B91 /* Products */,
 				A7CCB681DC7B8B7DAAE80B05 /* Pods */,
 				1F18E0D763EA3C69C7617669 /* Frameworks */,
@@ -508,6 +541,7 @@
 			children = (
 				E6138FCE2211FE86004E5B91 /* Newspack.app */,
 				E6138FE52211FE88004E5B91 /* NewspackTests.xctest */,
+				E60A250B2425418E003F3C81 /* NewspackShare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -846,6 +880,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		E60A250A2425418E003F3C81 /* NewspackShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E60A25162425418E003F3C81 /* Build configuration list for PBXNativeTarget "NewspackShare" */;
+			buildPhases = (
+				E60A25072425418E003F3C81 /* Sources */,
+				E60A25082425418E003F3C81 /* Frameworks */,
+				E60A25092425418E003F3C81 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NewspackShare;
+			productName = NewspackShare;
+			productReference = E60A250B2425418E003F3C81 /* NewspackShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		E6138FCD2211FE86004E5B91 /* Newspack */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6138FEE2211FE88004E5B91 /* Build configuration list for PBXNativeTarget "Newspack" */;
@@ -863,6 +914,7 @@
 			);
 			dependencies = (
 				E6E1FA832216152A00119ECE /* PBXTargetDependency */,
+				E60A25142425418E003F3C81 /* PBXTargetDependency */,
 			);
 			name = Newspack;
 			productName = Newspack;
@@ -895,10 +947,13 @@
 		E6138FC62211FE86004E5B91 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = Automattic;
 				TargetAttributes = {
+					E60A250A2425418E003F3C81 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
 					E6138FCD2211FE86004E5B91 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1100;
@@ -929,11 +984,20 @@
 				E6138FCD2211FE86004E5B91 /* Newspack */,
 				E6138FE42211FE88004E5B91 /* NewspackTests */,
 				E6E1FA7D2216134300119ECE /* GenerateCredentials */,
+				E60A250A2425418E003F3C81 /* NewspackShare */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		E60A25092425418E003F3C81 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E60A25112425418E003F3C81 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E6138FCC2211FE86004E5B91 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1108,6 +1172,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E60A25072425418E003F3C81 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E60A250E2425418E003F3C81 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E6138FCA2211FE86004E5B91 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1256,6 +1328,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		E60A25142425418E003F3C81 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E60A250A2425418E003F3C81 /* NewspackShare */;
+			targetProxy = E60A25132425418E003F3C81 /* PBXContainerItemProxy */;
+		};
 		E6138FE72211FE88004E5B91 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E6138FCD2211FE86004E5B91 /* Newspack */;
@@ -1269,6 +1346,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		E60A250F2425418E003F3C81 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E60A25102425418E003F3C81 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		E6138FD52211FE86004E5B91 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1288,6 +1373,68 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		E60A25172425418E003F3C81 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PZYM8XX95Q;
+				INFOPLIST_FILE = NewspackShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack.NewspackShare;
+				PRODUCT_NAME = NewspackShare;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E60A25182425418E003F3C81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = PZYM8XX95Q;
+				INFOPLIST_FILE = NewspackShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack.NewspackShare;
+				PRODUCT_NAME = NewspackShare;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		E60A25192425418E003F3C81 /* Release-Alpha */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = NewspackShare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack.NewspackShare;
+				PRODUCT_NAME = NewspackShare;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release-Alpha";
+		};
 		E6138FEC2211FE88004E5B91 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1629,6 +1776,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		E60A25162425418E003F3C81 /* Build configuration list for PBXNativeTarget "NewspackShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E60A25172425418E003F3C81 /* Debug */,
+				E60A25182425418E003F3C81 /* Release */,
+				E60A25192425418E003F3C81 /* Release-Alpha */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		E6138FC92211FE86004E5B91 /* Build configuration list for PBXProject "Newspack" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
