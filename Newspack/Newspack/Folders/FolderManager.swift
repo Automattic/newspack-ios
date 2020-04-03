@@ -57,11 +57,16 @@ class FolderManager {
 
     /// Creates a new folder with the specified name underneath the currentFolder.
     ///
-    /// - Parameter folderName: The name of the folder to create.
-    /// - Returns: The file URL of the folder or nil if the folder could not be created.
+    /// - Parameters:
+    ///   - path: The path, including name, of the folder to create.
+    ///   - ifExistsAppendSuffix: If true, if the specified path already exists
+    ///   a numberic index is appended to the path. Default is false.
+    /// - Returns: The file URL of the folder or nil if the folder could not be
+    /// created.
     ///
-    func createFolderAtPath(path: String) -> URL? {
-        let url = urlForFolderAtPath(path: path)
+    func createFolderAtPath(path: String, ifExistsAppendSuffix: Bool = false) -> URL? {
+        let url = urlForFolderAtPath(path: path, ifExistsAppendSuffix: ifExistsAppendSuffix)
+
         guard !folderExists(url: url) else {
             return url
         }
@@ -79,10 +84,27 @@ class FolderManager {
     /// or relative.  A relative path will be considered relative to the
     /// currentFolder.
     ///
-    /// - Parameter path: A path to a folder.
+    /// - Parameters:
+    ///   - path: The path, including name, of the folder.
+    ///   - ifExistsAppendSuffix: If true, if the specified path already exists
+    ///   a numberic index is appended to the path. Default is false.
     /// - Returns: A URL
     ///
-    func urlForFolderAtPath(path: String) -> URL {
-        return URL(fileURLWithPath: path, isDirectory: true, relativeTo: currentFolder)
+    func urlForFolderAtPath(path: String, ifExistsAppendSuffix: Bool = false) -> URL {
+        var url = URL(fileURLWithPath: path, isDirectory: true, relativeTo: currentFolder)
+
+        if !ifExistsAppendSuffix || !folderExists(url: url) {
+            return url
+        }
+
+        var newPath = path
+        var counter = 1
+        repeat {
+            counter = counter + 1
+            newPath = "\(path) \(counter)"
+            url = URL(fileURLWithPath: newPath, isDirectory: true, relativeTo: currentFolder)
+        } while folderExists(url: url)
+
+        return url
     }
 }
