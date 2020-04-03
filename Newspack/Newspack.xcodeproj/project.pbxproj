@@ -170,6 +170,8 @@
 		E6D44DEF234BDB8400B51438 /* MediaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEE234BDB8400B51438 /* MediaStore.swift */; };
 		E6D44DF1234BDBA000B51438 /* MediaApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF0234BDBA000B51438 /* MediaApiService.swift */; };
 		E6D44DF3234BDBB500B51438 /* MediaServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */; };
+		E6DF5575242E7139007DDC47 /* FolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DF5574242E7139007DDC47 /* FolderManager.swift */; };
+		E6DF5578242E7242007DDC47 /* FolderManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DF5577242E7242007DDC47 /* FolderManagerTests.swift */; };
 		E6E1834D22D6D44D009C2D0A /* remote-post-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */; };
 		E6E1834E22D6D44D009C2D0A /* remote-post-id-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834C22D6D44D009C2D0A /* remote-post-id-edit.json */; };
 		E6E1835022D79473009C2D0A /* RemoteTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E1834F22D79473009C2D0A /* RemoteTestCase.swift */; };
@@ -386,6 +388,8 @@
 		E6D44DEE234BDB8400B51438 /* MediaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStore.swift; sourceTree = "<group>"; };
 		E6D44DF0234BDBA000B51438 /* MediaApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaApiService.swift; sourceTree = "<group>"; };
 		E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceRemote.swift; sourceTree = "<group>"; };
+		E6DF5574242E7139007DDC47 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
+		E6DF5577242E7242007DDC47 /* FolderManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManagerTests.swift; sourceTree = "<group>"; };
 		E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-post-edit.json"; sourceTree = "<group>"; };
 		E6E1834C22D6D44D009C2D0A /* remote-post-id-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-post-id-edit.json"; sourceTree = "<group>"; };
 		E6E1834F22D79473009C2D0A /* RemoteTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTestCase.swift; sourceTree = "<group>"; };
@@ -549,6 +553,7 @@
 		E6138FD02211FE86004E5B91 /* Newspack */ = {
 			isa = PBXGroup;
 			children = (
+				E6DF5573242E7115007DDC47 /* Folders */,
 				E6FB51FE22B9677A0010FDF8 /* Extensions */,
 				E62C7C632235E0EC000FEB33 /* Stores */,
 				E6138FFE22120467004E5B91 /* Controllers */,
@@ -567,6 +572,7 @@
 		E6138FE82211FE88004E5B91 /* NewspackTests */ = {
 			isa = PBXGroup;
 			children = (
+				E6DF5576242E722B007DDC47 /* Folders */,
 				E61FC60A229F330A009E1748 /* TestData */,
 				E61FC607229F3280009E1748 /* TestTools */,
 				E66E8A122235ABB300E8DD88 /* Base */,
@@ -864,6 +870,22 @@
 				E6710A1622CE9F040036156E /* FadeTransitionController.swift */,
 			);
 			path = Transitions;
+			sourceTree = "<group>";
+		};
+		E6DF5573242E7115007DDC47 /* Folders */ = {
+			isa = PBXGroup;
+			children = (
+				E6DF5574242E7139007DDC47 /* FolderManager.swift */,
+			);
+			path = Folders;
+			sourceTree = "<group>";
+		};
+		E6DF5576242E722B007DDC47 /* Folders */ = {
+			isa = PBXGroup;
+			children = (
+				E6DF5577242E7242007DDC47 /* FolderManagerTests.swift */,
+			);
+			path = Folders;
 			sourceTree = "<group>";
 		};
 		E6FB51FE22B9677A0010FDF8 /* Extensions */ = {
@@ -1277,6 +1299,7 @@
 				E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */,
 				E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */,
 				E636C262234FBE6800564B63 /* RemoteMedia.swift in Sources */,
+				E6DF5575242E7139007DDC47 /* FolderManager.swift in Sources */,
 				E6D44DF1234BDBA000B51438 /* MediaApiService.swift in Sources */,
 				E66CCA0C2303527C00F1CA59 /* Media+CoreDataClass.swift in Sources */,
 				E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */,
@@ -1310,6 +1333,7 @@
 				E637A6E422F0EE1500229C1D /* RequestQueueTests.swift in Sources */,
 				E65875AA23A8139500185C75 /* StagedMediaImporterTests.swift in Sources */,
 				E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */,
+				E6DF5578242E7242007DDC47 /* FolderManagerTests.swift in Sources */,
 				E64D9FBD23D667D80075A60E /* PostItemStoreTests.swift in Sources */,
 				E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */,
 				E61A28CF22D53EFD003E214F /* PostServiceRemoteTests.swift in Sources */,
