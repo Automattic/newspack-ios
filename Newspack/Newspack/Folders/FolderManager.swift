@@ -13,7 +13,7 @@ class FolderManager {
 
     // The current working folder. This will be either the rootFolder or
     // one of its children.
-    private var currentFolder: URL
+    private(set) var currentFolder: URL
 
     /// A convenience method to create a new temporary directory and returns its URL.
     ///
