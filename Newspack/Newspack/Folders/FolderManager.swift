@@ -15,6 +15,16 @@ class FolderManager {
     // one of its children.
     private var currentFolder: URL
 
+    /// A convenience method to create a new temporary directory and returns its URL.
+    ///
+    /// - Returns: A file url to the newly created temporary directory, or nil
+    /// if the directory could not be created.
+    ///
+    static func createTemporaryDirectory() -> URL? {
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        return try? FileManager.default.url(for: .itemReplacementDirectory, in: .userDomainMask, appropriateFor: documentDirectory, create: true)
+    }
+
     /// Initializes the FolderManager, optionally specifying its default
     /// rootFolder.
     ///
@@ -32,7 +42,7 @@ class FolderManager {
         var isDirectory: ObjCBool = false
         if
             let root = rootFolder,
-            fileManager.fileExists(atPath: root.absoluteString, isDirectory: &isDirectory),
+            fileManager.fileExists(atPath: root.path, isDirectory: &isDirectory),
             isDirectory.boolValue,
             fileManager.isWritableFile(atPath: root.path)
         {
@@ -106,5 +116,28 @@ class FolderManager {
         } while folderExists(url: url)
 
         return url
+    }
+
+    /// Sets the current folder to the specified URL provided the URL is the
+    /// root directory or one of its children.
+    ///
+    /// - Parameter url: A file url.
+    /// - Returns: true if successful, false otherwise.
+    ///
+    func setCurrentFolder(url: URL) -> Bool {
+        var didSetCurrentFolder = false
+
+        let relation = UnsafeMutablePointer<FileManager.URLRelationship>.allocate(capacity: 1)
+
+        try? fileManager.getRelationship(relation, ofDirectoryAt: rootFolder, toItemAt: url)
+
+        if relation.pointee != .other {
+            currentFolder = url
+            didSetCurrentFolder = true
+        }
+
+        relation.deallocate()
+
+        return didSetCurrentFolder
     }
 }
