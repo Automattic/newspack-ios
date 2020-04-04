@@ -6,8 +6,7 @@ class FolderManagerTests: XCTestCase {
     var folderManager: FolderManager!
 
     override func setUpWithError() throws {
-        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
-        let tempDirectory = try! FileManager.default.url(for: .itemReplacementDirectory, in: .userDomainMask, appropriateFor: documentDirectory, create: true)
+        let tempDirectory = FolderManager.createTemporaryDirectory()
         folderManager = FolderManager(rootFolder: tempDirectory)
     }
 
