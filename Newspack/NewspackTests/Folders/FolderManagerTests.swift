@@ -49,4 +49,21 @@ class FolderManagerTests: XCTestCase {
         XCTAssertTrue(url3.lastPathComponent.hasSuffix(expectedPath3))
         XCTAssertTrue(folderManager.folderExists(url: url3))
     }
+
+    func testSetCurrentFolder() {
+        let path = "TestFolder"
+
+        let originalCurrentFolder = folderManager.currentFolder
+
+        // Create the starting folder
+        let url = folderManager.createFolderAtPath(path: path)!
+        var success = folderManager.setCurrentFolder(url: url)
+        XCTAssertTrue(success)
+
+        success = folderManager.setCurrentFolder(url: originalCurrentFolder)
+        XCTAssertTrue(success)
+
+        success = folderManager.setCurrentFolder(url: FileManager.default.temporaryDirectory)
+        XCTAssertFalse(success)
+    }
 }
