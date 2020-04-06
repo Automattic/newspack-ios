@@ -34,9 +34,15 @@ struct SiteMenuViewModel {
             SessionManager.shared.sessionDispatcher.dispatch(action)
         }
 
+        let folderRow = SiteMenuRow(title: "New Story Folder") {
+            let action = FolderAction.createFolder(path: "New Folder", addSuffix: true)
+            SessionManager.shared.sessionDispatcher.dispatch(action)
+        }
+
         let rows = [
             postRow,
             mediaRow,
+            folderRow,
             logoutRow
         ]
 
