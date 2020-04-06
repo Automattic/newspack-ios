@@ -4,20 +4,31 @@ import CocoaLumberjack
 class Log {
     private init() {}
 
-    static func info(message: String) {
-        DDLogInfo("ℹ️ INFO: " + message)
+    private static func fileName(filePath: String) -> String {
+        guard let index = filePath.lastIndex(of: "/") else {
+            return filePath
+        }
+        return String(filePath.suffix(from: index))
     }
 
-    static func error(message: String) {
-        DDLogError("🛑 ERROR: " + message)
+    static func info(message: String, file: String, function: String) {
+        let name = fileName(filePath: file)
+        DDLogInfo("ℹ️ INFO: \(name) \(function): \(message)")
     }
 
-    static func debug(message: String) {
-        DDLogDebug("🛠️ DEBUG: " + message)
+    static func error(message: String, file: String, function: String) {
+        let name = fileName(filePath: file)
+        DDLogError("🛑 ERROR: \(name) \(function): \(message)")
     }
 
-    static func warn(message: String) {
-        DDLogWarn("⚠️ WARNING: " + message)
+    static func debug(message: String, file: String, function: String) {
+        let name = fileName(filePath: file)
+        DDLogDebug("🛠️ DEBUG: \(name) \(function): \(message)")
+    }
+
+    static func warn(message: String, file: String, function: String) {
+        let name = fileName(filePath: file)
+        DDLogWarn("⚠️ WARNING: \(name) \(function): \(message)")
     }
 
     static func setup() {
@@ -31,18 +42,18 @@ class Log {
     }
 }
 
-public func LogInfo(message: String) {
-    Log.info(message: message)
+public func LogInfo(message: String, file: String = #file, function: String = #function) {
+    Log.info(message: message, file: file, function: function)
 }
 
-public func LogWarn(message: String) {
-    Log.warn(message: message)
+public func LogWarn(message: String, file: String = #file, function: String = #function) {
+    Log.warn(message: message, file: file, function: function)
 }
 
-public func LogDebug(message: String) {
-    Log.debug(message: message)
+public func LogDebug(message: String, file: String = #file, function: String = #function) {
+    Log.debug(message: message, file: file, function: function)
 }
 
-public func LogError(message: String) {
-    Log.error(message: message)
+public func LogError(message: String, file: String = #file, function: String = #function) {
+    Log.error(message: message, file: file, function: function)
 }
