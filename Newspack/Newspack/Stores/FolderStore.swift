@@ -28,7 +28,7 @@ class FolderStore: Store {
                 fatalError("Unable to set the current working folder to \(url.path)")
             }
         }
-        
+
         super.init(dispatcher: dispatcher)
     }
 
@@ -49,7 +49,12 @@ extension FolderStore {
     func createFolder(path: String, addSuffix: Bool) {
         if let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) {
             LogDebug(message: "Success: \(url.path)")
+            emitChange()
         }
+    }
+
+    func listFolders() -> [URL] {
+        return folderManager.enumerateFolders(url: folderManager.currentFolder)
     }
 
 }
