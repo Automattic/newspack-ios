@@ -35,7 +35,7 @@ class FolderManager {
     init(rootFolder: URL? = nil) {
         fileManager = FileManager()
 
-        guard let documentDirectory  = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+        guard let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
             fatalError()
         }
 
@@ -129,11 +129,15 @@ class FolderManager {
 
         let relation = UnsafeMutablePointer<FileManager.URLRelationship>.allocate(capacity: 1)
 
-        try? fileManager.getRelationship(relation, ofDirectoryAt: rootFolder, toItemAt: url)
+        do {
+            try fileManager.getRelationship(relation, ofDirectoryAt: rootFolder, toItemAt: url)
 
-        if relation.pointee != .other {
-            currentFolder = url
-            didSetCurrentFolder = true
+            if relation.pointee != .other {
+                currentFolder = url
+                didSetCurrentFolder = true
+            }
+        } catch {
+            LogError(message: "Error checking folder relationships. \(error)")
         }
 
         relation.deallocate()
