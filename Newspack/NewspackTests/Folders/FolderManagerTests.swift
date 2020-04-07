@@ -85,9 +85,14 @@ class FolderManagerTests: XCTestCase {
     func testMoveFolder() {
         let path = "TestFolder"
         let newPath = "MovedFolder"
+        let invalidPath = " "
         let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)!
         let childURL = url.appendingPathComponent(newPath, isDirectory: true)
         let newURL = url.deletingLastPathComponent().appendingPathComponent(newPath, isDirectory: true)
+        let invalidURL = url.deletingLastPathComponent().appendingPathComponent(invalidPath, isDirectory: true)
+
+        // Should return false if the folder name is invalid
+        XCTAssertFalse(folderManager.moveFolder(at: url, to: invalidURL))
 
         // Should return false if the urls are the same
         XCTAssertFalse(folderManager.moveFolder(at: url, to: url))
@@ -115,12 +120,12 @@ class FolderManagerTests: XCTestCase {
         let newName = "RenamedFolder"
 
         let folder = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)!
-        let success = folderManager.renameFolder(at: folder, to: newName)
-        XCTAssertTrue(success)
+        guard let renamedFolder = folderManager.renameFolder(at: folder, to: newName) else {
+            XCTFail("The renamed folder's URL should not be nil.")
+            return
+        }
 
         XCTAssertFalse(folderManager.folderExists(url: folder))
-
-        let url = folderManager.urlForFolderAtPath(path: newName)
-        XCTAssertTrue(folderManager.folderExists(url: url))
+        XCTAssertTrue(folderManager.folderExists(url: renamedFolder))
     }
 }

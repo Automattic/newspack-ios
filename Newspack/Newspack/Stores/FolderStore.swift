@@ -56,9 +56,12 @@ extension FolderStore {
     }
 
     func renameFolder(at url: URL, to name: String) {
-        if folderManager.renameFolder(at: url, to: name) {
-            emitChange()
+        if let url = folderManager.renameFolder(at: url, to: name) {
+            LogDebug(message: "Success: \(url)")
         }
+        // TODO: For now, emit change even if not successful. We'll wire up proper
+        // error handling later when we figure out what that looks like.
+        emitChange()
     }
 
     func listFolders() -> [URL] {
