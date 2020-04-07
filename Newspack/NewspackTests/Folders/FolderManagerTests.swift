@@ -66,4 +66,19 @@ class FolderManagerTests: XCTestCase {
         success = folderManager.setCurrentFolder(url: FileManager.default.temporaryDirectory)
         XCTAssertFalse(success)
     }
+
+    func testListFolders() {
+        let path = "TestFolder"
+
+        var folders = folderManager.enumerateFolders(url: folderManager.currentFolder)
+        XCTAssertEqual(folders.count, 0)
+
+        _ = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)
+        _ = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)
+        _ = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)
+        _ = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)
+
+        folders = folderManager.enumerateFolders(url: folderManager.currentFolder)
+        XCTAssertEqual(folders.count, 4)
+    }
 }
