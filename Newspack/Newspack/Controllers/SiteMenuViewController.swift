@@ -35,8 +35,8 @@ struct SiteMenuViewModel {
         }
 
         let folderRow = SiteMenuRow(title: "New Story Folder") {
-            let action = FolderAction.createFolder(path: "New Folder", addSuffix: true)
-            SessionManager.shared.sessionDispatcher.dispatch(action)
+            let controller = MainStoryboard.instantiateViewController(withIdentifier: .folderList)
+            presenter.navigationController?.pushViewController(controller, animated: true)
         }
 
         let rows = [
