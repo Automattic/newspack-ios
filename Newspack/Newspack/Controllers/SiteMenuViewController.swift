@@ -34,7 +34,7 @@ struct SiteMenuViewModel {
             SessionManager.shared.sessionDispatcher.dispatch(action)
         }
 
-        let folderRow = SiteMenuRow(title: "New Story Folder") {
+        let folderRow = SiteMenuRow(title: "Folders List") {
             let controller = MainStoryboard.instantiateViewController(withIdentifier: .folderList)
             presenter.navigationController?.pushViewController(controller, animated: true)
         }
