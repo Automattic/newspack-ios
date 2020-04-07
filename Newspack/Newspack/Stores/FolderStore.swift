@@ -39,6 +39,8 @@ class FolderStore: Store {
             switch action {
             case .createFolder(let path, let addSuffix) :
                 createFolder(path: path, addSuffix: addSuffix)
+            case .renameFolder(let folder, let name) :
+                renameFolder(at: folder, to: name)
             }
         }
     }
@@ -49,6 +51,12 @@ extension FolderStore {
     func createFolder(path: String, addSuffix: Bool) {
         if let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) {
             LogDebug(message: "Success: \(url.path)")
+            emitChange()
+        }
+    }
+
+    func renameFolder(at url: URL, to name: String) {
+        if folderManager.renameFolder(at: url, to: name) {
             emitChange()
         }
     }

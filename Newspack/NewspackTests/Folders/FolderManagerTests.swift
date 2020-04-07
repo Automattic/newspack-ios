@@ -81,4 +81,46 @@ class FolderManagerTests: XCTestCase {
         folders = folderManager.enumerateFolders(url: folderManager.currentFolder)
         XCTAssertEqual(folders.count, 4)
     }
+
+    func testMoveFolder() {
+        let path = "TestFolder"
+        let newPath = "MovedFolder"
+        let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)!
+        let childURL = url.appendingPathComponent(newPath, isDirectory: true)
+        let newURL = url.deletingLastPathComponent().appendingPathComponent(newPath, isDirectory: true)
+
+        // Should return false if the urls are the same
+        XCTAssertFalse(folderManager.moveFolder(at: url, to: url))
+
+        // Should return false if trying to make the folder a child of itself.
+        XCTAssertFalse((folderManager.moveFolder(at: url, to: childURL)))
+
+        // Should succeed moving folder to a sibling location.
+        XCTAssertTrue(folderManager.moveFolder(at: url, to: newURL))
+
+        // Original folder should no longer exist
+        XCTAssertFalse(folderManager.folderExists(url: url))
+
+        // New folder should exist
+        XCTAssertTrue(folderManager.folderExists(url: newURL))
+
+        _ = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)!
+
+        // Should return false if there is already a folder.
+        XCTAssertFalse(folderManager.moveFolder(at: newURL, to: url))
+    }
+
+    func testRenameFolder() {
+        let path = "TestFolder"
+        let newName = "RenamedFolder"
+
+        let folder = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)!
+        let success = folderManager.renameFolder(at: folder, to: newName)
+        XCTAssertTrue(success)
+
+        XCTAssertFalse(folderManager.folderExists(url: folder))
+
+        let url = folderManager.urlForFolderAtPath(path: newName)
+        XCTAssertTrue(folderManager.folderExists(url: url))
+    }
 }

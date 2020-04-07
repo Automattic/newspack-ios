@@ -145,7 +145,6 @@ class FolderManager {
         return didSetCurrentFolder
     }
 
-
     /// Get a list of the folders at the specified URL. Only folders are returned
     /// other file system items are ignored.
     ///
@@ -164,5 +163,39 @@ class FolderManager {
         }
 
         return folders
+    }
+
+    /// Move the folder at the specified URL to a new location.
+    ///
+    /// - Parameters:
+    ///   - source: The location of the folder to move.
+    ///   - destination: The new location for the folder.
+    /// - Returns: true if successful, false otherwise
+    ///
+    func moveFolder(at source: URL, to destination: URL) -> Bool {
+        guard folderExists(url: source) && !folderExists(url: destination) else {
+            return false
+        }
+
+        do {
+            try fileManager.moveItem(at: source, to: destination)
+            return true
+        } catch {
+            LogError(message: "Error moving folder \(source) to \(destination)")
+        }
+
+        return false
+    }
+
+    /// Rename the folder at the specified url to the specified name.
+    ///
+    /// - Parameters:
+    ///   - source: The url of the folder to rename.
+    ///   - name: The new name.
+    /// - Returns: true if successful, false otherwise
+    ///
+    func renameFolder(at source: URL, to name: String) -> Bool {
+        let newURL = source.deletingLastPathComponent().appendingPathComponent(name, isDirectory: true)
+        return moveFolder(at: source, to: newURL)
     }
 }
