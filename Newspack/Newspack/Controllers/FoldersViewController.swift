@@ -33,12 +33,41 @@ class FoldersViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FolderCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FolderCell", for: indexPath) as! FolderCell
 
         let url = folders[indexPath.row]
-        cell.textLabel?.text = url.lastPathComponent
+        cell.textField.text = url.lastPathComponent
+        cell.textChangedHandler = { text in
+            self.handleFolderNameChanged(indexPath: indexPath, newName: text)
+        }
 
         return cell
     }
 
+    func handleFolderNameChanged(indexPath: IndexPath, newName: String?) {
+        guard let name = newName else {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+            return
+        }
+        let folder = folders[indexPath.row]
+        let action = FolderAction.renameFolder(folder: folder, name: name)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+    }
+
+}
+
+class FolderCell: UITableViewCell {
+    @IBOutlet var textField: UITextField!
+    var textChangedHandler: ((String?) -> Void)?
+}
+
+extension FolderCell: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textChangedHandler?(textField.text)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
 }

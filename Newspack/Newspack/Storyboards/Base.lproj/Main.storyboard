@@ -31,18 +31,43 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="T7a-7n-C8K">
-                            <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="98.5" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderCell" id="O2R-uA-A0M">
-                                <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FolderCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderCell" id="O2R-uA-A0M" customClass="FolderCell" customModule="Newspack" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="42.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="O2R-uA-A0M" id="W0e-Zt-FK0">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="42.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KCq-fL-Dbc">
+                                            <rect key="frame" x="16" y="10" width="351" height="22.5"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Placeholder" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ga5-YF-VJ1">
+                                                    <rect key="frame" x="0.0" y="0.0" width="351" height="22.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="O2R-uA-A0M" id="N7w-xy-EBg"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="KCq-fL-Dbc" firstAttribute="leading" secondItem="Ec6-1T-jHG" secondAttribute="leading" constant="16" id="Tro-Fm-MIL"/>
+                                        <constraint firstItem="Ec6-1T-jHG" firstAttribute="bottom" secondItem="KCq-fL-Dbc" secondAttribute="bottom" constant="10" id="d4m-mh-1Xi"/>
+                                        <constraint firstItem="KCq-fL-Dbc" firstAttribute="top" secondItem="Ec6-1T-jHG" secondAttribute="top" constant="10" id="d5f-3M-nz7"/>
+                                        <constraint firstItem="Ec6-1T-jHG" firstAttribute="trailing" secondItem="KCq-fL-Dbc" secondAttribute="trailing" constant="8" id="k4x-LJ-wmS"/>
+                                    </constraints>
+                                    <viewLayoutGuide key="safeArea" id="Ec6-1T-jHG"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textField" destination="Ga5-YF-VJ1" id="yfq-1p-9Di"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -61,7 +86,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DK2-Ey-tPA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="292" y="-504"/>
+            <point key="canvasLocation" x="292" y="-504.19790104947532"/>
         </scene>
         <!--Initial View Controller-->
         <scene sceneID="tne-QT-ifu">
