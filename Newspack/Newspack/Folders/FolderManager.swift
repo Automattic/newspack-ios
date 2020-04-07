@@ -144,4 +144,25 @@ class FolderManager {
 
         return didSetCurrentFolder
     }
+
+
+    /// Get a list of the folders at the specified URL. Only folders are returned
+    /// other file system items are ignored.
+    ///
+    /// - Parameter url: A file URL to the parent folder.
+    /// - Returns: An array of file URLs
+    ///
+    func enumerateFolders(url: URL) -> [URL] {
+        var folders = [URL]()
+        let keys: [URLResourceKey] = [.isDirectoryKey]
+        do {
+            folders = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: keys, options: .skipsHiddenFiles).filter {
+                return try $0.resourceValues(forKeys: Set(keys)).isDirectory!
+            }
+        } catch {
+            LogError(message: "Error getting contents of \(url): \(error)")
+        }
+
+        return folders
+    }
 }

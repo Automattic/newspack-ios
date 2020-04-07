@@ -10,6 +10,7 @@ class MainStoryboard {
         case postList = "PostListViewController"
         case editor = "EditorViewController"
         case mediaDetail = "MediaDetailViewController"
+        case folderList = "FoldersViewController"
     }
 
     static func instantiateViewController(withIdentifier identifier: Identifier) -> UIViewController {
