@@ -17,8 +17,20 @@ class FoldersViewController: UITableViewController {
         }
     }
 
+    // MARK: - Actions and Handlers
+
     @IBAction func handleAddTapped(sender: Any) {
         let action = FolderAction.createFolder(path: "New Folder", addSuffix: true)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+    }
+
+    func handleFolderNameChanged(indexPath: IndexPath, newName: String?) {
+        guard let name = newName else {
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+            return
+        }
+        let folder = folders[indexPath.row]
+        let action = FolderAction.renameFolder(folder: folder, name: name)
         SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 
@@ -44,14 +56,12 @@ class FoldersViewController: UITableViewController {
         return cell
     }
 
-    func handleFolderNameChanged(indexPath: IndexPath, newName: String?) {
-        guard let name = newName else {
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-            return
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let folder = folders[indexPath.row]
+            let action = FolderAction.deleteFolder(folder: folder)
+            SessionManager.shared.sessionDispatcher.dispatch(action)
         }
-        let folder = folders[indexPath.row]
-        let action = FolderAction.renameFolder(folder: folder, name: name)
-        SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 
 }

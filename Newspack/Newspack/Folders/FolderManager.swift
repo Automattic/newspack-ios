@@ -165,6 +165,36 @@ class FolderManager {
         return folders
     }
 
+    /// Delete the folder at the specified file URL
+    /// - Parameter source: A file URL.
+    /// - Returns: true if the folder was deleted, otherwise false
+    ///
+    func deleteFolder(at source: URL) -> Bool {
+        guard folderExists(url: source) else {
+            return false
+        }
+
+        // Do not perform a delete operation on anything outside of our root folder.
+        let relation = UnsafeMutablePointer<FileManager.URLRelationship>.allocate(capacity: 1)
+        do {
+            try fileManager.getRelationship(relation, ofDirectoryAt: rootFolder, toItemAt: source)
+        } catch {
+            LogError(message: "Error checking folder relationships. \(error)")
+        }
+        if relation.pointee != .contains {
+            return false
+        }
+
+        do {
+            try fileManager.removeItem(at: source)
+            return true
+        } catch {
+            LogError(message: "Error checking folder relationships. \(error)")
+        }
+
+        return false
+    }
+
     /// Move the folder at the specified URL to a new location.
     ///
     /// - Parameters:
