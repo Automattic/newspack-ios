@@ -39,6 +39,8 @@ class FolderStore: Store {
             switch action {
             case .createFolder(let path, let addSuffix) :
                 createFolder(path: path, addSuffix: addSuffix)
+            case .renameFolder(let folder, let name) :
+                renameFolder(at: folder, to: name)
             }
         }
     }
@@ -51,6 +53,15 @@ extension FolderStore {
             LogDebug(message: "Success: \(url.path)")
             emitChange()
         }
+    }
+
+    func renameFolder(at url: URL, to name: String) {
+        if let url = folderManager.renameFolder(at: url, to: name) {
+            LogDebug(message: "Success: \(url)")
+        }
+        // TODO: For now, emit change even if not successful. We'll wire up proper
+        // error handling later when we figure out what that looks like.
+        emitChange()
     }
 
     func listFolders() -> [URL] {

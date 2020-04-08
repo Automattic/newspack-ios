@@ -145,7 +145,6 @@ class FolderManager {
         return didSetCurrentFolder
     }
 
-
     /// Get a list of the folders at the specified URL. Only folders are returned
     /// other file system items are ignored.
     ///
@@ -164,5 +163,70 @@ class FolderManager {
         }
 
         return folders
+    }
+
+    /// Move the folder at the specified URL to a new location.
+    ///
+    /// - Parameters:
+    ///   - source: The location of the folder to move.
+    ///   - destination: The new location for the folder.
+    /// - Returns: true if successful, false otherwise
+    ///
+    func moveFolder(at source: URL, to destination: URL) -> Bool {
+        let name = sanitizeFolderName(name: destination.lastPathComponent)
+        guard isValidFolderName(name: name) else {
+            return false
+        }
+
+        let destination = destination.deletingLastPathComponent().appendingPathComponent(name, isDirectory: true)
+        guard folderExists(url: source) && !folderExists(url: destination) else {
+            return false
+        }
+
+        do {
+            try fileManager.moveItem(at: source, to: destination)
+            return true
+        } catch {
+            LogError(message: "Error moving folder \(source) to \(destination)")
+        }
+
+        return false
+    }
+
+    /// Rename the folder at the specified url to the specified name.
+    ///
+    /// - Parameters:
+    ///   - source: The url of the folder to rename.
+    ///   - name: The new name.
+    /// - Returns: The new URL of the folder, or nil if the folder could not be
+    /// renamed.
+    ///
+    func renameFolder(at source: URL, to name: String) -> URL? {
+        let newURL = source.deletingLastPathComponent().appendingPathComponent(name, isDirectory: true)
+        if moveFolder(at: source, to: newURL) {
+            return newURL
+        }
+        return nil
+    }
+
+    /// Returns a sanitized version of the specified string.
+    ///
+    /// - Parameter name: A prospective folder name.
+    /// - Returns: The sanitized version of the name.
+    ///
+    func sanitizeFolderName(name: String) -> String {
+        return name.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "/", with: "-")
+    }
+
+    /// Checks if a string is a valid folder name.
+    ///
+    /// - Parameter name: The prospective folder name
+    /// - Returns: true if valid, otherwise false.
+    ///
+    func isValidFolderName(name: String) -> Bool {
+        guard name.characterCount > 0 else {
+            return false
+        }
+        return true
     }
 }
