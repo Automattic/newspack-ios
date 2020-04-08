@@ -9,7 +9,7 @@ jobs:
   Build Tests:
     executor:
       name: ios/default
-      xcode-version: "11.2.1"
+      xcode-version: "11.4.0"
     steps:
       - git/shallow-checkout
       - ios/install-dependencies:
@@ -25,22 +25,22 @@ jobs:
   Unit Tests:
     executor:
       name: ios/default
-      xcode-version: "11.2.1"
+      xcode-version: "11.4.0"
     steps:
       - ios/boot-simulator:
-          xcode-version: "11.2.1"
+          xcode-version: "11.4.0"
           device: iPhone 11
       - attach_workspace:
           at: ./
       - ios/wait-for-simulator
       - ios/xcodebuild:
           command: test-without-building
-          arguments: -xctestrun DerivedData/Build/Products/Newspack_iphonesimulator13.2-x86_64.xctestrun -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" -resultBundlePath test-without-building.xcresult
+          arguments: -xctestrun DerivedData/Build/Products/Newspack_iphonesimulator13.4-x86_64.xctestrun -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" -resultBundlePath test-without-building.xcresult
       - ios/save-xcodebuild-artifacts
   Installable Build:
     executor:
       name: ios/default
-      xcode-version: "11.2.1"
+      xcode-version: "11.4.0"
     steps:
       - git/shallow-checkout
       - ios/install-dependencies:
