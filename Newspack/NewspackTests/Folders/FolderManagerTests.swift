@@ -128,4 +128,21 @@ class FolderManagerTests: XCTestCase {
         XCTAssertFalse(folderManager.folderExists(url: folder))
         XCTAssertTrue(folderManager.folderExists(url: renamedFolder))
     }
+
+    func testDeleteFolder() {
+        let path = "TestFolder"
+        let folder = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)!
+
+        // We should not delete folders not contained by our root folder.
+        var result = folderManager.deleteFolder(at: FolderManager.createTemporaryDirectory()!)
+        XCTAssertFalse(result)
+
+        // We should delete a cihld of the root folder.
+        result = folderManager.deleteFolder(at: folder)
+        XCTAssertTrue(result)
+
+        // We should not delete a non-existant folder.
+        result = folderManager.deleteFolder(at: folder)
+        XCTAssertFalse(result)
+    }
 }

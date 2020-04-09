@@ -41,6 +41,8 @@ class FolderStore: Store {
                 createFolder(path: path, addSuffix: addSuffix)
             case .renameFolder(let folder, let name) :
                 renameFolder(at: folder, to: name)
+            case .deleteFolder(let folder) :
+                deleteFolder(at: folder)
             }
         }
     }
@@ -61,6 +63,14 @@ extension FolderStore {
         }
         // TODO: For now, emit change even if not successful. We'll wire up proper
         // error handling later when we figure out what that looks like.
+        emitChange()
+    }
+
+    func deleteFolder(at url: URL) {
+        if !folderManager.deleteFolder(at: url) {
+            // TODO: For now emit change even if not successful. We'll wire up
+            // proper error handling later.
+        }
         emitChange()
     }
 
