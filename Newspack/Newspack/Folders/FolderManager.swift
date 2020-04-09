@@ -189,7 +189,7 @@ class FolderManager {
             try fileManager.removeItem(at: source)
             return true
         } catch {
-            LogError(message: "Error checking folder relationships. \(error)")
+            LogError(message: "Error removing folder. \(error)")
         }
 
         return false
