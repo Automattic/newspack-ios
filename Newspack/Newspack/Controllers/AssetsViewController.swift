@@ -9,10 +9,10 @@ class AssetsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        items = StoreContainer.shared.assetStore.listAssets()
+//        items = StoreContainer.shared.assetStore.listAssets()
 
         receipt = StoreContainer.shared.folderStore.onChange { [weak self] in
-            self?.items = StoreContainer.shared.assetStore.listAssets()
+//            self?.items = StoreContainer.shared.assetStore.listAssets()
             self?.tableView.reloadData()
         }
     }
