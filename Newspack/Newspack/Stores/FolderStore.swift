@@ -41,6 +41,7 @@ class FolderStore: Store {
         super.init(dispatcher: dispatcher)
 
         createDefaultFolderIfNeeded()
+        selectDefaultStoryFolderIfNeeded()
     }
 
     /// Action handler
@@ -71,6 +72,13 @@ extension FolderStore {
             return
         }
         createFolder()
+    }
+
+    private func selectDefaultStoryFolderIfNeeded() {
+        guard let _ = currentSiteID, let folder = listStoryFolders().first else {
+            return
+        }
+        selectStoryFolder(folder: folder)
     }
 
     func createFolder(path: String = Constants.defaultFolderName, addSuffix: Bool = false) {
