@@ -29,6 +29,8 @@ class FolderStore: Store {
         }
 
         super.init(dispatcher: dispatcher)
+
+        createDefaultFolderIfNeeded()
     }
 
     /// Action handler
@@ -49,7 +51,17 @@ class FolderStore: Store {
 
 extension FolderStore {
 
-    func createFolder(path: String, addSuffix: Bool) {
+    private func createDefaultFolderIfNeeded() {
+        guard
+            let _ = currentSiteID,
+            listFolders().count == 0
+        else {
+            return
+        }
+        createFolder()
+    }
+
+    func createFolder(path: String = Constants.defaultFolderName, addSuffix: Bool = false) {
         if let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) {
             LogDebug(message: "Success: \(url.path)")
             emitChange()
@@ -70,6 +82,7 @@ extension FolderStore {
             // TODO: For now emit change even if not successful. We'll wire up
             // proper error handling later.
         }
+        createDefaultFolderIfNeeded()
         emitChange()
     }
 
@@ -77,4 +90,10 @@ extension FolderStore {
         return folderManager.enumerateFolders(url: folderManager.currentFolder)
     }
 
+}
+
+extension FolderStore {
+    private struct Constants {
+        static let defaultFolderName = NSLocalizedString("New Story", comment: "Noun. This is the default name given to a new story folder.")
+    }
 }
