@@ -66,6 +66,10 @@ class FoldersViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let folder = folders[indexPath.row]
+        let action = AssetAction.selectFolder(folder: folder)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+
         let controller = MainStoryboard.instantiateViewController(withIdentifier: .assetsList)
         navigationController?.pushViewController(controller, animated: true)
     }
