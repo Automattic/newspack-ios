@@ -9,6 +9,13 @@ class FolderStore: Store {
 
     private let folderManager: FolderManager
 
+    /// During normal operation the current story folder will be one of the folders
+    /// under the site's folder. Due to the way sessions work and how the FolderStore
+    /// is instantiated currentStoryFolder is intializaed to the temp directory,
+    /// but updated immediately after.
+    ///
+    private(set) var currentStoryFolder = FileManager.default.temporaryDirectory
+
     init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
         currentSiteID = siteID
 
@@ -19,12 +26,15 @@ class FolderStore: Store {
             let site = StoreContainer.shared.siteStore.getSiteByUUID(siteID),
             let title = site.title
         {
+            // Create a folder for the site to contain all of the site's story folders.
             let sanitizedTitle = title.replacingOccurrences(of: "/", with: "-")
             guard let url = folderManager.createFolderAtPath(path: sanitizedTitle) else {
                 fatalError("Unable to create a folder named: \(sanitizedTitle)")
             }
+
+            // The FolderManager's currentFolder should _always_ be the site's folder.
             guard folderManager.setCurrentFolder(url: url) else {
-                fatalError("Unable to set the current working folder to \(url.path)")
+                fatalError("Unable to set the folder manager's current folder to \(url.path)")
             }
         }
 
@@ -55,20 +65,25 @@ extension FolderStore {
     /// site, and there are currently no folders.
     ///
     private func createDefaultFolderIfNeeded() {
-        guard
-            let _ = currentSiteID,
-            listFolders().count == 0
-        else {
+        guard let _ = currentSiteID, listFolders().count == 0 else {
             return
         }
         createFolder()
     }
 
     func createFolder(path: String = Constants.defaultFolderName, addSuffix: Bool = false) {
-        if let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) {
-            LogDebug(message: "Success: \(url.path)")
-            emitChange()
+        guard let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) else {
+            LogError(message: "Unable to create the folder at \(path)")
+            return
         }
+        LogDebug(message: "Success: \(url.path)")
+
+        // Update the currentStoryFolder if needed.
+        if listFolders().count == 1 {
+            currentStoryFolder = url
+        }
+
+        emitChange()
     }
 
     func renameFolder(at url: URL, to name: String) {
@@ -84,10 +99,16 @@ extension FolderStore {
         if !folderManager.deleteFolder(at: url) {
             // TODO: For now emit change even if not successful. We'll wire up
             // proper error handling later.
+            LogError(message: "Unable to delete the folder at \(url)")
         }
 
         // There should always be at least one folder.
         createDefaultFolderIfNeeded()
+
+        // Update the current story folder if it was the one deleted.
+        if url == currentStoryFolder, let folder = listFolders().first {
+            currentStoryFolder = folder
+        }
 
         emitChange()
     }
