@@ -9,7 +9,7 @@ class AssetStore: Store {
 
     private let folderManager: FolderManager
 
-    private var selectedFolder: URL?
+    private(set) var selectedFolder: URL?
 
     init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
         currentSiteID = siteID
@@ -36,10 +36,6 @@ class AssetStore: Store {
 }
 
 extension AssetStore {
-
-    func getSelectedFolder() -> URL? {
-        return selectedFolder
-    }
 
     func selectFolder(folder: URL) {
         guard folderManager.folderExists(url: folder) else {
