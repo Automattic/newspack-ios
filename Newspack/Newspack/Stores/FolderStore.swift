@@ -75,7 +75,10 @@ extension FolderStore {
     }
 
     private func selectDefaultStoryFolderIfNeeded() {
-        guard let _ = currentSiteID, let folder = listStoryFolders().first else {
+        guard
+            let _ = currentSiteID,
+            !folderManager.currentFolderContains(currentStoryFolder),
+            let folder = listStoryFolders().first else {
             return
         }
         selectStoryFolder(folder: folder)
