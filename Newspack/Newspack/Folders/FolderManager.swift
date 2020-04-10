@@ -165,6 +165,22 @@ class FolderManager {
         return folders
     }
 
+    /// Get a list of the folder contents at the specified URL.
+    ///
+    /// - Parameter url: A file URL to the parent folder.
+    /// - Returns: An array of file URLs
+    ///
+    func enumerateFolderContents(url: URL) -> [URL] {
+        var contents = [URL]()
+        do {
+            contents = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+        } catch {
+            LogError(message: "Error getting contents of folder at \(url): \(error)")
+        }
+
+        return contents
+    }
+
     /// Delete the folder at the specified file URL
     /// - Parameter source: A file URL.
     /// - Returns: true if the folder was deleted, otherwise false

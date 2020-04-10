@@ -3,17 +3,16 @@ import WordPressFlux
 
 class AssetsViewController: UITableViewController {
 
-    var folder: URL?
     var items = [URL]()
     var receipt: Any?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        items = StoreContainer.shared.folderStore.listFolders()
+        items = StoreContainer.shared.assetStore.listAssets()
 
         receipt = StoreContainer.shared.folderStore.onChange { [weak self] in
-            self?.items = StoreContainer.shared.folderStore.listFolders()
+            self?.items = StoreContainer.shared.assetStore.listAssets()
             self?.tableView.reloadData()
         }
     }
