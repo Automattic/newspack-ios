@@ -52,6 +52,7 @@ class FoldersViewController: UITableViewController {
         cell.textChangedHandler = { text in
             self.handleFolderNameChanged(indexPath: indexPath, newName: text)
         }
+        cell.accessoryType = .disclosureIndicator
 
         return cell
     }
@@ -62,6 +63,11 @@ class FoldersViewController: UITableViewController {
             let action = FolderAction.deleteFolder(folder: folder)
             SessionManager.shared.sessionDispatcher.dispatch(action)
         }
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .assetsList)
+        navigationController?.pushViewController(controller, animated: true)
     }
 
 }
