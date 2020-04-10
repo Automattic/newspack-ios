@@ -67,7 +67,7 @@ extension FolderStore {
     /// site, and there are currently no folders.
     ///
     private func createDefaultFolderIfNeeded() {
-        guard let _ = currentSiteID, listFolders().count == 0 else {
+        guard let _ = currentSiteID, listStoryFolders().count == 0 else {
             return
         }
         createFolder()
@@ -81,7 +81,7 @@ extension FolderStore {
         LogDebug(message: "Success: \(url.path)")
 
         // Update the currentStoryFolder if needed.
-        if listFolders().count == 1 {
+        if listStoryFolders().count == 1 {
             currentStoryFolder = url
         }
 
@@ -108,14 +108,14 @@ extension FolderStore {
         createDefaultFolderIfNeeded()
 
         // Update the current story folder if it was the one deleted.
-        if url == currentStoryFolder, let folder = listFolders().first {
+        if url == currentStoryFolder, let folder = listStoryFolders().first {
             currentStoryFolder = folder
         }
 
         emitChange()
     }
 
-    func listFolders() -> [URL] {
+    func listStoryFolders() -> [URL] {
         return folderManager.enumerateFolders(url: folderManager.currentFolder)
     }
 
@@ -126,6 +126,10 @@ extension FolderStore {
 
         currentStoryFolder = folder
         emitChange()
+    }
+
+    func listCurrentStoryFolderContents() -> [URL] {
+        return folderManager.enumerateFolderContents(url: currentStoryFolder)
     }
 }
 
