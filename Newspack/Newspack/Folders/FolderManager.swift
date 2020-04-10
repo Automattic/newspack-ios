@@ -191,13 +191,7 @@ class FolderManager {
         }
 
         // Do not perform a delete operation on anything outside of our root folder.
-        let relation = UnsafeMutablePointer<FileManager.URLRelationship>.allocate(capacity: 1)
-        do {
-            try fileManager.getRelationship(relation, ofDirectoryAt: rootFolder, toItemAt: source)
-        } catch {
-            LogError(message: "Error checking folder relationships. \(error)")
-        }
-        if relation.pointee != .contains {
+        if !folder(rootFolder, contains: source) {
             return false
         }
 
@@ -274,5 +268,31 @@ class FolderManager {
             return false
         }
         return true
+    }
+
+    /// Check if a folder at one url contains the item at anoter url.
+    /// - Parameters:
+    ///   - parent: A file URL to the parent folder.
+    ///   - child: A file URL to the child item.
+    /// - Returns: true if the parent folder contains the child, otherwise false.
+    ///
+    func folder(_ parent: URL, contains child: URL) -> Bool {
+        let relation = UnsafeMutablePointer<FileManager.URLRelationship>.allocate(capacity: 1)
+        do {
+            try fileManager.getRelationship(relation, ofDirectoryAt: parent, toItemAt: child)
+        } catch {
+            LogError(message: "Error checking folder relationships. \(error)")
+            return false
+        }
+        return relation.pointee == .contains
+    }
+
+    /// A convenience method to see if the current folder contains the item
+    /// specified by the supplied file URL.
+    /// - Parameter child: A file URL to a child item.
+    /// - Returns: true if the current folder contains the child, otherwise false.
+    ///
+    func currentFolderContains(_ child: URL) -> Bool {
+        return folder(currentFolder, contains: child)
     }
 }
