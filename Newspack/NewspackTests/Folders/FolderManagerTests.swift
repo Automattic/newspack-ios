@@ -145,4 +145,22 @@ class FolderManagerTests: XCTestCase {
         result = folderManager.deleteFolder(at: folder)
         XCTAssertFalse(result)
     }
+
+    func testListFolderContents() {
+        let parent = "ParentFolder"
+        let url = folderManager.createFolderAtPath(path: parent, ifExistsAppendSuffix: true)!
+
+        let path = "ParentFolder/TestFolder"
+        var items = folderManager.enumerateFolderContents(url: url)
+        XCTAssertEqual(items.count, 0)
+
+        _ = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)
+        _ = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)
+        _ = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)
+        _ = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)
+
+        items = folderManager.enumerateFolderContents(url: url)
+        XCTAssertEqual(items.count, 4)
+
+    }
 }
