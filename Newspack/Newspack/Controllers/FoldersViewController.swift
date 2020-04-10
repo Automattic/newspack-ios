@@ -45,13 +45,14 @@ class FoldersViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FolderCell", for: indexPath) as! FolderCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: FolderCell.reuseIdentifier, for: indexPath) as! FolderCell
 
         let url = folders[indexPath.row]
         cell.textField.text = url.lastPathComponent
         cell.textChangedHandler = { text in
             self.handleFolderNameChanged(indexPath: indexPath, newName: text)
         }
+        cell.accessoryType = .disclosureIndicator
 
         return cell
     }
@@ -62,6 +63,15 @@ class FoldersViewController: UITableViewController {
             let action = FolderAction.deleteFolder(folder: folder)
             SessionManager.shared.sessionDispatcher.dispatch(action)
         }
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let folder = folders[indexPath.row]
+        let action = AssetAction.selectFolder(folder: folder)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .assetsList)
+        navigationController?.pushViewController(controller, animated: true)
     }
 
 }

@@ -17,6 +17,7 @@ class StoreContainer {
     private(set) var imageStore = ImageStore()
     private(set) var stagedMediaStore = StagedMediaStore()
     private(set) var folderStore = FolderStore()
+    private(set) var assetStore = AssetStore()
 
     private init() {}
 
@@ -37,5 +38,6 @@ class StoreContainer {
         imageStore = ImageStore(dispatcher: dispatcher)
         stagedMediaStore = StagedMediaStore(dispatcher: dispatcher, siteID: site?.uuid)
         folderStore = FolderStore(dispatcher: dispatcher, siteID: site?.uuid)
+        assetStore = AssetStore(dispatcher: dispatcher, siteID: site?.uuid)
     }
 }

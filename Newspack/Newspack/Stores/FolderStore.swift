@@ -12,8 +12,7 @@ class FolderStore: Store {
     init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
         currentSiteID = siteID
 
-        let rootFolder = Environment.isTesting() ? FolderManager.createTemporaryDirectory() : nil
-        folderManager = FolderManager(rootFolder: rootFolder)
+        folderManager = SessionManager.shared.folderManager
 
         if
             let siteID = siteID,

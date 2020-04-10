@@ -151,6 +151,7 @@
 		E68B2A0323048E510021283C /* EditorAttachmentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */; };
 		E68BA80C2347BAA300AB60F9 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68BA80B2347BAA300AB60F9 /* Environment.swift */; };
 		E690D57223722BB700676B1D /* PhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */; };
+		E69634102440C1C400D906E0 /* UITableViewCell+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E696340F2440C1C400D906E0 /* UITableViewCell+Helpers.swift */; };
 		E69DE37423A97F1C00F87157 /* remote-media-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E69DE37323A97F1C00F87157 /* remote-media-edit.json */; };
 		E69DE37623A981D000F87157 /* preview.png in Resources */ = {isa = PBXBuildFile; fileRef = E69DE37523A981D000F87157 /* preview.png */; };
 		E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */; };
@@ -168,6 +169,9 @@
 		E6AC98B823CCD5DE00E95381 /* MainNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AC98B723CCD5DE00E95381 /* MainNavController.swift */; };
 		E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */; };
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
+		E6BA1322243F9D1E00635A8A /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */; };
+		E6BA9FC9243FF7ED00A563BC /* AssetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA9FC8243FF7ED00A563BC /* AssetStore.swift */; };
+		E6BA9FCB243FFA2100A563BC /* AssetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA9FCA243FFA2100A563BC /* AssetAction.swift */; };
 		E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE56AE22B19001004895E5 /* ModelFactory.swift */; };
 		E6D44DEC234BC56C00B51438 /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEB234BC56C00B51438 /* MediaViewController.swift */; };
 		E6D44DEF234BDB8400B51438 /* MediaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEE234BDB8400B51438 /* MediaStore.swift */; };
@@ -372,6 +376,7 @@
 		E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAttachmentDelegate.swift; sourceTree = "<group>"; };
 		E68BA80B2347BAA300AB60F9 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryViewController.swift; sourceTree = "<group>"; };
+		E696340F2440C1C400D906E0 /* UITableViewCell+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Helpers.swift"; sourceTree = "<group>"; };
 		E69DE37323A97F1C00F87157 /* remote-media-edit.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "remote-media-edit.json"; sourceTree = "<group>"; };
 		E69DE37523A981D000F87157 /* preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preview.png; sourceTree = "<group>"; };
 		E69E59F822540D0900899DE2 /* SiteServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteServiceRemote.swift; sourceTree = "<group>"; };
@@ -389,6 +394,9 @@
 		E6AC98B723CCD5DE00E95381 /* MainNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavController.swift; sourceTree = "<group>"; };
 		E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-ids-edit.json"; sourceTree = "<group>"; };
 		E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-edit.json"; sourceTree = "<group>"; };
+		E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewController.swift; sourceTree = "<group>"; };
+		E6BA9FC8243FF7ED00A563BC /* AssetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStore.swift; sourceTree = "<group>"; };
+		E6BA9FCA243FFA2100A563BC /* AssetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetAction.swift; sourceTree = "<group>"; };
 		E6CE56AE22B19001004895E5 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
 		E6D44DEB234BC56C00B51438 /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		E6D44DEE234BDB8400B51438 /* MediaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStore.swift; sourceTree = "<group>"; };
@@ -510,6 +518,7 @@
 				E6E43EA3230F1D2B00A1974E /* EditAction.swift */,
 				E6A10C6223579CE300435670 /* MediaAction.swift */,
 				E6A800F424380A6600A14E6C /* FolderAction.swift */,
+				E6BA9FCA243FFA2100A563BC /* AssetAction.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -719,6 +728,7 @@
 				E632F9A023515116003737BF /* SiteMediaDataSource.swift */,
 				E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */,
 				E68689BF243C080400B7E363 /* FoldersViewController.swift */,
+				E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -796,6 +806,7 @@
 				E640D27723883ED800887FD9 /* StagedMediaImporter.swift */,
 				E640D27923883EE700887FD9 /* StagedMediaUploader.swift */,
 				E6A800F224380A5300A14E6C /* FolderStore.swift */,
+				E6BA9FC8243FF7ED00A563BC /* AssetStore.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -904,6 +915,7 @@
 				E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */,
 				E6051DEB23075A3A005AAF0B /* Dictionary+Merge.swift */,
 				E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */,
+				E696340F2440C1C400D906E0 /* UITableViewCell+Helpers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1229,6 +1241,7 @@
 				E6138FD42211FE86004E5B91 /* InitialViewController.swift in Sources */,
 				E66CCA072303527C00F1CA59 /* Account+CoreDataClass.swift in Sources */,
 				E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */,
+				E6BA1322243F9D1E00635A8A /* AssetsViewController.swift in Sources */,
 				E6A4D742230A08A700929376 /* StagedEdits+CoreDataProperties.swift in Sources */,
 				E636C26B234FEAD800564B63 /* MediaQuery+CoreDataClass.swift in Sources */,
 				E67339A6232EFEA3007C5E45 /* Logging.swift in Sources */,
@@ -1247,6 +1260,7 @@
 				E66CCA1E2303527D00F1CA59 /* Status+CoreDataClass.swift in Sources */,
 				E6051DEC23075A3A005AAF0B /* Dictionary+Merge.swift in Sources */,
 				E6343ADF23A077C80033D369 /* MediaSelectViewController.swift in Sources */,
+				E69634102440C1C400D906E0 /* UITableViewCell+Helpers.swift in Sources */,
 				E61BBD6822FA0470008A6D4C /* StartupHelper.swift in Sources */,
 				E636C26C234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift in Sources */,
 				E66CCA112303527C00F1CA59 /* AccountCapabilities+CoreDataClass.swift in Sources */,
@@ -1269,6 +1283,7 @@
 				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
 				E6E43EA4230F1D2B00A1974E /* EditAction.swift in Sources */,
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
+				E6BA9FCB243FFA2100A563BC /* AssetAction.swift in Sources */,
 				E602E68022C1588600795CBA /* ApiService.swift in Sources */,
 				E6E2ACF922E2840C00A8E85D /* Date+FormatGMTString.swift in Sources */,
 				E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */,
@@ -1302,6 +1317,7 @@
 				E66CCA132303527C00F1CA59 /* Status+CoreDataProperties.swift in Sources */,
 				E605418F2369E1920078D978 /* Diagnostics.swift in Sources */,
 				E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */,
+				E6BA9FC9243FF7ED00A563BC /* AssetStore.swift in Sources */,
 				E640D27823883ED800887FD9 /* StagedMediaImporter.swift in Sources */,
 				E61D8F6C2375EC3E005FECED /* StagedMediaStore.swift in Sources */,
 				E66CCA0D2303527C00F1CA59 /* Site+CoreDataProperties.swift in Sources */,

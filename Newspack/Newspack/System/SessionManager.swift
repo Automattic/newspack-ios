@@ -17,6 +17,8 @@ class SessionManager: StatefulStore<SessionState> {
     ///
     static let shared = SessionManager()
 
+    var folderManager: FolderManager
+
     /// Used with UserDefaults to store the current site's uuid for later recovery.
     ///
     private var currentSiteIDKey: String {
@@ -50,6 +52,9 @@ class SessionManager: StatefulStore<SessionState> {
     private(set) var api = WordPressCoreRestApi(oAuthToken: nil, userAgent: UserAgent.defaultUserAgent)
 
     private init() {
+        let rootFolder = Environment.isTesting() ? FolderManager.createTemporaryDirectory() : nil
+        folderManager = FolderManager(rootFolder: rootFolder)
+
         super.init(initialState: .pending)
     }
 
