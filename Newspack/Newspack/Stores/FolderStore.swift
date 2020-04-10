@@ -51,6 +51,9 @@ class FolderStore: Store {
 
 extension FolderStore {
 
+    /// Creates a single, default, folder under the site's folder if there is a
+    /// site, and there are currently no folders.
+    ///
     private func createDefaultFolderIfNeeded() {
         guard
             let _ = currentSiteID,
@@ -82,7 +85,10 @@ extension FolderStore {
             // TODO: For now emit change even if not successful. We'll wire up
             // proper error handling later.
         }
+
+        // There should always be at least one folder.
         createDefaultFolderIfNeeded()
+
         emitChange()
     }
 
