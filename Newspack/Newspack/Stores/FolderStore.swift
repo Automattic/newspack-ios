@@ -54,6 +54,8 @@ class FolderStore: Store {
                 renameFolder(at: folder, to: name)
             case .deleteFolder(let folder) :
                 deleteFolder(at: folder)
+            case .selectStoryFolder(let folder) :
+                selectStoryFolder(folder: folder)
             }
         }
     }
@@ -117,6 +119,14 @@ extension FolderStore {
         return folderManager.enumerateFolders(url: folderManager.currentFolder)
     }
 
+    func selectStoryFolder(folder: URL) {
+        guard folderManager.currentFolderContains(folder) else {
+            return
+        }
+
+        currentStoryFolder = folder
+        emitChange()
+    }
 }
 
 extension FolderStore {
