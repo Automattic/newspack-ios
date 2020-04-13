@@ -161,6 +161,16 @@ class FolderManagerTests: XCTestCase {
 
         items = folderManager.enumerateFolderContents(url: url)
         XCTAssertEqual(items.count, 4)
+    }
 
+    func testFolderContainsChild() {
+        let path = "TestFolder"
+        let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)!
+        let failURL = FolderManager.createTemporaryDirectory()!
+
+        XCTAssertTrue(folderManager.folder(folderManager.currentFolder, contains: url))
+        XCTAssertFalse(folderManager.folder(url, contains: url))
+        XCTAssertFalse(folderManager.folder(url, contains: failURL))
+        XCTAssertFalse(folderManager.folder(failURL, contains: url))
     }
 }

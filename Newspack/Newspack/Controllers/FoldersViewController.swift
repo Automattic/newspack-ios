@@ -9,10 +9,10 @@ class FoldersViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        folders = StoreContainer.shared.folderStore.listFolders()
+        folders = StoreContainer.shared.folderStore.listStoryFolders()
 
         receipt = StoreContainer.shared.folderStore.onChange { [weak self] in
-            self?.folders = StoreContainer.shared.folderStore.listFolders()
+            self?.folders = StoreContainer.shared.folderStore.listStoryFolders()
             self?.tableView.reloadData()
         }
     }
@@ -52,7 +52,8 @@ class FoldersViewController: UITableViewController {
         cell.textChangedHandler = { text in
             self.handleFolderNameChanged(indexPath: indexPath, newName: text)
         }
-        cell.accessoryType = .disclosureIndicator
+        let isCurrentStory = url.absoluteString == StoreContainer.shared.folderStore.currentStoryFolder.absoluteString
+        cell.accessoryType = isCurrentStory ? .detailDisclosureButton : .disclosureIndicator
 
         return cell
     }
@@ -67,7 +68,7 @@ class FoldersViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let folder = folders[indexPath.row]
-        let action = AssetAction.selectFolder(folder: folder)
+        let action = FolderAction.selectStoryFolder(folder: folder)
         SessionManager.shared.sessionDispatcher.dispatch(action)
 
         let controller = MainStoryboard.instantiateViewController(withIdentifier: .assetsList)
