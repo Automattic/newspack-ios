@@ -92,8 +92,8 @@ extension FolderStore {
         LogDebug(message: "Success: \(url.path)")
 
         // Update the currentStoryFolder if needed.
-        if listStoryFolders().count == 1 {
-            currentStoryFolder = url
+        if listStoryFolders().count == 1, let folder = listStoryFolders().first {
+            currentStoryFolder = folder
         }
 
         emitChange()
