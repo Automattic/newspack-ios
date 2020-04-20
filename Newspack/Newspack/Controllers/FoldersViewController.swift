@@ -52,8 +52,7 @@ class FoldersViewController: UITableViewController {
         cell.textChangedHandler = { text in
             self.handleFolderNameChanged(indexPath: indexPath, newName: text)
         }
-        let isCurrentStory = url.absoluteString == StoreContainer.shared.folderStore.currentStoryFolder.absoluteString
-        cell.accessoryType = isCurrentStory ? .detailDisclosureButton : .disclosureIndicator
+        cell.accessoryType = url == StoreContainer.shared.folderStore.currentStoryFolder ? .detailDisclosureButton : .disclosureIndicator
 
         return cell
     }
