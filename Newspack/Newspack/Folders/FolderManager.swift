@@ -101,7 +101,7 @@ class FolderManager {
     /// - Returns: A URL
     ///
     func urlForFolderAtPath(path: String, ifExistsAppendSuffix: Bool = false) -> URL {
-        var url = URL(fileURLWithPath: path, isDirectory: true, relativeTo: currentFolder)
+        var url = URL(fileURLWithPath: path, isDirectory: true, relativeTo: currentFolder).absoluteURL
 
         if !ifExistsAppendSuffix || !folderExists(url: url) {
             return url
@@ -112,7 +112,7 @@ class FolderManager {
         repeat {
             counter = counter + 1
             newPath = "\(path) \(counter)"
-            url = URL(fileURLWithPath: newPath, isDirectory: true, relativeTo: currentFolder)
+            url = URL(fileURLWithPath: newPath, isDirectory: true, relativeTo: currentFolder).absoluteURL
         } while folderExists(url: url)
 
         return url
@@ -157,6 +157,8 @@ class FolderManager {
         do {
             folders = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: keys, options: .skipsHiddenFiles).filter {
                 return try $0.resourceValues(forKeys: Set(keys)).isDirectory!
+            }.map {
+                return $0.resolvingSymlinksInPath()
             }
         } catch {
             LogError(message: "Error getting contents of \(url): \(error)")
@@ -173,7 +175,9 @@ class FolderManager {
     func enumerateFolderContents(url: URL) -> [URL] {
         var contents = [URL]()
         do {
-            contents = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+            contents = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).map {
+                return $0.resolvingSymlinksInPath()
+            }
         } catch {
             LogError(message: "Error getting contents of folder at \(url): \(error)")
         }

@@ -119,7 +119,7 @@ extension FolderStore {
         createDefaultFolderIfNeeded()
 
         // Update the current story folder if it was the one deleted.
-        if url.absoluteString == currentStoryFolder.absoluteString, let folder = listStoryFolders().first {
+        if url == currentStoryFolder, let folder = listStoryFolders().first {
             currentStoryFolder = folder
         }
 
