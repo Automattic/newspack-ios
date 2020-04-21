@@ -199,7 +199,7 @@
         <attribute name="defaultPostFormat" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="language" attributeType="String"/>
         <attribute name="postsPerPage" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="siteFolder" attributeType="Binary"/>
+        <attribute name="siteFolder" optional="YES" attributeType="Binary"/>
         <attribute name="startOfWeek" attributeType="String"/>
         <attribute name="summary" attributeType="String"/>
         <attribute name="timeFormat" attributeType="String"/>

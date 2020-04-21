@@ -15,7 +15,7 @@ extension Site {
     @NSManaged public var defaultPostFormat: Int64
     @NSManaged public var language: String!
     @NSManaged public var postsPerPage: Int64
-    @NSManaged public var siteFolder: Data!
+    @NSManaged public var siteFolder: Data?
     @NSManaged public var startOfWeek: String!
     @NSManaged public var summary: String!
     @NSManaged public var timeFormat: String!
