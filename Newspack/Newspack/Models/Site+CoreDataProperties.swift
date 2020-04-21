@@ -15,6 +15,7 @@ extension Site {
     @NSManaged public var defaultPostFormat: Int64
     @NSManaged public var language: String!
     @NSManaged public var postsPerPage: Int64
+    @NSManaged public var siteFolder: Data!
     @NSManaged public var startOfWeek: String!
     @NSManaged public var summary: String!
     @NSManaged public var timeFormat: String!
@@ -155,6 +156,23 @@ extension Site {
 
     @objc(removePosts:)
     @NSManaged public func removeFromPosts(_ values: Set<Post>)
+
+}
+
+// MARK: Generated accessors for storyFolders
+extension Site {
+
+    @objc(addStoryFoldersObject:)
+    @NSManaged public func addToStoryFolders(_ value: StoryFolder)
+
+    @objc(removeStoryFoldersObject:)
+    @NSManaged public func removeFromStoryFolders(_ value: StoryFolder)
+
+    @objc(addStoryFolders:)
+    @NSManaged public func addToStoryFolders(_ values: Set<StoryFolder>)
+
+    @objc(removeStoryFolders:)
+    @NSManaged public func removeFromStoryFolders(_ values: Set<StoryFolder>)
 
 }
 
