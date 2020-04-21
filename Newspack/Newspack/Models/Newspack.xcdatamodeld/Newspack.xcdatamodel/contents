@@ -261,7 +261,7 @@
     <entity name="StoryFolder" representedClassName="StoryFolder" syncable="YES">
         <attribute name="bookmark" attributeType="Binary"/>
         <attribute name="removed" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <relationship name="assets" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StoryAsset" inverseName="folder" inverseEntity="StoryAsset"/>
+        <relationship name="assets" toMany="YES" deletionRule="Cascade" destinationEntity="StoryAsset" inverseName="folder" inverseEntity="StoryAsset"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="storyFolders" inverseEntity="Site"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
@@ -291,8 +291,8 @@
         <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="118"/>
         <element name="StagedMedia" positionX="-1359" positionY="-234" width="128" height="208"/>
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
-        <element name="User" positionX="-1305" positionY="-180" width="128" height="163"/>
-        <element name="StoryFolder" positionX="-1359" positionY="-234" width="128" height="103"/>
         <element name="StoryAsset" positionX="-1350" positionY="-225" width="128" height="103"/>
+        <element name="StoryFolder" positionX="-1359" positionY="-234" width="128" height="103"/>
+        <element name="User" positionX="-1305" positionY="-180" width="128" height="163"/>
     </elements>
 </model>
