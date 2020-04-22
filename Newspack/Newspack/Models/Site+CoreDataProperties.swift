@@ -15,6 +15,7 @@ extension Site {
     @NSManaged public var defaultPostFormat: Int64
     @NSManaged public var language: String!
     @NSManaged public var postsPerPage: Int64
+    @NSManaged public var siteFolder: Data?
     @NSManaged public var startOfWeek: String!
     @NSManaged public var summary: String!
     @NSManaged public var timeFormat: String!
@@ -35,6 +36,7 @@ extension Site {
     @NSManaged public var posts: Set<Post>!
     @NSManaged public var stagedMedia: Set<Status>!
     @NSManaged public var statuses: Set<Status>!
+    @NSManaged public var storyFolders: Set<Status>!
     @NSManaged public var users: Set<User>!
 
 }
@@ -107,7 +109,7 @@ extension Site {
 
 }
 
-// MARK: Generated accessors for postListItems
+// MARK: Generated accessors for postItems
 extension Site {
 
     @objc(addPostItemsObject:)
@@ -124,7 +126,7 @@ extension Site {
 
 }
 
-// MARK: Generated accessors for postLists
+// MARK: Generated accessors for postQueries
 extension Site {
 
     @objc(addPostQueriesObject:)
@@ -167,11 +169,11 @@ extension Site {
     @objc(removeStagedMediaObject:)
     @NSManaged public func removeFromStagedMedia(_ value: StagedMedia)
 
-    @objc(addStagedMedias:)
-    @NSManaged public func addToStagedMedias(_ values: Set<StagedMedia>)
+    @objc(addStagedMedia:)
+    @NSManaged public func addToStagedMedia(_ values: Set<StagedMedia>)
 
-    @objc(removeStagedMedias:)
-    @NSManaged public func removeFromStagedMedias(_ values: Set<StagedMedia>)
+    @objc(removeStagedMedia:)
+    @NSManaged public func removeFromStagedMedia(_ values: Set<StagedMedia>)
 
 }
 
@@ -189,6 +191,23 @@ extension Site {
 
     @objc(removeStatuses:)
     @NSManaged public func removeFromStatuses(_ values: Set<Status>)
+
+}
+
+// MARK: Generated accessors for storyFolders
+extension Site {
+
+    @objc(addStoryFoldersObject:)
+    @NSManaged public func addToStoryFolders(_ value: StoryFolder)
+
+    @objc(removeStoryFoldersObject:)
+    @NSManaged public func removeFromStoryFolders(_ value: StoryFolder)
+
+    @objc(addStoryFolders:)
+    @NSManaged public func addToStoryFolders(_ values: Set<StoryFolder>)
+
+    @objc(removeStoryFolders:)
+    @NSManaged public func removeFromStoryFolders(_ values: Set<StoryFolder>)
 
 }
 

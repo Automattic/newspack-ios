@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES">
         <attribute name="networkUrl" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
@@ -199,6 +199,7 @@
         <attribute name="defaultPostFormat" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="language" attributeType="String"/>
         <attribute name="postsPerPage" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="siteFolder" optional="YES" attributeType="Binary"/>
         <attribute name="startOfWeek" attributeType="String"/>
         <attribute name="summary" attributeType="String"/>
         <attribute name="timeFormat" attributeType="String"/>
@@ -218,6 +219,7 @@
         <relationship name="posts" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Post" inverseName="site" inverseEntity="Post"/>
         <relationship name="stagedMedia" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StagedMedia" inverseName="site" inverseEntity="StagedMedia"/>
         <relationship name="statuses" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Status" inverseName="site" inverseEntity="Status"/>
+        <relationship name="storyFolders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="StoryFolder" inverseName="site" inverseEntity="StoryFolder"/>
         <relationship name="users" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="User" inverseName="site" inverseEntity="User"/>
     </entity>
     <entity name="StagedEdits" representedClassName="StagedEdits" syncable="YES">
@@ -250,6 +252,18 @@
         <attribute name="slug" attributeType="String"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="statuses" inverseEntity="Site"/>
     </entity>
+    <entity name="StoryAsset" representedClassName="StoryAsset" syncable="YES">
+        <attribute name="assetType" attributeType="String"/>
+        <attribute name="bookmark" optional="YES" attributeType="Binary"/>
+        <attribute name="removed" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <relationship name="folder" maxCount="1" deletionRule="Nullify" destinationEntity="StoryFolder" inverseName="assets" inverseEntity="StoryFolder"/>
+    </entity>
+    <entity name="StoryFolder" representedClassName="StoryFolder" syncable="YES">
+        <attribute name="bookmark" attributeType="Binary"/>
+        <attribute name="removed" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <relationship name="assets" toMany="YES" deletionRule="Cascade" destinationEntity="StoryAsset" inverseName="folder" inverseEntity="StoryAsset"/>
+        <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="storyFolders" inverseEntity="Site"/>
+    </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="avatarUrls" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
         <attribute name="descript" optional="YES" attributeType="String"/>
@@ -273,10 +287,12 @@
         <element name="PostItem" positionX="-1350" positionY="-234" width="128" height="178"/>
         <element name="PostQuery" positionX="-1341" positionY="-225" width="128" height="148"/>
         <element name="Revision" positionX="-1350" positionY="-225" width="128" height="270"/>
-        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="448"/>
+        <element name="Site" positionX="-1215.6171875" positionY="-384.84765625" width="128" height="478"/>
         <element name="StagedEdits" positionX="-1341" positionY="-234" width="128" height="118"/>
         <element name="StagedMedia" positionX="-1359" positionY="-234" width="128" height="208"/>
         <element name="Status" positionX="-1359" positionY="-234" width="128" height="165"/>
+        <element name="StoryAsset" positionX="-1350" positionY="-225" width="128" height="103"/>
+        <element name="StoryFolder" positionX="-1359" positionY="-234" width="128" height="103"/>
         <element name="User" positionX="-1305" positionY="-180" width="128" height="163"/>
     </elements>
 </model>

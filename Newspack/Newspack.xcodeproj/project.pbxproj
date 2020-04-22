@@ -151,6 +151,10 @@
 		E68B2A0323048E510021283C /* EditorAttachmentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */; };
 		E68BA80C2347BAA300AB60F9 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68BA80B2347BAA300AB60F9 /* Environment.swift */; };
 		E690D57223722BB700676B1D /* PhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */; };
+		E695A7E6244FD686007B29BB /* StoryFolder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E695A7E2244FD686007B29BB /* StoryFolder+CoreDataProperties.swift */; };
+		E695A7E7244FD686007B29BB /* StoryAsset+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E695A7E3244FD686007B29BB /* StoryAsset+CoreDataProperties.swift */; };
+		E695A7E8244FD686007B29BB /* StoryFolder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E695A7E4244FD686007B29BB /* StoryFolder+CoreDataClass.swift */; };
+		E695A7E9244FD686007B29BB /* StoryAsset+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E695A7E5244FD686007B29BB /* StoryAsset+CoreDataClass.swift */; };
 		E69634102440C1C400D906E0 /* UITableViewCell+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E696340F2440C1C400D906E0 /* UITableViewCell+Helpers.swift */; };
 		E69DE37423A97F1C00F87157 /* remote-media-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E69DE37323A97F1C00F87157 /* remote-media-edit.json */; };
 		E69DE37623A981D000F87157 /* preview.png in Resources */ = {isa = PBXBuildFile; fileRef = E69DE37523A981D000F87157 /* preview.png */; };
@@ -374,6 +378,10 @@
 		E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAttachmentDelegate.swift; sourceTree = "<group>"; };
 		E68BA80B2347BAA300AB60F9 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryViewController.swift; sourceTree = "<group>"; };
+		E695A7E2244FD686007B29BB /* StoryFolder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoryFolder+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E695A7E3244FD686007B29BB /* StoryAsset+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoryAsset+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E695A7E4244FD686007B29BB /* StoryFolder+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoryFolder+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E695A7E5244FD686007B29BB /* StoryAsset+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoryAsset+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E696340F2440C1C400D906E0 /* UITableViewCell+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Helpers.swift"; sourceTree = "<group>"; };
 		E69DE37323A97F1C00F87157 /* remote-media-edit.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "remote-media-edit.json"; sourceTree = "<group>"; };
 		E69DE37523A981D000F87157 /* preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preview.png; sourceTree = "<group>"; };
@@ -673,6 +681,10 @@
 				E61D8F6D2378C95A005FECED /* StagedMedia+CoreDataProperties.swift */,
 				E66CCA022303527C00F1CA59 /* Status+CoreDataClass.swift */,
 				E66CC9F72303527900F1CA59 /* Status+CoreDataProperties.swift */,
+				E695A7E5244FD686007B29BB /* StoryAsset+CoreDataClass.swift */,
+				E695A7E3244FD686007B29BB /* StoryAsset+CoreDataProperties.swift */,
+				E695A7E4244FD686007B29BB /* StoryFolder+CoreDataClass.swift */,
+				E695A7E2244FD686007B29BB /* StoryFolder+CoreDataProperties.swift */,
 				E66CC9FF2303527C00F1CA59 /* User+CoreDataClass.swift */,
 				E66CC9F42303527800F1CA59 /* User+CoreDataProperties.swift */,
 				E6138FD82211FE86004E5B91 /* Newspack.xcdatamodeld */,
@@ -1272,10 +1284,12 @@
 				E66CCA182303527D00F1CA59 /* Page+CoreDataClass.swift in Sources */,
 				E66CCA142303527D00F1CA59 /* AccountDetails+CoreDataProperties.swift in Sources */,
 				E602E68322C15EC100795CBA /* RemoteUser.swift in Sources */,
+				E695A7E8244FD686007B29BB /* StoryFolder+CoreDataClass.swift in Sources */,
 				E6871F1B22C3FDE7008D3D46 /* PostListViewController.swift in Sources */,
 				E632F9A123515116003737BF /* SiteMediaDataSource.swift in Sources */,
 				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
 				E6E43EA4230F1D2B00A1974E /* EditAction.swift in Sources */,
+				E695A7E6244FD686007B29BB /* StoryFolder+CoreDataProperties.swift in Sources */,
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
 				E602E68022C1588600795CBA /* ApiService.swift in Sources */,
 				E6E2ACF922E2840C00A8E85D /* Date+FormatGMTString.swift in Sources */,
@@ -1297,6 +1311,7 @@
 				E629822A2303667E00E8CEC7 /* EditorViewController.swift in Sources */,
 				E66CCA1B2303527D00F1CA59 /* User+CoreDataClass.swift in Sources */,
 				E6051DE323071A3A005AAF0B /* RemoteRevision.swift in Sources */,
+				E695A7E9244FD686007B29BB /* StoryAsset+CoreDataClass.swift in Sources */,
 				E66CCA0F2303527C00F1CA59 /* Revision+CoreDataProperties.swift in Sources */,
 				E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */,
 				E602E68D22C1634900795CBA /* SiteApiActions.swift in Sources */,
@@ -1316,6 +1331,7 @@
 				E66CCA0B2303527C00F1CA59 /* Account+CoreDataProperties.swift in Sources */,
 				E63F3F3C236350BE00DB760E /* MediaTypeDiscerner.swift in Sources */,
 				E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */,
+				E695A7E7244FD686007B29BB /* StoryAsset+CoreDataProperties.swift in Sources */,
 				E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */,
 				E636C262234FBE6800564B63 /* RemoteMedia.swift in Sources */,
 				E6DF5575242E7139007DDC47 /* FolderManager.swift in Sources */,
