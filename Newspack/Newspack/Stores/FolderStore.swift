@@ -40,7 +40,7 @@ class FolderStore: Store {
 
         super.init(dispatcher: dispatcher)
 
-        createDefaultFolderIfNeeded()
+        createDefaultStoryFolderIfNeeded()
         selectDefaultStoryFolderIfNeeded()
     }
 
@@ -49,12 +49,12 @@ class FolderStore: Store {
     override func onDispatch(_ action: Action) {
         if let action = action as? FolderAction {
             switch action {
-            case .createFolder(let path, let addSuffix) :
-                createFolder(path: path, addSuffix: addSuffix)
-            case .renameFolder(let folder, let name) :
-                renameFolder(at: folder, to: name)
-            case .deleteFolder(let folder) :
-                deleteFolder(at: folder)
+            case .createStoryFolder(let path, let addSuffix) :
+                createStoryFolder(path: path, addSuffix: addSuffix)
+            case .renameStoryFolder(let folder, let name) :
+                renameStoryFolder(at: folder, to: name)
+            case .deleteStoryFolder(let folder) :
+                deleteStoryFolder(at: folder)
             case .selectStoryFolder(let folder) :
                 selectStoryFolder(folder: folder)
             }
@@ -67,11 +67,11 @@ extension FolderStore {
     /// Creates a single, default, folder under the site's folder if there is a
     /// site, and there are currently no folders.
     ///
-    private func createDefaultFolderIfNeeded() {
+    private func createDefaultStoryFolderIfNeeded() {
         guard let _ = currentSiteID, listStoryFolders().count == 0 else {
             return
         }
-        createFolder()
+        createStoryFolder()
     }
 
     private func selectDefaultStoryFolderIfNeeded() {
@@ -84,7 +84,7 @@ extension FolderStore {
         selectStoryFolder(folder: folder)
     }
 
-    func createFolder(path: String = Constants.defaultFolderName, addSuffix: Bool = false) {
+    func createStoryFolder(path: String = Constants.defaultStoryFolderName, addSuffix: Bool = false) {
         guard let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) else {
             LogError(message: "Unable to create the folder at \(path)")
             return
@@ -99,7 +99,7 @@ extension FolderStore {
         emitChange()
     }
 
-    func renameFolder(at url: URL, to name: String) {
+    func renameStoryFolder(at url: URL, to name: String) {
         if let url = folderManager.renameFolder(at: url, to: name) {
             LogDebug(message: "Success: \(url)")
         }
@@ -108,7 +108,7 @@ extension FolderStore {
         emitChange()
     }
 
-    func deleteFolder(at url: URL) {
+    func deleteStoryFolder(at url: URL) {
         if !folderManager.deleteFolder(at: url) {
             // TODO: For now emit change even if not successful. We'll wire up
             // proper error handling later.
@@ -116,7 +116,7 @@ extension FolderStore {
         }
 
         // There should always be at least one folder.
-        createDefaultFolderIfNeeded()
+        createDefaultStoryFolderIfNeeded()
 
         // Update the current story folder if it was the one deleted.
         if url == currentStoryFolder, let folder = listStoryFolders().first {
@@ -146,6 +146,6 @@ extension FolderStore {
 
 extension FolderStore {
     private struct Constants {
-        static let defaultFolderName = NSLocalizedString("New Story", comment: "Noun. This is the default name given to a new story folder.")
+        static let defaultStoryFolderName = NSLocalizedString("New Story", comment: "Noun. This is the default name given to a new story folder.")
     }
 }
