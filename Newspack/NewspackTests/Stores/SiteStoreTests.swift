@@ -34,17 +34,17 @@ class SiteStoreTests: BaseTest {
         let account = self.account!
         let remoteSettings = self.remoteSettings!
 
-        siteStore.createSites(sites:[remoteSettings], accountID: account.uuid)
+        let expect = expectation(description: "expect")
+        siteStore.createSites(sites:[remoteSettings], accountID: account.uuid, onComplete: {
+            guard let site = account.sites.first else {
+                XCTFail("The site can not be nil.")
+                return
+            }
+            XCTAssertEqual(site.url, self.siteURL) // NOTE: The url is defined in the mock data. The actual endpoint does not currently return this value.
+            XCTAssertEqual(site.title, remoteSettings.title)
 
-        let expect = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
-            let site = account.sites.first
-
-            XCTAssertNotNil(site)
-            XCTAssertEqual(site!.url, self.siteURL) // NOTE: The url is defined in the mock data. The actual endpoint does not currently return this value.
-            XCTAssertEqual(site!.title, remoteSettings.title)
-
-            return true
-        }
+            expect.fulfill()
+        })
 
         wait(for: [expect], timeout: 1)
     }
@@ -57,15 +57,17 @@ class SiteStoreTests: BaseTest {
 
         siteStore.createSites(sites: [remoteSettings], accountID: account.uuid)
 
-        let expect1 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
-            site = account.sites.first
+        let expect1 = expectation(description: "expect")
+        siteStore.createSites(sites:[remoteSettings], accountID: account.uuid, onComplete: {
+            guard let site = account.sites.first else {
+                XCTFail("The site can not be nil.")
+                return
+            }
+            XCTAssertEqual(site.url, self.siteURL) // NOTE: The url is defined in the mock data. The actual endpoint does not currently return this value.
+            XCTAssertEqual(site.title, remoteSettings.title)
 
-            XCTAssertNotNil(site)
-            XCTAssertEqual(site!.title, remoteSettings.title)
-            XCTAssertNotEqual(site!.title, testTitle)
-
-            return true
-        }
+            expect1.fulfill()
+        })
 
         wait(for: [expect1], timeout: 1)
 
@@ -84,11 +86,14 @@ class SiteStoreTests: BaseTest {
         XCTAssertNotNil(receipt)
 
         let expect2 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
-            site = account.sites.first
+            guard let site = account.sites.first else {
+                XCTFail("The site can not be nil.")
+                return true
+            }
 
             XCTAssertNotNil(site)
-            XCTAssertEqual(site!.url, self.siteURL) // NOTE: The url is defined in the mock data. The actual endpoint does not currently return this value.
-            XCTAssertEqual(site!.title, testTitle)
+            XCTAssertEqual(site.url, self.siteURL) // NOTE: The url is defined in the mock data. The actual endpoint does not currently return this value.
+            XCTAssertEqual(site.title, testTitle)
 
             return true
         }
