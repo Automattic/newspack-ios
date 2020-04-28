@@ -21,25 +21,9 @@ class FolderStore: Store {
 
         folderManager = SessionManager.shared.folderManager
 
-        if
-            let siteID = siteID,
-            let site = StoreContainer.shared.siteStore.getSiteByUUID(siteID),
-            let title = site.title
-        {
-            // Create a folder for the site to contain all of the site's story folders.
-            let sanitizedTitle = title.replacingOccurrences(of: "/", with: "-")
-            guard let url = folderManager.createFolderAtPath(path: sanitizedTitle) else {
-                fatalError("Unable to create a folder named: \(sanitizedTitle)")
-            }
-
-            // The FolderManager's currentFolder should _always_ be the site's folder.
-            guard folderManager.setCurrentFolder(url: url) else {
-                fatalError("Unable to set the folder manager's current folder to \(url.path)")
-            }
-        }
-
         super.init(dispatcher: dispatcher)
 
+        createAndSetSiteFolderIfNeeded()
         createDefaultStoryFolderIfNeeded()
         selectDefaultStoryFolderIfNeeded()
     }
@@ -64,6 +48,67 @@ class FolderStore: Store {
 
 extension FolderStore {
 
+    /// Creates a folder for the current site if one does not exist. The site
+    /// folder contains all story folders so it must exist prior to creating
+    /// story folders.
+    ///
+    private func createAndSetSiteFolderIfNeeded() {
+        guard
+            let siteID = currentSiteID,
+            let site = StoreContainer.shared.siteStore.getSiteByUUID(siteID)
+        else {
+            return
+        }
+        // Get a usable site title
+        let name = folderNameForSite(site: site)
+
+        guard let url = folderManager.createFolderAtPath(path: name) else {
+            fatalError("Unable to create a folder named: \(name)")
+        }
+
+        // The FolderManager's currentFolder should _always_ be the site's folder.
+        guard folderManager.setCurrentFolder(url: url) else {
+            fatalError("Unable to set the folder manager's current folder to \(url.path)")
+        }
+    }
+
+    /// Get a folder name for the specified site.
+    ///
+    /// - Parameter site: A Site instance.
+    /// - Returns: A string that should be usable as a folder name.
+    ///
+    func folderNameForSite(site: Site) -> String {
+        // Prefer using the URL host + path since this should be unique
+        // for every site, and still readable if the user looks at the folder itself.
+        if
+            let url = URL(string: site.url),
+            let host = url.host
+        {
+            let name = host + url.path
+            return sanitizedFolderName(name: name)
+        }
+
+        // If for some crazy reason the URL is not available, use the site's UUID.
+        // The UUID will be unique, even if it looks like nonsense to the user.
+        // We want to avoid using the site's title as this is not guarenteed to
+        // be unique and there could be collisions when there are multiple sites.
+        // We can be clever later and use the site's title as a directory's
+        // display name.
+        return site.uuid.uuidString
+    }
+
+    /// Sanitize the supplied string to make it suitable to use as a folder name.
+    ///
+    /// - Parameter name: The string needing to be sanitized.
+    /// - Returns: The sanitized version of the string.
+    ///
+    func sanitizedFolderName(name: String) -> String {
+        var sanitizedName = name.replacingOccurrences(of: "/", with: "-")
+        sanitizedName = sanitizedName.replacingOccurrences(of: ".", with: "-")
+        sanitizedName = sanitizedName.trimmingCharacters(in: CharacterSet.init(charactersIn: "-"))
+        return sanitizedName
+    }
+
     /// Creates a single, default, folder under the site's folder if there is a
     /// site, and there are currently no folders.
     ///
@@ -74,6 +119,8 @@ extension FolderStore {
         createStoryFolder()
     }
 
+    /// Select the default story folder if needed.
+    ///
     private func selectDefaultStoryFolderIfNeeded() {
         guard
             let _ = currentSiteID,
@@ -84,6 +131,13 @@ extension FolderStore {
         selectStoryFolder(folder: folder)
     }
 
+    /// Create a new story folder using the supplied string as its path.
+    ///
+    /// - Parameters:
+    ///   - path: The folder name and (optionally) a path to the story folder.
+    ///   - addSuffix: Whether to add a numeric suffix to the folder name if there
+    /// is already a folder with that name.
+    ///
     func createStoryFolder(path: String = Constants.defaultStoryFolderName, addSuffix: Bool = false) {
         guard let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) else {
             LogError(message: "Unable to create the folder at \(path)")
