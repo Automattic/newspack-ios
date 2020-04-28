@@ -171,7 +171,6 @@
 		E6A800F324380A5300A14E6C /* FolderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A800F224380A5300A14E6C /* FolderStore.swift */; };
 		E6A800F524380A6600A14E6C /* FolderAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A800F424380A6600A14E6C /* FolderAction.swift */; };
 		E6AC98B823CCD5DE00E95381 /* MainNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AC98B723CCD5DE00E95381 /* MainNavController.swift */; };
-		E6B159DC2458873200915325 /* FolderStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B159DB2458873200915325 /* FolderStoreTests.swift */; };
 		E6B159DF2458BBFF00915325 /* FolderMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B159DE2458BBFF00915325 /* FolderMaker.swift */; };
 		E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */; };
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
@@ -400,7 +399,6 @@
 		E6A800F224380A5300A14E6C /* FolderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStore.swift; sourceTree = "<group>"; };
 		E6A800F424380A6600A14E6C /* FolderAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderAction.swift; sourceTree = "<group>"; };
 		E6AC98B723CCD5DE00E95381 /* MainNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavController.swift; sourceTree = "<group>"; };
-		E6B159DB2458873200915325 /* FolderStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStoreTests.swift; sourceTree = "<group>"; };
 		E6B159DE2458BBFF00915325 /* FolderMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderMaker.swift; sourceTree = "<group>"; };
 		E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-ids-edit.json"; sourceTree = "<group>"; };
 		E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-edit.json"; sourceTree = "<group>"; };
@@ -828,7 +826,6 @@
 				E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */,
 				E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */,
 				E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */,
-				E6B159DB2458873200915325 /* FolderStoreTests.swift */,
 				E65875A523A811A400185C75 /* MediaStoreTests.swift */,
 				E65875A723A811F100185C75 /* MediaItemStoreTests.swift */,
 				E64D9FBA23D667760075A60E /* PostStoreTests.swift */,
@@ -1390,7 +1387,6 @@
 				E61A28CF22D53EFD003E214F /* PostServiceRemoteTests.swift in Sources */,
 				E61FC603229F2EEE009E1748 /* UserServiceRemoteTests.swift in Sources */,
 				E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */,
-				E6B159DC2458873200915325 /* FolderStoreTests.swift in Sources */,
 				E6051DEF23075F8A005AAF0B /* DateTests.swift in Sources */,
 				E65875AC23A813EA00185C75 /* StagedMediaStoreTests.swift in Sources */,
 				E61FC605229F2F10009E1748 /* SiteServiceRemoteTests.swift in Sources */,
