@@ -29,7 +29,13 @@ class StoreContainer {
         accountStore = AccountStore(dispatcher: dispatcher, accountID: site?.account.uuid)
         accountCapabilitiesStore = AccountCapabilitiesStore(dispatcher: dispatcher, siteID: site?.uuid)
         accountDetailsStore = AccountDetailsStore(dispatcher: dispatcher, accountID: site?.account.uuid)
+
+        // NOTE: The SiteStore must be reset BEFORE any other store that interacts
+        // with folders, as the SiteStore is responsible for creating the site's
+        // folder--the parent container for StoryFolders etc.
+        // It must also be set before any store that relies on retrieving the
         siteStore = SiteStore(dispatcher: dispatcher, siteID: site?.uuid)
+
         postStore = PostStore(dispatcher: dispatcher, siteID: site?.uuid)
         postItemStore = PostItemStore(dispatcher: dispatcher, siteID: site?.uuid)
         mediaStore = MediaStore(dispatcher: dispatcher, siteID: site?.uuid)
