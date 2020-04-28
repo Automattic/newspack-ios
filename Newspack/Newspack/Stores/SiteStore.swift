@@ -49,36 +49,6 @@ class SiteStore: Store, FolderMaker {
         return nil
     }
 
-    /// Creates a folder for the current site if one does not exist. The site
-    /// folder contains all story folders so it must exist prior to creating
-    /// story folders.
-    ///
-    func createSiteFolderIfNeeded() {
-        guard
-            let siteID = currentSiteID,
-            let site = getSiteByUUID(siteID)
-        else {
-            return
-        }
-
-        // TODO: Before creating the folder, check the site's siteFolder bookmark
-        // to see if one already exists. If so do not create a new one.
-
-
-        // Get a usable site title
-        let name = folderNameForSite(site: site)
-        let folderManager = SessionManager.shared.folderManager
-
-        guard let url = folderManager.createFolderAtPath(path: name) else {
-            fatalError("Unable to create a folder named: \(name)")
-        }
-
-        // The FolderManager's currentFolder should _always_ be the site's folder.
-        guard folderManager.setCurrentFolder(url: url) else {
-            fatalError("Unable to set the folder manager's current folder to \(url.path)")
-        }
-
-    }
 }
 
 extension SiteStore {
@@ -108,6 +78,42 @@ extension SiteStore {
         return site.uuid.uuidString
     }
 
+    /// Creates a folder for the current site if one does not exist. The site
+    /// folder contains all story folders so it must exist prior to creating
+    /// story folders.
+    ///
+    func createSiteFolderIfNeeded() {
+        guard
+           let siteID = currentSiteID,
+           let site = getSiteByUUID(siteID)
+        else {
+           return
+        }
+
+        createFolderForSite(site: site)
+
+        // TODO: Before creating the folder, check the site's siteFolder bookmark
+        // to see if one already exists. If so do not create a new one.
+
+    }
+
+    @discardableResult
+    func createFolderForSite(site: Site) -> URL {
+        // Get a usable site title
+        let name = folderNameForSite(site: site)
+        let folderManager = SessionManager.shared.folderManager
+
+        guard let url = folderManager.createFolderAtPath(path: name) else {
+           fatalError("Unable to create a folder named: \(name)")
+        }
+
+        // The FolderManager's currentFolder should _always_ be the site's folder.
+        guard folderManager.setCurrentFolder(url: url) else {
+           fatalError("Unable to set the folder manager's current folder to \(url.path)")
+        }
+
+        return url
+    }
 }
 
 extension SiteStore {
@@ -135,9 +141,9 @@ extension SiteStore {
             let settings = action.payload,
             let siteID = currentSiteID,
             let siteObjID = getSiteByUUID(siteID)?.objectID
-            else {
-                LogError(message: "handleSiteFetched: A value was unexpectedly nil.")
-                return
+        else {
+            LogError(message: "handleSiteFetched: A value was unexpectedly nil.")
+            return
         }
 
         CoreDataManager.shared.performOnWriteContext { [weak self] (context) in
@@ -163,20 +169,35 @@ extension SiteStore {
         }
 
         CoreDataManager.shared.performOnWriteContext { [weak self] (context) in
+            defer {
+                DispatchQueue.main.async {
+                    onComplete?()
+                }
+            }
+
+            guard let `self` = self else {
+                return
+            }
+
             let account = context.object(with: accountObjID) as! Account
             for settings in sites {
                 let site = Site(context: context)
-                site.account = account
                 site.uuid = UUID()
 
-                self?.updateSite(site: site, withSettings: settings)
+                self.updateSite(site: site, withSettings: settings)
+                let url = self.createFolderForSite(site: site)
+
+                do {
+                    site.siteFolder = try url.bookmarkData()
+                } catch {
+                    LogError(message: "Unable to get bookmarkData from URL: \(url) for site: \(site)")
+                    fatalError("Unable to get bookmarkData from URL")
+                }
+
+                site.account = account
             }
 
             CoreDataManager.shared.saveContext(context: context)
-
-            DispatchQueue.main.async {
-                onComplete?()
-            }
         }
     }
 
