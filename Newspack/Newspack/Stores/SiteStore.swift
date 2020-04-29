@@ -81,6 +81,7 @@ extension SiteStore {
     /// Creates a folder for the current site if one does not exist. The site
     /// folder contains all story folders so it must exist prior to creating
     /// story folders.
+    /// This method sets the FolderManager's currentFolder.
     ///
     func createSiteFolderIfNeeded() {
         guard
@@ -90,13 +91,49 @@ extension SiteStore {
            return
         }
 
-        createFolderForSite(site: site)
+        var shouldCreateFolder = true
+        // Is there an existing site folder?
+        do {
+            if let data = site.siteFolder {
+                let url = try URL(resolvingBookmarkData: data, bookmarkDataIsStale: &shouldCreateFolder)
+                if !shouldCreateFolder {
+                    setCurrentFolder(url: url)
+                    return
+                }
+            }
+        } catch {
+            // Log the error and assume that the site folder needs to be created.
+            LogError(message: "Error creating a URL from the supplied bookmark data. \(error)")
+        }
 
-        // TODO: Before creating the folder, check the site's siteFolder bookmark
-        // to see if one already exists. If so do not create a new one.
-
+        let url = createFolderForSite(site: site)
+        site.siteFolder = try? url.bookmarkData()
+        if let context = site.managedObjectContext {
+            CoreDataManager.shared.saveContext(context: context)
+        }
+        setCurrentFolder(url: url)
     }
 
+    /// This method updates he FileManager's currentFolder to the folder at the
+    /// specified file URL. An exception is raised if setting the current folder
+    /// fails.
+    ///
+    /// - Parameter url: A file URL pointing to an existing folder in the filesystem.
+    ///
+    private func setCurrentFolder(url: URL) {
+        let folderManager = SessionManager.shared.folderManager
+        guard folderManager.setCurrentFolder(url: url) else {
+           fatalError("Unable to set the folder manager's current folder to \(url.path)")
+        }
+    }
+
+    /// Create a folder for the specified site. This method DOES NOT update the
+    /// FolderManager's currentFolder.  An exception is raised if the folder
+    /// can not be created.
+    ///
+    /// - Parameter site: The site for which to create a folder.
+    /// - Returns: The file URL of the newly created folder.
+    ///
     @discardableResult
     func createFolderForSite(site: Site) -> URL {
         // Get a usable site title
@@ -105,11 +142,6 @@ extension SiteStore {
 
         guard let url = folderManager.createFolderAtPath(path: name) else {
            fatalError("Unable to create a folder named: \(name)")
-        }
-
-        // The FolderManager's currentFolder should _always_ be the site's folder.
-        guard folderManager.setCurrentFolder(url: url) else {
-           fatalError("Unable to set the folder manager's current folder to \(url.path)")
         }
 
         return url
