@@ -42,6 +42,15 @@ extension FolderMaker {
             var isStale = false
             let url = try URL(resolvingBookmarkData: bookmark, bookmarkDataIsStale: &isStale)
             bookmarkIsStale = isStale
+
+            // There doesn't seem to be API for determining if a file URL points
+            // to something that's been trashed (but not deleted).
+            // We want to treat these as stale regardless, so this will have to
+            // do for now.
+            if url.absoluteString.contains(".Trash") {
+                bookmarkIsStale = true
+            }
+
             return url
         } catch {
             LogError(message: "Unable to create URL from bookmark data.")
