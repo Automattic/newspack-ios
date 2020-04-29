@@ -8,7 +8,7 @@ class SiteStoreTests: BaseTest {
     var remoteSettings: RemoteSiteSettings?
     var account: Account?
     let siteURL = "http://example.com"
-    var siteStore = SiteStore()
+    var siteStore: SiteStore!
 
     override func setUp() {
         super.setUp()
@@ -25,7 +25,7 @@ class SiteStoreTests: BaseTest {
 
     override func tearDown() {
         super.tearDown()
-
+        siteStore = nil
         account = nil
         remoteSettings = nil
     }
@@ -225,7 +225,7 @@ class SiteStoreTests: BaseTest {
         let context = CoreDataManager.shared.mainContext
         let site = ModelFactory.getTestSite(context: context)
         site.account = account
-        let store = SiteStore(dispatcher: testDispatcher, siteID: site.uuid)
+        let store = SiteStore()
 
         // Check that site with a URL uses the URL
         site.url = "https://www.example.com/"
