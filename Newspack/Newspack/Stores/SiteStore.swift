@@ -92,25 +92,21 @@ extension SiteStore {
         }
 
         var shouldCreateFolder = true
-        // Is there an existing site folder?
-        do {
-            if let data = site.siteFolder {
-                let url = try URL(resolvingBookmarkData: data, bookmarkDataIsStale: &shouldCreateFolder)
-                if !shouldCreateFolder {
-                    setCurrentFolder(url: url)
-                    return
-                }
-            }
-        } catch {
-            // Log the error and assume that the site folder needs to be created.
-            LogError(message: "Error creating a URL from the supplied bookmark data. \(error)")
+        // First, check the site's siteFolder bookmark. If there is a good bookmark
+        // use it to set the current folder.
+        if
+            let bookmark = site.siteFolder,
+            let url = urlFromBookmark(bookmark: bookmark, bookmarkIsStale: &shouldCreateFolder),
+            !shouldCreateFolder
+        {
+            setCurrentFolder(url: url)
+            return
         }
 
+        // There is not a good bookmark so assume a new folder is needed.
+        // Create one, assign it to the site, then update the current folder.
         let url = createFolderForSite(site: site)
-        site.siteFolder = try? url.bookmarkData()
-        if let context = site.managedObjectContext {
-            CoreDataManager.shared.saveContext(context: context)
-        }
+        assignAndSaveFolderAt(url: url, to: site)
         setCurrentFolder(url: url)
     }
 
@@ -215,19 +211,44 @@ extension SiteStore {
             for settings in sites {
                 let site = Site(context: context)
                 site.uuid = UUID()
+                site.account = account
 
                 self.updateSite(site: site, withSettings: settings)
                 let url = self.createFolderForSite(site: site)
-
-                do {
-                    site.siteFolder = try url.bookmarkData()
-                } catch {
-                    LogError(message: "Unable to get bookmarkData from URL: \(url) for site: \(site)")
-                    fatalError("Unable to get bookmarkData from URL")
-                }
-
-                site.account = account
+                self.assignFolderAt(url: url, to: site)
             }
+
+            CoreDataManager.shared.saveContext(context: context)
+        }
+    }
+
+    /// Assigns the specified URL to the specified Site's siteFolder property.
+    /// Core data is NOT saved.
+    ///
+    /// - Parameters:
+    ///   - url: A file URL pointing to an existing file.
+    ///   - site: The site in question.
+    ///
+    func assignFolderAt(url: URL, to site: Site) {
+        guard let bookmark = bookmarkForURL(url: url) else {
+            return
+        }
+        site.siteFolder = bookmark
+    }
+
+    /// Assigns the specified URL to the specified Site's siteFolder property and
+    /// saves the change to core data.
+    ///
+    /// - Parameters:
+    ///   - url: A file URL pointing to an existing file.
+    ///   - site: The site in question.
+    ///
+    func assignAndSaveFolderAt(url: URL, to site: Site) {
+        let objID = site.objectID
+        CoreDataManager.shared.performOnWriteContext { [weak self] (context) in
+            let site = context.object(with: objID) as! Site
+
+            self?.assignFolderAt(url: url, to: site)
 
             CoreDataManager.shared.saveContext(context: context)
         }
