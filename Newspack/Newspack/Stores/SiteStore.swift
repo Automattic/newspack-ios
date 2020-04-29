@@ -13,11 +13,16 @@ class SiteStore: Store, FolderMaker {
         }
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
         currentSiteID = siteID
         super.init(dispatcher: dispatcher)
 
         createSiteFolderIfNeeded()
+        NotificationCenter.default.addObserver(self, selector: #selector(handleApplicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
 
     /// Action handler
@@ -28,6 +33,17 @@ class SiteStore: Store, FolderMaker {
         } else if let apiAction = action as? SiteFetchedApiAction {
             handleSiteFetched(action: apiAction)
         }
+    }
+
+    /// When the application becomes active, make sure that our site folder
+    /// still exists.
+    ///
+    @objc
+    func handleApplicationDidBecomeActive() {
+        guard let _ = currentSiteID else {
+            return
+        }
+        createSiteFolderIfNeeded()
     }
 
     /// Get the site for the specified UUID
@@ -102,6 +118,9 @@ extension SiteStore {
             setCurrentFolder(url: url)
             return
         }
+
+        // Reset the current working folder just in case.
+        SessionManager.shared.folderManager.resetCurrentFolder()
 
         // There is not a good bookmark so assume a new folder is needed.
         // Create one, assign it to the site, then update the current folder.
