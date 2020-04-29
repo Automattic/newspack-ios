@@ -85,7 +85,16 @@ class SiteStoreTests: BaseTest {
 
         XCTAssertNotNil(receipt)
 
-        let expect2 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+        let expect2 = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (notification) -> Bool in
+            guard
+                let objects = notification.userInfo![NSRefreshedObjectsKey] as? NSSet,
+                (objects.contains { (object) -> Bool in
+                    return object is Site
+                })
+            else {
+                return false
+            }
+
             guard let site = account.sites.first else {
                 XCTFail("The site can not be nil.")
                 return true
@@ -215,6 +224,7 @@ class SiteStoreTests: BaseTest {
         let expectedName = "www-example-com"
         let context = CoreDataManager.shared.mainContext
         let site = ModelFactory.getTestSite(context: context)
+        site.account = account
         let store = SiteStore(dispatcher: testDispatcher, siteID: site.uuid)
 
         // Check that site with a URL uses the URL
