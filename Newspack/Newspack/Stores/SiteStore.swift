@@ -217,8 +217,8 @@ extension SiteStore {
 
         CoreDataManager.shared.performOnWriteContext { [weak self] (context) in
             defer {
-                DispatchQueue.main.async {
-                    onComplete?()
+                if let onComplete = onComplete {
+                    DispatchQueue.main.async(execute: onComplete)
                 }
             }
 

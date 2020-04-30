@@ -12,7 +12,7 @@ extension FolderMaker {
     func sanitizedFolderName(name: String) -> String {
         var sanitizedName = name.replacingOccurrences(of: "/", with: "-")
         sanitizedName = sanitizedName.replacingOccurrences(of: ".", with: "-")
-        sanitizedName = sanitizedName.trimmingCharacters(in: CharacterSet.init(charactersIn: "-"))
+        sanitizedName = sanitizedName.trimmingCharacters(in: CharacterSet(charactersIn: "-"))
         return sanitizedName
     }
 
