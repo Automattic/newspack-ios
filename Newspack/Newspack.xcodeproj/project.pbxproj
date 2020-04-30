@@ -171,6 +171,7 @@
 		E6A800F324380A5300A14E6C /* FolderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A800F224380A5300A14E6C /* FolderStore.swift */; };
 		E6A800F524380A6600A14E6C /* FolderAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6A800F424380A6600A14E6C /* FolderAction.swift */; };
 		E6AC98B823CCD5DE00E95381 /* MainNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AC98B723CCD5DE00E95381 /* MainNavController.swift */; };
+		E6B159DF2458BBFF00915325 /* FolderMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B159DE2458BBFF00915325 /* FolderMaker.swift */; };
 		E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */; };
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
 		E6BA1322243F9D1E00635A8A /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */; };
@@ -398,6 +399,7 @@
 		E6A800F224380A5300A14E6C /* FolderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStore.swift; sourceTree = "<group>"; };
 		E6A800F424380A6600A14E6C /* FolderAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderAction.swift; sourceTree = "<group>"; };
 		E6AC98B723CCD5DE00E95381 /* MainNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavController.swift; sourceTree = "<group>"; };
+		E6B159DE2458BBFF00915325 /* FolderMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderMaker.swift; sourceTree = "<group>"; };
 		E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-ids-edit.json"; sourceTree = "<group>"; };
 		E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-edit.json"; sourceTree = "<group>"; };
 		E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewController.swift; sourceTree = "<group>"; };
@@ -796,6 +798,7 @@
 		E62C7C632235E0EC000FEB33 /* Stores */ = {
 			isa = PBXGroup;
 			children = (
+				E6B159DD2458BBA000915325 /* Protocols */,
 				E602E69022C1665500795CBA /* Actions */,
 				E61AE63B2237373E00E6A489 /* StoreContainer.swift */,
 				E62C7C652235E16E000FEB33 /* AccountStore.swift */,
@@ -896,6 +899,14 @@
 				E6710A1622CE9F040036156E /* FadeTransitionController.swift */,
 			);
 			path = Transitions;
+			sourceTree = "<group>";
+		};
+		E6B159DD2458BBA000915325 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				E6B159DE2458BBFF00915325 /* FolderMaker.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		E6DF5573242E7115007DDC47 /* Folders */ = {
@@ -1269,6 +1280,7 @@
 				E69634102440C1C400D906E0 /* UITableViewCell+Helpers.swift in Sources */,
 				E61BBD6822FA0470008A6D4C /* StartupHelper.swift in Sources */,
 				E636C26C234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift in Sources */,
+				E6B159DF2458BBFF00915325 /* FolderMaker.swift in Sources */,
 				E66CCA112303527C00F1CA59 /* AccountCapabilities+CoreDataClass.swift in Sources */,
 				E66CCA152303527D00F1CA59 /* AccountCapabilities+CoreDataProperties.swift in Sources */,
 				E638804E22DFC07900B3C16A /* PostItemStore.swift in Sources */,

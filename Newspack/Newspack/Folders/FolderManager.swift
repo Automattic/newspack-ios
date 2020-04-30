@@ -124,6 +124,7 @@ class FolderManager {
     /// - Parameter url: A file url.
     /// - Returns: true if successful, false otherwise.
     ///
+    @discardableResult
     func setCurrentFolder(url: URL) -> Bool {
         var didSetCurrentFolder = false
 
@@ -143,6 +144,12 @@ class FolderManager {
         relation.deallocate()
 
         return didSetCurrentFolder
+    }
+
+    /// Reset the current folder to the root folder.
+    ///
+    func resetCurrentFolder() {
+        setCurrentFolder(url: rootFolder)
     }
 
     /// Get a list of the folders at the specified URL. Only folders are returned

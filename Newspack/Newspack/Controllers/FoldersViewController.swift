@@ -20,7 +20,7 @@ class FoldersViewController: UITableViewController {
     // MARK: - Actions and Handlers
 
     @IBAction func handleAddTapped(sender: Any) {
-        let action = FolderAction.createFolder(path: "New Folder", addSuffix: true)
+        let action = FolderAction.createStoryFolder(path: "New Folder", addSuffix: true)
         SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 
@@ -30,7 +30,7 @@ class FoldersViewController: UITableViewController {
             return
         }
         let folder = folders[indexPath.row]
-        let action = FolderAction.renameFolder(folder: folder, name: name)
+        let action = FolderAction.renameStoryFolder(folder: folder, name: name)
         SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 
@@ -60,7 +60,7 @@ class FoldersViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let folder = folders[indexPath.row]
-            let action = FolderAction.deleteFolder(folder: folder)
+            let action = FolderAction.deleteStoryFolder(folder: folder)
             SessionManager.shared.sessionDispatcher.dispatch(action)
         }
     }
