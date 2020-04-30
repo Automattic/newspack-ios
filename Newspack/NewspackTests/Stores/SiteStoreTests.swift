@@ -35,7 +35,7 @@ class SiteStoreTests: BaseTest {
         let remoteSettings = self.remoteSettings!
 
         let expect = expectation(description: "expect")
-        siteStore.createSites(sites:[remoteSettings], accountID: account.uuid, onComplete: {
+        siteStore.createSites(sites: [remoteSettings], accountID: account.uuid, onComplete: {
             guard let site = account.sites.first else {
                 XCTFail("The site can not be nil.")
                 return
@@ -58,7 +58,7 @@ class SiteStoreTests: BaseTest {
         siteStore.createSites(sites: [remoteSettings], accountID: account.uuid)
 
         let expect1 = expectation(description: "expect")
-        siteStore.createSites(sites:[remoteSettings], accountID: account.uuid, onComplete: {
+        siteStore.createSites(sites: [remoteSettings], accountID: account.uuid, onComplete: {
             guard let site = account.sites.first else {
                 XCTFail("The site can not be nil.")
                 return
