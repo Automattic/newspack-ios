@@ -25,18 +25,6 @@ class FolderManager {
         return try? FileManager.default.url(for: .itemReplacementDirectory, in: .userDomainMask, appropriateFor: documentDirectory, create: true)
     }
 
-    /// Sanitize the supplied string to make it suitable to use as a folder name.
-    ///
-    /// - Parameter name: The string needing to be sanitized.
-    /// - Returns: The sanitized version of the string.
-    ///
-    static func sanitizedFolderName(name: String) -> String {
-        var sanitizedName = name.replacingOccurrences(of: "/", with: "-")
-        sanitizedName = sanitizedName.replacingOccurrences(of: ".", with: "-")
-        sanitizedName = sanitizedName.trimmingCharacters(in: CharacterSet(charactersIn: "-"))
-        return sanitizedName
-    }
-
     /// Initializes the FolderManager, optionally specifying its default
     /// rootFolder.
     ///
@@ -236,7 +224,7 @@ class FolderManager {
     /// - Returns: true if successful, false otherwise
     ///
     func moveFolder(at source: URL, to destination: URL) -> Bool {
-        let name = sanitizeFolderName(name: destination.lastPathComponent)
+        let name = sanitizedFolderName(name: destination.lastPathComponent)
         guard isValidFolderName(name: name) else {
             return false
         }
@@ -277,8 +265,11 @@ class FolderManager {
     /// - Parameter name: A prospective folder name.
     /// - Returns: The sanitized version of the name.
     ///
-    func sanitizeFolderName(name: String) -> String {
-        return name.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "/", with: "-")
+    func sanitizedFolderName(name: String) -> String {
+        var sanitizedName = name.replacingOccurrences(of: "/", with: "-")
+        sanitizedName = sanitizedName.replacingOccurrences(of: ".", with: "-")
+        sanitizedName = sanitizedName.trimmingCharacters(in: CharacterSet(charactersIn: "-"))
+        return sanitizedName
     }
 
     /// Checks if a string is a valid folder name.

@@ -82,7 +82,7 @@ extension SiteStore {
             let host = url.host
         {
             let name = host + url.path
-            return FolderManager.sanitizedFolderName(name: name)
+            return SessionManager.shared.folderManager.sanitizedFolderName(name: name)
         }
 
         // If for some crazy reason the URL is not available, use the site's UUID.
