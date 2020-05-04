@@ -22,6 +22,9 @@ class ModelFactory {
         site.postsPerPage = 10
         site.defaultPingStatus = "defaultPingStatus"
         site.defaultCommentStatus = "defaultCommentStatus"
+        // This is an invalid bookmark and should be replaced before it is used
+        // in a real test.
+        site.siteFolder = Data(base64Encoded: "test")
 
         return site
     }
