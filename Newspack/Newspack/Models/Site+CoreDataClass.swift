@@ -4,11 +4,6 @@ import CoreData
 @objc(Site)
 public class Site: NSManagedObject {
 
-    @nonobjc public class func defaultFetchRequest() -> NSFetchRequest<Site> {
-        return NSFetchRequest<Site>(entityName: "Site")
-    }
-
-
     /// Check for the specified capability.
     ///
     /// - Parameter string: The name of the capability to look for.

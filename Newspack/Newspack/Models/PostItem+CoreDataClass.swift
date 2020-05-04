@@ -4,10 +4,6 @@ import CoreData
 @objc(PostItem)
 public class PostItem: NSManagedObject {
 
-    @nonobjc public class func defaultFetchRequest() -> NSFetchRequest<PostItem> {
-        return NSFetchRequest<PostItem>(entityName: "PostItem")
-    }
-
     public override func willSave() {
         /// Prevent orphaned entities. If we ever save without a relationship
         /// to a site just delete.

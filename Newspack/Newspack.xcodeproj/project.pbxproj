@@ -146,6 +146,8 @@
 		E68689C0243C080400B7E363 /* FoldersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68689BF243C080400B7E363 /* FoldersViewController.swift */; };
 		E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */; };
 		E6871F1B22C3FDE7008D3D46 /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */; };
+		E68A965E246098C700BE664B /* NSObject+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68A965D246098C700BE664B /* NSObject+Helpers.swift */; };
+		E68A96602460990B00BE664B /* NSManagedObject+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68A965F2460990B00BE664B /* NSManagedObject+Helpers.swift */; };
 		E68B29FF23048C6C0021283C /* EditCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B29FE23048C6C0021283C /* EditCoordinator.swift */; };
 		E68B2A0123048E050021283C /* EditorAttachmentImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */; };
 		E68B2A0323048E510021283C /* EditorAttachmentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */; };
@@ -374,6 +376,8 @@
 		E68689BF243C080400B7E363 /* FoldersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersViewController.swift; sourceTree = "<group>"; };
 		E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMenuViewController.swift; sourceTree = "<group>"; };
 		E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
+		E68A965D246098C700BE664B /* NSObject+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Helpers.swift"; sourceTree = "<group>"; };
+		E68A965F2460990B00BE664B /* NSManagedObject+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Helpers.swift"; sourceTree = "<group>"; };
 		E68B29FE23048C6C0021283C /* EditCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCoordinator.swift; sourceTree = "<group>"; };
 		E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAttachmentImageProvider.swift; sourceTree = "<group>"; };
 		E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorAttachmentDelegate.swift; sourceTree = "<group>"; };
@@ -932,6 +936,8 @@
 				E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */,
 				E6051DEB23075A3A005AAF0B /* Dictionary+Merge.swift */,
 				E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */,
+				E68A965F2460990B00BE664B /* NSManagedObject+Helpers.swift */,
+				E68A965D246098C700BE664B /* NSObject+Helpers.swift */,
 				E696340F2440C1C400D906E0 /* UITableViewCell+Helpers.swift */,
 			);
 			path = Extensions;
@@ -1313,6 +1319,7 @@
 				E690D57223722BB700676B1D /* PhotoLibraryViewController.swift in Sources */,
 				E602E68522C15ECC00795CBA /* RemoteSiteSettings.swift in Sources */,
 				E68B2A0323048E510021283C /* EditorAttachmentDelegate.swift in Sources */,
+				E68A965E246098C700BE664B /* NSObject+Helpers.swift in Sources */,
 				E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */,
 				E66CCA102303527C00F1CA59 /* User+CoreDataProperties.swift in Sources */,
 				E6E2ACF722E10F3400A8E85D /* MainStoryboard.swift in Sources */,
@@ -1353,6 +1360,7 @@
 				E66CCA0A2303527C00F1CA59 /* Page+CoreDataProperties.swift in Sources */,
 				E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */,
 				E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */,
+				E68A96602460990B00BE664B /* NSManagedObject+Helpers.swift in Sources */,
 				E6AC98B823CCD5DE00E95381 /* MainNavController.swift in Sources */,
 				E68B2A0123048E050021283C /* EditorAttachmentImageProvider.swift in Sources */,
 				E6500F9A2368B63800CB8C6C /* ImageStore.swift in Sources */,
