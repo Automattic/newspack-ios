@@ -337,11 +337,7 @@ class FolderManager {
             let url = try URL(resolvingBookmarkData: bookmark, bookmarkDataIsStale: &isStale)
             bookmarkIsStale = isStale
 
-            // There doesn't seem to be usable API for determining if a file URL
-            // points to something that's been trashed (but not deleted).
-            // We want to treat these as stale regardless, so this will have to
-            // do for now.
-            if url.pathComponents.contains(".Trash") {
+            if isTrashed(url: url) {
                 bookmarkIsStale = true
             }
 
@@ -350,6 +346,21 @@ class FolderManager {
             LogError(message: "Unable to create URL from bookmark data.")
         }
         return nil
+    }
+
+    /// Check if a file resource has been trashed.
+    ///
+    /// - Parameter url: A file URL.
+    /// - Returns: True the URL points to an object in the .Trash directory, otherwise false.
+    ///
+    func isTrashed(url: URL) -> Bool {
+        // There doesn't seem to be usable API for determining if a file URL
+        // points to something that's been trashed (but not deleted).
+        // We want to treat these as stale regardless, so this will have to
+        // do for now.
+        // The string literal seems to be consistent regardless of the system
+        // language, i.e. it does not reference a system folder's display name.
+        return url.pathComponents.contains(".Trash")
     }
 
 }
