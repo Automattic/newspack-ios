@@ -55,8 +55,6 @@ class SiteStoreTests: BaseTest {
         let testTitle = "Test Title"
         var site: Site?
 
-        siteStore.createSites(sites: [remoteSettings], accountID: account.uuid)
-
         let expect1 = expectation(description: "expect")
         siteStore.createSites(sites: [remoteSettings], accountID: account.uuid, onComplete: {
             guard let site = account.sites.first else {
