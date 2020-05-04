@@ -25,6 +25,18 @@ class FolderManager {
         return try? FileManager.default.url(for: .itemReplacementDirectory, in: .userDomainMask, appropriateFor: documentDirectory, create: true)
     }
 
+    /// Sanitize the supplied string to make it suitable to use as a folder name.
+    ///
+    /// - Parameter name: The string needing to be sanitized.
+    /// - Returns: The sanitized version of the string.
+    ///
+    static func sanitizedFolderName(name: String) -> String {
+        var sanitizedName = name.replacingOccurrences(of: "/", with: "-")
+        sanitizedName = sanitizedName.replacingOccurrences(of: ".", with: "-")
+        sanitizedName = sanitizedName.trimmingCharacters(in: CharacterSet(charactersIn: "-"))
+        return sanitizedName
+    }
+
     /// Initializes the FolderManager, optionally specifying its default
     /// rootFolder.
     ///

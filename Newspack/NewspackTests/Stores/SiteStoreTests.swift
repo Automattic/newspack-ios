@@ -238,40 +238,4 @@ class SiteStoreTests: BaseTest {
         XCTAssertTrue(name == site.uuid.uuidString)
     }
 
-    func testSanitizedFolderNames() {
-        let store = SiteStore()
-
-        // Try a simple domain.
-        var expectedName = "www-example-com"
-        var name = store.sanitizedFolderName(name: "www.example.com")
-        XCTAssertTrue(name == expectedName)
-
-        // Simple domain with a trailing directory path
-        name = store.sanitizedFolderName(name: "www.example.com/")
-        XCTAssertTrue(name == expectedName)
-
-        // Try a domain with a simple path
-        expectedName = "www-example-com-path"
-        name = store.sanitizedFolderName(name: "www.example.com/path")
-        XCTAssertTrue(name == expectedName)
-
-        // Simple domain with a path having a trailing directory path
-        name = store.sanitizedFolderName(name: "www.example.com/path/")
-        XCTAssertTrue(name == expectedName)
-
-        // A domain and complex path
-        expectedName = "www-example-com-path-to-some-thing"
-        name = store.sanitizedFolderName(name: "www.example.com/path/to/some/thing")
-        XCTAssertTrue(name == expectedName)
-
-        // A domain and complex path havng a trailing directory path
-        name = store.sanitizedFolderName(name: "www.example.com/path/to/some/thing/")
-        XCTAssertTrue(name == expectedName)
-
-        // A UUID should be already be valid.
-        expectedName = UUID().uuidString
-        name = store.sanitizedFolderName(name: expectedName)
-        XCTAssertTrue(name == expectedName)
-    }
-
 }
