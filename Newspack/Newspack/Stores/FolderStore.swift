@@ -3,7 +3,7 @@ import WordPressFlux
 
 /// Responsible for managing folder related things.
 ///
-class FolderStore: Store, FolderMaker {
+class FolderStore: Store {
 
     private(set) var currentSiteID: UUID?
 

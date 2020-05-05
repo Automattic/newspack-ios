@@ -4,7 +4,7 @@ import WordPressFlux
 
 /// Responsible for managing site related things.
 ///
-class SiteStore: Store, FolderMaker {
+class SiteStore: Store {
 
     private(set) var currentSiteID: UUID? {
         didSet {
@@ -82,7 +82,7 @@ extension SiteStore {
             let host = url.host
         {
             let name = host + url.path
-            return sanitizedFolderName(name: name)
+            return SessionManager.shared.folderManager.sanitizedFolderName(name: name)
         }
 
         // If for some crazy reason the URL is not available, use the site's UUID.
@@ -110,9 +110,10 @@ extension SiteStore {
         var shouldCreateFolder = true
         // First, check the site's siteFolder bookmark. If there is a good bookmark
         // use it to set the current folder.
+        let folderManager = SessionManager.shared.folderManager
         if
             let bookmark = site.siteFolder,
-            let url = urlFromBookmark(bookmark: bookmark, bookmarkIsStale: &shouldCreateFolder),
+            let url = folderManager.urlFromBookmark(bookmark: bookmark, bookmarkIsStale: &shouldCreateFolder),
             !shouldCreateFolder
         {
             setCurrentFolder(url: url)
@@ -249,7 +250,8 @@ extension SiteStore {
     ///   - site: The site in question.
     ///
     func assignFolderAt(url: URL, to site: Site) {
-        guard let bookmark = bookmarkForURL(url: url) else {
+        let folderManager = SessionManager.shared.folderManager
+        guard let bookmark = folderManager.bookmarkForURL(url: url) else {
             return
         }
         site.siteFolder = bookmark

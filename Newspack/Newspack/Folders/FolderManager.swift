@@ -224,7 +224,7 @@ class FolderManager {
     /// - Returns: true if successful, false otherwise
     ///
     func moveFolder(at source: URL, to destination: URL) -> Bool {
-        let name = sanitizeFolderName(name: destination.lastPathComponent)
+        let name = sanitizedFolderName(name: destination.lastPathComponent)
         guard isValidFolderName(name: name) else {
             return false
         }
@@ -265,8 +265,11 @@ class FolderManager {
     /// - Parameter name: A prospective folder name.
     /// - Returns: The sanitized version of the name.
     ///
-    func sanitizeFolderName(name: String) -> String {
-        return name.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: "/", with: "-")
+    func sanitizedFolderName(name: String) -> String {
+        var sanitizedName = name.replacingOccurrences(of: "/", with: "-")
+        sanitizedName = sanitizedName.replacingOccurrences(of: ".", with: "-")
+        sanitizedName = sanitizedName.trimmingCharacters(in: CharacterSet(charactersIn: "-"))
+        return sanitizedName
     }
 
     /// Checks if a string is a valid folder name.
@@ -306,4 +309,58 @@ class FolderManager {
     func currentFolderContains(_ child: URL) -> Bool {
         return folder(currentFolder, contains: child)
     }
+
+    /// Converts a file URL to bookkmark data.
+    ///
+    /// - Parameter url: A file URL.
+    /// - Returns: Bookmark data or nil if there was an error.
+    ///
+    func bookmarkForURL(url: URL) -> Data? {
+        do {
+            return try url.bookmarkData()
+        } catch {
+            LogError(message: "Unable to get bookmarkData for url: \(url)")
+        }
+        return nil
+    }
+
+    /// Creates a file URL from bookmark data.
+    ///
+    /// - Parameters:
+    ///   - bookmark: The bookmark data.
+    ///   - bookmarkIsStale: An inout bool indicating if the bookmark is stale.
+    /// - Returns: A URL or nil if there was an error.
+    ///
+    func urlFromBookmark(bookmark: Data, bookmarkIsStale: inout Bool) -> URL? {
+        do {
+            var isStale = false
+            let url = try URL(resolvingBookmarkData: bookmark, bookmarkDataIsStale: &isStale)
+            bookmarkIsStale = isStale
+
+            if isTrashed(url: url) {
+                bookmarkIsStale = true
+            }
+
+            return url
+        } catch {
+            LogError(message: "Unable to create URL from bookmark data.")
+        }
+        return nil
+    }
+
+    /// Check if a file resource has been trashed.
+    ///
+    /// - Parameter url: A file URL.
+    /// - Returns: True the URL points to an object in the .Trash directory, otherwise false.
+    ///
+    func isTrashed(url: URL) -> Bool {
+        // There doesn't seem to be usable API for determining if a file URL
+        // points to something that's been trashed (but not deleted).
+        // We want to treat these as stale regardless, so this will have to
+        // do for now.
+        // The string literal seems to be consistent regardless of the system
+        // language, i.e. it does not reference a system folder's display name.
+        return url.pathComponents.contains(".Trash")
+    }
+
 }
