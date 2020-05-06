@@ -196,6 +196,7 @@ class FolderManager {
     /// - Parameter source: A file URL.
     /// - Returns: true if the folder was deleted, otherwise false
     ///
+    @discardableResult
     func deleteFolder(at source: URL) -> Bool {
         guard folderExists(url: source) else {
             return false
