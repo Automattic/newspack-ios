@@ -67,6 +67,106 @@ class SiteStore: Store {
 
 }
 
+// MARK: - API and Core Data
+
+extension SiteStore {
+
+    func handleNetworkSitesFetched(action: NetworkSitesFetchedApiAction) {
+        // noop for now, pending other changes
+    }
+
+    /// Handles the siteFetched action.
+    ///
+    /// - Parameters:
+    ///     - settings: The remote site settings
+    ///     - error: Any error.
+    ///
+    func handleSiteFetched(action: SiteFetchedApiAction) {
+        guard !action.isError() else {
+            // TODO: Handle error.
+            if let error = action.error as NSError? {
+                LogError(message: "handleSiteFetched: " + error.localizedDescription)
+            }
+            return
+        }
+
+        guard
+            let settings = action.payload,
+            let siteID = currentSiteID,
+            let siteObjID = getSiteByUUID(siteID)?.objectID
+        else {
+            LogError(message: "handleSiteFetched: A value was unexpectedly nil.")
+            return
+        }
+
+        CoreDataManager.shared.performOnWriteContext { [weak self] (context) in
+            let site = context.object(with: siteObjID) as! Site
+            self?.updateSite(site: site, withSettings: settings)
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                self?.emitChange()
+            }
+        }
+    }
+
+    // TODO: It would be nice to not need a special method to handle site creation
+    // during the intial set up process. There should be a way to rely on
+    // flux instead.
+    func createSites(sites: [RemoteSiteSettings], accountID: UUID, onComplete:(() -> Void)? = nil) {
+        let accountStore = StoreContainer.shared.accountStore
+        guard let accountObjID = accountStore.getAccountByUUID(accountID)?.objectID else {
+            // TODO: handle error
+            LogError(message: "createSite: Unable to find account by UUID.")
+            return
+        }
+
+        CoreDataManager.shared.performOnWriteContext { [weak self] (context) in
+            defer {
+                if let onComplete = onComplete {
+                    DispatchQueue.main.async(execute: onComplete)
+                }
+            }
+
+            guard let `self` = self else {
+                return
+            }
+
+            let account = context.object(with: accountObjID) as! Account
+            for settings in sites {
+                let site = Site(context: context)
+                site.uuid = UUID()
+                site.account = account
+
+                self.updateSite(site: site, withSettings: settings)
+                let url = self.createFolderForSite(site: site)
+                self.assignFolderAt(url: url, to: site)
+            }
+
+            CoreDataManager.shared.saveContext(context: context)
+        }
+    }
+
+    func updateSite(site: Site, withSettings settings: RemoteSiteSettings) {
+        site.title = settings.title
+        site.summary = settings.description
+        site.timezone = settings.timezone
+        site.dateFormat = settings.dateFormat
+        site.timeFormat = settings.timeFormat
+        site.startOfWeek = settings.startOfWeek
+        site.language = settings.language
+        site.useSmilies = settings.useSmilies
+        site.defaultCategory = settings.defaultCategory
+        site.defaultPostFormat = settings.defaultPostFormat
+        site.postsPerPage = settings.postsPerPage
+        site.defaultPingStatus = settings.defaultPingStatus
+        site.defaultCommentStatus = settings.defaultCommentStatus
+        site.url = settings.url
+    }
+}
+
+// MARK: - Folder Management
+
 extension SiteStore {
 
     /// Get a folder name for the specified site.
@@ -162,85 +262,6 @@ extension SiteStore {
 
         return url
     }
-}
-
-extension SiteStore {
-
-    func handleNetworkSitesFetched(action: NetworkSitesFetchedApiAction) {
-        // noop for now, pending other changes
-    }
-
-    /// Handles the siteFetched action.
-    ///
-    /// - Parameters:
-    ///     - settings: The remote site settings
-    ///     - error: Any error.
-    ///
-    func handleSiteFetched(action: SiteFetchedApiAction) {
-        guard !action.isError() else {
-            // TODO: Handle error.
-            if let error = action.error as NSError? {
-                LogError(message: "handleSiteFetched: " + error.localizedDescription)
-            }
-            return
-        }
-
-        guard
-            let settings = action.payload,
-            let siteID = currentSiteID,
-            let siteObjID = getSiteByUUID(siteID)?.objectID
-        else {
-            LogError(message: "handleSiteFetched: A value was unexpectedly nil.")
-            return
-        }
-
-        CoreDataManager.shared.performOnWriteContext { [weak self] (context) in
-            let site = context.object(with: siteObjID) as! Site
-            self?.updateSite(site: site, withSettings: settings)
-            CoreDataManager.shared.saveContext(context: context)
-
-            DispatchQueue.main.async {
-                self?.emitChange()
-            }
-        }
-    }
-
-    // TODO: It would be nice to not need a special method to handle site creation
-    // during the intial set up process. There should be a way to rely on
-    // flux instead.
-    func createSites(sites: [RemoteSiteSettings], accountID: UUID, onComplete:(() -> Void)? = nil) {
-        let accountStore = StoreContainer.shared.accountStore
-        guard let accountObjID = accountStore.getAccountByUUID(accountID)?.objectID else {
-            // TODO: handle error
-            LogError(message: "createSite: Unable to find account by UUID.")
-            return
-        }
-
-        CoreDataManager.shared.performOnWriteContext { [weak self] (context) in
-            defer {
-                if let onComplete = onComplete {
-                    DispatchQueue.main.async(execute: onComplete)
-                }
-            }
-
-            guard let `self` = self else {
-                return
-            }
-
-            let account = context.object(with: accountObjID) as! Account
-            for settings in sites {
-                let site = Site(context: context)
-                site.uuid = UUID()
-                site.account = account
-
-                self.updateSite(site: site, withSettings: settings)
-                let url = self.createFolderForSite(site: site)
-                self.assignFolderAt(url: url, to: site)
-            }
-
-            CoreDataManager.shared.saveContext(context: context)
-        }
-    }
 
     /// Assigns the specified URL to the specified Site's siteFolder property.
     /// Core data is NOT saved.
@@ -275,20 +296,4 @@ extension SiteStore {
         }
     }
 
-    func updateSite(site: Site, withSettings settings: RemoteSiteSettings) {
-        site.title = settings.title
-        site.summary = settings.description
-        site.timezone = settings.timezone
-        site.dateFormat = settings.dateFormat
-        site.timeFormat = settings.timeFormat
-        site.startOfWeek = settings.startOfWeek
-        site.language = settings.language
-        site.useSmilies = settings.useSmilies
-        site.defaultCategory = settings.defaultCategory
-        site.defaultPostFormat = settings.defaultPostFormat
-        site.postsPerPage = settings.postsPerPage
-        site.defaultPingStatus = settings.defaultPingStatus
-        site.defaultCommentStatus = settings.defaultCommentStatus
-        site.url = settings.url
-    }
 }
