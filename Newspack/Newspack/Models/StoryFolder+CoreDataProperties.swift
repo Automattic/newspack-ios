@@ -10,8 +10,15 @@ extension StoryFolder {
 
     @NSManaged public var bookmark: Data!
     @NSManaged public var removed: Bool
-    @NSManaged public var site: Site!
+    // postID is non-optional due to ObjC so we'll let its default be 0.
+    // If postID is > 0 then there is a valid draft associated with the story.
+    @NSManaged public var postID: Int64
+    // Folder creation date, not the post draft date.
+    @NSManaged public var date: Date!
+    // The name of the folder cached for convenience. Used for the draft post title.
+    @NSManaged public var name: String!
     @NSManaged public var assets: Set<StoryAsset>!
+    @NSManaged public var site: Site!
 
 }
 
