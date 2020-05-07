@@ -19,6 +19,7 @@ extension StoryFolder {
     @NSManaged public var name: String!
     @NSManaged public var assets: Set<StoryAsset>!
     @NSManaged public var site: Site!
+    @NSManaged public var uuid: UUID!
 
 }
 
