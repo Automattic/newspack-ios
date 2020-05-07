@@ -349,6 +349,17 @@ class FolderManager {
         return nil
     }
 
+    /// A convenience wrapper around urlFromBookMark(bookmark:bookmarkIsStale:)
+    /// Only call this when confident the value of bookmarkIsStale: is not relevant.
+    ///
+    /// - Parameter bookmark: The bookmark data.
+    /// - Returns: A URL or nil if there was an error.
+    ///
+    func urlFromBookmark(bookmark: Data) -> URL? {
+        var isStale = false
+        return urlFromBookmark(bookmark: bookmark, bookmarkIsStale: &isStale)
+    }
+
     /// Check if a file resource has been trashed.
     ///
     /// - Parameter url: A file URL.
