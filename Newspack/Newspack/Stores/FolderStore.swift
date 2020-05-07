@@ -77,11 +77,31 @@ extension FolderStore {
     /// is already a folder with that name.
     ///
     func createStoryFolder(path: String = Constants.defaultStoryFolderName, addSuffix: Bool = false) {
+        guard
+            let siteID = currentSiteID,
+            let siteObjID = StoreContainer.shared.siteStore.getSiteByUUID(siteID)?.objectID
+        else {
+            LogError(message: "Attempted to create story folder, but no site was found,")
+            return
+        }
+
         guard let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) else {
             LogError(message: "Unable to create the folder at \(path)")
             return
         }
         LogDebug(message: "Success: \(url.path)")
+
+        // Create the core data proxy for the story folder.
+        CoreDataManager.shared.performBackgroundTask { context in
+            let site = context.object(with: siteObjID) as! Site
+            let folderManager = SessionManager.shared.folderManager
+
+            let storyFolder = StoryFolder(context: context)
+            storyFolder.site = site
+            storyFolder.bookmark = folderManager.bookmarkForURL(url: url)
+
+            CoreDataManager.shared.saveContext(context: context)
+        }
 
         // Update the currentStoryFolder if needed.
         if listStoryFolders().count == 1, let folder = listStoryFolders().first {
