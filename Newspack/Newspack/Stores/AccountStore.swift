@@ -129,10 +129,21 @@ extension AccountStore {
     /// - Parameter uuid: The uuid of the account to remove.
     ///
     func removeAccount(uuid: UUID) {
-        guard let accountObjID = getAccountByUUID(uuid)?.objectID else {
+        guard let account = getAccountByUUID(uuid) else {
             LogError(message: "removeAccount: Unable to find account by UUID.")
             return
         }
+
+        // For each site, clean up its site folder before deleting the account.
+        let folderManager = SessionManager.shared.folderManager
+        for site in account.sites {
+            var isStale = false
+            if let url = folderManager.urlFromBookmark(bookmark: site.siteFolder, bookmarkIsStale: &isStale), !isStale {
+                folderManager.deleteFolder(at: url)
+            }
+        }
+
+        let accountObjID = account.objectID
         CoreDataManager.shared.performOnWriteContext { (context) in
             let account = context.object(with: accountObjID) as! Account
             context.delete(account)

@@ -4,8 +4,9 @@ import WordPressFlux
 /// Supported Actions for changes to the FolderStore
 ///
 enum FolderAction: Action {
-    case createStoryFolder(path: String, addSuffix: Bool)
-    case renameStoryFolder(folder: URL, name: String)
-    case deleteStoryFolder(folder: URL)
-    case selectStoryFolder(folder: URL)
+    case createStoryFolder
+    case createStoryFolderNamed(path: String, addSuffix: Bool)
+    case renameStoryFolder(folderID: UUID, name: String)
+    case deleteStoryFolder(folderID: UUID)
+    case selectStoryFolder(folderID: UUID)
 }
