@@ -96,7 +96,7 @@ extension FolderStore {
     private func selectDefaultStoryFolderIfNeeded() {
         guard
             let _ = currentSiteID,
-            !folderManager.currentFolderContains(currentStoryFolder),
+            getStoryFolderByID(uuid: currentStoryFolderID) == nil,
             let storyFolder = getStoryFolders().first
         else {
             return
@@ -143,9 +143,7 @@ extension FolderStore {
             CoreDataManager.shared.saveContext(context: context)
 
             DispatchQueue.main.async {
-                if let folders = self?.getStoryFolders(), folders.count == 1 {
-                    self?.selectStoryFolder(folder: folders.first!)
-                }
+                self?.selectDefaultStoryFolderIfNeeded()
             }
         }
     }
