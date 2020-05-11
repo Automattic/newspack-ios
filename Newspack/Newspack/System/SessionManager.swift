@@ -134,6 +134,7 @@ class SessionManager: StatefulStore<SessionState> {
 
     func handleAccountRemoved() {
         if currentSite?.isDeleted == true || currentSite?.account == nil {
+            folderManager.resetCurrentFolder()
             state = .pending
             let store = AccountStore()
             initialize(site: store.getAccounts().first?.sites.first)
