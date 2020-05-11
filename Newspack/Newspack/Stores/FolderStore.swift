@@ -225,9 +225,9 @@ extension FolderStore {
         var newIndex = index - 1
         // However, if that would be a negative index, we want to select the
         // following item.
-        newIndex = (newIndex < 0) ? 1 : newIndex
+        newIndex = max(newIndex, 0)
 
-        currentStoryFolderID = results[newIndex]["uuid"]!
+        selectStoryFolder(uuid: results[newIndex]["uuid"]!)
     }
 
     /// Delete the specified StoryFolder. This removes the entity from core data
