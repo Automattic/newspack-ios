@@ -174,4 +174,3 @@ extension FolderDataSource: NSFetchedResultsControllerDelegate {
    }
 
 }
-
