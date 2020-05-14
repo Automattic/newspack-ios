@@ -129,7 +129,7 @@ extension FolderStore {
         LogDebug(message: "Success: \(url.path)")
 
         // Create the core data proxy for the story folder.
-        CoreDataManager.shared.performBackgroundTask { [weak self] context in
+        CoreDataManager.shared.performOnWriteContext { [weak self] context in
             let site = context.object(with: siteObjID) as! Site
             let folderManager = SessionManager.shared.folderManager
 
