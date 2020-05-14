@@ -54,7 +54,7 @@ class PostStoreTests: BaseTest {
 
         let remoteItem = RemotePostID(dict: response)
         let postItem = PostItem(context: context)
-        postItem.site = site!
+        postItem.siteUUID = site?.uuid!
         postItem.addToPostQueries(itemStore!.currentQuery!)
         itemStore!.updatePostItem(postItem, with: remoteItem)
         CoreDataManager.shared.saveContext(context: context)
@@ -76,7 +76,7 @@ class PostStoreTests: BaseTest {
         //
         let remoteItem = RemotePostID(dict: response)
         let postItem = PostItem(context: context)
-        postItem.site = site!
+        postItem.siteUUID = site!.uuid!
         postItem.addToPostQueries(itemStore!.currentQuery!)
         itemStore!.updatePostItem(postItem, with: remoteItem)
         CoreDataManager.shared.saveContext(context: context)
