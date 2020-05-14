@@ -79,7 +79,7 @@ extension PostStore {
 
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = PostItem.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "postID = %ld AND site.uuid = %@", postID, siteID as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "postID = %ld AND siteUUID = %@", postID, siteID as CVarArg)
         do {
             return try context.fetch(fetchRequest).first
         } catch {
@@ -151,7 +151,7 @@ extension PostStore {
             let listItem = context.object(with: listItemObjID) as! PostItem
 
             let fetchRequest = Post.defaultFetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "site = %@ AND postID = %ld", site, remotePost.postID)
+            fetchRequest.predicate = NSPredicate(format: "siteUUID = %@ AND postID = %ld", site.uuid as CVarArg, remotePost.postID)
 
             let post: Post
             do {
@@ -163,7 +163,7 @@ extension PostStore {
             }
 
             self.updatePost(post, with: remotePost)
-            post.site = site
+            post.siteUUID = site.uuid
             post.item = listItem
 
             CoreDataManager.shared.saveContext(context: context)

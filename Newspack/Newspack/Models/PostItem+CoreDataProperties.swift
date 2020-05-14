@@ -12,10 +12,10 @@ extension PostItem {
     @NSManaged public var dateGMT: Date!
     @NSManaged public var modifiedGMT: Date!
     @NSManaged public var revisionCount: Int16
+    @NSManaged public var siteUUID: UUID!
     @NSManaged public var syncing: Bool
 
     @NSManaged public var post: Post!
-    @NSManaged public var site: Site!
     @NSManaged public var postQueries: Set<PostQuery>!
     @NSManaged public var stagedEdits: StagedEdits?
 

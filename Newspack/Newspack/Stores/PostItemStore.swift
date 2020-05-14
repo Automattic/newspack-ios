@@ -310,7 +310,7 @@ extension PostItemStore {
 
                 let item: PostItem
                 let fetchRequest = PostItem.defaultFetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "%@ IN postQueries AND postID = %ld",query, remotePostID.postID)
+                fetchRequest.predicate = NSPredicate(format: "%@ IN postQueries AND postID = %ld", query, remotePostID.postID)
 
                 do {
                     item = try context.fetch(fetchRequest).first ?? PostItem(context: context)
@@ -321,7 +321,7 @@ extension PostItemStore {
                 }
 
                 self.updatePostItem(item, with: remotePostID)
-                item.site = query.site
+                item.siteUUID = siteID
                 query.addToItems(item)
             }
             CoreDataManager.shared.saveContext(context: context)
