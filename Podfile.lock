@@ -1,6 +1,6 @@
 PODS:
-  - 1PasswordExtension (1.8.5)
-  - Alamofire (4.7.3)
+  - 1PasswordExtension (1.8.6)
+  - Alamofire (4.8.0)
   - AlamofireImage (3.4.1):
     - Alamofire (~> 4.7)
   - boost-for-react-native (1.63.0)
@@ -35,17 +35,17 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.2.2)
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.2)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.2.2)"
-  - Gridicons (0.19)
-  - GTMSessionFetcher/Core (1.3.0)
+  - Gridicons (1.0.1)
+  - GTMSessionFetcher/Core (1.4.0)
   - Gutenberg (1.18.0):
     - React (= 0.60.0-patched)
     - React-RCTImage (= 0.60.0-patched)
     - RNTAztecView
     - WordPress-Aztec-iOS
   - KeychainAccess (3.2.0)
-  - lottie-ios (2.5.2)
-  - NSObject-SafeExpectations (0.0.3)
-  - "NSURL+IDN (0.3)"
+  - lottie-ios (3.1.6)
+  - NSObject-SafeExpectations (0.0.4)
+  - "NSURL+IDN (0.4)"
   - OHHTTPStubs/Core (8.0.0)
   - OHHTTPStubs/Default (8.0.0):
     - OHHTTPStubs/Core
@@ -161,36 +161,36 @@ PODS:
   - WordPress-Aztec-iOS (1.13.0)
   - WordPress-Editor-iOS (1.13.0):
     - WordPress-Aztec-iOS (= 1.13.0)
-  - WordPressAuthenticator (1.10.4):
-    - 1PasswordExtension (= 1.8.5)
-    - Alamofire (= 4.7.3)
+  - WordPressAuthenticator (1.16.0):
+    - 1PasswordExtension (= 1.8.6)
+    - Alamofire (= 4.8)
     - CocoaLumberjack (~> 3.5)
     - GoogleSignIn (~> 4.4)
-    - Gridicons (~> 0.15)
-    - lottie-ios (= 2.5.2)
-    - "NSURL+IDN (= 0.3)"
+    - Gridicons (~> 1.0)
+    - lottie-ios (= 3.1.6)
+    - "NSURL+IDN (= 0.4)"
     - SVProgressHUD (= 2.2.5)
-    - WordPressKit (~> 4.5.4)
-    - WordPressShared (~> 1.8)
-    - WordPressUI (~> 1.4-beta.1)
+    - WordPressKit (~> 4.8.0)
+    - WordPressShared (~> 1.8.16)
+    - WordPressUI (~> 1.6.0)
   - WordPressFlux (1.0.0)
-  - WordPressKit (4.5.4):
-    - Alamofire (~> 4.7.3)
+  - WordPressKit (4.8.0):
+    - Alamofire (~> 4.8.0)
     - CocoaLumberjack (~> 3.4)
-    - NSObject-SafeExpectations (= 0.0.3)
+    - NSObject-SafeExpectations (= 0.0.4)
     - UIDeviceIdentifier (~> 1)
-    - WordPressShared (~> 1.8.0)
-    - wpxmlrpc (= 0.8.4)
-  - WordPressShared (1.8.9):
+    - WordPressShared (~> 1.8.16)
+    - wpxmlrpc (= 0.8.5)
+  - WordPressShared (1.8.16):
     - CocoaLumberjack (~> 3.4)
     - FormatterKit/TimeIntervalFormatter (= 1.8.2)
   - WordPressUI (1.6.0)
-  - WPMediaPicker (1.6.0)
-  - wpxmlrpc (0.8.4)
+  - WPMediaPicker (1.6.1)
+  - wpxmlrpc (0.8.5)
   - yoga (0.60.0-patched.React)
 
 DEPENDENCIES:
-  - Alamofire (= 4.7.3)
+  - Alamofire (= 4.8.0)
   - AlamofireImage (= 3.4.1)
   - CocoaLumberjack/Swift (= 3.5.3)
   - Folly (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.18.0/react-native-gutenberg-bridge/third-party-podspecs/Folly.podspec.json`)
@@ -222,9 +222,9 @@ DEPENDENCIES:
   - RNSVG (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.18.0/react-native-gutenberg-bridge/third-party-podspecs/RNSVG.podspec.json`)
   - RNTAztecView (from `http://github.com/wordpress-mobile/gutenberg-mobile/`, tag `v1.18.0`)
   - WordPress-Editor-iOS (~> 1.13.0)
-  - WordPressAuthenticator (~> 1.10.4)
+  - WordPressAuthenticator (~> 1.16.beta-5)
   - WordPressFlux (= 1.0.0)
-  - WordPressKit (~> 4.5.4)
+  - WordPressKit (~> 4.8.0)
   - WordPressUI (~> 1.6.0)
   - WPMediaPicker (~> 1.6.0)
   - yoga (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.18.0/react-native-gutenberg-bridge/third-party-podspecs/yoga.podspec.json`)
@@ -326,8 +326,8 @@ CHECKOUT OPTIONS:
     :tag: v1.18.0
 
 SPEC CHECKSUMS:
-  1PasswordExtension: 0e95bdea64ec8ff2f4f693be5467a09fac42a83d
-  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  1PasswordExtension: f97cc80ae58053c331b2b6dc8843ba7103b33794
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
   AlamofireImage: 78d67ccbb763d87ba44b21583d2153500a195630
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
@@ -337,13 +337,13 @@ SPEC CHECKSUMS:
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
   GoogleToolboxForMac: 800648f8b3127618c1b59c7f97684427630c5ea3
-  Gridicons: dc92efbe5fd60111d2e8ea051d84a60cca552abc
-  GTMSessionFetcher: 43b8b64263023d4f32caa0b40f4c8bfa3c5f36d8
+  Gridicons: 8e19276b20bb15d1fda1d4d0db96d066d170135b
+  GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
   Gutenberg: c74aabb7d599b5782b3366f30563a204d5b14c45
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
-  lottie-ios: 3fef45d3fabe63e3c7c2eb603dd64ddfffc73062
-  NSObject-SafeExpectations: b989b68a8a9b7b9f2b264a8b52ba9d7aab8f3129
-  "NSURL+IDN": 82355a0afd532fe1de08f6417c134b49b1a1c4b3
+  lottie-ios: 85ce835dd8c53e02509f20729fc7d6a4e6645a0a
+  NSObject-SafeExpectations: ab8fe623d36b25aa1f150affa324e40a2f3c0374
+  "NSURL+IDN": afc873e639c18138a1589697c3add197fe8679ca
   OHHTTPStubs: 9cbce6364bec557cc3439aa6bb7514670d780881
   React: f208cb37831d73d3feafe90ff5c353ef67516cfb
   React-Core: c84e22ad089efdf344669e09c0036a8e68c87c54
@@ -372,15 +372,15 @@ SPEC CHECKSUMS:
   UIDeviceIdentifier: 44f805037d21b94394821828f4fcaba34b38c2d0
   WordPress-Aztec-iOS: 450cb7095c6852c9c933d2062c318c4d7fa4d9a6
   WordPress-Editor-iOS: c3373b246efe59adf7b6ac476c8e562964724bf9
-  WordPressAuthenticator: 0ecb8262ffb6507df3c77459d97d729fcdcbab4f
+  WordPressAuthenticator: 39eac4d224927f8feb73a5f2e9baac0907b62417
   WordPressFlux: a381542b0a0414ef85fb0b2a0f9dbde78ffe0637
-  WordPressKit: 1d365775fac17903a76ad5723bc146ab1739ec82
-  WordPressShared: 914ec1f855d74755e42d76e83c98b2d2d0e66218
+  WordPressKit: 84045e236949248632a2c644149e5657733011bb
+  WordPressShared: 1bc316ed162f42af4e0fa2869437e9e28b532b01
   WordPressUI: cbe8cce4bd529caf5969750c34ba2d2026a342a9
-  WPMediaPicker: e5d28197da6b467d4e5975d64a49255977e39455
-  wpxmlrpc: 6ba55c773cfa27083ae4a2173e69b19f46da98e2
+  WPMediaPicker: 59559813ec8a7929a91aa5a1db74998d8485fb9f
+  wpxmlrpc: 6a9bdd6ab9d1b159b384b0df0f3f39de9af4fecf
   yoga: 4e71c9a33abf45ba55af55ae9cbc86f4234bb2a9
 
-PODFILE CHECKSUM: 02532c747f0254eb55496f87d844752d4bd6dd33
+PODFILE CHECKSUM: 310645dd3c460babf9249bc680681319a10c0635
 
 COCOAPODS: 1.8.4
