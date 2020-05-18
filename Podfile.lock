@@ -1,8 +1,8 @@
 PODS:
   - 1PasswordExtension (1.8.6)
   - Alamofire (4.8.0)
-  - AlamofireImage (3.4.1):
-    - Alamofire (~> 4.7)
+  - AlamofireImage (3.5.2):
+    - Alamofire (~> 4.8)
   - boost-for-react-native (1.63.0)
   - CocoaLumberjack (3.5.3):
     - CocoaLumberjack/Core (= 3.5.3)
@@ -191,7 +191,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (= 4.8.0)
-  - AlamofireImage (= 3.4.1)
+  - AlamofireImage (= 3.5.2)
   - CocoaLumberjack/Swift (= 3.5.3)
   - Folly (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.18.0/react-native-gutenberg-bridge/third-party-podspecs/Folly.podspec.json`)
   - glog (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.18.0/react-native-gutenberg-bridge/third-party-podspecs/glog.podspec.json`)
@@ -328,7 +328,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   1PasswordExtension: f97cc80ae58053c331b2b6dc8843ba7103b33794
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
-  AlamofireImage: 78d67ccbb763d87ba44b21583d2153500a195630
+  AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
   DoubleConversion: e22e0762848812a87afd67ffda3998d9ef29170c
@@ -381,6 +381,6 @@ SPEC CHECKSUMS:
   wpxmlrpc: 6a9bdd6ab9d1b159b384b0df0f3f39de9af4fecf
   yoga: 4e71c9a33abf45ba55af55ae9cbc86f4234bb2a9
 
-PODFILE CHECKSUM: 310645dd3c460babf9249bc680681319a10c0635
+PODFILE CHECKSUM: ef2877bcb26b355a00297b670d369e779edd0c52
 
 COCOAPODS: 1.8.4
