@@ -137,6 +137,8 @@ class PostListDataSource: UITableViewDiffableDataSource<PostListDataSource.Secti
         case main
     }
 
+    var updating = false
+    var needsUpdate = false
     var updatedItems = [PostItem]()
 
     // A results controller instance used to fetch StoryFolders.
@@ -177,6 +179,10 @@ class PostListDataSource: UITableViewDiffableDataSource<PostListDataSource.Secti
     /// the tableView has a window (and is presumed visible).
     ///
     func update() {
+        if updating {
+            needsUpdate = true
+            return
+        }
         guard let items = resultsController.fetchedObjects else {
             return
         }
@@ -189,8 +195,17 @@ class PostListDataSource: UITableViewDiffableDataSource<PostListDataSource.Secti
         }
         updatedItems.removeAll()
 
+        updating = true
+        needsUpdate = false
         let shouldAnimate = tableView?.window != nil
-        apply(snapshot, animatingDifferences: shouldAnimate, completion: nil)
+        apply(snapshot, animatingDifferences: shouldAnimate, completion: {
+            self.updating = false
+            if self.needsUpdate {
+                DispatchQueue.main.async {
+                    self.update()
+                }
+            }
+        })
     }
 
     func count() -> Int {
@@ -215,7 +230,9 @@ extension PostListDataSource: NSFetchedResultsControllerDelegate {
     }
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        update()
+        DispatchQueue.main.async {
+            self.update()
+        }
    }
 
 }
