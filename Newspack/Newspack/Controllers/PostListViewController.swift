@@ -223,7 +223,7 @@ extension PostListDataSource: NSFetchedResultsControllerDelegate {
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
 
         if type == .update {
-            if let item = anObject as? PostItem {
+            if let item = anObject as? PostItem, !updatedItems.contains(item) {
                 updatedItems.append(item)
             }
         }
