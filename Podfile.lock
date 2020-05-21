@@ -222,7 +222,7 @@ DEPENDENCIES:
   - RNSVG (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.18.0/react-native-gutenberg-bridge/third-party-podspecs/RNSVG.podspec.json`)
   - RNTAztecView (from `http://github.com/wordpress-mobile/gutenberg-mobile/`, tag `v1.18.0`)
   - WordPress-Editor-iOS (~> 1.13.0)
-  - WordPressAuthenticator (~> 1.16.beta-5)
+  - WordPressAuthenticator (~> 1.16.0-beta.5)
   - WordPressFlux (= 1.0.0)
   - WordPressKit (~> 4.8.0)
   - WordPressUI (~> 1.6.0)
@@ -381,6 +381,6 @@ SPEC CHECKSUMS:
   wpxmlrpc: 6a9bdd6ab9d1b159b384b0df0f3f39de9af4fecf
   yoga: 4e71c9a33abf45ba55af55ae9cbc86f4234bb2a9
 
-PODFILE CHECKSUM: ef2877bcb26b355a00297b670d369e779edd0c52
+PODFILE CHECKSUM: ef91936704a69ccf451e3ec24371abe16507efdb
 
 COCOAPODS: 1.8.4

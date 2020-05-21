@@ -75,7 +75,7 @@ target 'Newspack' do
     pod 'KeychainAccess', '3.2.0'
     pod 'AlamofireImage', '3.5.2'
 
-    pod 'WordPressAuthenticator', '~> 1.16.beta-5'
+    pod 'WordPressAuthenticator', '~> 1.16.0-beta.5'
     pod 'WordPressKit', '~> 4.8.0'
     pod 'WPMediaPicker', '~> 1.6.0'
     pod 'WordPressFlux', '1.0.0'
