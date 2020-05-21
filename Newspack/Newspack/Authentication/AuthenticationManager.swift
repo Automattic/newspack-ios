@@ -48,7 +48,7 @@ class AuthenticationManager {
                                                 placeholderColor: WPStyleGuide.greyDarken20(),
                                                 viewControllerBackgroundColor: WPStyleGuide.lightGrey(),
                                                 textFieldBackgroundColor: UIColor.white,
-                                                navBarImage: Gridicon.iconOfType(.mySites),
+                                                navBarImage: UIImage.gridicon(.mySites),
                                                 navBarBadgeColor: UIColor.gray)
 
         WordPressAuthenticator.initialize(configuration: configuration, style: style)

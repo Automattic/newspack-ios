@@ -75,7 +75,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Folders" id="uV3-oP-jOr">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="H42-WT-r23">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="H42-WT-r23">
                             <connections>
                                 <action selector="handleAddTappedWithSender:" destination="o5i-8K-DIP" id="SsC-s9-7NN"/>
                             </connections>
