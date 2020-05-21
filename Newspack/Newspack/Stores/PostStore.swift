@@ -98,7 +98,7 @@ extension PostStore {
     ///
     func syncPostIfNecessary(postID: Int64) {
         guard let postItem = getPostItemWithID(postID: postID) else {
-            LogWarn(message: "syncPostIfNecessary: Unable to find post list by ID.")
+            LogWarn(message: "syncPostIfNecessary: Unable to find post item by ID.")
             return
         }
 
@@ -132,8 +132,17 @@ extension PostStore {
 
         let siteStore = StoreContainer.shared.siteStore
 
+        guard let remotePost = action.payload else {
+            LogError(message: "handlePostFetchedAction: The action payload was unexpectedly nil.")
+            return
+        }
+
+        // Remove item from queue.
+        // This should update the active queue and start the next sync
+        // Do this separate from other guarded nil checks so the queue never halts.
+        requestQueue.remove(item: remotePost.postID)
+
         guard
-            let remotePost = action.payload,
             let siteID = currentSiteID,
             let siteObjID = siteStore.getSiteByUUID(siteID)?.objectID,
             let listItemObjID = getPostItemWithID(postID: remotePost.postID)?.objectID
@@ -141,10 +150,6 @@ extension PostStore {
             LogError(message: "handlePostFetchedAction: A value was unexpectedly nil.")
             return
         }
-
-        // remove item from queue.
-        // This should update the active queue and start the next sync
-        requestQueue.remove(item: remotePost.postID)
 
         CoreDataManager.shared.performOnWriteContext { (context) in
             let site = context.object(with: siteObjID) as! Site
