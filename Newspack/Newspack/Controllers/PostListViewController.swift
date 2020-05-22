@@ -88,7 +88,7 @@ extension PostListViewController {
         dispatcher.dispatch(PostAction.syncPost(postID: listItem.postID))
 
         let count = dataSource.count()
-        if count > 0 && indexPath.row > (count - syncNextThreshold)  {
+        if count > 0 && indexPath.row > (count - syncNextThreshold) {
             dispatcher.dispatch(PostAction.syncNextPage)
         }
     }
