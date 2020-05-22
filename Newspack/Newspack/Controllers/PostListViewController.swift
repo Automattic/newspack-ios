@@ -11,6 +11,7 @@ import WordPressUI
 ///
 class PostListViewController: UITableViewController {
 
+    let syncNextThreshold = 5
     let cellIdentifier = "PostCellIdentifier"
     var dataSource: PostListDataSource!
 
@@ -87,7 +88,7 @@ extension PostListViewController {
         dispatcher.dispatch(PostAction.syncPost(postID: listItem.postID))
 
         let count = dataSource.count()
-        if count > 0 && indexPath.row > (count - 5)  {
+        if count > 0 && indexPath.row > (count - syncNextThreshold)  {
             dispatcher.dispatch(PostAction.syncNextPage)
         }
     }
