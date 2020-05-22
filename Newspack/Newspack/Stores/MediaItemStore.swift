@@ -278,12 +278,12 @@ extension MediaItemStore {
 
         let objID = query.objectID
         CoreDataManager.shared.performOnWriteContext { (context) in
-            let query = context.object(with: objID) as! MediaQuery
             defer {
                 DispatchQueue.main.async {
                     self.state = .ready
 
                     if let page = self.queue.popLast() {
+                        let query = context.object(with: objID) as! MediaQuery
                         self.syncItemsForQuery(query: query, page: page)
                     } else {
                         self.cleanupAfterSync()
@@ -291,11 +291,11 @@ extension MediaItemStore {
                 }
             }
 
+            let query = context.object(with: objID) as! MediaQuery
             guard !action.isError() else {
                 // TODO: Inspect and handle error.
                 // For now assume we're out of pages.
 
-                let query = context.object(with: objID) as! MediaQuery
                 query.hasMore = action.hasMore
                 CoreDataManager.shared.saveContext(context: context)
 

@@ -30,6 +30,7 @@ extension Post {
     @NSManaged public var pingStatus: String!
     @NSManaged public var postID: Int64
     @NSManaged public var revisionCount: Int16
+    @NSManaged public var siteUUID: UUID!
     @NSManaged public var slug: String!
     @NSManaged public var status: String!
     @NSManaged public var sticky: Bool
@@ -40,7 +41,6 @@ extension Post {
     @NSManaged public var type: String!
 
     @NSManaged public var revisions: Set<Revision>?
-    @NSManaged public var site: Site!
     @NSManaged public var item: PostItem!
 
 }

@@ -109,23 +109,6 @@ extension Site {
 
 }
 
-// MARK: Generated accessors for postItems
-extension Site {
-
-    @objc(addPostItemsObject:)
-    @NSManaged public func addToPostItems(_ value: PostItem)
-
-    @objc(removePostItemsObject:)
-    @NSManaged public func removeFromPostItems(_ value: PostItem)
-
-    @objc(addPostItems:)
-    @NSManaged public func addToPostItems(_ values: Set<PostItem>)
-
-    @objc(removePostItems:)
-    @NSManaged public func removeFromPostItems(_ values: Set<PostItem>)
-
-}
-
 // MARK: Generated accessors for postQueries
 extension Site {
 
@@ -140,23 +123,6 @@ extension Site {
 
     @objc(removePostQueries:)
     @NSManaged public func removeFromPostQueries(_ values: Set<PostQuery>)
-
-}
-
-// MARK: Generated accessors for posts
-extension Site {
-
-    @objc(addPostsObject:)
-    @NSManaged public func addToPosts(_ value: Post)
-
-    @objc(removePostsObject:)
-    @NSManaged public func removeFromPosts(_ value: Post)
-
-    @objc(addPosts:)
-    @NSManaged public func addToPosts(_ values: Set<Post>)
-
-    @objc(removePosts:)
-    @NSManaged public func removeFromPosts(_ values: Set<Post>)
 
 }
 

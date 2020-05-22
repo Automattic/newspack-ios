@@ -31,18 +31,6 @@ class CoreDataManager {
         return container.viewContext
     }
 
-    /// A convenience method for performing work in the supplied block on a
-    /// background thread.
-    ///
-    /// Parameters:
-    /// - block: An anonymous block executed on a background thread.
-    ///
-    public func performBackgroundTask(_ block: @escaping (NSManagedObjectContext) -> Void) {
-        container.performBackgroundTask { context in
-            block(context)
-        }
-    }
-
     /// A convenience method for performing work on a persistent write context.  Useful when multiple
     /// units of work need to happen in order on a single background queue.
     ///
@@ -66,13 +54,6 @@ class CoreDataManager {
         writeContext.performAndWait { [unowned writeContext] in
             block(writeContext)
         }
-    }
-
-    /// Returns an NSManagedObjectContext that is a child of the NSPersistentContainer's
-    /// private context--a sibling of the public mainContext.
-    ///
-    public func newPrivateContext() -> NSManagedObjectContext {
-        return container.newBackgroundContext()
     }
 
     /// Saves the passed NSManagedObjectContext if it has changes.

@@ -79,7 +79,7 @@ extension PostStore {
 
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = PostItem.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "postID = %ld AND site.uuid = %@", postID, siteID as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "postID = %ld AND siteUUID = %@", postID, siteID as CVarArg)
         do {
             return try context.fetch(fetchRequest).first
         } catch {
@@ -98,7 +98,7 @@ extension PostStore {
     ///
     func syncPostIfNecessary(postID: Int64) {
         guard let postItem = getPostItemWithID(postID: postID) else {
-            LogWarn(message: "syncPostIfNecessary: Unable to find post list by ID.")
+            LogWarn(message: "syncPostIfNecessary: Unable to find post item by ID.")
             return
         }
 
@@ -132,8 +132,17 @@ extension PostStore {
 
         let siteStore = StoreContainer.shared.siteStore
 
+        guard let remotePost = action.payload else {
+            LogError(message: "handlePostFetchedAction: The action payload was unexpectedly nil.")
+            return
+        }
+
+        // Remove item from queue.
+        // This should update the active queue and start the next sync
+        // Do this separate from other guarded nil checks so the queue never halts.
+        requestQueue.remove(item: remotePost.postID)
+
         guard
-            let remotePost = action.payload,
             let siteID = currentSiteID,
             let siteObjID = siteStore.getSiteByUUID(siteID)?.objectID,
             let listItemObjID = getPostItemWithID(postID: remotePost.postID)?.objectID
@@ -142,16 +151,12 @@ extension PostStore {
             return
         }
 
-        // remove item from queue.
-        // This should update the active queue and start the next sync
-        requestQueue.remove(item: remotePost.postID)
-
         CoreDataManager.shared.performOnWriteContext { (context) in
             let site = context.object(with: siteObjID) as! Site
             let listItem = context.object(with: listItemObjID) as! PostItem
 
             let fetchRequest = Post.defaultFetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "site = %@ AND postID = %ld", site, remotePost.postID)
+            fetchRequest.predicate = NSPredicate(format: "siteUUID = %@ AND postID = %ld", site.uuid as CVarArg, remotePost.postID)
 
             let post: Post
             do {
@@ -163,7 +168,7 @@ extension PostStore {
             }
 
             self.updatePost(post, with: remotePost)
-            post.site = site
+            post.siteUUID = site.uuid
             post.item = listItem
 
             CoreDataManager.shared.saveContext(context: context)

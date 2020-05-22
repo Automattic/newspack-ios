@@ -259,19 +259,22 @@ extension PostItemStore {
         guard
             let siteID = currentSiteID,
             let query = postQueryByFilter(filter: action.filter, siteUUID: siteID)
-            else {
-                // TODO: Handle error.
-                LogError(message: "handlePostIDsFetched: A value was unexpectedly nil.")
-                return
+        else {
+            // TODO: Handle error.
+            LogError(message: "handlePostIDsFetched: A value was unexpectedly nil.")
+            return
         }
 
-        defer {
-            state = .ready
+        // Call this as the last thing before returning, or as the last step after
+        // saving changes. Use this instead of a defer statement since the save
+        // will happen async.
+        let completionBlock = {
+            self.state = .ready
 
-            if let page = queue.popLast() {
-                syncItemsForQuery(query: query, page: page)
+            if let page = self.queue.popLast() {
+                self.syncItemsForQuery(query: query, page: page)
             } else {
-                cleanupAfterSync()
+                self.cleanupAfterSync()
             }
         }
 
@@ -285,17 +288,29 @@ extension PostItemStore {
                 CoreDataManager.shared.saveContext(context: context)
             }
             queue.removeAll()
+
+            completionBlock()
             return
         }
 
         guard let remotePostIDs = action.payload else {
             queue.removeAll()
             LogWarn(message: "handlePostIDsFetched: A value was unexpectedly nil.")
+
+            completionBlock()
             return
         }
 
+        // Get a copy so we're not reading or mutating across threads.
+        let itemsForCleanup = itemsToRemoveAfterSync
+
         let queryObjID = query.objectID
         CoreDataManager.shared.performOnWriteContext { (context) in
+            // Use this array to store postIDs that are returned by the endpoint.
+            // When we're done, we'll remove these IDs from itemsToRemoveAfterSync
+            // leaving only the IDs of posts that need cleaning up.
+            var returnedItems = [Int64]()
+
             let query = context.object(with: queryObjID) as! PostQuery
             query.hasMore = remotePostIDs.count == self.pageSize
 
@@ -304,13 +319,16 @@ extension PostItemStore {
             }
 
             for remotePostID in remotePostIDs {
-                if let idx = self.itemsToRemoveAfterSync.firstIndex(of: remotePostID.postID) {
-                    self.itemsToRemoveAfterSync.remove(at: idx)
+                // See if we have a match, if add it to our list of returned items
+                // that need to be removed from the list of items that need to be
+                // cleaned up.
+                if itemsForCleanup.contains(remotePostID.postID) {
+                    returnedItems.append(remotePostID.postID)
                 }
 
                 let item: PostItem
                 let fetchRequest = PostItem.defaultFetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "%@ IN postQueries AND postID = %ld",query, remotePostID.postID)
+                fetchRequest.predicate = NSPredicate(format: "%@ IN postQueries AND postID = %ld", query, remotePostID.postID)
 
                 do {
                     item = try context.fetch(fetchRequest).first ?? PostItem(context: context)
@@ -321,10 +339,16 @@ extension PostItemStore {
                 }
 
                 self.updatePostItem(item, with: remotePostID)
-                item.site = query.site
+                item.siteUUID = siteID
                 query.addToItems(item)
             }
             CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                // Update the itemsToRemoveAfterSync. This should be thrad safe now.
+                self.itemsToRemoveAfterSync = Array(Set(self.itemsToRemoveAfterSync).subtracting(returnedItems))
+                completionBlock()
+            }
         }
 
     }

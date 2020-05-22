@@ -319,7 +319,7 @@ extension EditCoordinator {
             let postStore = StoreContainer.shared.postStore
             let post = Post(context: context)
             postStore.updatePost(post, with: remotePost)
-            post.site = query.site
+            post.siteUUID = self.currentSiteID
 
             let postItem = PostItem(context: context)
             postItem.postID = post.postID
@@ -329,7 +329,7 @@ extension EditCoordinator {
 
             postItem.stagedEdits = stagedEdits
             postItem.post = post
-            postItem.site = query.site
+            postItem.siteUUID = self.currentSiteID
             postItem.addToPostQueries(query)
 
             CoreDataManager.shared.saveContext(context: context)
