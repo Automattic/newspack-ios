@@ -95,7 +95,7 @@ extension PostListViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let listItem = dataSource.object(at: indexPath)
-        let coordinator = EditCoordinator.init(postItem: listItem, dispatcher: SessionManager.shared.sessionDispatcher, siteID: listItem.siteUUID)
+        let coordinator = EditCoordinator(postItem: listItem, dispatcher: SessionManager.shared.sessionDispatcher, siteID: listItem.siteUUID)
         let controller = MainStoryboard.instantiateViewController(withIdentifier: .editor) as! EditorViewController
         controller.coordinator = coordinator
         navigationController?.pushViewController(controller, animated: true)
@@ -138,9 +138,9 @@ class PostListDataSource: UITableViewDiffableDataSource<PostListDataSource.Secti
         case main
     }
 
-    var updating = false
-    var needsUpdate = false
-    var updatedItems = [PostItem]()
+    private var updating = false
+    private var needsUpdate = false
+    private var updatedItems = [PostItem]()
 
     // A results controller instance used to fetch StoryFolders.
     // The StoryFolderDataSource is its delegate so it can call update whenever
