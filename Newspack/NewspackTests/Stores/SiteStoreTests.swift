@@ -236,4 +236,50 @@ class SiteStoreTests: BaseTest {
         XCTAssertTrue(name == site.uuid.uuidString)
     }
 
+    func testCurrentSiteFolderURL() {
+        let account = self.account!
+        let remoteSettings = self.remoteSettings!
+
+        let expect = expectation(description: "expect")
+        siteStore.createSites(sites: [remoteSettings], accountID: account.uuid, onComplete: {
+            guard let site = account.sites.first else {
+                XCTFail("The site can not be nil.")
+                return
+            }
+            XCTAssertEqual(site.url, self.siteURL) // NOTE: The url is defined in the mock data. The actual endpoint does not currently return this value.
+            XCTAssertEqual(site.title, remoteSettings.title)
+
+            expect.fulfill()
+        })
+
+        wait(for: [expect], timeout: 1)
+
+        let site = account.sites.first!
+        let store = SiteStore(dispatcher: .global, siteID: site.uuid)
+        XCTAssertNotNil(store.currentSiteFolderURL())
+    }
+
+    func testCurrentSiteFolderExists() {
+        let account = self.account!
+        let remoteSettings = self.remoteSettings!
+
+        let expect = expectation(description: "expect")
+        siteStore.createSites(sites: [remoteSettings], accountID: account.uuid, onComplete: {
+            guard let site = account.sites.first else {
+                XCTFail("The site can not be nil.")
+                return
+            }
+            XCTAssertEqual(site.url, self.siteURL) // NOTE: The url is defined in the mock data. The actual endpoint does not currently return this value.
+            XCTAssertEqual(site.title, remoteSettings.title)
+
+            expect.fulfill()
+        })
+
+        wait(for: [expect], timeout: 1)
+
+        let site = account.sites.first!
+        let store = SiteStore(dispatcher: .global, siteID: site.uuid)
+        XCTAssertTrue(store.currentSiteFolderExists())
+    }
+
 }
