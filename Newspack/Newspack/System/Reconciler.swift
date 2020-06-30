@@ -13,6 +13,9 @@ class Reconciler {
     }
 
     init() {
+        if Environment.isTesting() {
+            return
+        }
         listenForSessionChanges()
         listenForNotifications()
     }
@@ -25,7 +28,7 @@ class Reconciler {
             return
         }
 
-        guard detect() else {
+        guard hasInconsistencies() else {
             return
         }
 
@@ -37,15 +40,19 @@ class Reconciler {
     ///
     /// - Returns: Returns true if any inconsistencies are found. False otherwise.
     ///
-    func detect() -> Bool {
+    func hasInconsistencies() -> Bool {
         // Check site
-
+        let siteStore = StoreContainer.shared.siteStore
+        if !siteStore.currentSiteFolderExists() {
+            return true
+        }
 
         // Check story folders
-
+        if hasInconsistentStoryFolders() {
+            return true
+        }
 
         // TODO: check story folder contents
-
 
         return false
     }
@@ -56,13 +63,79 @@ class Reconciler {
     func reconcile() {
         // reconcile site
         // if recreated we can bail
+        let siteStore = StoreContainer.shared.siteStore
+        if !siteStore.currentSiteFolderExists() {
+            siteStore.createSiteFolderIfNeeded()
+            return
+        }
 
+        // Get story folder inconsistencies
+        let (rawFolders, removedStories) = getInconsistentStoryFolders()
+        let folderStore = StoreContainer.shared.folderStore
 
-        // Check story folders
-        // if any are recreated we can bail on their contents.
-
+        folderStore.createStoryFoldersForURLs(urls: rawFolders)
+        folderStore.deleteStoryFolders(folders: removedStories)
 
         // TODO: check folder contents
+    }
+
+    /// Check if there are any inconsistencies between the file system and
+    /// story folders in core data.
+    /// - Returns: true if there are inconsistencies, otherwise false.
+    ///
+    func hasInconsistentStoryFolders() -> Bool {
+        let (rawFolders, removedStories) = getInconsistentStoryFolders()
+
+        if rawFolders.count > 0 || removedStories.count > 0 {
+            return true
+        }
+
+        return false
+    }
+
+    /// Get any inconsistencies between the file system and story folders.
+    /// - Returns: A tuple containing an array of file URLs that have no
+    /// associated story, and an array of StoryFolders without a directory.
+    ///
+    func getInconsistentStoryFolders() -> ([URL], [StoryFolder]) {
+        let store = StoreContainer.shared.folderStore
+        let storyFolders = store.getStoryFolders()
+
+        let siteStore = StoreContainer.shared.siteStore
+        let siteFolderURL = siteStore.currentSiteFolderURL()!
+
+        let folderManager = SessionManager.shared.folderManager
+        var rawFolders = folderManager.enumerateFolders(url: siteFolderURL)
+
+        var removedStories = [StoryFolder]()
+        for story in storyFolders {
+            var isStale = true
+            guard let storyFolderURL = folderManager.urlFromBookmark(bookmark: story.bookmark, bookmarkIsStale: &isStale) else {
+                removedStories.append(story)
+                continue
+            }
+            if isStale || !folderManager.folder(siteFolderURL, isParentOf: storyFolderURL) {
+                removedStories.append(story)
+            }
+
+            // Remove a good story folder's URL from the array of raw folders.
+            // Whatever is left in raw folders will be URLs that need a story
+            // folder created.
+            rawFolders = rawFolders.filter { (url) -> Bool in
+                guard
+                    let urlRef = url.getFileReferenceURL(),
+                    let storyRef = storyFolderURL.getFileReferenceURL()
+                else {
+                    // This probably shouldn't happen but keep the rawFolder URL
+                    // if it does.
+                    return true
+                }
+                // If the folders are equal we can filter out the raw folder.
+                return !urlRef.isEqual(storyRef)
+            }
+        }
+
+        return (rawFolders, removedStories)
     }
 
 }
