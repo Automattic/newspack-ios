@@ -113,8 +113,8 @@ extension FolderStore {
     ///   - addSuffix: Whether to add a numeric suffix to the folder name if there
     /// is already a folder with that name.
     ///
-    func createStoryFolder(path: String = Constants.defaultStoryFolderName, addSuffix: Bool = false) {
-        createStoryFoldersForPaths(paths: [path], addSuffix: addSuffix)
+    func createStoryFolder(path: String = Constants.defaultStoryFolderName, addSuffix: Bool = false, onComplete:(()-> Void)? = nil) {
+        createStoryFoldersForPaths(paths: [path], addSuffix: addSuffix, onComplete: onComplete)
     }
 
     /// Create new StoryFolders for each of the specified folder names.
@@ -125,7 +125,7 @@ extension FolderStore {
     ///   - addSuffix: Whether to add a numeric suffix to the folder name if there
     /// is already a folder with that name.
     ///
-    func createStoryFoldersForPaths(paths: [String], addSuffix: Bool = false) {
+    func createStoryFoldersForPaths(paths: [String], addSuffix: Bool = false, onComplete:(()-> Void)? = nil) {
         var urls = [URL]()
         for path in paths {
             guard let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) else {
@@ -136,13 +136,13 @@ extension FolderStore {
             urls.append(url)
         }
 
-        createStoryFoldersForURLs(urls: urls)
+        createStoryFoldersForURLs(urls: urls, onComplete: onComplete)
     }
 
     /// Create new story folders for each of the specified URLs.
     /// - Parameter urls: An array of file URLs
     ///
-    func createStoryFoldersForURLs(urls: [URL]) {
+    func createStoryFoldersForURLs(urls: [URL], onComplete:(()-> Void)? = nil) {
         guard
             let siteID = currentSiteID,
             let siteObjID = StoreContainer.shared.siteStore.getSiteByUUID(siteID)?.objectID
@@ -169,6 +169,7 @@ extension FolderStore {
 
             DispatchQueue.main.async {
                 self?.selectDefaultStoryFolderIfNeeded()
+                onComplete?()
             }
         }
     }
@@ -276,7 +277,7 @@ extension FolderStore {
     ///
     /// - Parameter folders: An array of StoryFolders
     ///
-    func deleteStoryFolders(folders: [StoryFolder]) {
+    func deleteStoryFolders(folders: [StoryFolder], onComplete:(()->Void)? = nil) {
         // For each story folder, remove its bookmarked content and then delete.
 
         let uuids: [UUID] = folders.map { (folder) -> UUID in
@@ -311,6 +312,7 @@ extension FolderStore {
 
             DispatchQueue.main.async {
                 self?.createDefaultStoryFolderIfNeeded()
+                onComplete?()
             }
         }
     }
@@ -359,10 +361,6 @@ extension FolderStore {
         }
 
         return 0
-    }
-
-    func listStoryFolders() -> [URL] {
-        return folderManager.enumerateFolders(url: folderManager.currentFolder)
     }
 
     func getStoryFolderByID(uuid: UUID) -> StoryFolder? {

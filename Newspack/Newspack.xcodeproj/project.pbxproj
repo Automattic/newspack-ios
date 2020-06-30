@@ -178,6 +178,7 @@
 		E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */; };
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
 		E6B8CFDB24AB91430068C6BE /* URLFileReferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDA24AB91430068C6BE /* URLFileReferenceTests.swift */; };
+		E6B8CFDD24ABC48C0068C6BE /* FolderStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDC24ABC48C0068C6BE /* FolderStoreTests.swift */; };
 		E6BA1322243F9D1E00635A8A /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */; };
 		E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE56AE22B19001004895E5 /* ModelFactory.swift */; };
 		E6D44DEC234BC56C00B51438 /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEB234BC56C00B51438 /* MediaViewController.swift */; };
@@ -410,6 +411,7 @@
 		E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-ids-edit.json"; sourceTree = "<group>"; };
 		E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-edit.json"; sourceTree = "<group>"; };
 		E6B8CFDA24AB91430068C6BE /* URLFileReferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLFileReferenceTests.swift; sourceTree = "<group>"; };
+		E6B8CFDC24ABC48C0068C6BE /* FolderStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStoreTests.swift; sourceTree = "<group>"; };
 		E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewController.swift; sourceTree = "<group>"; };
 		E6CE56AE22B19001004895E5 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
 		E6D44DEB234BC56C00B51438 /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
@@ -835,6 +837,7 @@
 				E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */,
 				E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */,
 				E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */,
+				E6B8CFDC24ABC48C0068C6BE /* FolderStoreTests.swift */,
 				E65875A523A811A400185C75 /* MediaStoreTests.swift */,
 				E65875A723A811F100185C75 /* MediaItemStoreTests.swift */,
 				E64D9FBA23D667760075A60E /* PostStoreTests.swift */,
@@ -1396,6 +1399,7 @@
 				E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */,
 				E6B8CFDB24AB91430068C6BE /* URLFileReferenceTests.swift in Sources */,
 				E6051DEF23075F8A005AAF0B /* DateTests.swift in Sources */,
+				E6B8CFDD24ABC48C0068C6BE /* FolderStoreTests.swift in Sources */,
 				E65875AC23A813EA00185C75 /* StagedMediaStoreTests.swift in Sources */,
 				E61FC605229F2F10009E1748 /* SiteServiceRemoteTests.swift in Sources */,
 				E65875A623A811A400185C75 /* MediaStoreTests.swift in Sources */,
