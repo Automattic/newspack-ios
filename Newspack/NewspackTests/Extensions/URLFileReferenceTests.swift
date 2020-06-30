@@ -20,7 +20,7 @@ class URLFileReferenceTests: XCTestCase {
         XCTAssertNotNil(url)
         XCTAssertTrue(url.lastPathComponent.hasSuffix(path))
         XCTAssertTrue(folderManager.folderExists(url: url))
-        
+
         let refURL = url.getFileReferenceURL()
         XCTAssertNotNil(refURL)
     }
