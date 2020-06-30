@@ -169,6 +169,41 @@ extension SiteStore {
 
 extension SiteStore {
 
+    /// Check if a folder exists for the current site.
+    ///
+    /// - Returns: True if a folder exists, otherwise false.
+    ///
+    func currentSiteFolderExists() -> Bool {
+        guard let _ = currentSiteFolderURL() else {
+            return false
+        }
+        return true
+    }
+
+    /// Get the file URL for the current site's folder if it exists.
+    ///
+    /// - Returns: A file URL for the current site's folder or nil if one does
+    /// not exist.
+    ///
+    func currentSiteFolderURL() -> URL? {
+        var isStale = false
+        let folderManager = SessionManager.shared.folderManager
+        guard
+            let siteID = currentSiteID,
+            let site = getSiteByUUID(siteID),
+            let bookmarkData = site.siteFolder,
+            let url = folderManager.urlFromBookmark(bookmark: bookmarkData, bookmarkIsStale: &isStale)
+        else {
+            return nil
+        }
+
+        if isStale {
+            return nil
+        }
+
+        return url
+    }
+
     /// Get a folder name for the specified site.
     ///
     /// - Parameter site: A Site instance.
