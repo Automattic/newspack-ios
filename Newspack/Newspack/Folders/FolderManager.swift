@@ -311,6 +311,24 @@ class FolderManager {
         return folder(currentFolder, contains: child)
     }
 
+    /// Check if one folder is the immediate parent of another folder.
+    ///
+    /// - Parameters:
+    ///   - parent: A file URL to the parent folder.
+    ///   - child: A file URL to the child folder.
+    /// - Returns: true if there is a parent/child relationship.
+    ///
+    func folder(_ folder: URL, isParentOf child: URL) -> Bool {
+        let parent = child.deletingLastPathComponent()
+        guard
+            let folderRef = folder.getFileReferenceURL(),
+            let parentRef = parent.getFileReferenceURL()
+        else {
+            return false
+        }
+        return folderRef.isEqual(parentRef)
+    }
+
     /// Converts a file URL to bookkmark data.
     ///
     /// - Parameter url: A file URL.
