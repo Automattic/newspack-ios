@@ -35,7 +35,7 @@ class FolderStoreTests: BaseTest {
 
     func testCreateStoryFoldersForPaths() {
         // Create 10 story folders.
-        let paths = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa"]
+        let paths = ["alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa"]
 
         let expect = expectation(description: "expect")
         folderStore.createStoryFoldersForPaths(paths: paths, onComplete: {
@@ -50,7 +50,7 @@ class FolderStoreTests: BaseTest {
 
     func testSelectStoryOtherThan() {
         // Create 10 story folders.
-        let paths = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa"]
+        let paths = ["alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa"]
 
         let expect = expectation(description: "expect")
         folderStore.createStoryFoldersForPaths(paths: paths, onComplete: {
@@ -67,7 +67,7 @@ class FolderStoreTests: BaseTest {
         folderStore.selectStoryFolder(folder: delta)
         XCTAssertTrue(folderStore.currentStoryFolderID == delta.uuid)
 
-        // UUIDs for Gamma, Delta, Epsilon
+        // UUIDs for gamma, delta, epsilon
         let otherThanFolderUUIDs = folders[3...5].map { (folder) -> UUID in
             return folder.uuid
         }
@@ -79,7 +79,7 @@ class FolderStoreTests: BaseTest {
 
     func testDeleteStoryFolders() {
         // Create 10 story folders.
-        let paths = ["Alpha", "Beta", "Gamma", "Delta", "Epsilon", "Zeta", "Eta", "Theta", "Iota", "Kappa"]
+        let paths = ["alpha", "beta", "gamma", "delta", "epsilon", "zeta", "eta", "theta", "iota", "kappa"]
 
         let expect = expectation(description: "expect")
         folderStore.createStoryFoldersForPaths(paths: paths, onComplete: {

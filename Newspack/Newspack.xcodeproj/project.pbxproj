@@ -179,6 +179,7 @@
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
 		E6B8CFDB24AB91430068C6BE /* URLFileReferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDA24AB91430068C6BE /* URLFileReferenceTests.swift */; };
 		E6B8CFDD24ABC48C0068C6BE /* FolderStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDC24ABC48C0068C6BE /* FolderStoreTests.swift */; };
+		E6B8CFE024ABD6EB0068C6BE /* ReconcilerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */; };
 		E6BA1322243F9D1E00635A8A /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */; };
 		E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE56AE22B19001004895E5 /* ModelFactory.swift */; };
 		E6D44DEC234BC56C00B51438 /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEB234BC56C00B51438 /* MediaViewController.swift */; };
@@ -412,6 +413,7 @@
 		E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-edit.json"; sourceTree = "<group>"; };
 		E6B8CFDA24AB91430068C6BE /* URLFileReferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLFileReferenceTests.swift; sourceTree = "<group>"; };
 		E6B8CFDC24ABC48C0068C6BE /* FolderStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStoreTests.swift; sourceTree = "<group>"; };
+		E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconcilerTests.swift; sourceTree = "<group>"; };
 		E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewController.swift; sourceTree = "<group>"; };
 		E6CE56AE22B19001004895E5 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
 		E6D44DEB234BC56C00B51438 /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
@@ -604,15 +606,16 @@
 		E6138FE82211FE88004E5B91 /* NewspackTests */ = {
 			isa = PBXGroup;
 			children = (
-				E6DF5576242E722B007DDC47 /* Folders */,
 				E61FC60A229F330A009E1748 /* TestData */,
 				E61FC607229F3280009E1748 /* TestTools */,
 				E66E8A122235ABB300E8DD88 /* Base */,
+				E61FC601229F2E96009E1748 /* Api */,
 				E66E8A03223596B400E8DD88 /* CoreData */,
 				E6051DED23075F60005AAF0B /* Extensions */,
-				E61FC601229F2E96009E1748 /* Api */,
-				E62C7C672235E729000FEB33 /* Stores */,
+				E6DF5576242E722B007DDC47 /* Folders */,
 				E62C7C6A2235F042000FEB33 /* Services */,
+				E62C7C672235E729000FEB33 /* Stores */,
+				E6B8CFDE24ABD6B20068C6BE /* SystemTests */,
 				E6138FEB2211FE88004E5B91 /* Info.plist */,
 			);
 			path = NewspackTests;
@@ -911,6 +914,14 @@
 				E6710A1622CE9F040036156E /* FadeTransitionController.swift */,
 			);
 			path = Transitions;
+			sourceTree = "<group>";
+		};
+		E6B8CFDE24ABD6B20068C6BE /* SystemTests */ = {
+			isa = PBXGroup;
+			children = (
+				E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */,
+			);
+			path = SystemTests;
 			sourceTree = "<group>";
 		};
 		E6DF5573242E7115007DDC47 /* Folders */ = {
@@ -1392,6 +1403,7 @@
 				E65875AA23A8139500185C75 /* StagedMediaImporterTests.swift in Sources */,
 				E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */,
 				E6DF5578242E7242007DDC47 /* FolderManagerTests.swift in Sources */,
+				E6B8CFE024ABD6EB0068C6BE /* ReconcilerTests.swift in Sources */,
 				E64D9FBD23D667D80075A60E /* PostItemStoreTests.swift in Sources */,
 				E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */,
 				E61A28CF22D53EFD003E214F /* PostServiceRemoteTests.swift in Sources */,
