@@ -34,9 +34,9 @@ extension Site {
     @NSManaged public var postItems: Set<PostItem>!
     @NSManaged public var postQueries: Set<PostQuery>!
     @NSManaged public var posts: Set<Post>!
-    @NSManaged public var stagedMedia: Set<Status>!
+    @NSManaged public var stagedMedia: Set<StagedMedia>!
     @NSManaged public var statuses: Set<Status>!
-    @NSManaged public var storyFolders: Set<Status>!
+    @NSManaged public var storyFolders: Set<StoryFolder>!
     @NSManaged public var users: Set<User>!
 
 }
