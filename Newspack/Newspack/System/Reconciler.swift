@@ -44,11 +44,13 @@ class Reconciler {
         // Check site
         let siteStore = StoreContainer.shared.siteStore
         if !siteStore.currentSiteFolderExists() {
+            LogDebug(message: "Folder for current site is missing.")
             return true
         }
 
         // Check story folders
         if hasInconsistentStoryFolders() {
+            LogDebug(message: "StoryFolders where missing, or new folders were found.")
             return true
         }
 
@@ -65,6 +67,7 @@ class Reconciler {
         // if recreated we can bail
         let siteStore = StoreContainer.shared.siteStore
         if !siteStore.currentSiteFolderExists() {
+            LogDebug(message: "Recreating folder for current site.")
             siteStore.createSiteFolderIfNeeded()
             return
         }
@@ -72,8 +75,9 @@ class Reconciler {
         // Get story folder inconsistencies
         let (rawFolders, removedStories) = getInconsistentStoryFolders()
         let folderStore = StoreContainer.shared.folderStore
-
+        LogDebug(message: "Creating StoryFolders for discovered folders.")
         folderStore.createStoryFoldersForURLs(urls: rawFolders)
+        LogDebug(message: "Deleting StoryFolders for missing folders.")
         folderStore.deleteStoryFolders(folders: removedStories)
 
         // TODO: check folder contents
