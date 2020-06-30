@@ -92,6 +92,7 @@
 		E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECDA23428A0900669FFC /* UserApiService.swift */; };
 		E63F3F3C236350BE00DB760E /* MediaTypeDiscerner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63F3F3B236350BE00DB760E /* MediaTypeDiscerner.swift */; };
 		E63FF0E824AA4ECD0002A32F /* Reconciler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63FF0E724AA4ECD0002A32F /* Reconciler.swift */; };
+		E63FF0EC24AA864C0002A32F /* URL+FileReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63FF0EB24AA864C0002A32F /* URL+FileReference.swift */; };
 		E640D27823883ED800887FD9 /* StagedMediaImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640D27723883ED800887FD9 /* StagedMediaImporter.swift */; };
 		E640D27A23883EE700887FD9 /* StagedMediaUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E640D27923883EE700887FD9 /* StagedMediaUploader.swift */; };
 		E641A66122A71A83008BBD85 /* SiteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E641A66022A71A83008BBD85 /* SiteStore.swift */; };
@@ -319,6 +320,7 @@
 		E63EECDA23428A0900669FFC /* UserApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiService.swift; sourceTree = "<group>"; };
 		E63F3F3B236350BE00DB760E /* MediaTypeDiscerner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaTypeDiscerner.swift; sourceTree = "<group>"; };
 		E63FF0E724AA4ECD0002A32F /* Reconciler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reconciler.swift; sourceTree = "<group>"; };
+		E63FF0EB24AA864C0002A32F /* URL+FileReference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+FileReference.swift"; sourceTree = "<group>"; };
 		E640D27723883ED800887FD9 /* StagedMediaImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedMediaImporter.swift; sourceTree = "<group>"; };
 		E640D27923883EE700887FD9 /* StagedMediaUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedMediaUploader.swift; sourceTree = "<group>"; };
 		E641A66022A71A83008BBD85 /* SiteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStore.swift; sourceTree = "<group>"; };
@@ -931,6 +933,7 @@
 				E68A965F2460990B00BE664B /* NSManagedObject+Helpers.swift */,
 				E68A965D246098C700BE664B /* NSObject+Helpers.swift */,
 				E696340F2440C1C400D906E0 /* UITableViewCell+Helpers.swift */,
+				E63FF0EB24AA864C0002A32F /* URL+FileReference.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1330,6 +1333,7 @@
 				E623C6F62220516600F9865C /* ApiCredentials.swift in Sources */,
 				E66CCA1A2303527D00F1CA59 /* Post+CoreDataClass.swift in Sources */,
 				E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */,
+				E63FF0EC24AA864C0002A32F /* URL+FileReference.swift in Sources */,
 				E602E68722C15ED700795CBA /* RemotePost.swift in Sources */,
 				E66CCA082303527C00F1CA59 /* PostItem+CoreDataProperties.swift in Sources */,
 				E602E68B22C1632C00795CBA /* UserApiActions.swift in Sources */,
