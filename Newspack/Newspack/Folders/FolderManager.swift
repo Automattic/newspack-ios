@@ -287,14 +287,14 @@ class FolderManager {
 
     /// Check if a folder at one url contains the item at anoter url.
     /// - Parameters:
-    ///   - parent: A file URL to the parent folder.
-    ///   - child: A file URL to the child item.
-    /// - Returns: true if the parent folder contains the child, otherwise false.
+    ///   - folder: A file URL to the folder.
+    ///   - descendent: A file URL to the descendent item.
+    /// - Returns: true if the folder contains the descendent, otherwise false.
     ///
-    func folder(_ parent: URL, contains child: URL) -> Bool {
+    func folder(_ folder: URL, contains descendent: URL) -> Bool {
         let relation = UnsafeMutablePointer<FileManager.URLRelationship>.allocate(capacity: 1)
         do {
-            try fileManager.getRelationship(relation, ofDirectoryAt: parent, toItemAt: child)
+            try fileManager.getRelationship(relation, ofDirectoryAt: folder, toItemAt: descendent)
         } catch {
             LogError(message: "Error checking folder relationships. \(error)")
             return false
@@ -304,11 +304,11 @@ class FolderManager {
 
     /// A convenience method to see if the current folder contains the item
     /// specified by the supplied file URL.
-    /// - Parameter child: A file URL to a child item.
+    /// - Parameter descendent: A file URL to a child item.
     /// - Returns: true if the current folder contains the child, otherwise false.
     ///
-    func currentFolderContains(_ child: URL) -> Bool {
-        return folder(currentFolder, contains: child)
+    func currentFolderContains(_ descendent: URL) -> Bool {
+        return folder(currentFolder, contains: descendent)
     }
 
     /// Check if one folder is the immediate parent of another folder.
