@@ -164,7 +164,7 @@ class FolderManagerTests: XCTestCase {
     }
 
     func testFolderContainsChild() {
-        let path = "TestFolder"
+        let path = "TestFolder/Subfolder"
         let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: true)!
         let failURL = FolderManager.createTemporaryDirectory()!
 
@@ -172,6 +172,21 @@ class FolderManagerTests: XCTestCase {
         XCTAssertFalse(folderManager.folder(url, contains: url))
         XCTAssertFalse(folderManager.folder(url, contains: failURL))
         XCTAssertFalse(folderManager.folder(failURL, contains: url))
+    }
+
+    func testFolderIsParent() {
+        let childPath = "TestFolder"
+        let childURL = folderManager.createFolderAtPath(path: childPath, ifExistsAppendSuffix: true)!
+        let grandChildPath = "TestFolder/ChildFolder"
+        let grandChildURL = folderManager.createFolderAtPath(path: grandChildPath, ifExistsAppendSuffix: true)!
+        let failURL = FolderManager.createTemporaryDirectory()!
+
+        XCTAssertTrue(folderManager.folder(folderManager.currentFolder, isParentOf: childURL))
+        XCTAssertFalse(folderManager.folder(folderManager.currentFolder, isParentOf: grandChildURL))
+
+        XCTAssertFalse(folderManager.folder(childURL, isParentOf: childURL))
+        XCTAssertFalse(folderManager.folder(folderManager.currentFolder, contains: failURL))
+        XCTAssertFalse(folderManager.folder(failURL, contains: folderManager.currentFolder))
     }
 
     func testSanitizedFolderNames() {

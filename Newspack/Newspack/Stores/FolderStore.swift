@@ -113,41 +113,66 @@ extension FolderStore {
     ///   - addSuffix: Whether to add a numeric suffix to the folder name if there
     /// is already a folder with that name.
     ///
-    func createStoryFolder(path: String = Constants.defaultStoryFolderName, addSuffix: Bool = false) {
+    func createStoryFolder(path: String = Constants.defaultStoryFolderName, addSuffix: Bool = false, onComplete:(()-> Void)? = nil) {
+        createStoryFoldersForPaths(paths: [path], addSuffix: addSuffix, onComplete: onComplete)
+    }
+
+    /// Create new StoryFolders for each of the specified folder names.
+    /// - Parameters:
+    ///   - paths: An array of folder name and (optionally) a path to the story folder.
+    ///   If a path, only the last path component will be used for the StoryFolder
+    ///   name in core data.
+    ///   - addSuffix: Whether to add a numeric suffix to the folder name if there
+    /// is already a folder with that name.
+    ///
+    func createStoryFoldersForPaths(paths: [String], addSuffix: Bool = false, onComplete:(()-> Void)? = nil) {
+        var urls = [URL]()
+        for path in paths {
+            guard let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) else {
+                LogError(message: "Unable to create the folder at \(path)")
+                continue
+            }
+            LogDebug(message: "Success: \(url.path)")
+            urls.append(url)
+        }
+
+        createStoryFoldersForURLs(urls: urls, onComplete: onComplete)
+    }
+
+    /// Create new story folders for each of the specified URLs.
+    /// - Parameter urls: An array of file URLs
+    ///
+    func createStoryFoldersForURLs(urls: [URL], onComplete:(()-> Void)? = nil) {
         guard
             let siteID = currentSiteID,
             let siteObjID = StoreContainer.shared.siteStore.getSiteByUUID(siteID)?.objectID
         else {
-            LogError(message: "Attempted to create story folder, but no site was found,")
+            LogError(message: "Attempted to create story folders, but no site was found,")
             return
         }
-
-        guard let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) else {
-            LogError(message: "Unable to create the folder at \(path)")
-            return
-        }
-        LogDebug(message: "Success: \(url.path)")
 
         // Create the core data proxy for the story folder.
         CoreDataManager.shared.performOnWriteContext { [weak self] context in
             let site = context.object(with: siteObjID) as! Site
             let folderManager = SessionManager.shared.folderManager
 
-            let storyFolder = StoryFolder(context: context)
-            storyFolder.uuid = UUID()
-            storyFolder.date = Date()
-            storyFolder.name = url.pathComponents.last
-            storyFolder.site = site
-            storyFolder.bookmark = folderManager.bookmarkForURL(url: url)
+            for url in urls {
+                let storyFolder = StoryFolder(context: context)
+                storyFolder.uuid = UUID()
+                storyFolder.date = Date()
+                storyFolder.name = url.pathComponents.last
+                storyFolder.site = site
+                storyFolder.bookmark = folderManager.bookmarkForURL(url: url)
+            }
 
             CoreDataManager.shared.saveContext(context: context)
 
             DispatchQueue.main.async {
                 self?.selectDefaultStoryFolderIfNeeded()
+                onComplete?()
             }
         }
     }
-
 
     /// Rename a story folder. This updates the name of the story folder's underlying
     /// directory as well as the name field in core data.
@@ -186,20 +211,26 @@ extension FolderStore {
 
     /// Ensure the selected story folder is any folder other than the one listed.
     ///
-    /// - Parameter uuid: The uuid of the story folder we do not want selected.
+    /// - Parameter uuids: The uuids of the story folders we do not want selected.
     ///
-    func selectStoryOtherThan(uuid: UUID) {
+    func selectStoryOtherThan(uuids: [UUID]) {
         // If this isn't the currently selected folder then there is nothing to do.
         guard
-            currentStoryFolderID == uuid,
+            uuids.contains(currentStoryFolderID),
             let siteID = currentSiteID
         else {
             return
         }
 
+        // Make an array of uuids without the currently selected one and use this
+        // to filter results from our fetch request.
+        let uuidsToExclude = uuids.filter { (uuid) -> Bool in
+            return uuid != currentStoryFolderID
+        }
+
         let context = CoreDataManager.shared.mainContext
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = StoryFolder.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "site.uuid = %@ AND NOT (uuid IN %@)", siteID as CVarArg, uuidsToExclude)
         fetchRequest.sortDescriptors = currentSortDescriptors()
         fetchRequest.propertiesToFetch = ["uuid"]
         fetchRequest.resultType = .dictionaryResultType
@@ -216,7 +247,7 @@ extension FolderStore {
 
         // Get the index of the storyfolder that's selected.
         guard let index = (results.firstIndex { item -> Bool in
-            item["uuid"] == uuid
+            item["uuid"] == currentStoryFolderID
         }) else { return }
 
         // Normally we want to select the preceding item.
@@ -239,35 +270,55 @@ extension FolderStore {
             return
         }
 
-        guard let url = folderManager.urlFromBookmark(bookmark: storyFolder.bookmark) else {
-            return
+        deleteStoryFolders(folders: [storyFolder])
+    }
+
+    /// Delete each of the specified story folders.
+    ///
+    /// - Parameter folders: An array of StoryFolders
+    ///
+    func deleteStoryFolders(folders: [StoryFolder], onComplete:(()->Void)? = nil) {
+        // For each story folder, remove its bookmarked content and then delete.
+
+        let uuids: [UUID] = folders.map { (folder) -> UUID in
+            return folder.uuid
         }
 
         // If the story folder is the current folder, choose a different folder and select it.
-        selectStoryOtherThan(uuid: storyFolder.uuid)
+        selectStoryOtherThan(uuids: uuids)
 
-        // Remove the underlying directory
-        if !folderManager.deleteFolder(at: url) {
-            // TODO: For now emit change even if not successful. We'll wire up
-            // proper error handling later.
-            LogError(message: "Unable to delete the folder at \(url)")
+        var objIDs = [NSManagedObjectID]()
+        for folder in folders {
+            objIDs.append(folder.objectID)
+
+            guard let url = folderManager.urlFromBookmark(bookmark: folder.bookmark) else {
+                continue
+            }
+
+            // Remove the underlying directory
+            if !folderManager.deleteFolder(at: url) {
+                // TODO: For now emit change even if not successful. We'll wire up
+                // proper error handling later.
+                LogError(message: "Unable to delete the folder at \(url)")
+            }
         }
 
-        // Clean up core data.
-        let objID = storyFolder.objectID
         CoreDataManager.shared.performOnWriteContext { [weak self] context in
-            let folder = context.object(with: objID) as! StoryFolder
-            context.delete(folder)
-
+            for objID in objIDs {
+                let folder = context.object(with: objID) as! StoryFolder
+                context.delete(folder)
+            }
             CoreDataManager.shared.saveContext(context: context)
 
             DispatchQueue.main.async {
                 self?.createDefaultStoryFolderIfNeeded()
+                onComplete?()
             }
         }
     }
 
     /// Returns an array of StoryFolder instances for the current site.
+    ///
     /// - Returns: An array of StoryFolder instances.
     ///
     func getStoryFolders() -> [StoryFolder] {
@@ -310,10 +361,6 @@ extension FolderStore {
         }
 
         return 0
-    }
-
-    func listStoryFolders() -> [URL] {
-        return folderManager.enumerateFolders(url: folderManager.currentFolder)
     }
 
     func getStoryFolderByID(uuid: UUID) -> StoryFolder? {
