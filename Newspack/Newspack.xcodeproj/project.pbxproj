@@ -181,6 +181,7 @@
 		E6B8CFDD24ABC48C0068C6BE /* FolderStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDC24ABC48C0068C6BE /* FolderStoreTests.swift */; };
 		E6B8CFE024ABD6EB0068C6BE /* ReconcilerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */; };
 		E6BA1322243F9D1E00635A8A /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */; };
+		E6C3988C24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C3988B24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift */; };
 		E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE56AE22B19001004895E5 /* ModelFactory.swift */; };
 		E6D44DEC234BC56C00B51438 /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEB234BC56C00B51438 /* MediaViewController.swift */; };
 		E6D44DEF234BDB8400B51438 /* MediaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEE234BDB8400B51438 /* MediaStore.swift */; };
@@ -415,6 +416,7 @@
 		E6B8CFDC24ABC48C0068C6BE /* FolderStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStoreTests.swift; sourceTree = "<group>"; };
 		E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconcilerTests.swift; sourceTree = "<group>"; };
 		E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewController.swift; sourceTree = "<group>"; };
+		E6C3988B24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Newspack.swift"; sourceTree = "<group>"; };
 		E6CE56AE22B19001004895E5 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
 		E6D44DEB234BC56C00B51438 /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		E6D44DEE234BDB8400B51438 /* MediaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStore.swift; sourceTree = "<group>"; };
@@ -951,6 +953,7 @@
 				E68A965D246098C700BE664B /* NSObject+Helpers.swift */,
 				E696340F2440C1C400D906E0 /* UITableViewCell+Helpers.swift */,
 				E63FF0EB24AA864C0002A32F /* URL+FileReference.swift */,
+				E6C3988B24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1318,6 +1321,7 @@
 				E6871F1B22C3FDE7008D3D46 /* PostListViewController.swift in Sources */,
 				E632F9A123515116003737BF /* SiteMediaDataSource.swift in Sources */,
 				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
+				E6C3988C24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift in Sources */,
 				E6E43EA4230F1D2B00A1974E /* EditAction.swift in Sources */,
 				E695A7E6244FD686007B29BB /* StoryFolder+CoreDataProperties.swift in Sources */,
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
