@@ -6,7 +6,7 @@ import UIKit
 ///
 class Reconciler {
 
-    var sessionReceipt: Any?
+    private var sessionReceipt: Any?
 
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -90,11 +90,7 @@ class Reconciler {
     func hasInconsistentStoryFolders() -> Bool {
         let (rawFolders, removedStories) = getInconsistentStoryFolders()
 
-        if rawFolders.count > 0 || removedStories.count > 0 {
-            return true
-        }
-
-        return false
+        return rawFolders.count > 0 || removedStories.count > 0
     }
 
     /// Get any inconsistencies between the file system and story folders.
