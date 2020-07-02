@@ -14,6 +14,10 @@ class SortRulesBookTests: XCTestCase {
         sortRules = SortRulesBook(storageKey: storageKey, fields: fields, defaults: defaults)
     }
 
+    override func tearDownWithError() throws {
+        sortRules.reset()
+    }
+
     func testReset() {
         var rules = SortRules()
         for field in fields {
