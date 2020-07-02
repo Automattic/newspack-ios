@@ -188,6 +188,7 @@
 		E6D44DEF234BDB8400B51438 /* MediaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEE234BDB8400B51438 /* MediaStore.swift */; };
 		E6D44DF1234BDBA000B51438 /* MediaApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF0234BDBA000B51438 /* MediaApiService.swift */; };
 		E6D44DF3234BDBB500B51438 /* MediaServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */; };
+		E6DCB05224AE3BF300C4FD01 /* SortRulesBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DCB05124AE3BF300C4FD01 /* SortRulesBookTests.swift */; };
 		E6DF5575242E7139007DDC47 /* FolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DF5574242E7139007DDC47 /* FolderManager.swift */; };
 		E6DF5578242E7242007DDC47 /* FolderManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DF5577242E7242007DDC47 /* FolderManagerTests.swift */; };
 		E6E1834D22D6D44D009C2D0A /* remote-post-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */; };
@@ -424,6 +425,7 @@
 		E6D44DEE234BDB8400B51438 /* MediaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStore.swift; sourceTree = "<group>"; };
 		E6D44DF0234BDBA000B51438 /* MediaApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaApiService.swift; sourceTree = "<group>"; };
 		E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceRemote.swift; sourceTree = "<group>"; };
+		E6DCB05124AE3BF300C4FD01 /* SortRulesBookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortRulesBookTests.swift; sourceTree = "<group>"; };
 		E6DF5574242E7139007DDC47 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		E6DF5577242E7242007DDC47 /* FolderManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManagerTests.swift; sourceTree = "<group>"; };
 		E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-post-edit.json"; sourceTree = "<group>"; };
@@ -620,6 +622,7 @@
 				E62C7C6A2235F042000FEB33 /* Services */,
 				E62C7C672235E729000FEB33 /* Stores */,
 				E6B8CFDE24ABD6B20068C6BE /* SystemTests */,
+				E6DCB05024AE3BBF00C4FD01 /* Utils */,
 				E6138FEB2211FE88004E5B91 /* Info.plist */,
 			);
 			path = NewspackTests;
@@ -927,6 +930,14 @@
 				E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */,
 			);
 			path = SystemTests;
+			sourceTree = "<group>";
+		};
+		E6DCB05024AE3BBF00C4FD01 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E6DCB05124AE3BF300C4FD01 /* SortRulesBookTests.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		E6DF5573242E7115007DDC47 /* Folders */ = {
@@ -1417,6 +1428,7 @@
 				E61A28CF22D53EFD003E214F /* PostServiceRemoteTests.swift in Sources */,
 				E61FC603229F2EEE009E1748 /* UserServiceRemoteTests.swift in Sources */,
 				E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */,
+				E6DCB05224AE3BF300C4FD01 /* SortRulesBookTests.swift in Sources */,
 				E6B8CFDB24AB91430068C6BE /* URLFileReferenceTests.swift in Sources */,
 				E6051DEF23075F8A005AAF0B /* DateTests.swift in Sources */,
 				E6B8CFDD24ABC48C0068C6BE /* FolderStoreTests.swift in Sources */,
