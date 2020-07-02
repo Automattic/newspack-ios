@@ -54,7 +54,7 @@ class SortRulesBook {
 
         var arr = [NSSortDescriptor]()
         for (key, value) in dict {
-            arr.append(NSSortDescriptor(key: key, ascending: value))
+            arr.append(NSSortDescriptor(key: key, ascending: value, selector: #selector(NSString.caseInsensitiveCompare)))
         }
 
         return arr
