@@ -13,6 +13,7 @@ class SortRulesBook {
     private let storageKey: String
     private let fields: [String]
     private let defaults: SortRules
+    private let caseInsensitiveFields: [String]
 
     /// Creates a new instance of a SortRulesManager
     ///
@@ -20,11 +21,13 @@ class SortRulesBook {
     ///   - storageKey: A key to use with UserDefaults.
     ///   - fields: A list of allowed fields to sort by.
     ///   - defaults: Default SortRules.  This should not be empty.
+    ///   - caseInsensitiveFields: Optional. An array of case insensitive fields. These should only be string fields.
     ///
-    init(storageKey: String, fields: [String], defaults: SortRules) {
+    init(storageKey: String, fields: [String], defaults: SortRules, caseInsensitiveFields: [String] = []) {
         self.storageKey = storageKey
         self.fields = fields
         self.defaults = defaults
+        self.caseInsensitiveFields = caseInsensitiveFields
 
         setup()
     }
@@ -54,7 +57,11 @@ class SortRulesBook {
 
         var arr = [NSSortDescriptor]()
         for (key, value) in dict {
-            arr.append(NSSortDescriptor(key: key, ascending: value, selector: #selector(NSString.caseInsensitiveCompare)))
+            if caseInsensitiveFields.contains(key) {
+                arr.append(NSSortDescriptor(key: key, ascending: value, selector: #selector(NSString.caseInsensitiveCompare)))
+            } else {
+                arr.append(NSSortDescriptor(key: key, ascending: value))
+            }
         }
 
         return arr

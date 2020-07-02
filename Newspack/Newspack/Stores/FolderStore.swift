@@ -23,7 +23,7 @@ class FolderStore: Store {
     private(set) var currentStoryFolderID = UUID()
 
     lazy private(set) var sortRules: SortRulesBook = {
-        return SortRulesBook(storageKey: "FolderStoreSortRules", fields: ["date", "name"], defaults: ["date": false])
+        return SortRulesBook(storageKey: "FolderStoreSortRules", fields: ["date", "name"], defaults: ["date": false], caseInsensitiveFields: ["name"])
     }()
 
     init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
