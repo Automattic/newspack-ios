@@ -41,7 +41,7 @@
                                         <segment title="Name"/>
                                     </segments>
                                     <connections>
-                                        <action selector="handleSortNameChangedWithSender:" destination="o5i-8K-DIP" eventType="valueChanged" id="zNc-rc-rGI"/>
+                                        <action selector="handleSortChangedWithSender:" destination="o5i-8K-DIP" eventType="valueChanged" id="6Ig-Ng-b50"/>
                                     </connections>
                                 </segmentedControl>
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KoB-kO-fC0">
@@ -51,7 +51,7 @@
                                         <segment title="Desc"/>
                                     </segments>
                                     <connections>
-                                        <action selector="handleSortDirectionChangedWithSender:" destination="o5i-8K-DIP" eventType="valueChanged" id="heq-nl-JaI"/>
+                                        <action selector="handleSortChangedWithSender:" destination="o5i-8K-DIP" eventType="valueChanged" id="J5x-VT-H4L"/>
                                     </connections>
                                 </segmentedControl>
                             </subviews>

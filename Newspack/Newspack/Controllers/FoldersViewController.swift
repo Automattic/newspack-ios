@@ -4,6 +4,9 @@ import WordPressFlux
 
 class FoldersViewController: UITableViewController {
 
+    @IBOutlet var sortField: UISegmentedControl!
+    @IBOutlet var sortDirection: UISegmentedControl!
+
     var dataSource: FolderDataSource!
 
     required init?(coder aDecoder: NSCoder) {
@@ -14,11 +17,26 @@ class FoldersViewController: UITableViewController {
         super.viewDidLoad()
 
         configureDataSource()
+        configureSortControl()
+
+        // Temporary measure. The UI will change so right now this doesn't need to be pretty.
+        let headerView = tableView.tableHeaderView!
+        var frame = headerView.frame
+        frame.size.height = 44.0
+        headerView.frame = frame
+        tableView.tableHeaderView = headerView
     }
 }
 
 // MARK: - Actions and Handlers
 extension FoldersViewController {
+
+    @IBAction func handleSortChanged(sender: Any) {
+        let field = sortField.titleForSegment(at: sortField.selectedSegmentIndex)!.lowercased()
+        let direction = sortDirection.selectedSegmentIndex == 0
+
+        dataSource.sortBy(field: field, ascending: direction)
+    }
 
     @IBAction func handleAddTapped(sender: Any) {
         let action = FolderAction.createStoryFolder
@@ -77,6 +95,15 @@ extension FoldersViewController {
         dataSource.update()
     }
 
+    func configureSortControl() {
+        let dict = StoreContainer.shared.folderStore.sortRules.rules()
+        for (key, value) in dict {
+            sortDirection.selectedSegmentIndex = value ? 0 : 1
+
+            let name = sortField.titleForSegment(at: 0)!.lowercased()
+            sortField.selectedSegmentIndex = key == name ? 0 : 1
+        }
+    }
 }
 
 // MARK: - Folder Cell
@@ -132,6 +159,16 @@ class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, 
         }
 
         try? resultsController.performFetch()
+    }
+
+    func sortBy(field: String, ascending: Bool) {
+        let action = FolderAction.sortBy(field: field, ascending: ascending)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+
+        resultsController.fetchRequest.sortDescriptors = StoreContainer.shared.folderStore.sortRules.descriptors()
+        try? resultsController.performFetch()
+
+        update()
     }
 
     /// Updates the current datasource snapshot. Changes are animated only if
