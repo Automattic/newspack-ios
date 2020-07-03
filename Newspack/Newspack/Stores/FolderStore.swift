@@ -266,17 +266,19 @@ extension FolderStore {
             return
         }
 
-        // Get the index of the storyfolder that's selected.
-        guard let index = (results.firstIndex { item -> Bool in
+        // Default to 1 if, for some reason there is not a current selected index found.
+        var index = 0
+        if let currentSelectedIndex = (results.firstIndex { item -> Bool in
             item["uuid"] == currentStoryFolderID
-        }) else { return }
+        }) {
+            index = currentSelectedIndex
+        }
 
-        // Normally we want to select the preceding item.
-        var newIndex = index - 1
-        // However, if that would be a negative index, we want to select the
-        // following item.
-        newIndex = max(newIndex, 0)
-
+        // If the index is greater than zero we can just select the preceding item.
+        // If the index is zero it means the currently selected story is index zero.
+        // In this scenario we want the new index to be 1, so the next item in
+        // in the list is selected.
+        let newIndex = (index > 0) ? index - 1 : 1
         selectStoryFolder(uuid: results[newIndex]["uuid"]!)
     }
 
