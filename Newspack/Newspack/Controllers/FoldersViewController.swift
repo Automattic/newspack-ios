@@ -80,7 +80,14 @@ extension FoldersViewController {
         }
 
         cell.textField.text = storyFolder.name
-        cell.textChangedHandler = { text in
+        cell.textChangedHandler = { text, aCell in
+            // NOTE: Get the index path from the passed cell to ensure we're not
+            // capturing the value of cellFor's passed IndexPath. This can lead to
+            // referencing an incoreect index path leading to the wrong folder being renamed
+            // or an out of bounds error.
+            guard let indexPath = tableView.indexPath(for: aCell) else {
+                return
+            }
             self.handleFolderNameChanged(indexPath: indexPath, newName: text)
         }
         cell.accessoryType = storyFolder.uuid == StoreContainer.shared.folderStore.currentStoryFolderID ? .detailDisclosureButton : .disclosureIndicator
@@ -110,14 +117,14 @@ extension FoldersViewController {
 class FolderCell: UITableViewCell {
 
     @IBOutlet var textField: UITextField!
-    var textChangedHandler: ((String?) -> Void)?
+    var textChangedHandler: ((String?, UITableViewCell) -> Void)?
 
 }
 
 extension FolderCell: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textChangedHandler?(textField.text)
+        textChangedHandler?(textField.text, self)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
