@@ -261,8 +261,8 @@ extension FolderStore {
             return
         }
 
-        guard results.count > 0 else {
-            // Nothing to select.
+        guard results.count > 1 else {
+            // Nothing new to select.
             return
         }
 
