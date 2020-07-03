@@ -22,6 +22,10 @@ class FolderStore: Store {
     /// before it is used.
     private(set) var currentStoryFolderID = UUID()
 
+    lazy private(set) var sortRules: SortRulesBook = {
+        return SortRulesBook(storageKey: "FolderStoreSortRules", fields: ["date", "name"], defaults: ["date": false], caseInsensitiveFields: ["name"])
+    }()
+
     init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
         currentSiteID = siteID
 
@@ -38,6 +42,8 @@ class FolderStore: Store {
     override func onDispatch(_ action: Action) {
         if let action = action as? FolderAction {
             switch action {
+            case .sortBy(let field, let ascending):
+                sortFolders(by: field, ascending: ascending)
             case .createStoryFolder:
                 // Create a story folder with the default name, appending a suffix if needed.
                 createStoryFolder(path: Constants.defaultStoryFolderName, addSuffix: true)
@@ -70,7 +76,7 @@ extension FolderStore {
 
         let fetchRequest = StoryFolder.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
-        fetchRequest.sortDescriptors = currentSortDescriptors()
+        fetchRequest.sortDescriptors = sortRules.descriptors()
         return NSFetchedResultsController(fetchRequest: fetchRequest,
                                           managedObjectContext: CoreDataManager.shared.mainContext,
                                           sectionNameKeyPath: nil,
@@ -80,6 +86,21 @@ extension FolderStore {
 }
 
 extension FolderStore {
+
+    /// Update sort rules for folders and refetch data if the sort order has changed.
+    ///
+    /// - Parameters:
+    ///   - field: The field to sort by.
+    ///   - ascending: true if the sort order should be ascending, or false if descending.
+    ///
+    private func sortFolders(by field: String, ascending: Bool) {
+        guard !sortRules.hasRule(field: field, ascending: ascending) else {
+            return
+        }
+        var rules = SortRules()
+        rules[field] = ascending
+        sortRules.setRules(rules: rules)
+    }
 
     /// Creates a single, default, folder under the site's folder if there is a
     /// site, and there are currently no folders.
@@ -231,7 +252,7 @@ extension FolderStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = StoryFolder.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@ AND NOT (uuid IN %@)", siteID as CVarArg, uuidsToExclude)
-        fetchRequest.sortDescriptors = currentSortDescriptors()
+        fetchRequest.sortDescriptors = sortRules.descriptors()
         fetchRequest.propertiesToFetch = ["uuid"]
         fetchRequest.resultType = .dictionaryResultType
 
@@ -240,22 +261,24 @@ extension FolderStore {
             return
         }
 
-        guard results.count > 0 else {
-            // Nothing to select.
+        guard results.count > 1 else {
+            // Nothing new to select.
             return
         }
 
-        // Get the index of the storyfolder that's selected.
-        guard let index = (results.firstIndex { item -> Bool in
+        // Default to 1 if, for some reason there is not a current selected index found.
+        var index = 0
+        if let currentSelectedIndex = (results.firstIndex { item -> Bool in
             item["uuid"] == currentStoryFolderID
-        }) else { return }
+        }) {
+            index = currentSelectedIndex
+        }
 
-        // Normally we want to select the preceding item.
-        var newIndex = index - 1
-        // However, if that would be a negative index, we want to select the
-        // following item.
-        newIndex = max(newIndex, 0)
-
+        // If the index is greater than zero we can just select the preceding item.
+        // If the index is zero it means the currently selected story is index zero.
+        // In this scenario we want the new index to be 1, so the next item in
+        // in the list is selected.
+        let newIndex = (index > 0) ? index - 1 : 1
         selectStoryFolder(uuid: results[newIndex]["uuid"]!)
     }
 
@@ -330,17 +353,13 @@ extension FolderStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryFolder.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
-        fetchRequest.sortDescriptors = currentSortDescriptors()
+        fetchRequest.sortDescriptors = sortRules.descriptors()
 
         if let results = try? context.fetch(fetchRequest) {
             return results
         }
 
         return [StoryFolder]()
-    }
-
-    func currentSortDescriptors() -> [NSSortDescriptor] {
-        return [NSSortDescriptor(key: "date", ascending: false)]
     }
 
     /// Get the number of story folders for the current site.

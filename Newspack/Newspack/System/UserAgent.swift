@@ -23,7 +23,7 @@ class UserAgent {
     /// Returns the user agent used by WKWebViews
     ///
     static var webUserAgent: String {
-        return UserDefaults.standard.string(forKey: Constants.webUserAgentKey) ?? String()
+        return UserDefaults.shared.string(forKey: Constants.webUserAgentKey) ?? String()
     }
 
     /// Returns the version number of the app.
@@ -44,7 +44,7 @@ class UserAgent {
     ///
     private func configureIfNecessary() {
         // If a stored user agent exists there's nothing to do.
-        guard UserDefaults.standard.string(forKey: Constants.webUserAgentKey) == nil else {
+        guard UserDefaults.shared.string(forKey: Constants.webUserAgentKey) == nil else {
             return
         }
         webView = WKWebView()
@@ -61,7 +61,7 @@ class UserAgent {
     /// - Parameter agent: The string for the user agent.
     ///
     private func storeUserAgent(agent: String) {
-        UserDefaults.standard.set(agent, forKey: Constants.webUserAgentKey)
+        UserDefaults.shared.set(agent, forKey: Constants.webUserAgentKey)
     }
 }
 

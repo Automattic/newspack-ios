@@ -21,9 +21,7 @@ class SessionManager: StatefulStore<SessionState> {
 
     /// Used with UserDefaults to store the current site's uuid for later recovery.
     ///
-    private var currentSiteIDKey: String {
-        return Environment.isTesting() ? "testingCurrentSiteIDKey" :  "currentSiteIDKey"
-    }
+    private var currentSiteIDKey = "currentSiteIDKey"
 
     /// Read only.  The ActionDispatcher for the current session.
     ///
@@ -34,10 +32,7 @@ class SessionManager: StatefulStore<SessionState> {
     ///
     private(set) var currentSite: Site? {
         didSet {
-            let defaults = UserDefaults.standard
-            defer {
-                defaults.synchronize()
-            }
+            let defaults = UserDefaults.shared
             guard let uuid = currentSite?.uuid else {
                 defaults.removeObject(forKey: currentSiteIDKey)
                 return
@@ -119,7 +114,7 @@ class SessionManager: StatefulStore<SessionState> {
     ///
     private func retrieveSite() -> Site? {
         guard
-            let uuidString = UserDefaults.standard.string(forKey: currentSiteIDKey),
+            let uuidString = UserDefaults.shared.string(forKey: currentSiteIDKey),
             let uuid = UUID(uuidString: uuidString)
             else {
                 return nil
