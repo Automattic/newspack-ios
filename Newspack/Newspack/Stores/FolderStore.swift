@@ -10,13 +10,6 @@ class FolderStore: Store {
 
     private let folderManager: FolderManager
 
-    /// During normal operation the current story folder will be one of the folders
-    /// under the site's folder. Due to the way sessions work and how the FolderStore
-    /// is instantiated currentStoryFolder is intializaed to the temp directory,
-    /// but updated immediately after.
-    ///
-    private(set) var currentStoryFolder = FileManager.default.temporaryDirectory
-
     /// Warning: We initialize with a random UUID due to the way sessions work.
     /// Durning normal opperation this is updated to an actual StoryFolder's uuid
     /// before it is used.
@@ -417,9 +410,6 @@ extension FolderStore {
         emitChange()
     }
 
-    func listCurrentStoryFolderContents() -> [URL] {
-        return folderManager.enumerateFolderContents(url: currentStoryFolder)
-    }
 }
 
 extension FolderStore {
