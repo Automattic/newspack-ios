@@ -593,16 +593,17 @@
 		E6138FD02211FE86004E5B91 /* Newspack */ = {
 			isa = PBXGroup;
 			children = (
-				E6DF5573242E7115007DDC47 /* Folders */,
-				E6FB51FE22B9677A0010FDF8 /* Extensions */,
-				E62C7C632235E0EC000FEB33 /* Stores */,
-				E6138FFE22120467004E5B91 /* Controllers */,
-				E6138FFA22120371004E5B91 /* Models */,
 				E6138FF922120368004E5B91 /* Api */,
 				E6138FF822120363004E5B91 /* Authentication */,
+				E6138FFE22120467004E5B91 /* Controllers */,
+				E6FB51FE22B9677A0010FDF8 /* Extensions */,
+				E6DF5573242E7115007DDC47 /* Folders */,
+				E6138FFA22120371004E5B91 /* Models */,
+				E62C7C632235E0EC000FEB33 /* Stores */,
 				E6138FFC221203B1004E5B91 /* Resources */,
 				E6138FFB2212037E004E5B91 /* Storyboards */,
 				E6138FF722120346004E5B91 /* System */,
+				E677AAE924B3C714000FAA3D /* Utils */,
 				E6138FFD22120433004E5B91 /* View */,
 				E6138FDB2211FE88004E5B91 /* Assets.xcassets */,
 			);
@@ -657,8 +658,8 @@
 			isa = PBXGroup;
 			children = (
 				E602E67F22C1588600795CBA /* ApiService.swift */,
-				E602E68922C1617E00795CBA /* Config */,
 				E602E68822C1615C00795CBA /* Actions */,
+				E602E68922C1617E00795CBA /* Config */,
 				E602E68122C15EAB00795CBA /* Models */,
 				E63EECDC23428B3E00669FFC /* ServiceRemotes */,
 				E6D44DF0234BDBA000B51438 /* MediaApiService.swift */,
@@ -837,7 +838,6 @@
 				E61D8F6B2375EC3E005FECED /* StagedMediaStore.swift */,
 				E640D27723883ED800887FD9 /* StagedMediaImporter.swift */,
 				E640D27923883EE700887FD9 /* StagedMediaUploader.swift */,
-				E6C398BD24AD259300E0EBE6 /* SortRulesBook.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -922,6 +922,14 @@
 				E6710A1622CE9F040036156E /* FadeTransitionController.swift */,
 			);
 			path = Transitions;
+			sourceTree = "<group>";
+		};
+		E677AAE924B3C714000FAA3D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E6C398BD24AD259300E0EBE6 /* SortRulesBook.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		E6B8CFDE24ABD6B20068C6BE /* SystemTests */ = {
