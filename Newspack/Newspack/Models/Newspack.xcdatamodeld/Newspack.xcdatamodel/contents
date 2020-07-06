@@ -251,7 +251,7 @@
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="statuses" inverseEntity="Site"/>
     </entity>
     <entity name="StoryAsset" representedClassName="StoryAsset" syncable="YES">
-        <attribute name="assetType" attributeType="String"/>
+        <attribute name="assetTypeValue" attributeType="String"/>
         <attribute name="bookmark" optional="YES" attributeType="Binary"/>
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lastSync" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

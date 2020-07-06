@@ -8,7 +8,16 @@ extension StoryAsset {
         return NSFetchRequest<StoryAsset>(entityName: "StoryAsset")
     }
 
-    @NSManaged public var assetType: String!
+    var assetType: StoryAssetType {
+        get {
+            return StoryAssetType(rawValue: assetTypeValue)!
+        }
+        set {
+            assetTypeValue = newValue.rawValue
+        }
+    }
+
+    @NSManaged private var assetTypeValue: String!
     @NSManaged public var bookmark: Data? // Text notes do not have local files. RemoteMedia may not have local files.
     @NSManaged public var name: String!
     @NSManaged public var uuid: UUID!
