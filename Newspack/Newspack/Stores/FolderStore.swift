@@ -389,6 +389,7 @@ extension FolderStore {
         return nil
     }
 
+    // TODO: Make this a computed property
     /// A convenience method to get the current story folder.
     ///
     /// - Returns: The current story folder or nil.
