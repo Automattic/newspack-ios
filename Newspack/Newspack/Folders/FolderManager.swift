@@ -192,7 +192,8 @@ class FolderManager {
         return contents
     }
 
-    /// Delete the folder at the specified file URL
+    /// Delete the folder at the specified file URL. If the URL is not a folder
+    /// it will not be deleted.
     /// - Parameter source: A file URL.
     /// - Returns: true if the folder was deleted, otherwise false
     ///
@@ -202,6 +203,15 @@ class FolderManager {
             return false
         }
 
+        return deleteItem(at: source)
+    }
+
+    /// Delete the item at the specified file URL
+    /// - Parameter source: A file URL.
+    /// - Returns: true if the item was deleted, otherwise false
+    ///
+    @discardableResult
+    func deleteItem(at source: URL) -> Bool {
         // Do not perform a delete operation on anything outside of our root folder.
         if !folder(rootFolder, contains: source) {
             return false
