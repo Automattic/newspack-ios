@@ -48,6 +48,7 @@ extension AssetStore {
             let folder = context.object(with: objID) as! StoryFolder
             let asset = self.createAsset(name: name, url: nil, folder: folder, in: context)
             asset.text = text
+            asset.assetType = .textNote
             CoreDataManager.shared.saveContext(context: context)
             DispatchQueue.main.async {
                 onComplete?()
