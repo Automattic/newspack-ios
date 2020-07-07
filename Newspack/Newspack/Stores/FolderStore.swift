@@ -389,6 +389,14 @@ extension FolderStore {
         return nil
     }
 
+    /// A convenience method to get the current story folder.
+    ///
+    /// - Returns: The current story folder or nil.
+    ///
+    func getCurrentStoryFolder() -> StoryFolder? {
+        return getStoryFolderByID(uuid: currentStoryFolderID)
+    }
+
     /// Set the specified story folder as the selected folder.
     ///
     /// - Parameter uuid: The uuid of the story folder.
