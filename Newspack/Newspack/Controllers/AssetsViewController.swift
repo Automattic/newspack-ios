@@ -6,14 +6,21 @@ class AssetsViewController: UITableViewController {
 
     var dataSource: AssetDataSource!
 
-    var receipt: Any?
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        receipt = StoreContainer.shared.assetStore.onChange {
+        configureDataSource()
+    }
 
-        }
+}
+
+// MARK: - Actions
+
+extension AssetsViewController {
+
+    @IBAction func handleAddTapped(sender: Any) {
+        let action = AssetAction.createAssetFor(text: "New Text Note")
+        SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 
 }
@@ -22,15 +29,7 @@ class AssetsViewController: UITableViewController {
 extension AssetsViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let storyFolder = dataSource.resultsController.fetchedObjects?[indexPath.row] else {
-            return
-        }
 
-        let action = FolderAction.selectStoryFolder(folderID: storyFolder.uuid)
-        SessionManager.shared.sessionDispatcher.dispatch(action)
-
-        let controller = MainStoryboard.instantiateViewController(withIdentifier: .assetsList)
-        navigationController?.pushViewController(controller, animated: true)
     }
 }
 
@@ -38,11 +37,8 @@ extension AssetsViewController {
 extension AssetsViewController {
 
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FolderCell.reuseIdentifier, for: indexPath) as? FolderCell else {
-            fatalError("Cannot create new cell")
-        }
-
-        cell.textField.text = storyAsset.name
+        let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell", for: indexPath)
+        cell.textLabel?.text = storyAsset.name
         cell.accessoryType = .disclosureIndicator
 
         return cell
@@ -64,7 +60,7 @@ class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, St
         case main
     }
 
-    // Receipt so we can respond to any emitted changes in the FolderStore.
+    // Receipt so we can respond to any emitted changes in the AssetStore.
     var receipt: Any?
 
     // A results controller instance used to fetch StoryFolders.
