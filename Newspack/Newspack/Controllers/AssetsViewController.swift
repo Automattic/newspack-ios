@@ -116,8 +116,8 @@ class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, St
             return
         }
         if editingStyle == .delete {
-//            let action = FolderAction.deleteStoryFolder(folderID: storyFolder.uuid)
-//            SessionManager.shared.sessionDispatcher.dispatch(action)
+            let action = AssetAction.deleteAsset(assetID: storyAsset.uuid)
+            SessionManager.shared.sessionDispatcher.dispatch(action)
         }
     }
 
