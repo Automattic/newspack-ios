@@ -127,4 +127,3 @@ extension AssetDataSource: NSFetchedResultsControllerDelegate {
    }
 
 }
-
