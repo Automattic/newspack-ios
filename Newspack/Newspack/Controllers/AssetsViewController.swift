@@ -53,7 +53,7 @@ extension AssetsViewController {
 
 }
 
-// MARK: - FolderDataSource
+// MARK: - AssetDataSource
 class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, StoryAsset> {
 
     enum Section: CaseIterable {
@@ -63,8 +63,8 @@ class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, St
     // Receipt so we can respond to any emitted changes in the AssetStore.
     var receipt: Any?
 
-    // A results controller instance used to fetch StoryFolders.
-    // The StoryFolderDataSource is its delegate so it can call update whenever
+    // A results controller instance used to fetch StoryAssets.
+    // The AssetDataSource is its delegate so it can call update whenever
     // the results controller's content is changed.
     lazy var resultsController: NSFetchedResultsController<StoryAsset> = {
         return StoreContainer.shared.assetStore.getResultsController()
