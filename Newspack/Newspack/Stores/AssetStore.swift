@@ -33,7 +33,7 @@ class AssetStore: Store {
 extension AssetStore {
 
     func createAssetFor(text: String, onComplete: (() -> Void)? = nil) {
-        guard let folder = StoreContainer.shared.folderStore.getCurrentStoryFolder() else {
+        guard let folder = StoreContainer.shared.folderStore.currentStoryFolder else {
             LogError(message: "Attempted to create story asset, but a current story folder was not found.")
             onComplete?()
             return
@@ -57,7 +57,7 @@ extension AssetStore {
     }
 
     func createAssetsForURLs(urls: [URL], onComplete:(() -> Void)? = nil) {
-        guard let folder = StoreContainer.shared.folderStore.getCurrentStoryFolder() else {
+        guard let folder = StoreContainer.shared.folderStore.currentStoryFolder else {
             LogError(message: "Attempted to create story assets, but a current story folder was not found.")
             onComplete?()
             return
@@ -166,7 +166,7 @@ extension AssetStore {
     /// - Returns: An NSFetchedResultsController instance
     ///
     func getResultsController() -> NSFetchedResultsController<StoryAsset> {
-        guard let storyFolder = StoreContainer.shared.folderStore.getCurrentStoryFolder() else {
+        guard let storyFolder = StoreContainer.shared.folderStore.currentStoryFolder else {
             fatalError()
         }
         let fetchRequest = StoryAsset.defaultFetchRequest()
@@ -200,7 +200,7 @@ extension AssetStore {
     ///
     /// - Returns: An array of StoryAssets for the currently selected story folder.
     func getStoryAssets() -> [StoryAsset] {
-        guard let storyFolder = StoreContainer.shared.folderStore.getCurrentStoryFolder() else {
+        guard let storyFolder = StoreContainer.shared.folderStore.currentStoryFolder else {
             fatalError()
         }
         let context = CoreDataManager.shared.mainContext
