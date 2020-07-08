@@ -61,7 +61,7 @@ class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, St
     }
 
     // Receipt so we can respond to any emitted changes in the AssetStore.
-    var receipt: Any?
+    private var receipt: Any?
 
     // A results controller instance used to fetch StoryAssets.
     // The AssetDataSource is its delegate so it can call update whenever

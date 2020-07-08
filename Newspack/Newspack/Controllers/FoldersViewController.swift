@@ -142,7 +142,7 @@ class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, 
     }
 
     // Receipt so we can respond to any emitted changes in the FolderStore.
-    var receipt: Any?
+    private var receipt: Any?
 
     // A results controller instance used to fetch StoryFolders.
     // The StoryFolderDataSource is its delegate so it can call update whenever
