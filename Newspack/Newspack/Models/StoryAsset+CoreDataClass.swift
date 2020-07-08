@@ -5,3 +5,10 @@ import CoreData
 public class StoryAsset: NSManagedObject {
 
 }
+
+enum StoryAssetType: String {
+    case textNote
+    case image
+    case video
+    case audioNote
+}

@@ -145,6 +145,13 @@
                             <outlet property="delegate" destination="EtD-KI-a1B" id="vcw-dE-pg9"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="Assets" id="zmw-7F-Zw1">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="YP3-Sh-l02">
+                            <connections>
+                                <action selector="handleAddTappedWithSender:" destination="EtD-KI-a1B" id="oCV-tr-wXm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V9p-Z4-7n1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
