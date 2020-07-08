@@ -10,7 +10,7 @@ class AssetStore: Store {
 
     // TODO: This is a stub for now and will be improved as features are added.
     var allowedExtensions: [String] {
-        return ["png","jpg","jpeg"]
+        return ["png", "jpg", "jpeg"]
     }
 
     override init(dispatcher: ActionDispatcher = .global) {
