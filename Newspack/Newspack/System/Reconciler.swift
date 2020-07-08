@@ -54,8 +54,14 @@ class Reconciler {
             return true
         }
 
-        // TODO: check story folder contents
-
+        let folderStore = StoreContainer.shared.folderStore
+        let folders = folderStore.getStoryFolders()
+        for folder in folders {
+            if hasInconsistentAssets(storyFolder: folder) {
+                LogDebug(message: "StoryAssets where missing, or new assets were found.")
+                return true
+            }
+        }
         return false
     }
 
@@ -80,11 +86,20 @@ class Reconciler {
         LogDebug(message: "Deleting StoryFolders for missing folders.")
         folderStore.deleteStoryFolders(folders: removedStories)
 
-        // TODO: check folder contents
+        let folders = folderStore.getStoryFolders()
+        for folder in folders {
+            let (rawAssets, removedAssets) = getInconsistentAssets(storyFolder: folder)
+            let assetStore = StoreContainer.shared.assetStore
+            LogDebug(message: "Creating StoryAssets for discovered items.")
+            assetStore.createAssetsForURLs(urls: rawAssets, storyFolder: folder)
+            LogDebug(message: "Deleting StoryAssets for missing items.")
+            assetStore.deleteAssets(assets: removedAssets)
+        }
     }
 
     /// Check if there are any inconsistencies between the file system and
     /// story folders in core data.
+    ///
     /// - Returns: true if there are inconsistencies, otherwise false.
     ///
     func hasInconsistentStoryFolders() -> Bool {
@@ -94,6 +109,7 @@ class Reconciler {
     }
 
     /// Get any inconsistencies between the file system and story folders.
+    ///
     /// - Returns: A tuple containing an array of file URLs that have no
     /// associated story, and an array of StoryFolders without a directory.
     ///
@@ -136,6 +152,78 @@ class Reconciler {
         }
 
         return (rawFolders, removedStories)
+    }
+
+    /// Check if there are any inconsistencies with story assets.
+    ///
+    /// - Returns: True if there are inconsistencies, otherwise false.
+    ///
+    func hasInconsistentAssets(storyFolder: StoryFolder) -> Bool {
+        let (rawAssets, removedAssets) = getInconsistentAssets(storyFolder: storyFolder)
+
+        return rawAssets.count > 0 || removedAssets.count > 0
+    }
+
+    /// Get any inconsistencies between the file system and story assets for the
+    /// specified story folder.
+    ///
+    /// - Returns: A tuple containing an array of file URLs that have no
+    /// associated story, and an array of StoryAssets without a file system item.
+    ///
+    func getInconsistentAssets(storyFolder: StoryFolder) -> ([URL], [StoryAsset]) {
+        var rawItems = [URL]()
+        var removedAssets = [StoryAsset]()
+
+        let store = StoreContainer.shared.assetStore
+        let assets = store.getStoryAssets(storyFolder: storyFolder)
+
+        let folderManager = SessionManager.shared.folderManager
+
+        guard let storyFolderURL = folderManager.urlFromBookmark(bookmark: storyFolder.bookmark) else {
+            return (rawItems, removedAssets)
+        }
+
+        rawItems = folderManager.enumerateFolderContents(url: storyFolderURL)
+
+        // Filter out any items that are not supported types.
+        rawItems = rawItems.filter({ (url) -> Bool in
+            return store.allowedExtensions.contains(url.pathExtension)
+        })
+
+        for asset in assets {
+            var isStale = false
+
+            guard let bookmark = asset.bookmark else {
+                // Some storyAsset's do not have bookmarks (e.g. TextNotes). In these
+                // cases there is nothing to reconcile so just skip them.
+                continue
+            }
+
+            guard let assetURL = folderManager.urlFromBookmark(bookmark: bookmark, bookmarkIsStale: &isStale) else {
+                removedAssets.append(asset)
+                continue
+            }
+            if isStale || !folderManager.folder(storyFolderURL, isParentOf: assetURL) {
+                removedAssets.append(asset)
+            }
+
+            // Remove a good asset's URL from the array of raw items.
+            // Whatever is left in raw items will be URLs that need an asset created.
+            rawItems = rawItems.filter { (url) -> Bool in
+                guard
+                    let urlRef = url.getFileReferenceURL(),
+                    let assetRef = assetURL.getFileReferenceURL()
+                else {
+                    // This probably shouldn't happen but keep the rawFolder URL
+                    // if it does.
+                    return true
+                }
+                // If the URLs are equal we can filter out the raw asset.
+                return !urlRef.isEqual(assetRef)
+            }
+        }
+
+        return (rawItems, removedAssets)
     }
 
 }
