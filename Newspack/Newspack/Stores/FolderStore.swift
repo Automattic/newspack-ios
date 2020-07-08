@@ -19,6 +19,12 @@ class FolderStore: Store {
         return SortRulesBook(storageKey: "FolderStoreSortRules", fields: ["date", "name"], defaults: ["date": false], caseInsensitiveFields: ["name"])
     }()
 
+    /// A convenience getter to get the current story folder.
+    ///
+    var currentStoryFolder: StoryFolder? {
+        getStoryFolderByID(uuid: currentStoryFolderID)
+    }
+
     init(dispatcher: ActionDispatcher = .global, siteID: UUID? = nil) {
         currentSiteID = siteID
 
@@ -387,15 +393,6 @@ extension FolderStore {
             LogError(message: error.localizedDescription)
         }
         return nil
-    }
-
-    // TODO: Make this a computed property
-    /// A convenience method to get the current story folder.
-    ///
-    /// - Returns: The current story folder or nil.
-    ///
-    func getCurrentStoryFolder() -> StoryFolder? {
-        return getStoryFolderByID(uuid: currentStoryFolderID)
     }
 
     /// Set the specified story folder as the selected folder.

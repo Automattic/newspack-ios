@@ -8,6 +8,11 @@ class AssetStore: Store {
 
     private let folderManager: FolderManager
 
+    // TODO: This is a stub for now and will be improved as features are added.
+    var allowedExtensions: [String] {
+        return ["png", "jpg", "jpeg"]
+    }
+
     override init(dispatcher: ActionDispatcher = .global) {
 
         folderManager = SessionManager.shared.folderManager
@@ -33,7 +38,7 @@ class AssetStore: Store {
 extension AssetStore {
 
     func createAssetFor(text: String, onComplete: (() -> Void)? = nil) {
-        guard let folder = StoreContainer.shared.folderStore.getCurrentStoryFolder() else {
+        guard let folder = StoreContainer.shared.folderStore.currentStoryFolder else {
             LogError(message: "Attempted to create story asset, but a current story folder was not found.")
             onComplete?()
             return
@@ -46,7 +51,7 @@ extension AssetStore {
                 return
             }
             let folder = context.object(with: objID) as! StoryFolder
-            let asset = self.createAsset(name: name, url: nil, folder: folder, in: context)
+            let asset = self.createAsset(name: name, url: nil, storyFolder: folder, in: context)
             asset.text = text
             asset.assetType = .textNote
             CoreDataManager.shared.saveContext(context: context)
@@ -56,15 +61,9 @@ extension AssetStore {
         }
     }
 
-    func createAssetsForURLs(urls: [URL], onComplete:(() -> Void)? = nil) {
-        guard let folder = StoreContainer.shared.folderStore.getCurrentStoryFolder() else {
-            LogError(message: "Attempted to create story assets, but a current story folder was not found.")
-            onComplete?()
-            return
-        }
-
+    func createAssetsForURLs(urls: [URL], storyFolder: StoryFolder, onComplete:(() -> Void)? = nil) {
         // Create the core data proxy for the story asset.
-        let objID = folder.objectID
+        let objID = storyFolder.objectID
         CoreDataManager.shared.performOnWriteContext { [weak self] context in
             guard let self = self else {
                 onComplete?()
@@ -73,9 +72,11 @@ extension AssetStore {
             let folder = context.object(with: objID) as! StoryFolder
 
             for url in urls {
-                let _ = self.createAsset(name: url.lastPathComponent, url: url, folder: folder, in: context)
+                let asset = self.createAsset(name: url.lastPathComponent, url: url, storyFolder: folder, in: context)
                 // TODO: There is more to do depending on the type of item.
                 // But we'll deal with this as we build out the individual features.
+                // For testing purposes we'll default to image for now.
+                asset.assetType = .image
             }
 
             CoreDataManager.shared.saveContext(context: context)
@@ -86,7 +87,7 @@ extension AssetStore {
         }
     }
 
-    func createAsset(name: String, url: URL?, folder: StoryFolder, in context: NSManagedObjectContext) -> StoryAsset {
+    func createAsset(name: String, url: URL?, storyFolder: StoryFolder, in context: NSManagedObjectContext) -> StoryAsset {
         let asset = StoryAsset(context: context)
         if let url = url {
             asset.bookmark = folderManager.bookmarkForURL(url: url)
@@ -94,7 +95,7 @@ extension AssetStore {
         asset.name = assetName(from: name)
         asset.date = Date()
         asset.uuid = UUID()
-        asset.folder = folder
+        asset.folder = storyFolder
 
         return asset
     }
@@ -166,7 +167,7 @@ extension AssetStore {
     /// - Returns: An NSFetchedResultsController instance
     ///
     func getResultsController() -> NSFetchedResultsController<StoryAsset> {
-        guard let storyFolder = StoreContainer.shared.folderStore.getCurrentStoryFolder() else {
+        guard let storyFolder = StoreContainer.shared.folderStore.currentStoryFolder else {
             fatalError()
         }
         let fetchRequest = StoryAsset.defaultFetchRequest()
@@ -198,11 +199,10 @@ extension AssetStore {
 
     /// Get the assets for the currently selected story folder, sorted by date.
     ///
+    /// - Parameter storyFolder: storyFolder description
     /// - Returns: An array of StoryAssets for the currently selected story folder.
-    func getStoryAssets() -> [StoryAsset] {
-        guard let storyFolder = StoreContainer.shared.folderStore.getCurrentStoryFolder() else {
-            fatalError()
-        }
+    ///
+    func getStoryAssets(storyFolder: StoryFolder) -> [StoryAsset] {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryAsset.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "folder = %@", storyFolder)

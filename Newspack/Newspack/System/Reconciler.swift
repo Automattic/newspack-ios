@@ -29,6 +29,7 @@ class Reconciler {
         }
 
         guard hasInconsistencies() else {
+            LogInfo(message: "No inconsistencies found.")
             return
         }
 
@@ -44,18 +45,22 @@ class Reconciler {
         // Check site
         let siteStore = StoreContainer.shared.siteStore
         if !siteStore.currentSiteFolderExists() {
-            LogDebug(message: "Folder for current site is missing.")
+            LogInfo(message: "Folder for current site is missing.")
             return true
         }
 
         // Check story folders
         if hasInconsistentStoryFolders() {
-            LogDebug(message: "StoryFolders where missing, or new folders were found.")
+            LogInfo(message: "StoryFolders where missing, or new folders were found.")
             return true
         }
 
-        // TODO: check story folder contents
-
+        let folderStore = StoreContainer.shared.folderStore
+        let folders = folderStore.getStoryFolders()
+        for folder in folders where hasInconsistentAssets(storyFolder: folder) {
+            LogInfo(message: "StoryAssets where missing, or new assets were found for story: \(folder.name ?? "").")
+            return true
+        }
         return false
     }
 
@@ -67,7 +72,7 @@ class Reconciler {
         // if recreated we can bail
         let siteStore = StoreContainer.shared.siteStore
         if !siteStore.currentSiteFolderExists() {
-            LogDebug(message: "Recreating folder for current site.")
+            LogInfo(message: "Recreating folder for current site.")
             siteStore.createSiteFolderIfNeeded()
             return
         }
@@ -75,16 +80,35 @@ class Reconciler {
         // Get story folder inconsistencies
         let (rawFolders, removedStories) = getInconsistentStoryFolders()
         let folderStore = StoreContainer.shared.folderStore
-        LogDebug(message: "Creating StoryFolders for discovered folders.")
-        folderStore.createStoryFoldersForURLs(urls: rawFolders)
-        LogDebug(message: "Deleting StoryFolders for missing folders.")
-        folderStore.deleteStoryFolders(folders: removedStories)
+        if rawFolders.count > 0 {
+            LogInfo(message: "Creating StoryFolders for \(rawFolders.count) discovered folders.")
+            folderStore.createStoryFoldersForURLs(urls: rawFolders)
+        }
+        if removedStories.count > 0 {
+            LogInfo(message: "Deleting StoryFolders for \(removedStories.count) missing folders.")
+            folderStore.deleteStoryFolders(folders: removedStories)
+        }
 
-        // TODO: check folder contents
+        // Get asset inconsistencies.
+        let folders = folderStore.getStoryFolders()
+        for folder in folders {
+            let (rawAssets, removedAssets) = getInconsistentAssets(storyFolder: folder)
+            let assetStore = StoreContainer.shared.assetStore
+
+            if rawAssets.count > 0 {
+                LogInfo(message: "Creating StoryAssets for \(rawAssets.count) discovered items in story: \(folder.name ?? "").")
+                assetStore.createAssetsForURLs(urls: rawAssets, storyFolder: folder)
+            }
+            if removedAssets.count > 0 {
+                LogDebug(message: "Deleting StoryAssets for \(removedAssets.count) missing items in story: \(folder.name ?? "").")
+                assetStore.deleteAssets(assets: removedAssets)
+            }
+        }
     }
 
     /// Check if there are any inconsistencies between the file system and
     /// story folders in core data.
+    ///
     /// - Returns: true if there are inconsistencies, otherwise false.
     ///
     func hasInconsistentStoryFolders() -> Bool {
@@ -94,6 +118,7 @@ class Reconciler {
     }
 
     /// Get any inconsistencies between the file system and story folders.
+    ///
     /// - Returns: A tuple containing an array of file URLs that have no
     /// associated story, and an array of StoryFolders without a directory.
     ///
@@ -136,6 +161,78 @@ class Reconciler {
         }
 
         return (rawFolders, removedStories)
+    }
+
+    /// Check if there are any inconsistencies with story assets.
+    ///
+    /// - Returns: True if there are inconsistencies, otherwise false.
+    ///
+    func hasInconsistentAssets(storyFolder: StoryFolder) -> Bool {
+        let (rawAssets, removedAssets) = getInconsistentAssets(storyFolder: storyFolder)
+
+        return rawAssets.count > 0 || removedAssets.count > 0
+    }
+
+    /// Get any inconsistencies between the file system and story assets for the
+    /// specified story folder.
+    ///
+    /// - Returns: A tuple containing an array of file URLs that have no
+    /// associated story, and an array of StoryAssets without a file system item.
+    ///
+    func getInconsistentAssets(storyFolder: StoryFolder) -> ([URL], [StoryAsset]) {
+        var rawItems = [URL]()
+        var removedAssets = [StoryAsset]()
+
+        let store = StoreContainer.shared.assetStore
+        let assets = store.getStoryAssets(storyFolder: storyFolder)
+
+        let folderManager = SessionManager.shared.folderManager
+
+        guard let storyFolderURL = folderManager.urlFromBookmark(bookmark: storyFolder.bookmark) else {
+            return (rawItems, removedAssets)
+        }
+
+        rawItems = folderManager.enumerateFolderContents(url: storyFolderURL)
+
+        // Filter out any items that are not supported types.
+        rawItems = rawItems.filter({ (url) -> Bool in
+            return store.allowedExtensions.contains(url.pathExtension)
+        })
+
+        for asset in assets {
+            var isStale = false
+
+            guard let bookmark = asset.bookmark else {
+                // Some storyAsset's do not have bookmarks (e.g. TextNotes). In these
+                // cases there is nothing to reconcile so just skip them.
+                continue
+            }
+
+            guard let assetURL = folderManager.urlFromBookmark(bookmark: bookmark, bookmarkIsStale: &isStale) else {
+                removedAssets.append(asset)
+                continue
+            }
+            if isStale || !folderManager.folder(storyFolderURL, isParentOf: assetURL) {
+                removedAssets.append(asset)
+            }
+
+            // Remove a good asset's URL from the array of raw items.
+            // Whatever is left in raw items will be URLs that need an asset created.
+            rawItems = rawItems.filter { (url) -> Bool in
+                guard
+                    let urlRef = url.getFileReferenceURL(),
+                    let assetRef = assetURL.getFileReferenceURL()
+                else {
+                    // This probably shouldn't happen but keep the rawFolder URL
+                    // if it does.
+                    return true
+                }
+                // If the URLs are equal we can filter out the raw asset.
+                return !urlRef.isEqual(assetRef)
+            }
+        }
+
+        return (rawItems, removedAssets)
     }
 
 }
