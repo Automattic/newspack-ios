@@ -57,11 +57,9 @@ class Reconciler {
 
         let folderStore = StoreContainer.shared.folderStore
         let folders = folderStore.getStoryFolders()
-        for folder in folders {
-            if hasInconsistentAssets(storyFolder: folder) {
-                LogInfo(message: "StoryAssets where missing, or new assets were found for story: \(folder.name ?? "").")
-                return true
-            }
+        for folder in folders where hasInconsistentAssets(storyFolder: folder) {
+            LogInfo(message: "StoryAssets where missing, or new assets were found for story: \(folder.name ?? "").")
+            return true
         }
         return false
     }
