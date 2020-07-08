@@ -29,6 +29,7 @@ class Reconciler {
         }
 
         guard hasInconsistencies() else {
+            LogInfo(message: "No inconsistencies found.")
             return
         }
 
@@ -44,13 +45,13 @@ class Reconciler {
         // Check site
         let siteStore = StoreContainer.shared.siteStore
         if !siteStore.currentSiteFolderExists() {
-            LogDebug(message: "Folder for current site is missing.")
+            LogInfo(message: "Folder for current site is missing.")
             return true
         }
 
         // Check story folders
         if hasInconsistentStoryFolders() {
-            LogDebug(message: "StoryFolders where missing, or new folders were found.")
+            LogInfo(message: "StoryFolders where missing, or new folders were found.")
             return true
         }
 
@@ -58,7 +59,7 @@ class Reconciler {
         let folders = folderStore.getStoryFolders()
         for folder in folders {
             if hasInconsistentAssets(storyFolder: folder) {
-                LogDebug(message: "StoryAssets where missing, or new assets were found.")
+                LogInfo(message: "StoryAssets where missing, or new assets were found for story: \(folder.name ?? "").")
                 return true
             }
         }
@@ -73,7 +74,7 @@ class Reconciler {
         // if recreated we can bail
         let siteStore = StoreContainer.shared.siteStore
         if !siteStore.currentSiteFolderExists() {
-            LogDebug(message: "Recreating folder for current site.")
+            LogInfo(message: "Recreating folder for current site.")
             siteStore.createSiteFolderIfNeeded()
             return
         }
@@ -81,19 +82,29 @@ class Reconciler {
         // Get story folder inconsistencies
         let (rawFolders, removedStories) = getInconsistentStoryFolders()
         let folderStore = StoreContainer.shared.folderStore
-        LogDebug(message: "Creating StoryFolders for discovered folders.")
-        folderStore.createStoryFoldersForURLs(urls: rawFolders)
-        LogDebug(message: "Deleting StoryFolders for missing folders.")
-        folderStore.deleteStoryFolders(folders: removedStories)
+        if rawFolders.count > 0 {
+            LogInfo(message: "Creating StoryFolders for \(rawFolders.count) discovered folders.")
+            folderStore.createStoryFoldersForURLs(urls: rawFolders)
+        }
+        if removedStories.count > 0 {
+            LogInfo(message: "Deleting StoryFolders for \(removedStories.count) missing folders.")
+            folderStore.deleteStoryFolders(folders: removedStories)
+        }
 
+        // Get asset inconsistencies.
         let folders = folderStore.getStoryFolders()
         for folder in folders {
             let (rawAssets, removedAssets) = getInconsistentAssets(storyFolder: folder)
             let assetStore = StoreContainer.shared.assetStore
-            LogDebug(message: "Creating StoryAssets for discovered items.")
-            assetStore.createAssetsForURLs(urls: rawAssets, storyFolder: folder)
-            LogDebug(message: "Deleting StoryAssets for missing items.")
-            assetStore.deleteAssets(assets: removedAssets)
+
+            if rawAssets.count > 0 {
+                LogInfo(message: "Creating StoryAssets for \(rawAssets.count) discovered items in story: \(folder.name ?? "").")
+                assetStore.createAssetsForURLs(urls: rawAssets, storyFolder: folder)
+            }
+            if removedAssets.count > 0 {
+                LogDebug(message: "Deleting StoryAssets for \(removedAssets.count) missing items in story: \(folder.name ?? "").")
+                assetStore.deleteAssets(assets: removedAssets)
+            }
         }
     }
 
