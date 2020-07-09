@@ -4,12 +4,21 @@ import WordPressFlux
 
 class AssetsViewController: UITableViewController {
 
+    @IBOutlet var sortControl: UISegmentedControl!
+
     var dataSource: AssetDataSource!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureDataSource()
+
+        // Temporary measure. The UI will change so right now this doesn't need to be pretty.
+        let headerView = tableView.tableHeaderView!
+        var frame = headerView.frame
+        frame.size.height = 44.0
+        headerView.frame = frame
+        tableView.tableHeaderView = headerView
     }
 
 }
@@ -21,6 +30,10 @@ extension AssetsViewController {
     @IBAction func handleAddTapped(sender: Any) {
         let action = AssetAction.createAssetFor(text: "New Text Note")
         SessionManager.shared.sessionDispatcher.dispatch(action)
+    }
+
+    @IBAction func handleSortChanged(sender: Any) {
+        print("changed")
     }
 
 }

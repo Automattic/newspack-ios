@@ -125,14 +125,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <stackView key="tableHeaderView" opaque="NO" contentMode="scaleToFill" id="lrE-Pn-O5b">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ujc-SR-HJd">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
+                                    <segments>
+                                        <segment title="Ordered"/>
+                                        <segment title="Type"/>
+                                    </segments>
+                                    <connections>
+                                        <action selector="handleSortChangedWithSender:" destination="EtD-KI-a1B" eventType="valueChanged" id="Kog-eH-9Qt"/>
+                                    </connections>
+                                </segmentedControl>
+                            </subviews>
+                        </stackView>
                         <view key="tableFooterView" contentMode="scaleToFill" id="GFd-8g-uaH">
-                            <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
+                            <rect key="frame" x="0.0" y="143.5" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AssetCell" id="a0I-9b-USj">
-                                <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="a0I-9b-USj" id="G1c-S4-kfV">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -153,6 +169,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="sortControl" destination="Ujc-SR-HJd" id="vEb-oM-xai"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V9p-Z4-7n1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
