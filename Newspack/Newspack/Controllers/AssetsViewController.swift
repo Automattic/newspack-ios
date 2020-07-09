@@ -42,7 +42,14 @@ extension AssetsViewController {
 extension AssetsViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectSelectedRowWithAnimation(true)
+        guard let asset = dataSource.object(at: indexPath) else {
+            return
+        }
 
+        // HACK HACK HACK: Just for testing. Tap on a cell to change which section it should be sorted to.
+        asset.order = (asset.order == -1) ? 1 : -1
+        CoreDataManager.shared.saveContext(context: asset.managedObjectContext!)
     }
 }
 
@@ -51,7 +58,8 @@ extension AssetsViewController {
 
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell", for: indexPath)
-        cell.textLabel?.text = storyAsset.name
+        cell.textLabel?.text = storyAsset.name + " " + String(storyAsset.order)
+        cell.detailTextLabel?.text = storyAsset.uuid.uuidString
         cell.accessoryType = .disclosureIndicator
 
         return cell
@@ -67,11 +75,7 @@ extension AssetsViewController {
 }
 
 // MARK: - AssetDataSource
-class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, StoryAsset> {
-
-    enum Section: CaseIterable {
-        case main
-    }
+class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
 
     // Receipt so we can respond to any emitted changes in the AssetStore.
     private var receipt: Any?
@@ -87,7 +91,7 @@ class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, St
     // animate changes.
     weak var tableView: UITableView?
 
-    override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<AssetDataSource.Section, StoryAsset>.CellProvider) {
+    override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Int, StoryAsset>.CellProvider) {
         self.tableView = tableView
         super.init(tableView: tableView, cellProvider: cellProvider)
 
@@ -100,18 +104,29 @@ class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, St
         try? resultsController.performFetch()
     }
 
+    func object(at indexPath: IndexPath) -> StoryAsset? {
+        return resultsController.object(at: indexPath)
+    }
+
     /// Updates the current datasource snapshot. Changes are animated only if
     /// the tableView has a window (and is presumed visible).
     ///
     func update() {
-        guard let items = resultsController.fetchedObjects else {
+
+        guard let sections = resultsController.sections else {
             return
         }
-        var snapshot = NSDiffableDataSourceSnapshot<AssetDataSource.Section, StoryAsset>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(items)
+        var snapshot = NSDiffableDataSourceSnapshot<Int, StoryAsset>()
 
-        let shouldAnimate = tableView?.window != nil
+        for (i , section) in sections.enumerated() {
+            snapshot.appendSections([i])
+            guard let items = section.objects as? [StoryAsset] else {
+                continue
+            }
+            snapshot.appendItems(items, toSection: i)
+        }
+
+        let shouldAnimate = false// tableView?.window != nil
         apply(snapshot, animatingDifferences: shouldAnimate, completion: nil)
     }
 
@@ -130,6 +145,10 @@ class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, St
         }
     }
 
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? "Assets" : "Unsorted Assets"
+    }
 }
 
 // MARK: - Fetched Results Controller Delegate methods

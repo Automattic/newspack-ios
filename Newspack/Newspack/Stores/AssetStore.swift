@@ -170,13 +170,18 @@ extension AssetStore {
         guard let storyFolder = StoreContainer.shared.folderStore.currentStoryFolder else {
             fatalError()
         }
-        let fetchRequest = StoryAsset.defaultFetchRequest()
 
+        let sortDescriptors = [
+            NSSortDescriptor(key: "sorted", ascending: false),
+            NSSortDescriptor(key: "order", ascending: true),
+            NSSortDescriptor(key: "date", ascending: true)
+        ]
+        let fetchRequest = StoryAsset.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "folder = %@", storyFolder)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "order", ascending: true)]
+        fetchRequest.sortDescriptors = sortDescriptors
         return NSFetchedResultsController(fetchRequest: fetchRequest,
                                           managedObjectContext: CoreDataManager.shared.mainContext,
-                                          sectionNameKeyPath: nil,
+                                          sectionNameKeyPath: "sorted",
                                           cacheName: nil)
     }
 }
