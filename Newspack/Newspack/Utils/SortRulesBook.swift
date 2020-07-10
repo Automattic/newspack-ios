@@ -12,8 +12,54 @@ class SortRulesBook {
 
     private let storageKey: String
     private let fields: [String]
+    private var defaultSectionKey: String?
     private let defaults: SortRules
     private let caseInsensitiveFields: [String]
+
+    // Get the current sectionNameKeyPath if one exists.
+    //
+    var sectionKey: String? {
+        guard
+            let dict = UserDefaults.shared.dictionary(forKey: storageKey),
+            let key = dict[Constants.sectionKey] as? String
+        else {
+            return defaultSectionKey
+        }
+        return key
+    }
+
+    /// Get a list of NSSortDescriptors derived from the current SortRules.
+    ///
+    /// - Returns: An array of NSSortDescriptors
+    ///
+    var descriptors: [NSSortDescriptor] {
+        let dict = rules
+
+        var arr = [NSSortDescriptor]()
+        for (key, value) in dict {
+            if caseInsensitiveFields.contains(key) {
+                arr.append(NSSortDescriptor(key: key, ascending: value, selector: #selector(NSString.caseInsensitiveCompare)))
+            } else {
+                arr.append(NSSortDescriptor(key: key, ascending: value))
+            }
+        }
+
+        return arr
+    }
+
+    /// Returns the current SortRules
+    ///
+    /// - Returns: An array of SortRules
+    ///
+    var rules: SortRules {
+        guard
+            let dict = UserDefaults.shared.dictionary(forKey: storageKey),
+            let rules = dict[Constants.rules] as? SortRules
+        else {
+            return defaults
+        }
+        return rules
+    }
 
     /// Creates a new instance of a SortRulesManager
     ///
@@ -21,12 +67,14 @@ class SortRulesBook {
     ///   - storageKey: A key to use with UserDefaults.
     ///   - fields: A list of allowed fields to sort by.
     ///   - defaults: Default SortRules.  This should not be empty.
+    ///   - sectionKey: A sectionNameKeyPath for ordering results into sections in a FetchedRsultsController.
     ///   - caseInsensitiveFields: Optional. An array of case insensitive fields. These should only be string fields.
     ///
-    init(storageKey: String, fields: [String], defaults: SortRules, caseInsensitiveFields: [String] = []) {
+    init(storageKey: String, fields: [String], defaults: SortRules, sectionKey: String? = nil, caseInsensitiveFields: [String] = []) {
         self.storageKey = storageKey
         self.fields = fields
         self.defaults = defaults
+        self.defaultSectionKey = sectionKey
         self.caseInsensitiveFields = caseInsensitiveFields
 
         setup()
@@ -45,26 +93,7 @@ class SortRulesBook {
     /// Resets the stored SortRules to the default rules.
     ///
     func reset() {
-        UserDefaults.shared.set(defaults, forKey: storageKey)
-    }
-
-    /// Get a list of NSSortDescriptors derived from the current SortRules.
-    ///
-    /// - Returns: An array of NSSortDescriptors
-    ///
-    func descriptors() -> [NSSortDescriptor] {
-        let dict = rules()
-
-        var arr = [NSSortDescriptor]()
-        for (key, value) in dict {
-            if caseInsensitiveFields.contains(key) {
-                arr.append(NSSortDescriptor(key: key, ascending: value, selector: #selector(NSString.caseInsensitiveCompare)))
-            } else {
-                arr.append(NSSortDescriptor(key: key, ascending: value))
-            }
-        }
-
-        return arr
+        saveRules(rules: defaults, sectionKey: sectionKey)
     }
 
     /// Check if there is an existing rule matching the specified field and value.
@@ -74,7 +103,7 @@ class SortRulesBook {
     /// - Returns: True if a rule exists, otherwise false.
     ///
     func hasRule(field: String, ascending: Bool) -> Bool {
-        return rules().contains { element -> Bool in
+        return rules.contains { element -> Bool in
             return element.key == field && element.value == ascending
         }
     }
@@ -94,9 +123,9 @@ class SortRulesBook {
             return
         }
 
-        var dict = rules()
+        var dict = rules
         dict[field] = ascending
-        UserDefaults.shared.set(dict, forKey: storageKey)
+        saveRules(rules: dict, sectionKey: sectionKey)
     }
 
     /// Sets the stored rules. Note that any keys missing from fields will be
@@ -111,18 +140,43 @@ class SortRulesBook {
                 dict[rule.key] = rule.value
             }
         }
+        saveRules(rules: dict, sectionKey: sectionKey)
+    }
+
+    /// Sets the section key. Note that the key must be one of the allowed fields.
+    ///
+    /// - Parameter key: The field to use for sections, or nil.
+    ///
+    func setSectionKey(key: String?) {
+        // If the key is not nil, and it isn't included in the list of allowed
+        // fields just return.
+        if let key = key, !fields.contains(key) {
+            return
+        }
+        saveRules(rules: rules, sectionKey: key)
+    }
+
+    /// Save Rules
+    ///
+    /// - Parameters:
+    ///   - rules: The SortRules to save.
+    ///   - sectionKey: The section key to save.
+    ///
+    private func saveRules(rules: SortRules, sectionKey: String?) {
+        var dict: [String: Any?] = [
+            Constants.rules: rules
+        ]
+
+        if let key = sectionKey {
+            dict[Constants.sectionKey] = key
+        }
+
         UserDefaults.shared.set(dict, forKey: storageKey)
     }
 
-    /// Returns the current SortRules
-    ///
-    /// - Returns: An array of SortRules
-    ///
-    func rules() -> SortRules {
-        guard let dict = UserDefaults.shared.dictionary(forKey: storageKey) as? SortRules else {
-            return defaults
-        }
-        return dict
+    /// Private constants.
+    private struct Constants {
+        static let sectionKey = "sectionKey"
+        static let rules = "rules"
     }
-
 }

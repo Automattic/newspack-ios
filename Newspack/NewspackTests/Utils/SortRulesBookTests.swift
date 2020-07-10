@@ -25,10 +25,10 @@ class SortRulesBookTests: XCTestCase {
         }
 
         sortRules.setRules(rules: rules)
-        XCTAssertFalse(NSDictionary(dictionary: defaults).isEqual(to: sortRules.rules()))
+        XCTAssertFalse(NSDictionary(dictionary: defaults).isEqual(to: sortRules.rules))
 
         sortRules.reset()
-        XCTAssertTrue(NSDictionary(dictionary: defaults).isEqual(to: sortRules.rules()))
+        XCTAssertTrue(NSDictionary(dictionary: defaults).isEqual(to: sortRules.rules))
     }
 
     func testHasRule() {
@@ -58,7 +58,7 @@ class SortRulesBookTests: XCTestCase {
         }
         sortRules.setRules(rules: rules)
 
-        let setRules = sortRules.rules()
+        let setRules = sortRules.rules
         for (key, value) in setRules {
             XCTAssertTrue(fields.contains(key))
             XCTAssertTrue(value)
@@ -66,7 +66,7 @@ class SortRulesBookTests: XCTestCase {
     }
 
     func testDescriptors() {
-        let descriptors = sortRules.descriptors()
+        let descriptors = sortRules.descriptors
         for descriptor in descriptors {
             XCTAssertTrue(fields.contains(descriptor.key!))
             XCTAssertFalse(descriptor.ascending)

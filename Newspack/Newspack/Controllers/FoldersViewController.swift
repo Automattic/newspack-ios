@@ -103,7 +103,7 @@ extension FoldersViewController {
     }
 
     func configureSortControl() {
-        let dict = StoreContainer.shared.folderStore.sortRules.rules()
+        let dict = StoreContainer.shared.folderStore.sortRules.rules
         for (key, value) in dict {
             sortDirection.selectedSegmentIndex = value ? 0 : 1
 
@@ -172,7 +172,7 @@ class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, 
         let action = FolderAction.sortBy(field: field, ascending: ascending)
         SessionManager.shared.sessionDispatcher.dispatch(action)
 
-        resultsController.fetchRequest.sortDescriptors = StoreContainer.shared.folderStore.sortRules.descriptors()
+        resultsController.fetchRequest.sortDescriptors = StoreContainer.shared.folderStore.sortRules.descriptors
         try? resultsController.performFetch()
 
         update()
