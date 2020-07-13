@@ -191,13 +191,12 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard let storyAsset = resultsController.fetchedObjects?[indexPath.row] else {
+        guard editingStyle == .delete else {
             return
         }
-        if editingStyle == .delete {
-            let action = AssetAction.deleteAsset(assetID: storyAsset.uuid)
-            SessionManager.shared.sessionDispatcher.dispatch(action)
-        }
+        let storyAsset = resultsController.object(at: indexPath)
+        let action = AssetAction.deleteAsset(assetID: storyAsset.uuid)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
