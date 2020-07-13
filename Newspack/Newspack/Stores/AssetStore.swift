@@ -8,6 +8,36 @@ class AssetStore: Store {
 
     private let folderManager: FolderManager
 
+    lazy private(set) var sortOrganizer: SortOrganizer = {
+        var typeRules: [SortRule] = [
+            SortRule(field: "assetTypeValue", displayName: NSLocalizedString("Type", comment: "Noun. The type or category of something."), ascending: false),
+            SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true)
+        ]
+        var typeSort = SortMode(defaultsKey: "AssetSortModeType",
+                                title: NSLocalizedString("Type", comment: "Noun. The title of a list that is sorted by the types of objects in the list."),
+                                rules: typeRules,
+                                hasSections: true) { (title) -> String in
+                                    guard let type = StoryAssetType(rawValue: title) else {
+                                        return NSLocalizedString("Unrecognized", comment: "Adjective. Refers to an object that was not an expected type.")
+                                    }
+                                    return type.displayName()
+                                }
+        var orderRules: [SortRule] = [
+            SortRule(field: "sorted", displayName: NSLocalizedString("Sorted", comment: "Adjective. Refers whether items have been sorted or are unsorted."), ascending: false),
+            SortRule(field: "order", displayName: NSLocalizedString("Order", comment: "Noun. Refers to the order or arrangement of items in a list."), ascending: true),
+            SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true)
+        ]
+        var orderSort = SortMode(defaultsKey: "AssetSortModeOrder",
+                                 title: NSLocalizedString("Order", comment: "Noun. Refers to the order or arrangement of items in a list."),
+                                 rules: orderRules,
+                                 hasSections: true) { (title) -> String in
+                                    let sorted = NSLocalizedString("Sorted", comment: "Noun. Refers to items that have been sorted into a specific order or grouping.")
+                                    let unsorted = NSLocalizedString("Unsorted", comment: "Noun. Refers to items that have been not been sorted into a specific order or grouping.")
+                                    return title == "1" ? sorted : unsorted
+                                }
+        return SortOrganizer(defaultsKey: "AssetSortOrganizerIndex", modes: [typeSort, orderSort])
+    }()
+
     // TODO: This is a stub for now and will be improved as features are added.
     var allowedExtensions: [String] {
         return ["png", "jpg", "jpeg"]
@@ -25,6 +55,8 @@ class AssetStore: Store {
     override func onDispatch(_ action: Action) {
         if let action = action as? AssetAction {
             switch action {
+            case .sortMode(let index):
+                selectSortMode(index: index)
             case .createAssetFor(let text):
                 createAssetFor(text: text)
             case .deleteAsset(let uuid):
@@ -36,6 +68,14 @@ class AssetStore: Store {
 
 // MARK: - Actions
 extension AssetStore {
+
+    /// Update the sort rules for story assets returned by the stores results controller.
+    ///
+    /// - Parameter sortMode: The sort mode to sort by.
+    ///
+    func selectSortMode(index: Int) {
+        sortOrganizer.select(index: index)
+    }
 
     func createAssetFor(text: String, onComplete: (() -> Void)? = nil) {
         guard let folder = StoreContainer.shared.folderStore.currentStoryFolder else {
@@ -171,17 +211,12 @@ extension AssetStore {
             fatalError()
         }
 
-        let sortDescriptors = [
-            NSSortDescriptor(key: "sorted", ascending: false),
-            NSSortDescriptor(key: "order", ascending: true),
-            NSSortDescriptor(key: "date", ascending: true)
-        ]
         let fetchRequest = StoryAsset.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "folder = %@", storyFolder)
-        fetchRequest.sortDescriptors = sortDescriptors
+        fetchRequest.sortDescriptors = sortOrganizer.selectedMode.descriptors
         return NSFetchedResultsController(fetchRequest: fetchRequest,
                                           managedObjectContext: CoreDataManager.shared.mainContext,
-                                          sectionNameKeyPath: "sorted",
+                                          sectionNameKeyPath: sortOrganizer.selectedMode.sectionNameKeyPath,
                                           cacheName: nil)
     }
 }
