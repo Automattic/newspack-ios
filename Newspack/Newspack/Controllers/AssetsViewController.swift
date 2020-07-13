@@ -73,6 +73,14 @@ extension AssetsViewController {
     override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return tableView.isEditing ? false : true
     }
+
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        // No droppiing into the unsorted section, so just return the source indexpath.
+        if proposedDestinationIndexPath.section == 1 {
+            return sourceIndexPath
+        }
+        return proposedDestinationIndexPath
+    }
 }
 
 // MARK: - DataSource related methods
@@ -206,7 +214,54 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
     }
 
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // Here are the rules:
+        // 1. unsorted items can be moved to sorted items.
+        // 2. sorted items can not be moved to unsorted items.
+        // 3. unsorted items do not change order within unsorted items.
+        // 4. Update the sort order of all sorted items for simplicity sake.
+        guard destinationIndexPath.section == 0 else {
+            return
+        }
 
+        guard let sortedAssets = resultsController.sections?[0].objects as? [StoryAsset] else {
+            LogError(message: "Tried to move a row but no sorted section found.")
+            return
+        }
+
+        var newOrder = [UUID: Int]()
+
+        let movedAsset = resultsController.object(at: sourceIndexPath)
+        newOrder[movedAsset.uuid] = destinationIndexPath.row
+
+        // We need to update the sort order of Assets. We can do this by looping
+        // over sortedAssets and setting their order property to the index of
+        // the loop, taking into account whether the modified row was previously
+        // unsorted, or moved up or down in the sorted list.
+        // We can get the range of affected rows and then add a modifier of 1 or -1
+        // as appropriate.
+        var modifier = 1
+        var range: Range<Int>
+        if sourceIndexPath.section == 1 {
+            // We're inserting from unsorted into sorted.
+            range = Range(destinationIndexPath.row...sortedAssets.count)
+        } else if sourceIndexPath.row > destinationIndexPath.row {
+            // We're moving from vertically lower in the list, to higher in the list.
+            range = Range(destinationIndexPath.row...sourceIndexPath.row)
+        } else {
+            // We're moving from vertically higher in the list to lower in the list.
+            modifier = -1
+            range = Range(sourceIndexPath.row...destinationIndexPath.row)
+        }
+
+        for (index, asset) in sortedAssets.enumerated() {
+            if asset == movedAsset {
+                continue
+            }
+            newOrder[asset.uuid] = range.contains(index) ? index + modifier : index
+        }
+
+        let action = AssetAction.applyOrder(order: newOrder)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 }
 

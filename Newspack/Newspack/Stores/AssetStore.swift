@@ -62,6 +62,8 @@ class AssetStore: Store {
             switch action {
             case .sortMode(let index):
                 selectSortMode(index: index)
+            case .applyOrder(let order):
+                applySortOrder(order: order)
             case .createAssetFor(let text):
                 createAssetFor(text: text)
             case .deleteAsset(let uuid):
@@ -200,6 +202,24 @@ extension AssetStore {
         }
     }
 
+    func applySortOrder(order: [UUID: Int]) {
+        print(order.values)
+        CoreDataManager.shared.performOnWriteContext { context in
+            for (key, value) in order {
+                let fetchRequest = StoryAsset.defaultFetchRequest()
+                fetchRequest.predicate = NSPredicate(format: "uuid = %@", key as CVarArg)
+
+                guard let asset = try? context.fetch(fetchRequest).first else {
+                    continue
+                }
+
+                asset.order = Int16(value)
+            }
+
+            CoreDataManager.shared.saveContext(context: context)
+        }
+
+    }
 }
 
 extension AssetStore {
