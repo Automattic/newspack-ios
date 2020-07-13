@@ -8,6 +8,12 @@ struct SortRule {
     let displayName: String
     var ascending: Bool
 
+    init(field: String, displayName: String, ascending: Bool) {
+        self.field = field
+        self.displayName = displayName
+        self.ascending = ascending
+    }
+
     init(dict: [String: Any]) {
         guard
             let field = dict["field"] as? String,
@@ -43,7 +49,7 @@ class SortMode {
 
     let title: String
 
-    let sectionNameKeyPath: String?
+    let hasSections: Bool
 
     private let sectionNameResolver: ((_ name: String) -> String)?
 
@@ -59,10 +65,17 @@ class SortMode {
         return arr
     }
 
-    init(defaultsKey: String, title: String, sectionName: String, rules: [SortRule], resolver: @escaping ((_ name: String) -> String)) {
+    var sectionNameKeyPath: String? {
+        guard hasSections else {
+            return nil
+        }
+        return rules.first?.field
+    }
+
+    init(defaultsKey: String, title: String, rules: [SortRule], hasSections: Bool, resolver: @escaping ((_ name: String) -> String)) {
         self.defaultsKey = defaultsKey
         self.title = title
-        self.sectionNameKeyPath = sectionName
+        self.hasSections = hasSections
         self.rules = rules
         sectionNameResolver = resolver
 
