@@ -28,4 +28,18 @@ enum StoryAssetType: String {
     case image
     case video
     case audioNote
+
+    func displayName() -> String {
+        switch self {
+        case .textNote:
+            return NSLocalizedString("Text Note", comment: "Noun. A short note made up of simple text.")
+        case .image:
+            return NSLocalizedString("Image", comment: "Noun. An image or photo.")
+        case .video:
+            return NSLocalizedString("Video", comment: "Noun. A video recording.")
+        case .audioNote:
+            return NSLocalizedString("Audio Note", comment: "Noun: A short audio recording. Like a text note but audio, likely the user's own voice.")
+
+        }
+    }
 }
