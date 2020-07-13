@@ -132,8 +132,8 @@
                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ujc-SR-HJd">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                                     <segments>
-                                        <segment title="Ordered"/>
                                         <segment title="Type"/>
+                                        <segment title="Ordered"/>
                                     </segments>
                                     <connections>
                                         <action selector="handleSortChangedWithSender:" destination="EtD-KI-a1B" eventType="valueChanged" id="Kog-eH-9Qt"/>

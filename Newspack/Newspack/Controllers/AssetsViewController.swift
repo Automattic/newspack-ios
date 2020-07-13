@@ -12,6 +12,7 @@ class AssetsViewController: UITableViewController {
         super.viewDidLoad()
 
         configureDataSource()
+        configureSortControl()
 
         // Temporary measure. The UI will change so right now this doesn't need to be pretty.
         let headerView = tableView.tableHeaderView!
@@ -33,7 +34,10 @@ extension AssetsViewController {
     }
 
     @IBAction func handleSortChanged(sender: Any) {
-        print("changed")
+        let action = AssetAction.sortMode(index: sortControl.selectedSegmentIndex)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+        // refresh data source.
+        dataSource.refresh()
     }
 
 }
@@ -55,6 +59,17 @@ extension AssetsViewController {
 
 // MARK: - DataSource related methods
 extension AssetsViewController {
+
+    func configureSortControl() {
+        let assetStore = StoreContainer.shared.assetStore
+
+        sortControl.removeAllSegments()
+        for (index, mode) in assetStore.sortOrganizer.modes.enumerated() {
+            sortControl.insertSegment(withTitle: mode.title, at: index, animated: false)
+        }
+
+        sortControl.selectedSegmentIndex = assetStore.sortOrganizer.selectedIndex
+    }
 
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell", for: indexPath)
@@ -104,8 +119,22 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
         try? resultsController.performFetch()
     }
 
+    /// A pass through method to get an entity from the backing results controller
+    /// by the entities index path.
+    ///
+    /// - Parameter indexPath: The desired entity's index path.
+    /// - Returns: A story asset instance or nil.
+    ///
     func object(at indexPath: IndexPath) -> StoryAsset? {
         return resultsController.object(at: indexPath)
+    }
+
+    func refresh() {
+        resultsController.delegate = nil
+        resultsController = StoreContainer.shared.assetStore.getResultsController()
+        resultsController.delegate = self
+        try? resultsController.performFetch()
+        update()
     }
 
     /// Updates the current datasource snapshot. Changes are animated only if
@@ -147,7 +176,11 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
 
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "Assets" : "Unsorted Assets"
+        guard let sectionInfo = resultsController.sections?[section] else {
+            return ""
+        }
+        let mode = StoreContainer.shared.assetStore.sortOrganizer.selectedMode
+        return mode.title(for: sectionInfo)
     }
 }
 
