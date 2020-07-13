@@ -43,6 +43,11 @@ class AssetStore: Store {
         return ["png", "jpg", "jpeg"]
     }
 
+    var canSortAssets: Bool {
+        // True if the selected sort option is orderSort.
+        return sortOrganizer.selectedIndex == 1
+    }
+
     override init(dispatcher: ActionDispatcher = .global) {
 
         folderManager = SessionManager.shared.folderManager

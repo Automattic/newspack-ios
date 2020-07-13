@@ -36,8 +36,18 @@ extension AssetsViewController {
     @IBAction func handleSortChanged(sender: Any) {
         let action = AssetAction.sortMode(index: sortControl.selectedSegmentIndex)
         SessionManager.shared.sessionDispatcher.dispatch(action)
+
+        tableView.isEditing = false
         // refresh data source.
         dataSource.refresh()
+    }
+
+    @IBAction func handleToggleEditing(sender: Any) {
+        if tableView.isEditing {
+            tableView.setEditing(false, animated: true)
+        } else if StoreContainer.shared.assetStore.canSortAssets {
+            tableView.setEditing(true, animated: true)
+        }
     }
 
 }
@@ -54,6 +64,14 @@ extension AssetsViewController {
         // HACK HACK HACK: Just for testing. Tap on a cell to change which section it should be sorted to.
         asset.order = (asset.order == -1) ? 1 : -1
         CoreDataManager.shared.saveContext(context: asset.managedObjectContext!)
+    }
+
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return tableView.isEditing ? .none : .delete
+    }
+
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return tableView.isEditing ? false : true
     }
 }
 
@@ -174,13 +192,21 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
         }
     }
 
-
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let sectionInfo = resultsController.sections?[section] else {
             return ""
         }
         let mode = StoreContainer.shared.assetStore.sortOrganizer.selectedMode
         return mode.title(for: sectionInfo)
+    }
+
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        let mode = StoreContainer.shared.assetStore.sortOrganizer.selectedMode
+        return mode.rules.first?.field == "sorted"
+    }
+
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+
     }
 }
 

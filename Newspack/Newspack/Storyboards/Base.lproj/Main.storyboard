@@ -178,11 +178,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Assets" id="zmw-7F-Zw1">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="YP3-Sh-l02">
-                            <connections>
-                                <action selector="handleAddTappedWithSender:" destination="EtD-KI-a1B" id="oCV-tr-wXm"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="YP3-Sh-l02">
+                                <connections>
+                                    <action selector="handleAddTappedWithSender:" destination="EtD-KI-a1B" id="oCV-tr-wXm"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="edit" id="Q83-lh-HXm">
+                                <connections>
+                                    <action selector="handleToggleEditingWithSender:" destination="EtD-KI-a1B" id="XMg-Hr-Ag2"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
