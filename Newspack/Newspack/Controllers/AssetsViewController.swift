@@ -173,7 +173,7 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
         }
         var snapshot = NSDiffableDataSourceSnapshot<Int, StoryAsset>()
 
-        for (i , section) in sections.enumerated() {
+        for (i, section) in sections.enumerated() {
             snapshot.appendSections([i])
             guard let items = section.objects as? [StoryAsset] else {
                 continue
