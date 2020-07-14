@@ -8,6 +8,7 @@ class AssetStore: Store {
 
     private let folderManager: FolderManager
 
+    /// Defines a SortOrganizer and its associated SortRules.
     lazy private(set) var sortOrganizer: SortOrganizer = {
         var typeRules: [SortRule] = [
             SortRule(field: "assetTypeValue", displayName: NSLocalizedString("Type", comment: "Noun. The type or category of something."), ascending: false),
@@ -43,6 +44,8 @@ class AssetStore: Store {
         return ["png", "jpg", "jpeg"]
     }
 
+    /// Whethher the StoryAssets managed by the store can be sorted. This applies
+    /// only to the assets wrangled by the SortOrganizer.
     var canSortAssets: Bool {
         // True if the selected sort option is orderSort.
         return sortOrganizer.selectedIndex == 1
@@ -84,6 +87,12 @@ extension AssetStore {
         sortOrganizer.select(index: index)
     }
 
+    /// Create a new TextNote StoryAsset
+    ///
+    /// - Parameters:
+    ///   - text: A string of text.
+    ///   - onComplete: A closeure to call when finished.
+    ///
     func createAssetFor(text: String, onComplete: (() -> Void)? = nil) {
         guard let folder = StoreContainer.shared.folderStore.currentStoryFolder else {
             LogError(message: "Attempted to create story asset, but a current story folder was not found.")
@@ -108,6 +117,13 @@ extension AssetStore {
         }
     }
 
+    /// Create new StoryAsset instances for the specified file URLs.
+    ///
+    /// - Parameters:
+    ///   - urls: An array of file URLs.
+    ///   - storyFolder: The parent StoryFolder for the new StoryAssets
+    ///   - onComplete: A closure to call when finished.
+    ///
     func createAssetsForURLs(urls: [URL], storyFolder: StoryFolder, onComplete:(() -> Void)? = nil) {
         // Create the core data proxy for the story asset.
         let objID = storyFolder.objectID
@@ -134,6 +150,15 @@ extension AssetStore {
         }
     }
 
+    /// Create a new StoryAsset.
+    ///
+    /// - Parameters:
+    ///   - name: The asset's name.
+    ///   - url: The file URL of the asset if there is a corresponding file system object.
+    ///   - storyFolder: The asset's StoryFolder.
+    ///   - context: A NSManagedObjectContext to use.
+    /// - Returns: A new StoryAsset
+    ///
     func createAsset(name: String, url: URL?, storyFolder: StoryFolder, in context: NSManagedObjectContext) -> StoryAsset {
         let asset = StoryAsset(context: context)
         if let url = url {
@@ -147,6 +172,11 @@ extension AssetStore {
         return asset
     }
 
+    /// Retursn the name to use for a story asset based on the supplied string.
+    ///
+    /// - Parameter string: A string from which to derived the StoryAsset's name.
+    /// - Returns: The name for a StoryAsset.
+    ///
     func assetName(from string: String) -> String {
         let maxLength = 50 // Fifty is an arbitrary number.
         guard let index = string.index(string.startIndex, offsetBy: maxLength, limitedBy: string.endIndex) else {
@@ -161,6 +191,10 @@ extension AssetStore {
         return str + "..."
     }
 
+    /// Deletes the specified StoryAsset.
+    ///
+    /// - Parameter assetID: The UUID of the specified StoryAsset.
+    ///
     func deleteAsset(assetID: UUID) {
         guard let asset = getStoryAssetByID(uuid: assetID) else {
             return
@@ -168,6 +202,12 @@ extension AssetStore {
         deleteAssets(assets: [asset])
     }
 
+    /// Deletes the specified assets and triggers the specified callback.
+    ///
+    /// - Parameters:
+    ///   - assets: An array of StoryAssets to delete.
+    ///   - onComplete: A closure to execute when finished, whether successful or not.
+    ///
     func deleteAssets(assets: [StoryAsset], onComplete: (() -> Void)? = nil) {
         // For each asset, remove its bookmarked content and then delete.
         var objIDs = [NSManagedObjectID]()
@@ -202,6 +242,12 @@ extension AssetStore {
         }
     }
 
+    /// Updates the sort order of the StoryAssets matching the specified UUIDs.
+    ///
+    /// - Parameter order: A dictionary representing the StoryAssets to update.
+    /// Keys should be the asset UUIDs and values should be the desired sort order
+    /// for the assets.
+    ///
     func applySortOrder(order: [UUID: Int]) {
         print(order.values)
         CoreDataManager.shared.performOnWriteContext { context in
