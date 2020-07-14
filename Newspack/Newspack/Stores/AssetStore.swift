@@ -10,11 +10,11 @@ class AssetStore: Store {
 
     /// Defines a SortOrganizer and its associated SortRules.
     lazy private(set) var sortOrganizer: SortOrganizer = {
-        var typeRules: [SortRule] = [
+        let typeRules: [SortRule] = [
             SortRule(field: "assetTypeValue", displayName: NSLocalizedString("Type", comment: "Noun. The type or category of something."), ascending: false),
             SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true)
         ]
-        var typeSort = SortMode(defaultsKey: "AssetSortModeType",
+        let typeSort = SortMode(defaultsKey: "AssetSortModeType",
                                 title: NSLocalizedString("Type", comment: "Noun. The title of a list that is sorted by the types of objects in the list."),
                                 rules: typeRules,
                                 hasSections: true) { (title) -> String in
@@ -23,12 +23,12 @@ class AssetStore: Store {
                                     }
                                     return type.displayName()
                                 }
-        var orderRules: [SortRule] = [
+        let orderRules: [SortRule] = [
             SortRule(field: "sorted", displayName: NSLocalizedString("Sorted", comment: "Adjective. Refers whether items have been sorted or are unsorted."), ascending: false),
             SortRule(field: "order", displayName: NSLocalizedString("Order", comment: "Noun. Refers to the order or arrangement of items in a list."), ascending: true),
             SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true)
         ]
-        var orderSort = SortMode(defaultsKey: "AssetSortModeOrder",
+        let orderSort = SortMode(defaultsKey: "AssetSortModeOrder",
                                  title: NSLocalizedString("Order", comment: "Noun. Refers to the order or arrangement of items in a list."),
                                  rules: orderRules,
                                  hasSections: true) { (title) -> String in
@@ -249,7 +249,6 @@ extension AssetStore {
     /// for the assets.
     ///
     func applySortOrder(order: [UUID: Int]) {
-        print(order.values)
         CoreDataManager.shared.performOnWriteContext { context in
             for (key, value) in order {
                 let fetchRequest = StoryAsset.defaultFetchRequest()
@@ -264,7 +263,6 @@ extension AssetStore {
 
             CoreDataManager.shared.saveContext(context: context)
         }
-
     }
 }
 

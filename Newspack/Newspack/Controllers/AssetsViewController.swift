@@ -181,7 +181,11 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
             snapshot.appendItems(items, toSection: i)
         }
 
-        let shouldAnimate = false// tableView?.window != nil
+        // Note: When animating cells, for some reason individual cells are not redrawn
+        // (i.e. cellForRow is not being called). Needs further exploration to figure out why.
+        // Also, when animating it makes reording look a little weird.
+        // For these reasons we'll disable animating when sorting or not in a window.
+        let shouldAnimate = tableView?.window != nil && tableView?.isEditing == false
         apply(snapshot, animatingDifferences: shouldAnimate, completion: nil)
     }
 
