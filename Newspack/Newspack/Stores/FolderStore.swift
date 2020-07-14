@@ -15,8 +15,12 @@ class FolderStore: Store {
     /// before it is used.
     private(set) var currentStoryFolderID = UUID()
 
-    lazy private(set) var sortRules: SortRulesBook = {
-        return SortRulesBook(storageKey: "FolderStoreSortRules", fields: ["date", "name"], defaults: ["date": false], caseInsensitiveFields: ["name"])
+    lazy private(set) var sortMode: SortMode = {
+        let field = "date"
+        let rules: [SortRule] = [
+            SortRule(field: field, displayName: displayNameForField(field: field), ascending: false)
+        ]
+        return SortMode(defaultsKey: "FolderStoreSortMode", title: "", rules: rules, hasSections: false, resolver: nil)
     }()
 
     /// A convenience getter to get the current story folder.
@@ -75,7 +79,7 @@ extension FolderStore {
 
         let fetchRequest = StoryFolder.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
-        fetchRequest.sortDescriptors = sortRules.descriptors
+        fetchRequest.sortDescriptors = sortMode.descriptors
         return NSFetchedResultsController(fetchRequest: fetchRequest,
                                           managedObjectContext: CoreDataManager.shared.mainContext,
                                           sectionNameKeyPath: nil,
@@ -93,12 +97,23 @@ extension FolderStore {
     ///   - ascending: true if the sort order should be ascending, or false if descending.
     ///
     private func sortFolders(by field: String, ascending: Bool) {
-        guard !sortRules.hasRule(field: field, ascending: ascending) else {
-            return
+        let rule = SortRule(field: field, displayName: displayNameForField(field: field), ascending: ascending)
+        sortMode.setRules(newRules: [rule])
+    }
+
+    /// Get the user facing display name to use for the specified field.
+    ///
+    /// - Parameter field: The name of the sort field.
+    /// - Returns: The user facing String or an empty string if the specified field was not found.
+    ///
+    private func displayNameForField(field: String) -> String {
+        if field == "name" {
+            return NSLocalizedString("Name", comment: "Noun. An item's name.")
         }
-        var rules = SortRules()
-        rules[field] = ascending
-        sortRules.setRules(rules: rules)
+        if field == "date" {
+            return NSLocalizedString("Date", comment: "Noun. An item's creation date.")
+        }
+        return ""
     }
 
     /// Creates a single, default, folder under the site's folder if there is a
@@ -160,6 +175,7 @@ extension FolderStore {
     }
 
     /// Create new story folders for each of the specified URLs.
+    ///
     /// - Parameter urls: An array of file URLs
     ///
     func createStoryFoldersForURLs(urls: [URL], onComplete:(()-> Void)? = nil) {
@@ -251,7 +267,7 @@ extension FolderStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = StoryFolder.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@ AND NOT (uuid IN %@)", siteID as CVarArg, uuidsToExclude)
-        fetchRequest.sortDescriptors = sortRules.descriptors
+        fetchRequest.sortDescriptors = sortMode.descriptors
         fetchRequest.propertiesToFetch = ["uuid"]
         fetchRequest.resultType = .dictionaryResultType
 
@@ -352,7 +368,7 @@ extension FolderStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryFolder.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
-        fetchRequest.sortDescriptors = sortRules.descriptors
+        fetchRequest.sortDescriptors = sortMode.descriptors
 
         if let results = try? context.fetch(fetchRequest) {
             return results

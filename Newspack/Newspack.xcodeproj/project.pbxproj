@@ -185,13 +185,12 @@
 		E6B8CFE024ABD6EB0068C6BE /* ReconcilerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */; };
 		E6BA1322243F9D1E00635A8A /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */; };
 		E6C3988C24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C3988B24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift */; };
-		E6C398BE24AD259300E0EBE6 /* SortRulesBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C398BD24AD259300E0EBE6 /* SortRulesBook.swift */; };
 		E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE56AE22B19001004895E5 /* ModelFactory.swift */; };
 		E6D44DEC234BC56C00B51438 /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEB234BC56C00B51438 /* MediaViewController.swift */; };
 		E6D44DEF234BDB8400B51438 /* MediaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEE234BDB8400B51438 /* MediaStore.swift */; };
 		E6D44DF1234BDBA000B51438 /* MediaApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF0234BDBA000B51438 /* MediaApiService.swift */; };
 		E6D44DF3234BDBB500B51438 /* MediaServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */; };
-		E6DCB05224AE3BF300C4FD01 /* SortRulesBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DCB05124AE3BF300C4FD01 /* SortRulesBookTests.swift */; };
+		E6DCB05224AE3BF300C4FD01 /* SortOrganizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DCB05124AE3BF300C4FD01 /* SortOrganizerTests.swift */; };
 		E6DF5575242E7139007DDC47 /* FolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DF5574242E7139007DDC47 /* FolderManager.swift */; };
 		E6DF5578242E7242007DDC47 /* FolderManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DF5577242E7242007DDC47 /* FolderManagerTests.swift */; };
 		E6E1834D22D6D44D009C2D0A /* remote-post-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */; };
@@ -425,13 +424,12 @@
 		E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconcilerTests.swift; sourceTree = "<group>"; };
 		E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewController.swift; sourceTree = "<group>"; };
 		E6C3988B24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Newspack.swift"; sourceTree = "<group>"; };
-		E6C398BD24AD259300E0EBE6 /* SortRulesBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortRulesBook.swift; sourceTree = "<group>"; };
 		E6CE56AE22B19001004895E5 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
 		E6D44DEB234BC56C00B51438 /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		E6D44DEE234BDB8400B51438 /* MediaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStore.swift; sourceTree = "<group>"; };
 		E6D44DF0234BDBA000B51438 /* MediaApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaApiService.swift; sourceTree = "<group>"; };
 		E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceRemote.swift; sourceTree = "<group>"; };
-		E6DCB05124AE3BF300C4FD01 /* SortRulesBookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortRulesBookTests.swift; sourceTree = "<group>"; };
+		E6DCB05124AE3BF300C4FD01 /* SortOrganizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrganizerTests.swift; sourceTree = "<group>"; };
 		E6DF5574242E7139007DDC47 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		E6DF5577242E7242007DDC47 /* FolderManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManagerTests.swift; sourceTree = "<group>"; };
 		E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-post-edit.json"; sourceTree = "<group>"; };
@@ -935,7 +933,6 @@
 		E677AAE924B3C714000FAA3D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				E6C398BD24AD259300E0EBE6 /* SortRulesBook.swift */,
 				E6B7728724BCD8DA00CA8AB8 /* SortOrganizer.swift */,
 			);
 			path = Utils;
@@ -952,7 +949,7 @@
 		E6DCB05024AE3BBF00C4FD01 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				E6DCB05124AE3BF300C4FD01 /* SortRulesBookTests.swift */,
+				E6DCB05124AE3BF300C4FD01 /* SortOrganizerTests.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1334,7 +1331,6 @@
 				E61BBD6822FA0470008A6D4C /* StartupHelper.swift in Sources */,
 				E636C26C234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift in Sources */,
 				E66CCA112303527C00F1CA59 /* AccountCapabilities+CoreDataClass.swift in Sources */,
-				E6C398BE24AD259300E0EBE6 /* SortRulesBook.swift in Sources */,
 				E66CCA152303527D00F1CA59 /* AccountCapabilities+CoreDataProperties.swift in Sources */,
 				E638804E22DFC07900B3C16A /* PostItemStore.swift in Sources */,
 				E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */,
@@ -1448,7 +1444,7 @@
 				E61A28CF22D53EFD003E214F /* PostServiceRemoteTests.swift in Sources */,
 				E61FC603229F2EEE009E1748 /* UserServiceRemoteTests.swift in Sources */,
 				E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */,
-				E6DCB05224AE3BF300C4FD01 /* SortRulesBookTests.swift in Sources */,
+				E6DCB05224AE3BF300C4FD01 /* SortOrganizerTests.swift in Sources */,
 				E6B8CFDB24AB91430068C6BE /* URLFileReferenceTests.swift in Sources */,
 				E6051DEF23075F8A005AAF0B /* DateTests.swift in Sources */,
 				E6B8CFDD24ABC48C0068C6BE /* FolderStoreTests.swift in Sources */,

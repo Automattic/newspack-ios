@@ -103,13 +103,12 @@ extension FoldersViewController {
     }
 
     func configureSortControl() {
-        let dict = StoreContainer.shared.folderStore.sortRules.rules
-        for (key, value) in dict {
-            sortDirection.selectedSegmentIndex = value ? 0 : 1
-
-            let name = sortField.titleForSegment(at: 0)!.lowercased()
-            sortField.selectedSegmentIndex = key == name ? 0 : 1
+        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
+            return
         }
+        sortDirection.selectedSegmentIndex = rule.ascending ? 0 : 1
+        let name = sortField.titleForSegment(at: 0)!.lowercased()
+        sortField.selectedSegmentIndex = rule.field == name ? 0 : 1
     }
 }
 
@@ -172,7 +171,7 @@ class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, 
         let action = FolderAction.sortBy(field: field, ascending: ascending)
         SessionManager.shared.sessionDispatcher.dispatch(action)
 
-        resultsController.fetchRequest.sortDescriptors = StoreContainer.shared.folderStore.sortRules.descriptors
+        resultsController.fetchRequest.sortDescriptors = StoreContainer.shared.folderStore.sortMode.descriptors
         try? resultsController.performFetch()
 
         update()
