@@ -4,12 +4,22 @@ import WordPressFlux
 
 class AssetsViewController: UITableViewController {
 
+    @IBOutlet var sortControl: UISegmentedControl!
+
     var dataSource: AssetDataSource!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureDataSource()
+        configureSortControl()
+
+        // Temporary measure. The UI will change so right now this doesn't need to be pretty.
+        let headerView = tableView.tableHeaderView!
+        var frame = headerView.frame
+        frame.size.height = 44.0
+        headerView.frame = frame
+        tableView.tableHeaderView = headerView
     }
 
 }
@@ -23,22 +33,74 @@ extension AssetsViewController {
         SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 
+    @IBAction func handleSortChanged(sender: Any) {
+        let action = AssetAction.sortMode(index: sortControl.selectedSegmentIndex)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+
+        tableView.isEditing = false
+        // refresh data source.
+        dataSource.refresh()
+    }
+
+    @IBAction func handleToggleEditing(sender: Any) {
+        if tableView.isEditing {
+            tableView.setEditing(false, animated: true)
+        } else if StoreContainer.shared.assetStore.canSortAssets {
+            tableView.setEditing(true, animated: true)
+        }
+    }
+
 }
 
 // MARK: - TableViewDelegate methods
 extension AssetsViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectSelectedRowWithAnimation(true)
+        guard let asset = dataSource.object(at: indexPath) else {
+            return
+        }
 
+        // HACK HACK HACK: Just for testing. Tap on a cell to change which section it should be sorted to.
+        asset.order = (asset.order == -1) ? 1 : -1
+        CoreDataManager.shared.saveContext(context: asset.managedObjectContext!)
+    }
+
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return tableView.isEditing ? .none : .delete
+    }
+
+    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return tableView.isEditing ? false : true
+    }
+
+    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        // No droppiing into the unsorted section, so just return the source indexpath.
+        if proposedDestinationIndexPath.section == 1 {
+            return sourceIndexPath
+        }
+        return proposedDestinationIndexPath
     }
 }
 
 // MARK: - DataSource related methods
 extension AssetsViewController {
 
+    func configureSortControl() {
+        let assetStore = StoreContainer.shared.assetStore
+
+        sortControl.removeAllSegments()
+        for (index, mode) in assetStore.sortOrganizer.modes.enumerated() {
+            sortControl.insertSegment(withTitle: mode.title, at: index, animated: false)
+        }
+
+        sortControl.selectedSegmentIndex = assetStore.sortOrganizer.selectedIndex
+    }
+
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell", for: indexPath)
-        cell.textLabel?.text = storyAsset.name
+        cell.textLabel?.text = storyAsset.name + " " + String(storyAsset.order)
+        cell.detailTextLabel?.text = storyAsset.uuid.uuidString
         cell.accessoryType = .disclosureIndicator
 
         return cell
@@ -54,11 +116,7 @@ extension AssetsViewController {
 }
 
 // MARK: - AssetDataSource
-class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, StoryAsset> {
-
-    enum Section: CaseIterable {
-        case main
-    }
+class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
 
     // Receipt so we can respond to any emitted changes in the AssetStore.
     private var receipt: Any?
@@ -74,7 +132,7 @@ class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, St
     // animate changes.
     weak var tableView: UITableView?
 
-    override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<AssetDataSource.Section, StoryAsset>.CellProvider) {
+    override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Int, StoryAsset>.CellProvider) {
         self.tableView = tableView
         super.init(tableView: tableView, cellProvider: cellProvider)
 
@@ -87,18 +145,47 @@ class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, St
         try? resultsController.performFetch()
     }
 
+    /// A pass through method to get an entity from the backing results controller
+    /// by the entities index path.
+    ///
+    /// - Parameter indexPath: The desired entity's index path.
+    /// - Returns: A story asset instance or nil.
+    ///
+    func object(at indexPath: IndexPath) -> StoryAsset? {
+        return resultsController.object(at: indexPath)
+    }
+
+    func refresh() {
+        resultsController.delegate = nil
+        resultsController = StoreContainer.shared.assetStore.getResultsController()
+        resultsController.delegate = self
+        try? resultsController.performFetch()
+        update()
+    }
+
     /// Updates the current datasource snapshot. Changes are animated only if
     /// the tableView has a window (and is presumed visible).
     ///
     func update() {
-        guard let items = resultsController.fetchedObjects else {
+
+        guard let sections = resultsController.sections else {
             return
         }
-        var snapshot = NSDiffableDataSourceSnapshot<AssetDataSource.Section, StoryAsset>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(items)
+        var snapshot = NSDiffableDataSourceSnapshot<Int, StoryAsset>()
 
-        let shouldAnimate = tableView?.window != nil
+        for (i, section) in sections.enumerated() {
+            snapshot.appendSections([i])
+            guard let items = section.objects as? [StoryAsset] else {
+                continue
+            }
+            snapshot.appendItems(items, toSection: i)
+        }
+
+        // Note: When animating cells, for some reason individual cells are not redrawn
+        // (i.e. cellForRow is not being called). Needs further exploration to figure out why.
+        // Also, when animating it makes reording look a little weird.
+        // For these reasons we'll disable animating when sorting or not in a window.
+        let shouldAnimate = tableView?.window != nil && tableView?.isEditing == false
         apply(snapshot, animatingDifferences: shouldAnimate, completion: nil)
     }
 
@@ -108,15 +195,77 @@ class AssetDataSource: UITableViewDiffableDataSource<AssetDataSource.Section, St
     }
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard let storyAsset = resultsController.fetchedObjects?[indexPath.row] else {
+        guard editingStyle == .delete else {
             return
         }
-        if editingStyle == .delete {
-            let action = AssetAction.deleteAsset(assetID: storyAsset.uuid)
-            SessionManager.shared.sessionDispatcher.dispatch(action)
-        }
+        let storyAsset = resultsController.object(at: indexPath)
+        let action = AssetAction.deleteAsset(assetID: storyAsset.uuid)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let sectionInfo = resultsController.sections?[section] else {
+            return ""
+        }
+        let mode = StoreContainer.shared.assetStore.sortOrganizer.selectedMode
+        return mode.title(for: sectionInfo)
+    }
+
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        let mode = StoreContainer.shared.assetStore.sortOrganizer.selectedMode
+        return mode.rules.first?.field == "sorted"
+    }
+
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        // Here are the rules:
+        // 1. unsorted items can be moved to sorted items.
+        // 2. sorted items can not be moved to unsorted items.
+        // 3. unsorted items do not change order within unsorted items.
+        // 4. Update the sort order of all sorted items for simplicity sake.
+        guard destinationIndexPath.section == 0 else {
+            return
+        }
+
+        guard let sortedAssets = resultsController.sections?[0].objects as? [StoryAsset] else {
+            LogError(message: "Tried to move a row but no sorted section found.")
+            return
+        }
+
+        var newOrder = [UUID: Int]()
+
+        let movedAsset = resultsController.object(at: sourceIndexPath)
+        newOrder[movedAsset.uuid] = destinationIndexPath.row
+
+        // We need to update the sort order of Assets. We can do this by looping
+        // over sortedAssets and setting their order property to the index of
+        // the loop, taking into account whether the modified row was previously
+        // unsorted, or moved up or down in the sorted list.
+        // We can get the range of affected rows and then add a modifier of 1 or -1
+        // as appropriate.
+        var modifier = 1
+        var range: Range<Int>
+        if sourceIndexPath.section == 1 {
+            // We're inserting from unsorted into sorted.
+            range = Range(destinationIndexPath.row...sortedAssets.count)
+        } else if sourceIndexPath.row > destinationIndexPath.row {
+            // We're moving from vertically lower in the list, to higher in the list.
+            range = Range(destinationIndexPath.row...sourceIndexPath.row)
+        } else {
+            // We're moving from vertically higher in the list to lower in the list.
+            modifier = -1
+            range = Range(sourceIndexPath.row...destinationIndexPath.row)
+        }
+
+        for (index, asset) in sortedAssets.enumerated() {
+            if asset == movedAsset {
+                continue
+            }
+            newOrder[asset.uuid] = range.contains(index) ? index + modifier : index
+        }
+
+        let action = AssetAction.applyOrder(order: newOrder)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+    }
 }
 
 // MARK: - Fetched Results Controller Delegate methods

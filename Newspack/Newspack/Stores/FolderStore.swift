@@ -75,7 +75,7 @@ extension FolderStore {
 
         let fetchRequest = StoryFolder.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
-        fetchRequest.sortDescriptors = sortRules.descriptors()
+        fetchRequest.sortDescriptors = sortRules.descriptors
         return NSFetchedResultsController(fetchRequest: fetchRequest,
                                           managedObjectContext: CoreDataManager.shared.mainContext,
                                           sectionNameKeyPath: nil,
@@ -251,7 +251,7 @@ extension FolderStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = StoryFolder.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@ AND NOT (uuid IN %@)", siteID as CVarArg, uuidsToExclude)
-        fetchRequest.sortDescriptors = sortRules.descriptors()
+        fetchRequest.sortDescriptors = sortRules.descriptors
         fetchRequest.propertiesToFetch = ["uuid"]
         fetchRequest.resultType = .dictionaryResultType
 
@@ -352,7 +352,7 @@ extension FolderStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryFolder.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
-        fetchRequest.sortDescriptors = sortRules.descriptors()
+        fetchRequest.sortDescriptors = sortRules.descriptors
 
         if let results = try? context.fetch(fetchRequest) {
             return results
