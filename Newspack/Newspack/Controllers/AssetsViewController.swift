@@ -181,12 +181,12 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
             snapshot.appendItems(items, toSection: i)
         }
 
-        // Note: When animating cells, for some reason individual cells are not redrawn
-        // (i.e. cellForRow is not being called). Needs further exploration to figure out why.
+        // Note: When animating cells, for some reason individual cells are not
+        // redrawn, nor are section titles. (i.e. cellForRow is not being called).
+        // Needs further exploration to figure out why.
         // Also, when animating it makes reording look a little weird.
-        // For these reasons we'll disable animating when sorting or not in a window.
-        let shouldAnimate = tableView?.window != nil && tableView?.isEditing == false
-        apply(snapshot, animatingDifferences: shouldAnimate, completion: nil)
+        // For these reasons we'll disable animating.
+        apply(snapshot, animatingDifferences: false, completion: nil)
     }
 
     // MARK: - Overrides for cell deletion behaviors
