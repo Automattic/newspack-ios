@@ -97,7 +97,7 @@ class SortMode {
         return rules.first?.field
     }
 
-    init(defaultsKey: String, title: String, rules: [SortRule], hasSections: Bool, resolver: @escaping ((_ name: String) -> String)) {
+    init(defaultsKey: String, title: String, rules: [SortRule], hasSections: Bool, resolver: ((_ name: String) -> String)?) {
         self.defaultsKey = defaultsKey
         self.title = title
         self.hasSections = hasSections
@@ -162,6 +162,15 @@ class SortMode {
         }
         rules = arr
 
+        save()
+    }
+
+    /// Set the rules for the sort mode and save the new rules to storage.
+    ///
+    /// - Parameter newRules: An array of SortRule instances.
+    ///
+    func setRules(newRules: [SortRule]) {
+        rules = newRules
         save()
     }
 
