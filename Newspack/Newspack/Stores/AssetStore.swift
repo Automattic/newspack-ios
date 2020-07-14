@@ -11,7 +11,7 @@ class AssetStore: Store {
     /// Defines a SortOrganizer and its associated SortRules.
     lazy private(set) var sortOrganizer: SortOrganizer = {
         let typeRules: [SortRule] = [
-            SortRule(field: "assetTypeValue", displayName: NSLocalizedString("Type", comment: "Noun. The type or category of something."), ascending: false),
+            SortRule(field: "type", displayName: NSLocalizedString("Type", comment: "Noun. The type or category of something."), ascending: false),
             SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true)
         ]
         let typeSort = SortMode(defaultsKey: "AssetSortModeType",
