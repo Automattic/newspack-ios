@@ -54,6 +54,7 @@
 		E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD82211FE86004E5B91 /* Newspack.xcdatamodeld */; };
 		E6138FDC2211FE88004E5B91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6138FDB2211FE88004E5B91 /* Assets.xcassets */; };
 		E6138FDF2211FE88004E5B91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6138FDD2211FE88004E5B91 /* LaunchScreen.storyboard */; };
+		E6190C4724BF834B0060D00A /* ColorStudio.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6190C4624BF834B0060D00A /* ColorStudio.xcassets */; };
 		E61A28CF22D53EFD003E214F /* PostServiceRemoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A28CE22D53EFD003E214F /* PostServiceRemoteTests.swift */; };
 		E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61AE63B2237373E00E6A489 /* StoreContainer.swift */; };
 		E61BBD6822FA0470008A6D4C /* StartupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61BBD6722FA0470008A6D4C /* StartupHelper.swift */; };
@@ -289,6 +290,7 @@
 		E6138FE02211FE88004E5B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6138FE52211FE88004E5B91 /* NewspackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewspackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6138FEB2211FE88004E5B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E6190C4624BF834B0060D00A /* ColorStudio.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ColorStudio.xcassets; sourceTree = "<group>"; };
 		E61A28CE22D53EFD003E214F /* PostServiceRemoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostServiceRemoteTests.swift; sourceTree = "<group>"; };
 		E61AE63B2237373E00E6A489 /* StoreContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreContainer.swift; sourceTree = "<group>"; };
 		E61BBD6722FA0470008A6D4C /* StartupHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupHelper.swift; sourceTree = "<group>"; };
@@ -611,6 +613,7 @@
 				E6138FFD22120433004E5B91 /* View */,
 				E6138FFC221203B1004E5B91 /* Resources */,
 				E6138FDB2211FE88004E5B91 /* Assets.xcassets */,
+				E6190C4624BF834B0060D00A /* ColorStudio.xcassets */,
 			);
 			path = Newspack;
 			sourceTree = "<group>";
@@ -1116,6 +1119,7 @@
 				E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */,
 				E6138FDC2211FE88004E5B91 /* Assets.xcassets in Resources */,
 				E6138FD72211FE86004E5B91 /* Main.storyboard in Resources */,
+				E6190C4724BF834B0060D00A /* ColorStudio.xcassets in Resources */,
 				E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
