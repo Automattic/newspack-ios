@@ -55,6 +55,9 @@
 		E6138FDC2211FE88004E5B91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6138FDB2211FE88004E5B91 /* Assets.xcassets */; };
 		E6138FDF2211FE88004E5B91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6138FDD2211FE88004E5B91 /* LaunchScreen.storyboard */; };
 		E6190C4724BF834B0060D00A /* ColorStudio.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6190C4624BF834B0060D00A /* ColorStudio.xcassets */; };
+		E6190C4B24BF8A540060D00A /* ColorStudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6190C4A24BF8A540060D00A /* ColorStudio.swift */; };
+		E6190C4D24BF8DDA0060D00A /* UIColor+ColorStudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6190C4C24BF8DDA0060D00A /* UIColor+ColorStudio.swift */; };
+		E6190C4F24BF8DFA0060D00A /* UIColor+SemanticColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6190C4E24BF8DFA0060D00A /* UIColor+SemanticColors.swift */; };
 		E61A28CF22D53EFD003E214F /* PostServiceRemoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61A28CE22D53EFD003E214F /* PostServiceRemoteTests.swift */; };
 		E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61AE63B2237373E00E6A489 /* StoreContainer.swift */; };
 		E61BBD6822FA0470008A6D4C /* StartupHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61BBD6722FA0470008A6D4C /* StartupHelper.swift */; };
@@ -291,6 +294,9 @@
 		E6138FE52211FE88004E5B91 /* NewspackTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewspackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6138FEB2211FE88004E5B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E6190C4624BF834B0060D00A /* ColorStudio.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ColorStudio.xcassets; sourceTree = "<group>"; };
+		E6190C4A24BF8A540060D00A /* ColorStudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStudio.swift; sourceTree = "<group>"; };
+		E6190C4C24BF8DDA0060D00A /* UIColor+ColorStudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+ColorStudio.swift"; sourceTree = "<group>"; };
+		E6190C4E24BF8DFA0060D00A /* UIColor+SemanticColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+SemanticColors.swift"; sourceTree = "<group>"; };
 		E61A28CE22D53EFD003E214F /* PostServiceRemoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostServiceRemoteTests.swift; sourceTree = "<group>"; };
 		E61AE63B2237373E00E6A489 /* StoreContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreContainer.swift; sourceTree = "<group>"; };
 		E61BBD6722FA0470008A6D4C /* StartupHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartupHelper.swift; sourceTree = "<group>"; };
@@ -608,6 +614,7 @@
 				E6138FFA22120371004E5B91 /* Models */,
 				E62C7C632235E0EC000FEB33 /* Stores */,
 				E6138FFB2212037E004E5B91 /* Storyboards */,
+				E6190C4924BF8A3B0060D00A /* Styles */,
 				E6138FF722120346004E5B91 /* System */,
 				E677AAE924B3C714000FAA3D /* Utils */,
 				E6138FFD22120433004E5B91 /* View */,
@@ -771,6 +778,16 @@
 				E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		E6190C4924BF8A3B0060D00A /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				E6190C4A24BF8A540060D00A /* ColorStudio.swift */,
+				E6190C4C24BF8DDA0060D00A /* UIColor+ColorStudio.swift */,
+				E6190C4E24BF8DFA0060D00A /* UIColor+SemanticColors.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 		E61FC601229F2E96009E1748 /* Api */ = {
@@ -1356,12 +1373,14 @@
 				E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */,
 				E6C3988C24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift in Sources */,
 				E6E43EA4230F1D2B00A1974E /* EditAction.swift in Sources */,
+				E6190C4F24BF8DFA0060D00A /* UIColor+SemanticColors.swift in Sources */,
 				E695A7E6244FD686007B29BB /* StoryFolder+CoreDataProperties.swift in Sources */,
 				E69E59FB22540D5000899DE2 /* ServiceRemoteCoreRest.swift in Sources */,
 				E602E68022C1588600795CBA /* ApiService.swift in Sources */,
 				E6E2ACF922E2840C00A8E85D /* Date+FormatGMTString.swift in Sources */,
 				E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */,
 				E6451AC22322F737005809E2 /* EditorSaveAlertController.swift in Sources */,
+				E6190C4B24BF8A540060D00A /* ColorStudio.swift in Sources */,
 				E6D44DEF234BDB8400B51438 /* MediaStore.swift in Sources */,
 				E66CCA172303527D00F1CA59 /* PostItem+CoreDataClass.swift in Sources */,
 				E636C264234FD16F00564B63 /* MediaApiActions.swift in Sources */,
@@ -1391,6 +1410,7 @@
 				E602E68722C15ED700795CBA /* RemotePost.swift in Sources */,
 				E66CCA082303527C00F1CA59 /* PostItem+CoreDataProperties.swift in Sources */,
 				E602E68B22C1632C00795CBA /* UserApiActions.swift in Sources */,
+				E6190C4D24BF8DDA0060D00A /* UIColor+ColorStudio.swift in Sources */,
 				E66CCA132303527C00F1CA59 /* Status+CoreDataProperties.swift in Sources */,
 				E605418F2369E1920078D978 /* Diagnostics.swift in Sources */,
 				E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */,
