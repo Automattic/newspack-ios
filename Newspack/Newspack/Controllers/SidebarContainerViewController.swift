@@ -12,7 +12,12 @@ protocol SidebarContainerDelegate: AnyObject {
 
 class SidebarContainerViewController: UIViewController {
 
+    static let toggleSidebarNotification = NSNotification.Name("toggleSidebarNotification")
+
     struct Constants {
+        static let alpha1_0 = CGFloat(1)
+        static let alpha0_5 = CGFloat(0.5)
+        static let alpha0_0 = CGFloat(0)
         static let directionalIdentity = CGFloat(1)
         static let directionalInverted = CGFloat(-1)
         static let sidebarWidth = CGFloat(300)
@@ -34,13 +39,12 @@ class SidebarContainerViewController: UIViewController {
 
     private var animator: UIViewPropertyAnimator?
     private var isPanningActive = false
-    private var captureView = UIView() // Used to block user interaction while the menu is visible.
+    private var touchCaptureView = UIView() // Used to block user interaction while the menu is visible.
 
     private lazy var tapGestureRecognizer: UITapGestureRecognizer = {
         var recognizer = UITapGestureRecognizer(target: self, action: #selector(tapGestureRecognized(recognizer:)))
         recognizer.numberOfTapsRequired = 1
         recognizer.numberOfTouchesRequired = 1
-
         return recognizer
     }()
 
@@ -110,6 +114,10 @@ class SidebarContainerViewController: UIViewController {
         return isRightToLeft ? Constants.directionalInverted : Constants.directionalIdentity
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     init(mainViewController: UIViewController, sidebarViewController: UIViewController) {
         self.mainViewController = mainViewController
         self.sidebarViewController = sidebarViewController
@@ -135,6 +143,8 @@ class SidebarContainerViewController: UIViewController {
         view.addSubview(mainView)
         attachCaptureView()
         attachSidebarView()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(handleToggleSidebarNotification(notification:)), name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -165,18 +175,23 @@ class SidebarContainerViewController: UIViewController {
         sidebarView.frame = sidebarFrame
         sidebarView.autoresizingMask = [.flexibleHeight, .flexibleRightMargin]
 
-        view.insertSubview(sidebarView, aboveSubview: captureView)
+        view.insertSubview(sidebarView, aboveSubview: touchCaptureView)
     }
 
     func attachCaptureView() {
-        captureView.frame = view.bounds
-        captureView.autoresizingMask = view.autoresizingMask
-        captureView.backgroundColor = UIColor.black
-        captureView.alpha = 0.0
-        captureView.isUserInteractionEnabled = true
-        captureView.addGestureRecognizer(tapGestureRecognizer)
+        touchCaptureView.frame = view.bounds
+        touchCaptureView.autoresizingMask = view.autoresizingMask
+        touchCaptureView.backgroundColor = UIColor.black
+        touchCaptureView.alpha = Constants.alpha0_0
+        touchCaptureView.isUserInteractionEnabled = true
+        touchCaptureView.addGestureRecognizer(tapGestureRecognizer)
 
-        view.insertSubview(captureView, aboveSubview: mainView)
+        view.insertSubview(touchCaptureView, aboveSubview: mainView)
+    }
+
+    @objc
+    func handleToggleSidebarNotification(notification: Notification) {
+        toggleSidebar()
     }
 }
 
@@ -294,14 +309,14 @@ extension SidebarContainerViewController {
     func animatorForSidebarVisibility(visible: Bool) -> UIViewPropertyAnimator {
         let x = Constants.sidebarWidth * directionalMultiplier
         let transform: CGAffineTransform = visible ? CGAffineTransform(translationX: x, y: 0) : .identity
-        let alphaSidebar: CGFloat = visible ? 1.0 : 0.0
-        let alphaCapture: CGFloat = visible ? 0.5 : 0.0
+        let alphaSidebar: CGFloat = visible ? Constants.alpha1_0 : Constants.alpha0_0
+        let alphaCapture: CGFloat = visible ? Constants.alpha0_5 : Constants.alpha0_0
 
         let parameters = UISpringTimingParameters(dampingRatio: Constants.sidebarAnimationDamping, initialVelocity: Constants.sidebarAnimationInitialVelocity)
 
         let animator = UIViewPropertyAnimator(duration: Constants.sidebarAnimationDuration, timingParameters: parameters)
         animator.addAnimations {
-            self.captureView.alpha = alphaCapture
+            self.touchCaptureView.alpha = alphaCapture
             self.mainView.transform = transform
             self.sidebarView.transform = transform
             self.sidebarView.alpha = alphaSidebar
