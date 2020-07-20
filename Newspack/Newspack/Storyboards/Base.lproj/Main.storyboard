@@ -22,6 +22,30 @@
             </objects>
             <point key="canvasLocation" x="-1138" y="149"/>
         </scene>
+        <!--Menu View Controller-->
+        <scene sceneID="Qhv-Md-LKX">
+            <objects>
+                <viewController storyboardIdentifier="MenuViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="EV0-bn-GuZ" customClass="MenuViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7hG-mt-0Qn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Menu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7u-wD-2rL">
+                                <rect key="frame" x="166" y="282" width="43" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Qpz-nP-vgP"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gz3-vD-6e2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-354" y="-504"/>
+        </scene>
         <!--Folders-->
         <scene sceneID="8gr-DY-Qxl">
             <objects>
@@ -101,6 +125,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Folders" id="uV3-oP-jOr">
+                        <barButtonItem key="leftBarButtonItem" title="Menu" id="lgK-5A-NeH">
+                            <connections>
+                                <action selector="handleMenuButtonTappedWithSender:" destination="o5i-8K-DIP" id="wH7-Xc-HFT"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="H42-WT-r23">
                             <connections>
                                 <action selector="handleAddTappedWithSender:" destination="o5i-8K-DIP" id="SsC-s9-7NN"/>

@@ -76,6 +76,7 @@
 		E6257889222F0B3C00DE6F26 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6257888222F0B3C00DE6F26 /* AVFoundation.framework */; };
 		E625788B222F0B4C00DE6F26 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E625788A222F0B4B00DE6F26 /* ImageIO.framework */; };
 		E629822A2303667E00E8CEC7 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62982292303667E00E8CEC7 /* EditorViewController.swift */; };
+		E62A6BA424C6198300013092 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62A6BA324C6198300013092 /* MenuViewController.swift */; };
 		E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C652235E16E000FEB33 /* AccountStore.swift */; };
 		E62C7C692235E73F000FEB33 /* AccountStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */; };
 		E62C7C6C2235F061000FEB33 /* AuthenticationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */; };
@@ -317,6 +318,7 @@
 		E6257888222F0B3C00DE6F26 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E625788A222F0B4B00DE6F26 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		E62982292303667E00E8CEC7 /* EditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
+		E62A6BA324C6198300013092 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		E62C7C652235E16E000FEB33 /* AccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStore.swift; sourceTree = "<group>"; };
 		E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStoreTests.swift; sourceTree = "<group>"; };
 		E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManagerTests.swift; sourceTree = "<group>"; };
@@ -779,6 +781,7 @@
 				E68689BF243C080400B7E363 /* FoldersViewController.swift */,
 				E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */,
 				E679AD7224C0E831000FDF90 /* SidebarContainerViewController.swift */,
+				E62A6BA324C6198300013092 /* MenuViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1432,6 +1435,7 @@
 				E6D44DF1234BDBA000B51438 /* MediaApiService.swift in Sources */,
 				E66CCA0C2303527C00F1CA59 /* Media+CoreDataClass.swift in Sources */,
 				E677AAED24B4EED9000FAA3D /* AssetAction.swift in Sources */,
+				E62A6BA424C6198300013092 /* MenuViewController.swift in Sources */,
 				E6FB520622B973A60010FDF8 /* PostStore.swift in Sources */,
 				E66CCA0A2303527C00F1CA59 /* Page+CoreDataProperties.swift in Sources */,
 				E6FB520822B9D2A30010FDF8 /* AccountSetupHelper.swift in Sources */,
