@@ -12,6 +12,7 @@ class MainStoryboard {
         case mediaDetail = "MediaDetailViewController"
         case folderList = "FoldersViewController"
         case assetsList = "AssetsViewController"
+        case menu = "MenuViewController"
     }
 
     static func instantiateViewController(withIdentifier identifier: Identifier) -> UIViewController {
