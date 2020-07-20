@@ -36,6 +36,7 @@ final class MainNavController: UINavigationController {
         let navController = UINavigationController(rootViewController: folderController)
 
         let controller = SidebarContainerViewController(mainViewController: navController, sidebarViewController: menuController)
+        controller.view.backgroundColor = .basicBackground
         controller.modalTransitionStyle = .crossDissolve
         setViewControllers([controller], animated: true)
 
