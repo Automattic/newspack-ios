@@ -181,7 +181,7 @@ class SidebarContainerViewController: UIViewController {
     func attachCaptureView() {
         touchCaptureView.frame = view.bounds
         touchCaptureView.autoresizingMask = view.autoresizingMask
-        touchCaptureView.backgroundColor = UIColor.black
+        touchCaptureView.backgroundColor = UIColor.systemBackground
         touchCaptureView.alpha = Constants.alpha0_0
         touchCaptureView.isUserInteractionEnabled = true
         touchCaptureView.addGestureRecognizer(tapGestureRecognizer)
@@ -319,6 +319,7 @@ extension SidebarContainerViewController {
             self.touchCaptureView.alpha = alphaCapture
             self.mainView.transform = transform
             self.sidebarView.transform = transform
+            self.touchCaptureView.transform = transform
             self.sidebarView.alpha = alphaSidebar
         }
         return animator
