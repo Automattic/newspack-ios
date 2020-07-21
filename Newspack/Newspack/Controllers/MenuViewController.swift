@@ -66,10 +66,6 @@ extension MenuViewController {
         }
         row.callback()
     }
-
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return menuDataSource.sections[section].title
-    }
 }
 
 // MARK: - Data Source Related
@@ -104,7 +100,6 @@ struct MenuRow {
 
 struct MenuSection {
     let rows: [MenuRow]
-    let title: String?
 }
 
 /// Acts as the data source for the menu.
@@ -123,8 +118,8 @@ class MenuDataSource {
     func updateSections() {
         sections = [
             buildSitesSection(),
-            buildAppSection(),
-            buildSessionSection()
+            buildSessionSection(),
+            buildAboutSection()
         ]
     }
 
@@ -140,35 +135,21 @@ class MenuDataSource {
             rows.append(row)
         }
 
-        return MenuSection(rows: rows, title: nil)
-    }
-
-    private func buildAppSection()  -> MenuSection {
-        var rows = [MenuRow]()
-
-        var row = MenuRow(title: NSLocalizedString("About", comment: "About the app.")) {
-            self.showAbout()
-        }
-        rows.append(row)
-
-        row = MenuRow(title: NSLocalizedString("Privacy", comment: "Refers to Privacy Policy"), callback: {
-            self.showPrivacy()
-        })
-        rows.append(row)
-
-        row = MenuRow(title: NSLocalizedString("Terms", comment: "Refers to Terms of Use"), callback: {
-            self.showTerms()
-        })
-        rows.append(row)
-
-        return MenuSection(rows: rows, title: NSLocalizedString("App", comment: "Noun. Abbrieviation of application. Refers to the app itself."))
+        return MenuSection(rows: rows)
     }
 
     private func buildSessionSection() -> MenuSection {
         let row = MenuRow(title: NSLocalizedString("Log Out", comment: "Action. Log out of the app.")) {
             self.logout()
         }
-        return MenuSection(rows: [row], title: nil)
+        return MenuSection(rows: [row])
+    }
+
+    private func buildAboutSection()  -> MenuSection {
+        let row = MenuRow(title: NSLocalizedString("About", comment: "About the app.")) { [weak self] in
+            self?.showAbout()
+        }
+        return MenuSection(rows: [row])
     }
 
     func section(indexPath: IndexPath) -> MenuSection? {
@@ -192,15 +173,8 @@ extension MenuDataSource {
     }
 
     func showAbout() {
-        LogInfo(message: "Show About")
-    }
-
-    func showTerms() {
-        LogInfo(message: "Show Terms")
-    }
-
-    func showPrivacy() {
-        LogInfo(message: "Show Privacy")
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .about)
+        presenter?.present(controller, animated: true, completion: nil)
     }
 
     func selectSite(uuid: UUID) {
