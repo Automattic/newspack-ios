@@ -6,6 +6,7 @@ import WordPressFlux
 /// Responsible for managing account and keychain related things.
 ///
 class AccountStore: Store {
+
     private let currentAccountUUIDKey: String = "currentAccountUUIDKey"
     private static let keychainServiceName: String = "com.automattic.newspack"
     private let keychain: Keychain
@@ -18,6 +19,8 @@ class AccountStore: Store {
         currentAccountID = accountID
         self.keychain = Keychain(service: keychainServiceName).accessibility(.afterFirstUnlock)
         super.init(dispatcher: dispatcher)
+
+        syncAccount()
     }
 
     /// Action handler
@@ -194,4 +197,18 @@ extension AccountStore {
     func clearAuthTokens() {
         try? keychain.removeAll()
     }
+}
+
+// MARK: - API Related.
+extension AccountStore {
+
+    func syncAccount() {
+        guard let _ = currentAccount else {
+            return
+        }
+
+        let service = ApiService.userService()
+        service.fetchMe()
+    }
+
 }
