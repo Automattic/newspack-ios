@@ -29,6 +29,9 @@ class MenuViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        var insets = tableView.contentInset
+        insets.top = 44.0
+        tableView.contentInset = insets
         tableView.tableHeaderView = userView
 
         receipt = StoreContainer.shared.accountDetailsStore.onChange {

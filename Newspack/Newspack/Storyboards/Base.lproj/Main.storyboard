@@ -34,7 +34,7 @@
                             <rect key="frame" x="0.0" y="117" width="375" height="147"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tzH-Mk-rZ0">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tzH-Mk-rZ0" customClass="CircularImageView" customModule="Newspack" customModuleProvider="target">
                                     <rect key="frame" x="150" y="0.0" width="75" height="75"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="75" id="FBH-Y9-LNs"/>
