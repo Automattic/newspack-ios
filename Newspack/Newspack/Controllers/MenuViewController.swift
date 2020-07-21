@@ -1,27 +1,11 @@
 import UIKit
-import WordPressShared
-
-class UserView: UIStackView {
-    @IBOutlet var imageView: UIImageView!
-    @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var usernameLable: UILabel!
-    @IBOutlet var spacer: UIView!
-
-    func configure(with name: String, username: String, gravatar: URL?) {
-        nameLabel.text = name
-        usernameLable.text = username
-
-        if let url = gravatar, let photonURL = PhotonImageURLHelper.photonURL(with: imageView.frame.size, forImageURL: url) {
-            imageView.downloadImage(from: photonURL)
-        }
-    }
-}
+import Gridicons
 
 class MenuViewController: UITableViewController {
 
-    var receipt: Any?
-
     @IBOutlet var userView: UserView!
+
+    var receipt: Any?
 
     lazy var menuDataSource: MenuDataSource = {
         return MenuDataSource(presenter: self)
@@ -29,15 +13,12 @@ class MenuViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        var insets = tableView.contentInset
-        insets.top = 44.0
-        tableView.contentInset = insets
-        tableView.tableHeaderView = userView
 
         receipt = StoreContainer.shared.accountDetailsStore.onChange {
             self.configureHeader()
         }
 
+        configureInsets()
         configureHeader()
     }
 
@@ -45,12 +26,18 @@ class MenuViewController: UITableViewController {
         guard let details = StoreContainer.shared.accountStore.currentAccount?.details else {
             return
         }
-
         userView.configure(with: details.name, username: details.username, gravatar: details.avatarURL)
     }
 
+    func configureInsets() {
+        var insets = tableView.contentInset
+        insets.top = 44.0
+        tableView.contentInset = insets
+        tableView.tableHeaderView = userView
+    }
 }
 
+// MARK: - TableView Methods
 extension MenuViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return menuDataSource.sections.count
@@ -61,10 +48,12 @@ extension MenuViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MenuCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: MenuTableViewCell.reuseIdentifier, for: indexPath)
 
         if let row = menuDataSource.row(indexPath: indexPath) {
             cell.textLabel?.text = row.title
+            cell.accessoryType = row.accessoryType
+            cell.imageView?.image = row.icon
         }
 
         return cell
@@ -83,9 +72,34 @@ extension MenuViewController {
     }
 }
 
+// MARK: - Data Source Related
+
 struct MenuRow {
     let title: String
+    let uuid: UUID?
     let callback: () -> Void
+
+    var accessoryType: UITableViewCell.AccessoryType {
+        // Site rows have UUIDs and should show disclosure icons.
+        return uuid == nil ? .none : .disclosureIndicator
+    }
+
+    var icon: UIImage? {
+        return uuid == nil ? nil : UIImage.gridicon(.globe, size: CGSize(width: 32, height: 32))
+    }
+
+    init(title: String, callback: (@escaping () -> Void)) {
+        self.title = title
+        self.callback = callback
+        self.uuid = nil
+    }
+
+    init(title: String, uuid: UUID, callback: (@escaping () -> Void)) {
+        self.title = title
+        self.callback = callback
+        self.uuid = uuid
+    }
+
 }
 
 struct MenuSection {
@@ -93,6 +107,8 @@ struct MenuSection {
     let title: String?
 }
 
+/// Acts as the data source for the menu.
+///
 class MenuDataSource {
 
     var sections = [MenuSection]()
@@ -118,7 +134,7 @@ class MenuDataSource {
         let store = StoreContainer.shared.siteStore
         let sites = store.getSites()
         for site in sites {
-            let row = MenuRow(title: site.title) {
+            let row = MenuRow(title: site.title, uuid: site.uuid) {
                 self.selectSite(uuid: site.uuid)
             }
             rows.append(row)
@@ -135,14 +151,15 @@ class MenuDataSource {
         }
         rows.append(row)
 
+        row = MenuRow(title: NSLocalizedString("Privacy", comment: "Refers to Privacy Policy"), callback: {
+            self.showPrivacy()
+        })
+        rows.append(row)
+
         row = MenuRow(title: NSLocalizedString("Terms", comment: "Refers to Terms of Use"), callback: {
             self.showTerms()
         })
         rows.append(row)
-
-        row = MenuRow(title: NSLocalizedString("Privacy", comment: "Refers to Privacy Policy"), callback: {
-            self.showPrivacy()
-        })
 
         return MenuSection(rows: rows, title: NSLocalizedString("App", comment: "Noun. Abbrieviation of application. Refers to the app itself."))
     }

@@ -35,6 +35,8 @@
 		E602E69F22C1747D00795CBA /* Dictionary+Unwrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */; };
 		E6034B1422529414007DB6DD /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6034B1322529414007DB6DD /* UserAgent.swift */; };
 		E604EE4724C76FAD0015D284 /* CircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604EE4624C76FAD0015D284 /* CircularImageView.swift */; };
+		E604EE4924C774A80015D284 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604EE4824C774A80015D284 /* UserView.swift */; };
+		E604EE4B24C774FB0015D284 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604EE4A24C774FB0015D284 /* MenuTableViewCell.swift */; };
 		E6051DE323071A3A005AAF0B /* RemoteRevision.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6051DE223071A3A005AAF0B /* RemoteRevision.swift */; };
 		E6051DE623072251005AAF0B /* remote-revisions.json in Resources */ = {isa = PBXBuildFile; fileRef = E6051DE423072251005AAF0B /* remote-revisions.json */; };
 		E6051DE723072251005AAF0B /* remote-autosave.json in Resources */ = {isa = PBXBuildFile; fileRef = E6051DE523072251005AAF0B /* remote-autosave.json */; };
@@ -272,6 +274,8 @@
 		E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Unwrappers.swift"; sourceTree = "<group>"; };
 		E6034B1322529414007DB6DD /* UserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
 		E604EE4624C76FAD0015D284 /* CircularImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularImageView.swift; sourceTree = "<group>"; };
+		E604EE4824C774A80015D284 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		E604EE4A24C774FB0015D284 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		E6051DE223071A3A005AAF0B /* RemoteRevision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRevision.swift; sourceTree = "<group>"; };
 		E6051DE423072251005AAF0B /* remote-revisions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-revisions.json"; sourceTree = "<group>"; };
 		E6051DE523072251005AAF0B /* remote-autosave.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-autosave.json"; sourceTree = "<group>"; };
@@ -760,6 +764,8 @@
 			isa = PBXGroup;
 			children = (
 				E604EE4624C76FAD0015D284 /* CircularImageView.swift */,
+				E604EE4824C774A80015D284 /* UserView.swift */,
+				E604EE4A24C774FB0015D284 /* MenuTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1421,12 +1427,14 @@
 				E66CCA082303527C00F1CA59 /* PostItem+CoreDataProperties.swift in Sources */,
 				E602E68B22C1632C00795CBA /* UserApiActions.swift in Sources */,
 				E6190C4D24BF8DDA0060D00A /* UIColor+ColorStudio.swift in Sources */,
+				E604EE4B24C774FB0015D284 /* MenuTableViewCell.swift in Sources */,
 				E66CCA132303527C00F1CA59 /* Status+CoreDataProperties.swift in Sources */,
 				E605418F2369E1920078D978 /* Diagnostics.swift in Sources */,
 				E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */,
 				E640D27823883ED800887FD9 /* StagedMediaImporter.swift in Sources */,
 				E61D8F6C2375EC3E005FECED /* StagedMediaStore.swift in Sources */,
 				E66CCA0D2303527C00F1CA59 /* Site+CoreDataProperties.swift in Sources */,
+				E604EE4924C774A80015D284 /* UserView.swift in Sources */,
 				E66CCA0B2303527C00F1CA59 /* Account+CoreDataProperties.swift in Sources */,
 				E63F3F3C236350BE00DB760E /* MediaTypeDiscerner.swift in Sources */,
 				E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */,
