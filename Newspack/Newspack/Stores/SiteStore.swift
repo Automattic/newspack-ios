@@ -65,6 +65,27 @@ class SiteStore: Store {
         return nil
     }
 
+    /// Get all sites for the current account.
+    ///
+    /// - Returns: An array of Site instances.
+    ///
+    func getSites() -> [Site] {
+        guard let account = StoreContainer.shared.accountStore.currentAccount else {
+            return [Site]()
+        }
+
+        let fetchRequest = Site.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "account = %@", account)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        let context = CoreDataManager.shared.mainContext
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            let error = error as NSError
+            LogError(message: error.localizedDescription)
+        }
+        return [Site]()
+    }
 }
 
 // MARK: - API and Core Data
