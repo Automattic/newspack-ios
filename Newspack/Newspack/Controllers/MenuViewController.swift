@@ -1,5 +1,5 @@
 import UIKit
-
+import WordPressShared
 
 class UserView: UIStackView {
     @IBOutlet var imageView: UIImageView!
@@ -11,15 +11,15 @@ class UserView: UIStackView {
         nameLabel.text = name
         usernameLable.text = username
 
-        if let url = gravatar {
-            imageView.downloadImage(from: url)
-        } else {
-            // placeholder
+        if let url = gravatar, let photonURL = PhotonImageURLHelper.photonURL(with: imageView.frame.size, forImageURL: url) {
+            imageView.downloadImage(from: photonURL)
         }
     }
 }
 
 class MenuViewController: UITableViewController {
+
+    var receipt: Any?
 
     @IBOutlet var userView: UserView!
 
@@ -31,12 +31,19 @@ class MenuViewController: UITableViewController {
         super.viewDidLoad()
         tableView.tableHeaderView = userView
 
+        receipt = StoreContainer.shared.accountDetailsStore.onChange {
+            self.configureHeader()
+        }
+
+        configureHeader()
+    }
+
+    func configureHeader() {
         guard let details = StoreContainer.shared.accountStore.currentAccount?.details else {
             return
         }
 
-//        let url = URL(string: details.avatarUrls.first)
-        userView.configure(with: details.name, username: details.username, gravatar: nil)
+        userView.configure(with: details.name, username: details.username, gravatar: details.avatarURL)
     }
 
 }
