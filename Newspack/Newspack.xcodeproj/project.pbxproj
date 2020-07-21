@@ -36,7 +36,8 @@
 		E6034B1422529414007DB6DD /* UserAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6034B1322529414007DB6DD /* UserAgent.swift */; };
 		E604EE4724C76FAD0015D284 /* CircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604EE4624C76FAD0015D284 /* CircularImageView.swift */; };
 		E604EE4924C774A80015D284 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604EE4824C774A80015D284 /* UserView.swift */; };
-		E604EE4B24C774FB0015D284 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604EE4A24C774FB0015D284 /* MenuTableViewCell.swift */; };
+		E604EE4B24C774FB0015D284 /* SimpleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604EE4A24C774FB0015D284 /* SimpleTableViewCell.swift */; };
+		E604EE4E24C77BD10015D284 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E604EE4D24C77BD10015D284 /* AboutViewController.swift */; };
 		E6051DE323071A3A005AAF0B /* RemoteRevision.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6051DE223071A3A005AAF0B /* RemoteRevision.swift */; };
 		E6051DE623072251005AAF0B /* remote-revisions.json in Resources */ = {isa = PBXBuildFile; fileRef = E6051DE423072251005AAF0B /* remote-revisions.json */; };
 		E6051DE723072251005AAF0B /* remote-autosave.json in Resources */ = {isa = PBXBuildFile; fileRef = E6051DE523072251005AAF0B /* remote-autosave.json */; };
@@ -275,7 +276,8 @@
 		E6034B1322529414007DB6DD /* UserAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAgent.swift; sourceTree = "<group>"; };
 		E604EE4624C76FAD0015D284 /* CircularImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularImageView.swift; sourceTree = "<group>"; };
 		E604EE4824C774A80015D284 /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
-		E604EE4A24C774FB0015D284 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
+		E604EE4A24C774FB0015D284 /* SimpleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTableViewCell.swift; sourceTree = "<group>"; };
+		E604EE4D24C77BD10015D284 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		E6051DE223071A3A005AAF0B /* RemoteRevision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteRevision.swift; sourceTree = "<group>"; };
 		E6051DE423072251005AAF0B /* remote-revisions.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-revisions.json"; sourceTree = "<group>"; };
 		E6051DE523072251005AAF0B /* remote-autosave.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-autosave.json"; sourceTree = "<group>"; };
@@ -765,7 +767,7 @@
 			children = (
 				E604EE4624C76FAD0015D284 /* CircularImageView.swift */,
 				E604EE4824C774A80015D284 /* UserView.swift */,
-				E604EE4A24C774FB0015D284 /* MenuTableViewCell.swift */,
+				E604EE4A24C774FB0015D284 /* SimpleTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -776,7 +778,11 @@
 				E6710A1522CE9ED00036156E /* Transitions */,
 				E6AC98B723CCD5DE00E95381 /* MainNavController.swift */,
 				E6138FD32211FE86004E5B91 /* InitialViewController.swift */,
-				E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */,
+				E679AD7224C0E831000FDF90 /* SidebarContainerViewController.swift */,
+				E62A6BA324C6198300013092 /* MenuViewController.swift */,
+				E604EE4D24C77BD10015D284 /* AboutViewController.swift */,
+				E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */,
+				E68689BF243C080400B7E363 /* FoldersViewController.swift */,
 				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
 				E62982292303667E00E8CEC7 /* EditorViewController.swift */,
 				E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */,
@@ -787,10 +793,7 @@
 				E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */,
 				E632F9A023515116003737BF /* SiteMediaDataSource.swift */,
 				E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */,
-				E68689BF243C080400B7E363 /* FoldersViewController.swift */,
-				E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */,
-				E679AD7224C0E831000FDF90 /* SidebarContainerViewController.swift */,
-				E62A6BA324C6198300013092 /* MenuViewController.swift */,
+				E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1395,6 +1398,7 @@
 				E6E2ACF922E2840C00A8E85D /* Date+FormatGMTString.swift in Sources */,
 				E6F1C52522C2A48600334003 /* ApiAction.swift in Sources */,
 				E6451AC22322F737005809E2 /* EditorSaveAlertController.swift in Sources */,
+				E604EE4E24C77BD10015D284 /* AboutViewController.swift in Sources */,
 				E6190C4B24BF8A540060D00A /* ColorStudio.swift in Sources */,
 				E6D44DEF234BDB8400B51438 /* MediaStore.swift in Sources */,
 				E66CCA172303527D00F1CA59 /* PostItem+CoreDataClass.swift in Sources */,
@@ -1427,7 +1431,7 @@
 				E66CCA082303527C00F1CA59 /* PostItem+CoreDataProperties.swift in Sources */,
 				E602E68B22C1632C00795CBA /* UserApiActions.swift in Sources */,
 				E6190C4D24BF8DDA0060D00A /* UIColor+ColorStudio.swift in Sources */,
-				E604EE4B24C774FB0015D284 /* MenuTableViewCell.swift in Sources */,
+				E604EE4B24C774FB0015D284 /* SimpleTableViewCell.swift in Sources */,
 				E66CCA132303527C00F1CA59 /* Status+CoreDataProperties.swift in Sources */,
 				E605418F2369E1920078D978 /* Diagnostics.swift in Sources */,
 				E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */,
