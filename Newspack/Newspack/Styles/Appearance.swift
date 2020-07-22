@@ -3,6 +3,7 @@ import UIKit
 
 class Appearance {
 
+    // MARK: - UserView styles
 
     static func style(userView label: UILabel, imageView: UIImageView) {
         label.textColor = .neutral(.shade70)
@@ -14,6 +15,7 @@ class Appearance {
     static func style(view: UIView, tableView: UITableView) {
         view.backgroundColor = .basicBackground
         tableView.backgroundColor = .neutral(.shade0)
+        tableView.separatorColor = .neutral(.shade10)
     }
 
     static func style(cell: UITableViewCell) {
@@ -30,6 +32,10 @@ class Appearance {
         cell.imageView?.tintColor = .neutral(.shade30)
     }
 
+    static func style(centeredFooter footer: UITableViewHeaderFooterView) {
+        footer.textLabel?.textColor = .textSubtle
+        footer.textLabel?.textAlignment = .center
+    }
 }
 
 // MARK: - Fonts

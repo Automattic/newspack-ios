@@ -13,6 +13,8 @@ class AboutViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        Appearance.style(view: view, tableView: tableView)
+
         configureButtons()
         configureHeader()
         buildSections()
@@ -62,6 +64,8 @@ extension AboutViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SimpleTableViewCell.reuseIdentifier, for: indexPath)
+        Appearance.style(cell: cell)
+
         let section = sections[indexPath.section]
         let row = section.rows[indexPath.row]
 
@@ -79,6 +83,10 @@ extension AboutViewController {
     }
 
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        guard section == sections.count - 1 else {
+            return nil
+        }
+
         let year = Calendar.current.component(.year, from: Date())
         let localizedTitleText = NSLocalizedString("© %ld Automattic, Inc.", comment: "About View's Footer Text. The variable is the current year")
         return String(format: localizedTitleText, year)
@@ -89,6 +97,13 @@ extension AboutViewController {
         let section = sections[indexPath.section]
         let row = section.rows[indexPath.row]
         row.callback?()
+    }
+
+    override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        guard section == sections.count - 1, let footer = view as? UITableViewHeaderFooterView else {
+            return
+        }
+        Appearance.style(centeredFooter: footer)
     }
 
 }
