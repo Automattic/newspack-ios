@@ -20,13 +20,14 @@ class MenuViewController: UITableViewController {
 
         configureInsets()
         configureHeader()
+        configureStyle()
     }
 
     func configureHeader() {
         guard let details = StoreContainer.shared.accountStore.currentAccount?.details else {
             return
         }
-        userView.configure(with: details.name, username: details.username, gravatar: details.avatarURL)
+        userView.configure(with: details.username, gravatar: details.avatarURL)
     }
 
     func configureInsets() {
@@ -34,6 +35,10 @@ class MenuViewController: UITableViewController {
         insets.top = 44.0
         tableView.contentInset = insets
         tableView.tableHeaderView = userView
+    }
+
+    func configureStyle() {
+        Appearance.style(view: view, tableView: tableView)
     }
 }
 
@@ -49,6 +54,7 @@ extension MenuViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SimpleTableViewCell.reuseIdentifier, for: indexPath)
+        Appearance.style(cell: cell)
 
         if let row = menuDataSource.row(indexPath: indexPath) {
             cell.textLabel?.text = row.title
@@ -81,7 +87,7 @@ struct MenuRow {
     }
 
     var icon: UIImage? {
-        return uuid == nil ? nil : UIImage.gridicon(.globe, size: CGSize(width: 32, height: 32))
+        return uuid == nil ? nil : UIImage.gridicon(.globe)
     }
 
     init(title: String, callback: (@escaping () -> Void)) {
