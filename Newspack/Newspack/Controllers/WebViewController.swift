@@ -19,7 +19,6 @@ class WebViewController: UIViewController {
     deinit {
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.title))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.url))
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
         webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.isLoading))
     }
 
@@ -50,7 +49,6 @@ class WebViewController: UIViewController {
     private func startObservingWebView() {
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: [.new], context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: [.new], context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: [.new], context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.isLoading), options: [], context: nil)
     }
 

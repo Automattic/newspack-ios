@@ -22,7 +22,7 @@
             </objects>
             <point key="canvasLocation" x="-1138" y="149"/>
         </scene>
-        <!--About View Controller-->
+        <!--About-->
         <scene sceneID="FUe-xj-cc0">
             <objects>
                 <tableViewController storyboardIdentifier="AboutViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cPy-aB-XOq" customClass="AboutViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
@@ -58,7 +58,16 @@
                             <outlet property="delegate" destination="cPy-aB-XOq" id="Qxa-jT-eWi"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="About" id="aBg-d4-ghi">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="cross" id="7bc-B3-UI9">
+                            <connections>
+                                <action selector="handleCloseButtonWithSender:" destination="cPy-aB-XOq" id="IGZ-ny-5u4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="closeButton" destination="7bc-B3-UI9" id="9ru-R2-DgV"/>
                         <outlet property="headerView" destination="nhp-T8-Jr8" id="eIb-We-3MB"/>
                     </connections>
                 </tableViewController>
@@ -66,7 +75,7 @@
             </objects>
             <point key="canvasLocation" x="-354" y="-1169"/>
         </scene>
-        <!--Title-->
+        <!--Web View Controller-->
         <scene sceneID="zwj-ZW-uPp">
             <objects>
                 <viewController storyboardIdentifier="WebViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ncU-i4-ggh" customClass="WebViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
@@ -117,7 +126,7 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Title" id="sqH-8v-UkD">
+                    <navigationItem key="navigationItem" id="sqH-8v-UkD">
                         <barButtonItem key="leftBarButtonItem" title="Close" image="cross" id="erH-Fq-09T">
                             <connections>
                                 <action selector="handleCloseButtonWithSender:" destination="ncU-i4-ggh" id="Sbn-LO-ABe"/>

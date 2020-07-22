@@ -1,8 +1,11 @@
 import UIKit
-import SafariServices
+import Gridicons
 
+/// Presents information about the app.
+///
 class AboutViewController: UITableViewController {
 
+    @IBOutlet var closeButton: UIBarButtonItem!
     @IBOutlet var headerView: UIStackView!
 
     var rows = [AboutRow]()
@@ -10,12 +13,37 @@ class AboutViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureButtons()
+        configureHeader()
         buildRows()
+    }
+
+    func configureButtons() {
+        closeButton.image = UIImage.gridicon(.cross)
+    }
+
+    func configureHeader() {
+        var frame = headerView.frame
+        frame.size.height = 132.0
+        headerView.frame = frame
         tableView.tableHeaderView = headerView
     }
 
-    // MARK: - Table view data source
+    func configureInsets() {
+        var insets = tableView.contentInset
+        insets.top = 44.0
+        tableView.contentInset = insets
+        tableView.tableHeaderView = headerView
+    }
 
+    @IBAction func handleCloseButton(sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - Table view data source
+
+extension AboutViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1

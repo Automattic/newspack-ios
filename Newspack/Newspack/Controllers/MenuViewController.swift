@@ -174,7 +174,8 @@ extension MenuDataSource {
 
     func showAbout() {
         let controller = MainStoryboard.instantiateViewController(withIdentifier: .about)
-        presenter?.present(controller, animated: true, completion: nil)
+        let navController = UINavigationController(rootViewController: controller)
+        presenter?.present(navController, animated: true, completion: nil)
     }
 
     func selectSite(uuid: UUID) {
