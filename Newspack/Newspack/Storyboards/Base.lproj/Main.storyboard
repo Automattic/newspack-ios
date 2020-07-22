@@ -550,6 +550,7 @@
             <point key="canvasLocation" x="288.80000000000001" y="798.35082458770626"/>
         </scene>
     </scenes>
+    <color key="tintColor" name="NewspackBlue"/>
     <resources>
         <image name="Icon" width="32" height="32"/>
         <image name="chevron-left" width="24" height="24"/>
@@ -558,5 +559,8 @@
         <image name="refresh" width="24" height="24"/>
         <image name="safari" catalog="system" width="128" height="121"/>
         <image name="share-ios" width="24" height="24"/>
+        <namedColor name="NewspackBlue">
+            <color red="0.20000000000000001" green="0.40000000000000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>
