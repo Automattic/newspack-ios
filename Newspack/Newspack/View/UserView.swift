@@ -6,6 +6,11 @@ class UserView: UIStackView {
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var spacer: UIView!
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        Appearance.style(userView: nameLabel, imageView: imageView)
+    }
+
     func configure(with name: String, gravatar: URL?) {
         nameLabel.text = name
 

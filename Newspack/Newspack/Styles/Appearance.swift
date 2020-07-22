@@ -3,6 +3,12 @@ import UIKit
 
 class Appearance {
 
+
+    static func style(userView label: UILabel, imageView: UIImageView) {
+        label.textColor = .neutral(.shade70)
+        imageView.backgroundColor = .placeholderImage
+    }
+
     // MARK: - Tableview Styles
 
     static func style(view: UIView, tableView: UITableView) {

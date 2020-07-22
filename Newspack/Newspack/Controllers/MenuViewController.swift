@@ -124,8 +124,8 @@ class MenuDataSource {
     func updateSections() {
         sections = [
             buildSitesSection(),
-            buildSessionSection(),
-            buildAboutSection()
+            buildAboutSection(),
+            buildSessionSection()
         ]
     }
 
