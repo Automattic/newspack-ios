@@ -7,8 +7,10 @@ class Appearance {
 
     static func style(userView label: UILabel, imageView: UIImageView) {
         label.textColor = .neutral(.shade70)
+        label.backgroundColor = .neutral(.shade0)
 
         label.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+
         imageView.backgroundColor = .placeholderImage
     }
 
@@ -25,6 +27,8 @@ class Appearance {
 
         cell.textLabel?.font = .tableViewText
         cell.textLabel?.sizeToFit()
+        cell.textLabel?.backgroundColor = .basicBackground
+        cell.imageView?.backgroundColor = .basicBackground
 
         cell.detailTextLabel?.font = .tableViewSubtitle
         cell.detailTextLabel?.sizeToFit()
@@ -37,6 +41,7 @@ class Appearance {
     static func style(centeredFooter footer: UITableViewHeaderFooterView) {
         footer.textLabel?.textColor = .textSubtle
         footer.textLabel?.textAlignment = .center
+        footer.textLabel?.backgroundColor = .neutral(.shade0)
     }
 }
 
