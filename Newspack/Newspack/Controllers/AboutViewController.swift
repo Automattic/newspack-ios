@@ -13,11 +13,10 @@ class AboutViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        Appearance.style(view: view, tableView: tableView)
-
         configureButtons()
         configureHeader()
         buildSections()
+        configureStyle()
     }
 
     func configureButtons() {
@@ -31,13 +30,9 @@ class AboutViewController: UITableViewController {
         tableView.tableHeaderView = headerView
     }
 
-    func configureInsets() {
-        var insets = tableView.contentInset
-        insets.top = 44.0
-        tableView.contentInset = insets
-        tableView.tableHeaderView = headerView
+    func configureStyle() {
+        Appearance.style(view: view, tableView: tableView)
     }
-
 }
 
 // MARK: - Actions

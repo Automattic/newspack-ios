@@ -7,6 +7,8 @@ class Appearance {
 
     static func style(userView label: UILabel, imageView: UIImageView) {
         label.textColor = .neutral(.shade70)
+
+        label.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
         imageView.backgroundColor = .placeholderImage
     }
 
