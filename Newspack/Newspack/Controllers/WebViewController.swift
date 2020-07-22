@@ -7,7 +7,6 @@ import Gridicons
 class WebViewController: UIViewController {
 
     @IBOutlet var webView: WKWebView!
-
     @IBOutlet var reloadButton: UIBarButtonItem!
     @IBOutlet var safariButton: UIBarButtonItem!
     @IBOutlet var closeButton: UIBarButtonItem!
@@ -37,7 +36,7 @@ class WebViewController: UIViewController {
         }
     }
 
-    func configureToolbar() {
+    private func configureToolbar() {
         reloadButton.image = UIImage.gridicon(.refresh)
         safariButton.image = UIImage.gridicon(.globe)
         closeButton.image = UIImage.gridicon(.cross)
@@ -46,19 +45,6 @@ class WebViewController: UIViewController {
         shareButton.image = UIImage.gridicon(.shareiOS)
 
         navigationController?.setToolbarHidden(false, animated: false)
-    }
-
-    func load(url: URL) {
-        self.url = url
-        guard isViewLoaded else {
-            return
-        }
-        if url.isFileURL {
-            webView.loadFileURL(url, allowingReadAccessTo: url)
-            return
-        }
-        let request = URLRequest(url: url)
-        webView.load(request)
     }
 
     private func startObservingWebView() {
@@ -100,6 +86,29 @@ class WebViewController: UIViewController {
          navigationItem.titleView?.accessibilityValue = navigationItem.title
          navigationItem.titleView?.accessibilityTraits = .updatesFrequently
      }
+}
+
+// MARK: - Public Methods
+
+extension WebViewController {
+
+    /// Load the specified URL in the controller's webview.
+    ///
+    /// - Parameter url: The URL to load.
+    ///
+    func load(url: URL) {
+        self.url = url
+        guard isViewLoaded else {
+            return
+        }
+        if url.isFileURL {
+            webView.loadFileURL(url, allowingReadAccessTo: url)
+            return
+        }
+        let request = URLRequest(url: url)
+        webView.load(request)
+    }
+
 }
 
 // MARK: - Actions
