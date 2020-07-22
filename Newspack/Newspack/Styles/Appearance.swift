@@ -27,8 +27,6 @@ class Appearance {
 
         cell.textLabel?.font = .tableViewText
         cell.textLabel?.sizeToFit()
-        cell.textLabel?.backgroundColor = .basicBackground
-        cell.imageView?.backgroundColor = .basicBackground
 
         cell.detailTextLabel?.font = .tableViewSubtitle
         cell.detailTextLabel?.sizeToFit()
