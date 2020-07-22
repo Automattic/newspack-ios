@@ -185,6 +185,7 @@ extension MenuDataSource {
     }
 
     func selectSite(uuid: UUID) {
-        LogInfo(message: "Select Site")
+        // For now, we only support a single site, so just toggle closed the menu.
+        NotificationCenter.default.post(name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
     }
 }
