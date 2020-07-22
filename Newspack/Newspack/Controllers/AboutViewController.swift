@@ -109,11 +109,16 @@ extension AboutViewController {
     }
 
     func displayWebPage(url: URL?) {
-        guard let url = url else {
+        guard
+            let url = url,
+            let controller = MainStoryboard.instantiateViewController(withIdentifier: .web) as? WebViewController
+        else {
             return
         }
-        let controller = SFSafariViewController(url: url)
-        present(controller, animated: true, completion: nil)
+
+        controller.load(url: url)
+        let navController = UINavigationController(rootViewController: controller)
+        present(navController, animated: true, completion: nil)
     }
 }
 

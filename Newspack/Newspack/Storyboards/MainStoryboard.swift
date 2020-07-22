@@ -14,6 +14,7 @@ class MainStoryboard {
         case assetsList = "AssetsViewController"
         case menu = "MenuViewController"
         case about = "AboutViewController"
+        case web = "WebViewController"
     }
 
     static func instantiateViewController(withIdentifier identifier: Identifier) -> UIViewController {

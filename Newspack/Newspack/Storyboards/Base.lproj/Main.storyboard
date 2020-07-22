@@ -66,6 +66,85 @@
             </objects>
             <point key="canvasLocation" x="-354" y="-1169"/>
         </scene>
+        <!--Title-->
+        <scene sceneID="zwj-ZW-uPp">
+            <objects>
+                <viewController storyboardIdentifier="WebViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ncU-i4-ggh" customClass="WebViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AmA-ea-p5p">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DD8-LM-P0Y">
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration" applicationNameForUserAgent="">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="DD8-LM-P0Y" firstAttribute="leading" secondItem="BiN-Jc-Gjp" secondAttribute="leading" id="EJx-eA-qt3"/>
+                            <constraint firstItem="DD8-LM-P0Y" firstAttribute="bottom" secondItem="BiN-Jc-Gjp" secondAttribute="bottom" id="XwD-Nj-wfe"/>
+                            <constraint firstItem="DD8-LM-P0Y" firstAttribute="top" secondItem="BiN-Jc-Gjp" secondAttribute="top" id="gQz-Yb-X6T"/>
+                            <constraint firstItem="BiN-Jc-Gjp" firstAttribute="trailing" secondItem="DD8-LM-P0Y" secondAttribute="trailing" id="ito-HA-jOD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="BiN-Jc-Gjp"/>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem title="Previous" image="chevron-left" id="8K5-9y-WhQ">
+                            <connections>
+                                <action selector="handlePrevButtonWithSender:" destination="ncU-i4-ggh" id="aJs-0s-Spr"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="8DU-Ul-rN8"/>
+                        <barButtonItem title="Next" image="chevron-right" id="gnS-YQ-fPL">
+                            <connections>
+                                <action selector="handleNextButtonWithSender:" destination="ncU-i4-ggh" id="ZCM-Sc-6VX"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="gdj-Yd-Cxe"/>
+                        <barButtonItem title="Share" image="share-ios" id="DZ6-7R-gCP">
+                            <connections>
+                                <action selector="handleShareButtonWithSender:" destination="ncU-i4-ggh" id="ojq-0y-hPL"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="7zn-8M-Oaa"/>
+                        <barButtonItem title="Open in Safari" image="safari" catalog="system" id="wCQ-ln-ek9">
+                            <connections>
+                                <action selector="handleSafariButtonWithSender:" destination="ncU-i4-ggh" id="sAq-uT-Udo"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Title" id="sqH-8v-UkD">
+                        <barButtonItem key="leftBarButtonItem" title="Close" image="cross" id="erH-Fq-09T">
+                            <connections>
+                                <action selector="handleCloseButtonWithSender:" destination="ncU-i4-ggh" id="Sbn-LO-ABe"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Refresh" image="refresh" id="wKJ-mZ-rVx">
+                            <connections>
+                                <action selector="handleRefreshButtonWithSender:" destination="ncU-i4-ggh" id="LK8-Jh-dkm"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
+                    <connections>
+                        <outlet property="closeButton" destination="erH-Fq-09T" id="Ul9-Ea-Rvj"/>
+                        <outlet property="nextButton" destination="gnS-YQ-fPL" id="eh2-qY-u1C"/>
+                        <outlet property="prevButton" destination="8K5-9y-WhQ" id="XSg-wq-lve"/>
+                        <outlet property="reloadButton" destination="wKJ-mZ-rVx" id="lH5-8Q-NY3"/>
+                        <outlet property="safariButton" destination="wCQ-ln-ek9" id="YEc-Jz-oW0"/>
+                        <outlet property="shareButton" destination="DZ6-7R-gCP" id="Z6u-jt-PRu"/>
+                        <outlet property="webView" destination="DD8-LM-P0Y" id="NZY-pN-q3T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aMw-h8-Exn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="292" y="-1169.865067466267"/>
+        </scene>
         <!--Menu View Controller-->
         <scene sceneID="tOF-tp-XBd">
             <objects>
@@ -470,5 +549,11 @@
     </scenes>
     <resources>
         <image name="Icon" width="32" height="32"/>
+        <image name="chevron-left" width="24" height="24"/>
+        <image name="chevron-right" width="24" height="24"/>
+        <image name="cross" width="24" height="24"/>
+        <image name="refresh" width="24" height="24"/>
+        <image name="safari" catalog="system" width="128" height="121"/>
+        <image name="share-ios" width="24" height="24"/>
     </resources>
 </document>
