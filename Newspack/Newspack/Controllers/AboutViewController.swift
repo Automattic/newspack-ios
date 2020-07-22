@@ -8,14 +8,14 @@ class AboutViewController: UITableViewController {
     @IBOutlet var closeButton: UIBarButtonItem!
     @IBOutlet var headerView: UIStackView!
 
-    var rows = [AboutRow]()
+    var sections = [AboutSection]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureButtons()
         configureHeader()
-        buildRows()
+        buildSections()
     }
 
     func configureButtons() {
@@ -36,29 +36,44 @@ class AboutViewController: UITableViewController {
         tableView.tableHeaderView = headerView
     }
 
+}
+
+// MARK: - Actions
+
+extension AboutViewController {
+
     @IBAction func handleCloseButton(sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
+
 }
 
 // MARK: - Table view data source
 
 extension AboutViewController {
+
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+        return sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rows.count
+        return sections[section].rows.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SimpleTableViewCell.reuseIdentifier, for: indexPath)
+        let section = sections[indexPath.section]
+        let row = section.rows[indexPath.row]
 
-        let row = rows[indexPath.row]
         cell.textLabel?.text = row.title
-        cell.accessoryType = row.accessoryType
+
+        if indexPath.section == 0 {
+            cell.accessoryType = .none
+            cell.selectionStyle = .none
+        } else {
+            cell.accessoryType = .disclosureIndicator
+            cell.selectionStyle = .default
+        }
 
         return cell
     }
@@ -71,23 +86,33 @@ extension AboutViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
-        let row = rows[indexPath.row]
+        let section = sections[indexPath.section]
+        let row = section.rows[indexPath.row]
         row.callback?()
     }
 
 }
 
+// MARK: - Setup our data model.
+
 extension AboutViewController {
 
-    func buildRows() {
-        rows.removeAll()
+    func buildSections() {
+        sections.removeAll()
 
-        // Version
+        // Section 1 : Version
+        var rows = [AboutRow]()
+
         let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "?"
         let format = NSLocalizedString("Version %@", comment: "The version of the app.  The %@ symbole is a placeholder for the version number.")
         let versionString = String(format: format, version)
         rows.append(AboutRow(title: versionString, callback: nil))
+
+        sections.append(AboutSection(rows: rows))
+
+        // Section 2 : Links
+
+        rows = [AboutRow]()
 
         // Newspack
         rows.append(AboutRow(title: NSLocalizedString("Newspack", comment: "Noun. A link to Newspack's web page."), callback: { [weak self] in
@@ -113,6 +138,8 @@ extension AboutViewController {
         rows.append(AboutRow(title: NSLocalizedString("Acknowledgements", comment: "Noun. A link that displays acknowledgements."), callback: { [weak self] in
             self?.showAcknowledgements()
         }))
+
+        sections.append(AboutSection(rows: rows))
     }
 
     func showNewspack() {
@@ -150,10 +177,11 @@ extension AboutViewController {
     }
 }
 
+struct AboutSection {
+    let rows: [AboutRow]
+}
+
 struct AboutRow {
     let title: String
     let callback: (() -> Void)?
-    var accessoryType: UITableViewCell.AccessoryType {
-        return callback == nil ? .none : .disclosureIndicator
-    }
 }
