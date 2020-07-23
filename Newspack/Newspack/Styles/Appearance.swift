@@ -9,7 +9,7 @@ class Appearance {
         label.textColor = .neutral(.shade70)
         label.backgroundColor = .neutral(.shade0)
 
-        label.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+        label.font = .preferredFont(forTextStyle: .headline)
 
         imageView.backgroundColor = .placeholderImage
     }
