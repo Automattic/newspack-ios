@@ -26,16 +26,18 @@ final class MainNavController: UINavigationController {
         setViewControllers(controllers, animated: false)
     }
 
-    /// Shows the site menu view controller if the first controller is the initial controller.
-    ///
-    func showSiteMenuController() {
+    func showSidebarController() {
         guard viewControllers.first is InitialViewController else {
             return
         }
 
-        let controller = MainStoryboard.instantiateViewController(withIdentifier: .siteMenu)
+        let menuController = MainStoryboard.instantiateViewController(withIdentifier: .menu)
+        let folderController = MainStoryboard.instantiateViewController(withIdentifier: .folderList)
+        let navController = UINavigationController(rootViewController: folderController)
+
+        let controller = SidebarContainerViewController(mainViewController: navController, sidebarViewController: menuController)
+        controller.view.backgroundColor = .basicBackground
         controller.modalTransitionStyle = .crossDissolve
-        setNavigationBarHidden(false, animated: true)
         setViewControllers([controller], animated: true)
 
         presentedViewController?.dismiss(animated: true, completion: nil)
@@ -71,7 +73,7 @@ extension MainNavController {
     }
 
     func handleAuthenticatedSession() {
-        showSiteMenuController()
+        showSidebarController()
     }
 
     func handleUnauthenticatedSession() {

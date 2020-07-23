@@ -31,6 +31,10 @@ class FoldersViewController: UITableViewController {
 // MARK: - Actions and Handlers
 extension FoldersViewController {
 
+    @IBAction func handleMenuButtonTapped(sender: Any) {
+        NotificationCenter.default.post(name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
+    }
+
     @IBAction func handleSortChanged(sender: Any) {
         let field = sortField.titleForSegment(at: sortField.selectedSegmentIndex)!.lowercased()
         let direction = sortDirection.selectedSegmentIndex == 0
