@@ -5,7 +5,8 @@ class MenuViewController: UITableViewController {
 
     @IBOutlet var userView: UserView!
 
-    var receipt: Any?
+    private let topInset = CGFloat(44)
+    private var receipt: Any?
 
     lazy var menuDataSource: MenuDataSource = {
         return MenuDataSource(presenter: self)
@@ -31,9 +32,7 @@ class MenuViewController: UITableViewController {
     }
 
     func configureInsets() {
-        var insets = tableView.contentInset
-        insets.top = 44.0
-        tableView.contentInset = insets
+        tableView.contentInset.top = topInset
         tableView.tableHeaderView = userView
     }
 

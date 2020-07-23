@@ -8,7 +8,8 @@ class AboutViewController: UITableViewController {
     @IBOutlet var closeButton: UIBarButtonItem!
     @IBOutlet var headerView: UIStackView!
 
-    var sections = [AboutSection]()
+    private var sections = [AboutSection]()
+    private let headerHeight = CGFloat(132)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,9 +25,7 @@ class AboutViewController: UITableViewController {
     }
 
     func configureHeader() {
-        var frame = headerView.frame
-        frame.size.height = 132.0
-        headerView.frame = frame
+        headerView.frame.size.height = headerHeight
         tableView.tableHeaderView = headerView
     }
 
