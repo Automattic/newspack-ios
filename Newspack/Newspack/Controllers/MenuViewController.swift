@@ -175,16 +175,23 @@ extension MenuDataSource {
         }
         let action = AccountAction.removeAccount(uuid: account.uuid)
         SessionManager.shared.sessionDispatcher.dispatch(action)
+        Notification.send(.logoutTapped)
     }
 
     func showAbout() {
         let controller = MainStoryboard.instantiateViewController(withIdentifier: .about)
         let navController = UINavigationController(rootViewController: controller)
         presenter?.present(navController, animated: true, completion: nil)
+        Notification.send(.aboutTapped)
     }
 
     func selectSite(uuid: UUID) {
         // For now, we only support a single site, so just toggle closed the menu.
         NotificationCenter.default.post(name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
     }
+}
+
+extension Notification.Name {
+    static let logoutTapped = Notification.Name(rawValue: "logout_tapped")
+    static let aboutTapped = Notification.Name(rawValue: "about_tapped")
 }

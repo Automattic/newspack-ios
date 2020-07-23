@@ -36,6 +36,7 @@ final class MainNavController: UINavigationController {
         let navController = UINavigationController(rootViewController: folderController)
 
         let controller = SidebarContainerViewController(mainViewController: navController, sidebarViewController: menuController)
+        controller.delegate = self
         controller.view.backgroundColor = .basicBackground
         controller.modalTransitionStyle = .crossDissolve
         setViewControllers([controller], animated: true)
@@ -113,4 +114,35 @@ extension MainNavController: UINavigationControllerDelegate {
         return FadeTransitionController(hideNavigationBar: toVC is InitialViewController)
     }
 
+}
+
+// MARK: - SidebarContainer Delegate
+
+extension MainNavController: SidebarContainerDelegate {
+
+    func containerShouldShowSidebar(container: SidebarContainerViewController) -> Bool {
+        return true
+    }
+
+    func containerWillShowSidebar(container: SidebarContainerViewController) {
+        // No op
+    }
+
+    func containerDidShowSidebar(container: SidebarContainerViewController) {
+        Notification.send(.sidebarOpened)
+    }
+
+    func containerWillHideSidebar(container: SidebarContainerViewController) {
+        // No op
+    }
+
+    func containerDidHideSidebar(container: SidebarContainerViewController) {
+        Notification.send(.sidebarClosed)
+    }
+
+}
+
+extension Notification.Name {
+    static let sidebarOpened = Notification.Name(rawValue: "sidebar_opened")
+    static let sidebarClosed = Notification.Name(rawValue: "sidebar_closed")
 }
