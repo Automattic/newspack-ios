@@ -2,9 +2,18 @@ import UIKit
 import CoreData
 import WordPressFlux
 
-class AssetsViewController: UITableViewController {
+class AssetsViewController: UIViewController, UITableViewDelegate {
 
     @IBOutlet var sortControl: UISegmentedControl!
+    @IBOutlet var folderLabel: UILabel!
+    @IBOutlet var syncButton: UIBarButtonItem!
+    @IBOutlet var editButton: UIBarButtonItem!
+    @IBOutlet var tableView: UITableView!
+
+    @IBOutlet var textNoteButton: UIBarButtonItem!
+    @IBOutlet var photoButton: UIBarButtonItem!
+    @IBOutlet var videoButton: UIBarButtonItem!
+    @IBOutlet var audioNoteButton: UIBarButtonItem!
 
     var dataSource: AssetDataSource!
 
@@ -13,13 +22,6 @@ class AssetsViewController: UITableViewController {
 
         configureDataSource()
         configureSortControl()
-
-        // Temporary measure. The UI will change so right now this doesn't need to be pretty.
-        let headerView = tableView.tableHeaderView!
-        var frame = headerView.frame
-        frame.size.height = 44.0
-        headerView.frame = frame
-        tableView.tableHeaderView = headerView
     }
 
 }
@@ -27,11 +29,6 @@ class AssetsViewController: UITableViewController {
 // MARK: - Actions
 
 extension AssetsViewController {
-
-    @IBAction func handleAddTapped(sender: Any) {
-        let action = AssetAction.createAssetFor(text: "New Text Note")
-        SessionManager.shared.sessionDispatcher.dispatch(action)
-    }
 
     @IBAction func handleSortChanged(sender: Any) {
         let action = AssetAction.sortMode(index: sortControl.selectedSegmentIndex)
@@ -52,10 +49,30 @@ extension AssetsViewController {
 
 }
 
+extension AssetsViewController {
+
+    @IBAction func handleTextNoteButton(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped \(sender.description)")
+    }
+
+    @IBAction func handlePhotoButton(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped \(sender.description)")
+    }
+
+    @IBAction func handleVideoButton(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped \(sender.description)")
+    }
+
+    @IBAction func handleAudioNoteButton(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped \(sender.description)")
+    }
+
+}
+
 // MARK: - TableViewDelegate methods
 extension AssetsViewController {
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectSelectedRowWithAnimation(true)
         guard let asset = dataSource.object(at: indexPath) else {
             return
@@ -66,15 +83,15 @@ extension AssetsViewController {
         CoreDataManager.shared.saveContext(context: asset.managedObjectContext!)
     }
 
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return tableView.isEditing ? .none : .delete
     }
 
-    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
         return tableView.isEditing ? false : true
     }
 
-    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
         // No droppiing into the unsorted section, so just return the source indexpath.
         if proposedDestinationIndexPath.section == 1 {
             return sourceIndexPath
