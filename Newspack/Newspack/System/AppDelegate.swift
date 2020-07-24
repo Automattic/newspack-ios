@@ -3,6 +3,11 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    /// Convenience to make it a little easier to reference the AppDelegate.
+    static var shared: AppDelegate {
+        UIApplication.shared.delegate as! AppDelegate
+    }
+
     // We want a single instance of the Reconciler for the lifecycle of the app.
     // We'll instantiate it here for convenience.
     private let reconciler = Reconciler()
@@ -16,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        configureEventMonitor()
         configureLogger()
         // Configure the window which should call makeKeyAndVisible.
         // Necessary in order to present the authentication flow.
@@ -81,6 +87,10 @@ extension AppDelegate {
 
     private func configureLogger() {
         Log.setup()
+    }
+
+    private func configureEventMonitor() {
+        EventMonitor.shared.registerObject(object: self)
     }
 
 }

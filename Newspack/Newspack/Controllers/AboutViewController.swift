@@ -153,23 +153,28 @@ extension AboutViewController {
 
     func showNewspack() {
         displayWebPage(url: URL(string: "https://newspack.pub/"))
+        Notification.send(.newspackSiteTapped)
     }
 
     func showPrivacy() {
         displayWebPage(url: URL(string: "https://automattic.com/privacy/"))
+        Notification.send(.privacyTapped)
     }
 
     func showTerms() {
         displayWebPage(url: URL(string: "https://wordpress.com/tos/"))
+        Notification.send(.termsTapped)
     }
 
     func showSource() {
         displayWebPage(url: URL(string: "https://github.com/Automattic/newspack-ios"))
+        Notification.send(.sourceTapped)
     }
 
     func showAcknowledgements() {
         let url = Bundle.main.url(forResource: "acknowledgements", withExtension: "htm")
         displayWebPage(url: url)
+        Notification.send(.acknowledgementsTapped)
     }
 
     func displayWebPage(url: URL?) {
@@ -193,4 +198,12 @@ struct AboutSection {
 struct AboutRow {
     let title: String
     let callback: (() -> Void)?
+}
+
+extension Notification.Name {
+    static let newspackSiteTapped = Notification.Name(rawValue: "newspack_site_tapped")
+    static let privacyTapped = Notification.Name(rawValue: "privacy_tapped")
+    static let termsTapped = Notification.Name(rawValue: "terms_tapped")
+    static let sourceTapped = Notification.Name(rawValue: "source_tapped")
+    static let acknowledgementsTapped = Notification.Name(rawValue: "acknowledgements_tapped")
 }
