@@ -158,7 +158,7 @@
         <!--Folders-->
         <scene sceneID="NTU-fz-MXb">
             <objects>
-                <viewController id="HoW-Ma-W9C" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FoldersViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HoW-Ma-W9C" customClass="FoldersViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ou8-ZM-ej4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -175,6 +175,9 @@
                                             <segment title="Date"/>
                                             <segment title="Name"/>
                                         </segments>
+                                        <connections>
+                                            <action selector="handleSortChangedWithSender:" destination="HoW-Ma-W9C" eventType="valueChanged" id="azd-go-huG"/>
+                                        </connections>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PfQ-Pm-Ra2">
                                         <rect key="frame" x="280.5" y="10" width="24" height="24"/>
@@ -183,6 +186,9 @@
                                             <constraint firstAttribute="width" constant="24" id="qui-Sy-6SV"/>
                                         </constraints>
                                         <state key="normal" title="Button" image="chevron-down"/>
+                                        <connections>
+                                            <action selector="handleSortChangedWithSender:" destination="HoW-Ma-W9C" eventType="touchUpInside" id="z1C-fk-XYX"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hkv-nq-i3Y">
                                         <rect key="frame" x="0.0" y="43" width="375" height="1"/>
@@ -208,7 +214,7 @@
                                 <rect key="frame" x="0.0" y="45" width="375" height="529"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="8Pc-C0-8g3">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FolderCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderCell" id="8Pc-C0-8g3" customClass="FolderCell" customModule="Newspack" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8Pc-C0-8g3" id="L3s-pR-PR2">
@@ -232,24 +238,57 @@
                         <viewLayoutGuide key="safeArea" id="Ppq-kB-bNS"/>
                     </view>
                     <toolbarItems>
-                        <barButtonItem title="Item" image="doc.text" catalog="system" id="YXs-K9-y6Z"/>
+                        <barButtonItem title="Item" image="doc.text" catalog="system" id="YXs-K9-y6Z">
+                            <connections>
+                                <action selector="handleTextNoteButtonWithSender:" destination="HoW-Ma-W9C" id="uo1-Bf-hDU"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="yz5-cB-IPh"/>
-                        <barButtonItem title="Item" image="image-multiple" id="CDY-v8-QbT"/>
+                        <barButtonItem title="Item" image="image-multiple" id="CDY-v8-QbT">
+                            <connections>
+                                <action selector="handlePhotoButtonWithSender:" destination="HoW-Ma-W9C" id="T9T-cL-Jd7"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="uZF-dx-aBe"/>
-                        <barButtonItem title="Item" image="video" id="PMa-Ad-aM0"/>
+                        <barButtonItem title="Item" image="video" id="PMa-Ad-aM0">
+                            <connections>
+                                <action selector="handleVideoButtonWithSender:" destination="HoW-Ma-W9C" id="0JT-na-hBx"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="fGN-o6-DsB"/>
-                        <barButtonItem title="Item" image="microphone" id="EVv-Df-1uE"/>
+                        <barButtonItem title="Item" image="microphone" id="EVv-Df-1uE">
+                            <connections>
+                                <action selector="handleAudioNoteButtonWithSender:" destination="HoW-Ma-W9C" id="ycQ-az-umX"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Folders" id="kt5-gi-Yct">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="menu" id="Rg0-or-Kc9"/>
-                        <barButtonItem key="rightBarButtonItem" image="plus" largeContentSizeImage="create folder" id="1nj-Jr-xHF"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="menu" id="Rg0-or-Kc9">
+                            <connections>
+                                <action selector="handleMenuButtonTappedWithSender:" destination="HoW-Ma-W9C" id="xkh-cd-C86"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="plus" largeContentSizeImage="create folder" id="1nj-Jr-xHF">
+                            <connections>
+                                <action selector="handleAddTappedWithSender:" destination="HoW-Ma-W9C" id="WXY-yC-hTy"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="audioNoteButton" destination="EVv-Df-1uE" id="IWr-Ow-uGO"/>
+                        <outlet property="directionButton" destination="PfQ-Pm-Ra2" id="9Pi-ob-YAD"/>
+                        <outlet property="photoButton" destination="CDY-v8-QbT" id="KbD-Bv-oUP"/>
+                        <outlet property="sortControl" destination="M20-Ij-iSu" id="RXf-Yn-Hbq"/>
+                        <outlet property="tableView" destination="DE7-1p-iKS" id="rma-Rg-3tp"/>
+                        <outlet property="textNoteButton" destination="YXs-K9-y6Z" id="aAz-p7-Ftk"/>
+                        <outlet property="videoButton" destination="PMa-Ad-aM0" id="AI9-g5-1RI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GUw-mL-IDK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="980" y="-1169.865067466267"/>
+            <point key="canvasLocation" x="292" y="-504"/>
         </scene>
         <!--Assets-->
         <scene sceneID="Ca1-RU-Vfb">
@@ -358,7 +397,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rPD-5z-GAP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1624.8" y="-1171.6641679160421"/>
+            <point key="canvasLocation" x="964" y="-1164"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="tOF-tp-XBd">
@@ -417,106 +456,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aVd-sy-YNL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-354" y="-504"/>
-        </scene>
-        <!--Folders-->
-        <scene sceneID="8gr-DY-Qxl">
-            <objects>
-                <tableViewController storyboardIdentifier="FoldersViewController" title="Folders" useStoryboardIdentifierAsRestorationIdentifier="YES" id="o5i-8K-DIP" customClass="FoldersViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="w0w-el-gTo">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <stackView key="tableHeaderView" opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" id="QLX-ao-DFN">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="EkV-Vg-qa5">
-                                    <rect key="frame" x="0.0" y="0.0" width="194.5" height="111"/>
-                                    <segments>
-                                        <segment title="Date"/>
-                                        <segment title="Name"/>
-                                    </segments>
-                                    <connections>
-                                        <action selector="handleSortChangedWithSender:" destination="o5i-8K-DIP" eventType="valueChanged" id="6Ig-Ng-b50"/>
-                                    </connections>
-                                </segmentedControl>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KoB-kO-fC0">
-                                    <rect key="frame" x="194.5" y="0.0" width="180.5" height="111"/>
-                                    <segments>
-                                        <segment title="Asc"/>
-                                        <segment title="Desc"/>
-                                    </segments>
-                                    <connections>
-                                        <action selector="handleSortChangedWithSender:" destination="o5i-8K-DIP" eventType="valueChanged" id="J5x-VT-H4L"/>
-                                    </connections>
-                                </segmentedControl>
-                            </subviews>
-                        </stackView>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="T7a-7n-C8K">
-                            <rect key="frame" x="0.0" y="208.5" width="375" height="44"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        </view>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FolderCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderCell" id="O2R-uA-A0M" customClass="FolderCell" customModule="Newspack" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="138" width="375" height="42.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="O2R-uA-A0M" id="W0e-Zt-FK0">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="42.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KCq-fL-Dbc">
-                                            <rect key="frame" x="16" y="10" width="351" height="22.5"/>
-                                            <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Placeholder" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ga5-YF-VJ1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="351" height="22.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="O2R-uA-A0M" id="N7w-xy-EBg"/>
-                                                    </connections>
-                                                </textField>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="KCq-fL-Dbc" firstAttribute="leading" secondItem="Ec6-1T-jHG" secondAttribute="leading" constant="16" id="Tro-Fm-MIL"/>
-                                        <constraint firstItem="Ec6-1T-jHG" firstAttribute="bottom" secondItem="KCq-fL-Dbc" secondAttribute="bottom" constant="10" id="d4m-mh-1Xi"/>
-                                        <constraint firstItem="KCq-fL-Dbc" firstAttribute="top" secondItem="Ec6-1T-jHG" secondAttribute="top" constant="10" id="d5f-3M-nz7"/>
-                                        <constraint firstItem="Ec6-1T-jHG" firstAttribute="trailing" secondItem="KCq-fL-Dbc" secondAttribute="trailing" constant="8" id="k4x-LJ-wmS"/>
-                                    </constraints>
-                                    <viewLayoutGuide key="safeArea" id="Ec6-1T-jHG"/>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="textField" destination="Ga5-YF-VJ1" id="yfq-1p-9Di"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="delegate" destination="o5i-8K-DIP" id="arm-xD-IwK"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Folders" id="uV3-oP-jOr">
-                        <barButtonItem key="leftBarButtonItem" title="Menu" id="lgK-5A-NeH">
-                            <connections>
-                                <action selector="handleMenuButtonTappedWithSender:" destination="o5i-8K-DIP" id="wH7-Xc-HFT"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="H42-WT-r23">
-                            <connections>
-                                <action selector="handleAddTappedWithSender:" destination="o5i-8K-DIP" id="SsC-s9-7NN"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <connections>
-                        <outlet property="sortDirection" destination="KoB-kO-fC0" id="E3B-uI-NFv"/>
-                        <outlet property="sortField" destination="EkV-Vg-qa5" id="VVV-E8-jE3"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DK2-Ey-tPA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="292" y="-504.19790104947532"/>
         </scene>
         <!--Assets-->
         <scene sceneID="crf-0X-lV6">

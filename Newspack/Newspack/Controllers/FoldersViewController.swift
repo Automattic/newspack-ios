@@ -2,10 +2,16 @@ import UIKit
 import CoreData
 import WordPressFlux
 
-class FoldersViewController: UITableViewController {
+class FoldersViewController: UIViewController, UITableViewDelegate {
 
-    @IBOutlet var sortField: UISegmentedControl!
-    @IBOutlet var sortDirection: UISegmentedControl!
+    @IBOutlet var sortControl: UISegmentedControl!
+    @IBOutlet var directionButton: UIButton!
+    @IBOutlet var tableView: UITableView!
+
+    @IBOutlet var textNoteButton: UIBarButtonItem!
+    @IBOutlet var photoButton: UIBarButtonItem!
+    @IBOutlet var videoButton: UIBarButtonItem!
+    @IBOutlet var audioNoteButton: UIBarButtonItem!
 
     var dataSource: FolderDataSource!
 
@@ -18,17 +24,11 @@ class FoldersViewController: UITableViewController {
 
         configureDataSource()
         configureSortControl()
-
-        // Temporary measure. The UI will change so right now this doesn't need to be pretty.
-        let headerView = tableView.tableHeaderView!
-        var frame = headerView.frame
-        frame.size.height = 44.0
-        headerView.frame = frame
-        tableView.tableHeaderView = headerView
     }
 }
 
 // MARK: - Actions and Handlers
+
 extension FoldersViewController {
 
     @IBAction func handleMenuButtonTapped(sender: Any) {
@@ -36,10 +36,10 @@ extension FoldersViewController {
     }
 
     @IBAction func handleSortChanged(sender: Any) {
-        let field = sortField.titleForSegment(at: sortField.selectedSegmentIndex)!.lowercased()
-        let direction = sortDirection.selectedSegmentIndex == 0
+//        let field = sortField.titleForSegment(at: sortField.selectedSegmentIndex)!.lowercased()
+//        let direction = sortDirection.selectedSegmentIndex == 0
 
-        dataSource.sortBy(field: field, ascending: direction)
+//        dataSource.sortBy(field: field, ascending: direction)
     }
 
     @IBAction func handleAddTapped(sender: Any) {
@@ -59,10 +59,31 @@ extension FoldersViewController {
 
 }
 
-// MARK: - TableViewDelegate methods
 extension FoldersViewController {
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    @IBAction func handleTextNoteButton(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped \(sender.description)")
+    }
+
+    @IBAction func handlePhotoButton(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped \(sender.description)")
+    }
+
+    @IBAction func handleVideoButton(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped \(sender.description)")
+    }
+
+    @IBAction func handleAudioNoteButton(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped \(sender.description)")
+    }
+
+}
+
+// MARK: - TableViewDelegate methods
+
+extension FoldersViewController {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let storyFolder = dataSource.resultsController.fetchedObjects?[indexPath.row] else {
             return
         }
@@ -83,17 +104,17 @@ extension FoldersViewController {
             fatalError("Cannot create new cell")
         }
 
-        cell.textField.text = storyFolder.name
-        cell.textChangedHandler = { text, aCell in
-            // NOTE: Get the index path from the passed cell to ensure we're not
-            // capturing the value of cellFor's passed IndexPath. This can lead to
-            // referencing an incoreect index path leading to the wrong folder being renamed
-            // or an out of bounds error.
-            guard let indexPath = tableView.indexPath(for: aCell) else {
-                return
-            }
-            self.handleFolderNameChanged(indexPath: indexPath, newName: text)
-        }
+//        cell.textField.text = storyFolder.name
+//        cell.textChangedHandler = { text, aCell in
+//            // NOTE: Get the index path from the passed cell to ensure we're not
+//            // capturing the value of cellFor's passed IndexPath. This can lead to
+//            // referencing an incoreect index path leading to the wrong folder being renamed
+//            // or an out of bounds error.
+//            guard let indexPath = tableView.indexPath(for: aCell) else {
+//                return
+//            }
+//            self.handleFolderNameChanged(indexPath: indexPath, newName: text)
+//        }
         cell.accessoryType = storyFolder.uuid == StoreContainer.shared.folderStore.currentStoryFolderID ? .detailDisclosureButton : .disclosureIndicator
 
         return cell
@@ -110,32 +131,32 @@ extension FoldersViewController {
         guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
             return
         }
-        sortDirection.selectedSegmentIndex = rule.ascending ? 0 : 1
-        let name = sortField.titleForSegment(at: 0)!.lowercased()
-        sortField.selectedSegmentIndex = rule.field == name ? 0 : 1
+//        sortDirection.selectedSegmentIndex = rule.ascending ? 0 : 1
+//        let name = sortField.titleForSegment(at: 0)!.lowercased()
+//        sortField.selectedSegmentIndex = rule.field == name ? 0 : 1
     }
 }
 
 // MARK: - Folder Cell
 class FolderCell: UITableViewCell {
 
-    @IBOutlet var textField: UITextField!
-    var textChangedHandler: ((String?, UITableViewCell) -> Void)?
+//    @IBOutlet var textField: UITextField!
+//    var textChangedHandler: ((String?, UITableViewCell) -> Void)?
 
 }
 
-extension FolderCell: UITextFieldDelegate {
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textChangedHandler?(textField.text, self)
-    }
-
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return false
-    }
-
-}
+//extension FolderCell: UITextFieldDelegate {
+//
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        textChangedHandler?(textField.text, self)
+//    }
+//
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+//        return false
+//    }
+//
+//}
 
 // MARK: - FolderDataSource
 class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, StoryFolder> {
