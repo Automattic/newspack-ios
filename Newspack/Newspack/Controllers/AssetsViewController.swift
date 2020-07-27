@@ -78,7 +78,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
 
 extension AssetsViewController {
 
-    @IBAction func handleSortChanged(sender: Any) {
+    @IBAction func handleSortChanged(sender: UISegmentedControl) {
         let action = AssetAction.sortMode(index: sortControl.selectedSegmentIndex)
         SessionManager.shared.sessionDispatcher.dispatch(action)
 
@@ -87,7 +87,7 @@ extension AssetsViewController {
         dataSource.refresh()
     }
 
-    @IBAction func handleToggleEditing(sender: Any) {
+    @IBAction func handleToggleEditing(sender: UIBarButtonItem) {
         if tableView.isEditing {
             editButton.title = Constants.edit
             tableView.setEditing(false, animated: true)
@@ -95,6 +95,10 @@ extension AssetsViewController {
             editButton.title = Constants.done
             tableView.setEditing(true, animated: true)
         }
+    }
+
+    @IBAction func handleSyncTapped(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped sync")
     }
 
 }

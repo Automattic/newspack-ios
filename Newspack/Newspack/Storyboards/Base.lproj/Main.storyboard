@@ -410,7 +410,11 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Assets" id="YtF-a8-687">
                         <rightBarButtonItems>
-                            <barButtonItem title="Item" image="sync" largeContentSizeImage="sync" id="YoR-aT-oGj"/>
+                            <barButtonItem title="Item" image="sync" largeContentSizeImage="sync" id="YoR-aT-oGj">
+                                <connections>
+                                    <action selector="handleSyncTappedWithSender:" destination="NWk-Co-Z8t" id="gLL-2i-pfm"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="Edit" id="7ng-Vi-nSB">
                                 <connections>
                                     <action selector="handleToggleEditingWithSender:" destination="NWk-Co-Z8t" id="DLi-Up-EqJ"/>
