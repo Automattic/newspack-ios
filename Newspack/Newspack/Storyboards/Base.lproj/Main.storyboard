@@ -155,7 +155,7 @@
             </objects>
             <point key="canvasLocation" x="292" y="-1169.865067466267"/>
         </scene>
-        <!--Folders-->
+        <!--Stories-->
         <scene sceneID="NTU-fz-MXb">
             <objects>
                 <viewController storyboardIdentifier="FoldersViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="HoW-Ma-W9C" customClass="FoldersViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
@@ -266,7 +266,7 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Folders" id="kt5-gi-Yct">
+                    <navigationItem key="navigationItem" title="Stories" id="kt5-gi-Yct">
                         <barButtonItem key="leftBarButtonItem" title="Item" image="menu" id="Rg0-or-Kc9">
                             <connections>
                                 <action selector="handleMenuButtonTappedWithSender:" destination="HoW-Ma-W9C" id="xkh-cd-C86"/>

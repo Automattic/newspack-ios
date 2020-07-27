@@ -58,6 +58,7 @@ class FoldersViewController: UIViewController, UITableViewDelegate {
     }
 
     func configureNavbar() {
+        navigationItem.title = NSLocalizedString("Stories", comment: "Noun. The title of the list of stories the reporter is working on.")
         navigationItem.leftBarButtonItem?.image = .gridicon(.menu)
         navigationItem.rightBarButtonItem?.image = .gridicon(.plus)
     }
@@ -157,7 +158,7 @@ extension FoldersViewController {
 extension FoldersViewController {
 
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyFolder: StoryFolder) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FolderCell", for: indexPath) as? FolderCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FolderCell.reuseIdentifier, for: indexPath) as? FolderCell else {
             fatalError("Cannot create new cell")
         }
         Appearance.style(cell: cell)
