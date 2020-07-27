@@ -411,7 +411,7 @@
                     <navigationItem key="navigationItem" title="Assets" id="YtF-a8-687">
                         <rightBarButtonItems>
                             <barButtonItem title="Item" image="sync" largeContentSizeImage="sync" id="YoR-aT-oGj"/>
-                            <barButtonItem systemItem="edit" id="7ng-Vi-nSB">
+                            <barButtonItem title="Edit" id="7ng-Vi-nSB">
                                 <connections>
                                     <action selector="handleToggleEditingWithSender:" destination="NWk-Co-Z8t" id="DLi-Up-EqJ"/>
                                 </connections>

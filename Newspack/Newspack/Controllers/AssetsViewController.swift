@@ -83,8 +83,10 @@ extension AssetsViewController {
 
     @IBAction func handleToggleEditing(sender: Any) {
         if tableView.isEditing {
+            editButton.title = NSLocalizedString("Edit", comment: "Verb. Title of a control to enable editing.")
             tableView.setEditing(false, animated: true)
         } else if StoreContainer.shared.assetStore.canSortAssets {
+            editButton.title = NSLocalizedString("Done", comment: "Verb (past participle). Title of a control to disable editing when finished.")
             tableView.setEditing(true, animated: true)
         }
     }
