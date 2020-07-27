@@ -3,6 +3,14 @@ import UIKit
 
 class Appearance {
 
+    /// Configure global UI appearance settings via the appearane API.
+    ///
+    static func configureGlobalAppearance() {
+        let view = UIView()
+        view.backgroundColor = .cellBackgroundSelected
+        UITableViewCell.appearance().selectedBackgroundView = view
+    }
+
     // MARK: - UserView styles
 
     static func style(userView label: UILabel, imageView: UIImageView) {
@@ -23,7 +31,7 @@ class Appearance {
     }
 
     static func style(cell: UITableViewCell) {
-        cell.backgroundColor = .basicBackground
+        cell.backgroundColor = .cellBackground // semantic pass-thru to basicBackground.
 
         cell.textLabel?.font = .tableViewText
         cell.textLabel?.sizeToFit()

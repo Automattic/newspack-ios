@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         configureEventMonitor()
         configureLogger()
+        Appearance.configureGlobalAppearance()
         // Configure the window which should call makeKeyAndVisible.
         // Necessary in order to present the authentication flow.
         configureWindow()
