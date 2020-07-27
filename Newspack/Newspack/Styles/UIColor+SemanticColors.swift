@@ -166,6 +166,25 @@ extension UIColor {
         return .white
     }
 
+    /// Selection color.
+    ///
+    static var selection: UIColor {
+        return UIColor(light: .newspackBlue(.shade20),
+                       dark: .newspackBlue(.shade80))
+    }
+
+    /// Cell default background color
+    ///
+    static var cellBackground: UIColor {
+        return basicBackground
+    }
+
+    /// Cell selected background color
+    ///
+    static var cellBackgroundSelected: UIColor {
+        return selection
+    }
+
     /// App Navigation Bar. brand (< iOS 13 and Light Mode) and `UIColor.systemThickMaterial` (Dark Mode)
     ///
     static var appBar: UIColor {
