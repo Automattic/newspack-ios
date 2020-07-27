@@ -4,6 +4,11 @@ import WordPressFlux
 
 class AssetsViewController: UIViewController, UITableViewDelegate {
 
+    struct Constants {
+        static let edit = NSLocalizedString("Edit", comment: "Verb. Title of a control to enable editing.")
+        static let done = NSLocalizedString("Done", comment: "Verb (past participle). Title of a control to disable editing when finished.")
+    }
+
     @IBOutlet var sortControl: UISegmentedControl!
     @IBOutlet var syncButton: UIBarButtonItem!
     @IBOutlet var editButton: UIBarButtonItem!
@@ -51,6 +56,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
         }
         navigationItem.title = currentStory.name
         syncButton.image = .gridicon(.sync)
+        editButton.title = Constants.edit
     }
 
     func configureToolbar() {
@@ -83,10 +89,10 @@ extension AssetsViewController {
 
     @IBAction func handleToggleEditing(sender: Any) {
         if tableView.isEditing {
-            editButton.title = NSLocalizedString("Edit", comment: "Verb. Title of a control to enable editing.")
+            editButton.title = Constants.edit
             tableView.setEditing(false, animated: true)
         } else if StoreContainer.shared.assetStore.canSortAssets {
-            editButton.title = NSLocalizedString("Done", comment: "Verb (past participle). Title of a control to disable editing when finished.")
+            editButton.title = Constants.done
             tableView.setEditing(true, animated: true)
         }
     }
