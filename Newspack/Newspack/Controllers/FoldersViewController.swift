@@ -164,6 +164,7 @@ extension FoldersViewController {
 
         cell.textLabel?.text = storyFolder.name
         cell.accessoryType = .disclosureIndicator
+        cell.selectedStory = storyFolder.uuid == StoreContainer.shared.folderStore.currentStoryFolderID
 
         return cell
     }
@@ -174,6 +175,17 @@ extension FoldersViewController {
 
 class FolderCell: UITableViewCell {
 
+    var selectedStory: Bool = false {
+        didSet {
+            backgroundColor = selectedStory ? .cellBackgroundSelected : .cellBackground
+        }
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        selectedStory = false
+    }
 }
 
 // MARK: - FolderDataSource
