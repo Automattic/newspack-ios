@@ -6,6 +6,7 @@ import WordPressFlux
 ///
 class FolderStore: Store {
 
+    private let lastSelectedStoryFolderKey = "LastSelectedStoryFolder_"
     private(set) var currentSiteID: UUID?
 
     private let folderManager: FolderManager
@@ -135,14 +136,41 @@ extension FolderStore {
     /// Select the default story folder if needed.
     ///
     private func selectDefaultStoryFolderIfNeeded() {
+        // Make sure there are story folders to retrieve.
         guard
             let _ = currentSiteID,
             getStoryFolderByID(uuid: currentStoryFolderID) == nil,
-            let storyFolder = getStoryFolders().first
+            let firstFolder = getStoryFolders().first
         else {
             return
         }
-        selectStoryFolder(uuid: storyFolder.uuid)
+        // Check for last selected story folder.
+        if let lastFolder = getLastSelectedStoryFolder() {
+            selectStoryFolder(uuid: lastFolder.uuid)
+            return
+        }
+        selectStoryFolder(uuid: firstFolder.uuid)
+    }
+
+    /// Get the last selected story folder if one exists.
+    ///
+    /// - Returns: A StoryFolder instance or nil.
+    ///
+    func getLastSelectedStoryFolder() -> StoryFolder? {
+        guard let siteID = currentSiteID else {
+            return nil
+        }
+
+        let key = lastSelectedStoryFolderKey + siteID.uuidString
+        guard
+            let uuidString = UserDefaults.shared.string(forKey: key),
+            let uuid = UUID(uuidString: uuidString),
+            let storyFolder = getStoryFolderByID(uuid: uuid)
+        else {
+            return nil
+        }
+
+        return storyFolder
     }
 
     /// Create a new story folder using the supplied string as its path.
@@ -434,6 +462,10 @@ extension FolderStore {
     /// - Parameter uuid: The story folder.
     ///
     func selectStoryFolder(folder: StoryFolder) {
+        if let siteID = currentSiteID {
+            let key = lastSelectedStoryFolderKey + siteID.uuidString
+            UserDefaults.shared.set(folder.uuid.uuidString, forKey: key)
+        }
         currentStoryFolderID = folder.uuid
         emitChange()
     }
