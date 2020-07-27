@@ -303,31 +303,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4KS-uW-XyS">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6HK-ka-tl4">
-                                        <rect key="frame" x="8" y="0.0" width="359" height="44"/>
-                                        <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="folder" translatesAutoresizingMaskIntoConstraints="NO" id="NO1-Pw-MSM">
-                                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="44" id="1dq-hB-aZR"/>
-                                                    <constraint firstAttribute="width" constant="44" id="KSk-Z0-GCV"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Folder Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l39-sX-qNj">
-                                                <rect key="frame" x="52" y="0.0" width="307" height="44"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="ayk-Oe-ndL"/>
-                                        </constraints>
-                                    </stackView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="iLK-I6-MuO">
-                                        <rect key="frame" x="107.5" y="47" width="160" height="32"/>
+                                        <rect key="frame" x="107.5" y="6.5" width="160" height="32"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="W64-GM-wse"/>
                                         </constraints>
@@ -340,7 +319,7 @@
                                         </connections>
                                     </segmentedControl>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMB-nt-ccw">
-                                        <rect key="frame" x="0.0" y="87" width="375" height="1"/>
+                                        <rect key="frame" x="0.0" y="43" width="375" height="1"/>
                                         <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="JOe-Ls-r3H"/>
@@ -349,19 +328,16 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="6HK-ka-tl4" firstAttribute="top" secondItem="4KS-uW-XyS" secondAttribute="top" id="24a-ax-XMT"/>
+                                    <constraint firstItem="iLK-I6-MuO" firstAttribute="centerY" secondItem="4KS-uW-XyS" secondAttribute="centerY" id="LOl-qD-G6k"/>
                                     <constraint firstAttribute="bottom" secondItem="AMB-nt-ccw" secondAttribute="bottom" id="MX9-eX-bou"/>
-                                    <constraint firstAttribute="trailing" secondItem="6HK-ka-tl4" secondAttribute="trailing" constant="8" id="WXF-m7-Wsa"/>
-                                    <constraint firstItem="6HK-ka-tl4" firstAttribute="leading" secondItem="4KS-uW-XyS" secondAttribute="leading" constant="8" id="Yt5-Q6-oFJ"/>
                                     <constraint firstAttribute="trailing" secondItem="AMB-nt-ccw" secondAttribute="trailing" id="ZFs-b2-u4Z"/>
                                     <constraint firstItem="iLK-I6-MuO" firstAttribute="centerX" secondItem="4KS-uW-XyS" secondAttribute="centerX" id="bus-Nq-SZy"/>
-                                    <constraint firstAttribute="bottom" secondItem="iLK-I6-MuO" secondAttribute="bottom" constant="10" id="hVM-Vu-5Y4"/>
-                                    <constraint firstAttribute="height" constant="88" id="pyr-ic-t2l"/>
+                                    <constraint firstAttribute="height" constant="44" id="pyr-ic-t2l"/>
                                     <constraint firstItem="AMB-nt-ccw" firstAttribute="leading" secondItem="4KS-uW-XyS" secondAttribute="leading" id="ymL-Fz-Nj1"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="IC9-M0-AO4">
-                                <rect key="frame" x="0.0" y="89" width="375" height="485"/>
+                                <rect key="frame" x="0.0" y="45" width="375" height="529"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AssetCell" textLabel="fhP-Mh-0fy" detailTextLabel="3cd-FK-kOv" style="IBUITableViewCellStyleSubtitle" id="8GI-SA-Ocq">
@@ -447,7 +423,6 @@
                     <connections>
                         <outlet property="audioNoteButton" destination="GnL-gZ-eCi" id="RlS-n1-NlY"/>
                         <outlet property="editButton" destination="7ng-Vi-nSB" id="Kcj-ya-LdH"/>
-                        <outlet property="folderLabel" destination="l39-sX-qNj" id="zz3-9D-HWy"/>
                         <outlet property="photoButton" destination="fcy-JG-eKM" id="Ctf-YY-KUS"/>
                         <outlet property="sortControl" destination="iLK-I6-MuO" id="aAT-mL-p5F"/>
                         <outlet property="syncButton" destination="YoR-aT-oGj" id="IqL-DZ-n6V"/>
@@ -680,7 +655,6 @@
         <image name="chevron-right" width="24" height="24"/>
         <image name="create folder" width="128" height="128"/>
         <image name="cross" width="24" height="24"/>
-        <image name="folder" width="24" height="24"/>
         <image name="image-multiple" width="24" height="24"/>
         <image name="menu" width="24" height="24"/>
         <image name="microphone" width="24" height="24"/>

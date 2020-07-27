@@ -5,7 +5,6 @@ import WordPressFlux
 class AssetsViewController: UIViewController, UITableViewDelegate {
 
     @IBOutlet var sortControl: UISegmentedControl!
-    @IBOutlet var folderLabel: UILabel!
     @IBOutlet var syncButton: UIBarButtonItem!
     @IBOutlet var editButton: UIBarButtonItem!
     @IBOutlet var tableView: UITableView!
@@ -22,6 +21,49 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
 
         configureDataSource()
         configureSortControl()
+        configureNavbar()
+        configureToolbar()
+        configureStyle()
+        tableView.tableFooterView = UIView()
+    }
+
+    func configureDataSource() {
+        dataSource = AssetDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, storyAsset) -> UITableViewCell? in
+            return self?.cellFor(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+        })
+        dataSource.update()
+    }
+
+    func configureSortControl() {
+        let assetStore = StoreContainer.shared.assetStore
+
+        sortControl.removeAllSegments()
+        for (index, mode) in assetStore.sortOrganizer.modes.enumerated() {
+            sortControl.insertSegment(withTitle: mode.title, at: index, animated: false)
+        }
+
+        sortControl.selectedSegmentIndex = assetStore.sortOrganizer.selectedIndex
+    }
+
+    func configureNavbar() {
+        guard let currentStory = StoreContainer.shared.folderStore.currentStoryFolder else {
+            return
+        }
+        navigationItem.title = currentStory.name
+        syncButton.image = .gridicon(.sync)
+    }
+
+    func configureToolbar() {
+        textNoteButton.image = .gridicon(.posts)
+        photoButton.image = .gridicon(.imageMultiple)
+        videoButton.image = .gridicon(.video)
+        audioNoteButton.image = .gridicon(.microphone)
+
+        navigationController?.setToolbarHidden(false, animated: false)
+    }
+
+    func configureStyle() {
+        Appearance.style(view: view, tableView: tableView)
     }
 
 }
@@ -52,7 +94,9 @@ extension AssetsViewController {
 extension AssetsViewController {
 
     @IBAction func handleTextNoteButton(sender: UIBarButtonItem) {
-        LogDebug(message: "tapped \(sender.description)")
+        // Temporary action just for testing.
+        let action = AssetAction.createAssetFor(text: "New Text Note")
+        SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 
     @IBAction func handlePhotoButton(sender: UIBarButtonItem) {
@@ -103,17 +147,6 @@ extension AssetsViewController {
 // MARK: - DataSource related methods
 extension AssetsViewController {
 
-    func configureSortControl() {
-        let assetStore = StoreContainer.shared.assetStore
-
-        sortControl.removeAllSegments()
-        for (index, mode) in assetStore.sortOrganizer.modes.enumerated() {
-            sortControl.insertSegment(withTitle: mode.title, at: index, animated: false)
-        }
-
-        sortControl.selectedSegmentIndex = assetStore.sortOrganizer.selectedIndex
-    }
-
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell", for: indexPath)
         cell.textLabel?.text = storyAsset.name + " " + String(storyAsset.order)
@@ -121,13 +154,6 @@ extension AssetsViewController {
         cell.accessoryType = .disclosureIndicator
 
         return cell
-    }
-
-    func configureDataSource() {
-        dataSource = AssetDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, storyAsset) -> UITableViewCell? in
-            return self?.cellFor(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
-        })
-        dataSource.update()
     }
 
 }
