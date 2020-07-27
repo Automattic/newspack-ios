@@ -1,5 +1,6 @@
 import UIKit
 import CoreData
+import Gridicons
 import WordPressFlux
 
 class FoldersViewController: UIViewController, UITableViewDelegate {
@@ -23,37 +24,93 @@ class FoldersViewController: UIViewController, UITableViewDelegate {
         super.viewDidLoad()
 
         configureDataSource()
-        configureSortControl()
+        configureSortControls()
+        configureNavbar()
+        configureToolbar()
+        configureStyle()
+        tableView.tableFooterView = UIView()
     }
+
+    func configureDataSource() {
+        dataSource = FolderDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, storyFolder) -> UITableViewCell? in
+            return self?.cellFor(tableView: tableView, indexPath: indexPath, storyFolder: storyFolder)
+        })
+        dataSource.update()
+    }
+
+    func configureSortControls() {
+        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
+            return
+        }
+        let rules = StoreContainer.shared.folderStore.sortRules
+
+        var selectedIndex = 0
+        for (index, item) in rules.enumerated() {
+            sortControl.setTitle(item.displayName, forSegmentAt: index)
+            if item.field == rule.field {
+                selectedIndex = index
+            }
+        }
+
+        sortControl.selectedSegmentIndex = selectedIndex
+
+        configureDirectionButton(ascending: rule.ascending)
+    }
+
+    func configureNavbar() {
+        navigationItem.leftBarButtonItem?.image = .gridicon(.menu)
+        navigationItem.rightBarButtonItem?.image = .gridicon(.plus)
+    }
+
+    func configureToolbar() {
+        textNoteButton.image = .gridicon(.posts)
+        photoButton.image = .gridicon(.imageMultiple)
+        videoButton.image = .gridicon(.video)
+        audioNoteButton.image = .gridicon(.microphone)
+
+        navigationController?.setToolbarHidden(false, animated: false)
+    }
+
+    func configureStyle() {
+        Appearance.style(view: view, tableView: tableView)
+    }
+
+    func configureDirectionButton(ascending: Bool) {
+        let image: UIImage = ascending ? .gridicon(.chevronUp) : .gridicon(.chevronDown)
+        directionButton.setImage(image, for: .normal)
+    }
+
 }
 
 // MARK: - Actions and Handlers
 
 extension FoldersViewController {
 
-    @IBAction func handleMenuButtonTapped(sender: Any) {
+    @IBAction func handleMenuButtonTapped(sender: UIBarButtonItem) {
         NotificationCenter.default.post(name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
     }
 
-    @IBAction func handleSortChanged(sender: Any) {
-//        let field = sortField.titleForSegment(at: sortField.selectedSegmentIndex)!.lowercased()
-//        let direction = sortDirection.selectedSegmentIndex == 0
-
-//        dataSource.sortBy(field: field, ascending: direction)
+    @IBAction func handleSortChanged(sender: UISegmentedControl) {
+        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
+            return
+        }
+        let ascending = rule.ascending
+        let rules = StoreContainer.shared.folderStore.sortRules
+        let field = rules[sender.selectedSegmentIndex].field
+        dataSource.sortBy(field: field, ascending: ascending)
     }
 
-    @IBAction func handleAddTapped(sender: Any) {
-        let action = FolderAction.createStoryFolder
-        SessionManager.shared.sessionDispatcher.dispatch(action)
-    }
-
-    func handleFolderNameChanged(indexPath: IndexPath, newName: String?) {
-        guard let name = newName, let storyFolder = dataSource.resultsController.fetchedObjects?[indexPath.row] else {
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+    @IBAction func handleDirectionButtonTapped(sender: UIButton) {
+        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
             return
         }
 
-        let action = FolderAction.renameStoryFolder(folderID: storyFolder.uuid, name: name)
+        dataSource.sortBy(field: rule.field, ascending: !rule.ascending)
+        configureDirectionButton(ascending: !rule.ascending)
+    }
+
+    @IBAction func handleAddTapped(sender: UIBarButtonItem) {
+        let action = FolderAction.createStoryFolder
         SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 
@@ -100,65 +157,27 @@ extension FoldersViewController {
 extension FoldersViewController {
 
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyFolder: StoryFolder) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FolderCell.reuseIdentifier, for: indexPath) as? FolderCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FolderCell", for: indexPath) as? FolderCell else {
             fatalError("Cannot create new cell")
         }
+        Appearance.style(cell: cell)
 
-//        cell.textField.text = storyFolder.name
-//        cell.textChangedHandler = { text, aCell in
-//            // NOTE: Get the index path from the passed cell to ensure we're not
-//            // capturing the value of cellFor's passed IndexPath. This can lead to
-//            // referencing an incoreect index path leading to the wrong folder being renamed
-//            // or an out of bounds error.
-//            guard let indexPath = tableView.indexPath(for: aCell) else {
-//                return
-//            }
-//            self.handleFolderNameChanged(indexPath: indexPath, newName: text)
-//        }
-        cell.accessoryType = storyFolder.uuid == StoreContainer.shared.folderStore.currentStoryFolderID ? .detailDisclosureButton : .disclosureIndicator
+        cell.textLabel?.text = storyFolder.name
+        cell.accessoryType = .disclosureIndicator
 
         return cell
     }
 
-    func configureDataSource() {
-        dataSource = FolderDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, storyFolder) -> UITableViewCell? in
-            return self?.cellFor(tableView: tableView, indexPath: indexPath, storyFolder: storyFolder)
-        })
-        dataSource.update()
-    }
-
-    func configureSortControl() {
-        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
-            return
-        }
-//        sortDirection.selectedSegmentIndex = rule.ascending ? 0 : 1
-//        let name = sortField.titleForSegment(at: 0)!.lowercased()
-//        sortField.selectedSegmentIndex = rule.field == name ? 0 : 1
-    }
 }
 
 // MARK: - Folder Cell
-class FolderCell: UITableViewCell {
 
-//    @IBOutlet var textField: UITextField!
-//    var textChangedHandler: ((String?, UITableViewCell) -> Void)?
+class FolderCell: UITableViewCell {
 
 }
 
-//extension FolderCell: UITextFieldDelegate {
-//
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        textChangedHandler?(textField.text, self)
-//    }
-//
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        textField.resignFirstResponder()
-//        return false
-//    }
-//
-//}
-
 // MARK: - FolderDataSource
+
 class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, StoryFolder> {
 
     enum Section: CaseIterable {
@@ -235,6 +254,7 @@ class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, 
 }
 
 // MARK: - Fetched Results Controller Delegate methods
+
 extension FolderDataSource: NSFetchedResultsControllerDelegate {
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

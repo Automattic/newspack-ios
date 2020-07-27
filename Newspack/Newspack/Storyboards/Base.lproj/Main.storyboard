@@ -187,7 +187,7 @@
                                         </constraints>
                                         <state key="normal" image="chevron-down"/>
                                         <connections>
-                                            <action selector="handleSortChangedWithSender:" destination="HoW-Ma-W9C" eventType="touchUpInside" id="z1C-fk-XYX"/>
+                                            <action selector="handleDirectionButtonTappedWithSender:" destination="HoW-Ma-W9C" eventType="touchUpInside" id="ojq-bL-h5c"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hkv-nq-i3Y">
@@ -213,12 +213,6 @@
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DE7-1p-iKS">
                                 <rect key="frame" x="0.0" y="45" width="375" height="529"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="jW9-Kf-8UD">
-                                    <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FolderCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderCell" id="8Pc-C0-8g3" customClass="FolderCell" customModule="Newspack" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
@@ -248,7 +242,7 @@
                         <viewLayoutGuide key="safeArea" id="Ppq-kB-bNS"/>
                     </view>
                     <toolbarItems>
-                        <barButtonItem title="Item" image="doc.text" catalog="system" id="YXs-K9-y6Z">
+                        <barButtonItem title="Item" image="posts" id="YXs-K9-y6Z">
                             <connections>
                                 <action selector="handleTextNoteButtonWithSender:" destination="HoW-Ma-W9C" id="uo1-Bf-hDU"/>
                             </connections>
@@ -369,11 +363,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="IC9-M0-AO4">
                                 <rect key="frame" x="0.0" y="89" width="375" height="485"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="TUY-ZN-kgh">
-                                    <rect key="frame" x="0.0" y="129" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AssetCell" textLabel="fhP-Mh-0fy" detailTextLabel="3cd-FK-kOv" style="IBUITableViewCellStyleSubtitle" id="8GI-SA-Ocq">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="55.5"/>
@@ -419,7 +408,7 @@
                         <viewLayoutGuide key="safeArea" id="WK3-Qr-Vcx"/>
                     </view>
                     <toolbarItems>
-                        <barButtonItem title="Item" image="doc.text" catalog="system" id="I7i-cV-h16">
+                        <barButtonItem title="Item" image="posts" id="I7i-cV-h16">
                             <connections>
                                 <action selector="handleTextNoteButtonWithSender:" destination="NWk-Co-Z8t" id="Nek-rD-dKx"/>
                             </connections>
@@ -691,12 +680,12 @@
         <image name="chevron-right" width="24" height="24"/>
         <image name="create folder" width="128" height="128"/>
         <image name="cross" width="24" height="24"/>
-        <image name="doc.text" catalog="system" width="115" height="128"/>
         <image name="folder" width="24" height="24"/>
         <image name="image-multiple" width="24" height="24"/>
         <image name="menu" width="24" height="24"/>
         <image name="microphone" width="24" height="24"/>
         <image name="plus" width="24" height="24"/>
+        <image name="posts" width="24" height="24"/>
         <image name="refresh" width="24" height="24"/>
         <image name="safari" catalog="system" width="128" height="121"/>
         <image name="share-ios" width="24" height="24"/>

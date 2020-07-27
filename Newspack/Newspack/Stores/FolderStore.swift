@@ -15,12 +15,18 @@ class FolderStore: Store {
     /// before it is used.
     private(set) var currentStoryFolderID = UUID()
 
-    lazy private(set) var sortMode: SortMode = {
-        let field = "date"
-        let rules: [SortRule] = [
-            SortRule(field: field, displayName: displayNameForField(field: field), ascending: false)
+    lazy var sortRules: [SortRule] = {
+        let dateField = "date"
+        let nameField = "name"
+        return [
+            SortRule(field: dateField, displayName: displayNameForField(field: dateField), ascending: true),
+            SortRule(field: nameField, displayName: displayNameForField(field: nameField), ascending: true)
         ]
-        return SortMode(defaultsKey: "FolderStoreSortMode", title: "", rules: rules, hasSections: false, resolver: nil)
+    }()
+
+    lazy private(set) var sortMode: SortMode = {
+        let rule = sortRules.first!
+        return SortMode(defaultsKey: "FolderStoreSortMode", title: "", rules: [rule], hasSections: false, resolver: nil)
     }()
 
     /// A convenience getter to get the current story folder.
