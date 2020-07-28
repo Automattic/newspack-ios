@@ -74,7 +74,23 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZDB-VV-olZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-354" y="-1169"/>
+            <point key="canvasLocation" x="289" y="-1170"/>
+        </scene>
+        <!--Story Navigation Controller-->
+        <scene sceneID="48Y-eH-lUf">
+            <objects>
+                <navigationController storyboardIdentifier="StoryNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="OXw-Qc-qBP" customClass="StoryNavigationController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="wWy-kG-HmN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="HoW-Ma-W9C" kind="relationship" relationship="rootViewController" id="NGX-fA-0pg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hdq-ng-1SU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-354" y="-504"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="zwj-ZW-uPp">
@@ -153,7 +169,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aMw-h8-Exn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="292" y="-1169.865067466267"/>
+            <point key="canvasLocation" x="964" y="-1170"/>
         </scene>
         <!--Stories-->
         <scene sceneID="NTU-fz-MXb">
@@ -495,7 +511,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aVd-sy-YNL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-354" y="-504"/>
+            <point key="canvasLocation" x="-354" y="-1171"/>
         </scene>
         <!--Initial View Controller-->
         <scene sceneID="tne-QT-ifu">
