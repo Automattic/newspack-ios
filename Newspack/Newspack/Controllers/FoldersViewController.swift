@@ -174,7 +174,7 @@ class FolderCell: UITableViewCell {
 
     var selectedStory: Bool = false {
         didSet {
-            backgroundColor = selectedStory ? .cellBackgroundSelected : .cellBackground
+            textLabel?.textColor = selectedStory ? .textLink : .text
         }
     }
 
