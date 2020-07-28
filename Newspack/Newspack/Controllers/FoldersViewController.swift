@@ -3,6 +3,20 @@ import CoreData
 import Gridicons
 import WordPressFlux
 
+extension FoldersViewController: UIViewControllerRestoration {
+    static func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
+        guard
+            let mainNav = AppDelegate.shared.window?.rootViewController as? MainNavController,
+            let sideBar = mainNav.viewControllers.first as? SidebarContainerViewController,
+            let storyNav = sideBar.mainViewController as? StoryNavigationController,
+            let folderController = storyNav.viewControllers.first as? AssetsViewController
+        else {
+            return nil
+        }
+        return folderController
+    }
+}
+
 class FoldersViewController: UIViewController, UITableViewDelegate {
 
     @IBOutlet var sortControl: UISegmentedControl!
@@ -15,10 +29,6 @@ class FoldersViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var audioNoteButton: UIBarButtonItem!
 
     var dataSource: FolderDataSource!
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

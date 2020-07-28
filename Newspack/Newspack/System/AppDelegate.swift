@@ -17,17 +17,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // Need to configure the user agent as early as possible.
         UserAgent.configure()
+        configureEventMonitor()
+        configureLogger()
+
+        // Configure the window which should call makeKeyAndVisible.
+        // Necessary in order to present the authentication flow.
+        configureWindow()
+        // Configure the session prior to state restoration running.
+        configureSession()
+
         return true
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        configureEventMonitor()
-        configureLogger()
         Appearance.configureGlobalAppearance()
-        // Configure the window which should call makeKeyAndVisible.
-        // Necessary in order to present the authentication flow.
-        configureWindow()
-        configureSession()
+
 
         LogInfo(message: "Application did finish launching.")
 
@@ -56,6 +60,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+
+    func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
+        return SessionManager.shared.state == .initialized
+    }
+
+    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+        return true
     }
 
 }

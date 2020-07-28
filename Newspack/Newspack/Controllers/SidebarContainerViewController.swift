@@ -29,6 +29,8 @@ class SidebarContainerViewController: UIViewController {
         static let sidebarAnimationCompletionMax = CGFloat(0.999)
         static let sidebarAnimationCompletionFactorFull = CGFloat(1.0)
         static let sidebarAnimationCompletionFactorZero = CGFloat(0.0)
+        static let mainControllerEncodeKey = "mainControllerEncodeKey"
+        static let sideControllerEncodeKey = "sideControllerEncodeKey"
     }
 
     private(set) var sidebarViewController: UIViewController
@@ -144,6 +146,9 @@ class SidebarContainerViewController: UIViewController {
         attachCaptureView()
         attachSidebarView()
 
+        mainViewController.didMove(toParent: self)
+        sidebarViewController.didMove(toParent: self)
+
         NotificationCenter.default.addObserver(self, selector: #selector(handleToggleSidebarNotification(notification:)), name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
     }
 
@@ -192,6 +197,12 @@ class SidebarContainerViewController: UIViewController {
     @objc
     func handleToggleSidebarNotification(notification: Notification) {
         toggleSidebar()
+    }
+
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+        coder.encode(mainViewController, forKey: Constants.mainControllerEncodeKey)
+        coder.encode(sidebarViewController, forKey: Constants.sideControllerEncodeKey)
     }
 }
 
