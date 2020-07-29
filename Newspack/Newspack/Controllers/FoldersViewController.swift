@@ -14,7 +14,7 @@ class FoldersViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var videoButton: UIBarButtonItem!
     @IBOutlet var audioNoteButton: UIBarButtonItem!
 
-    var dataSource: FolderDataSource!
+    private var dataSource: FolderDataSource!
 
     override func viewDidLoad() {
         super.viewDidLoad()

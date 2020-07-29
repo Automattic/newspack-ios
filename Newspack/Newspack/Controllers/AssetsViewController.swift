@@ -19,7 +19,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var videoButton: UIBarButtonItem!
     @IBOutlet var audioNoteButton: UIBarButtonItem!
 
-    var dataSource: AssetDataSource!
+    private var dataSource: AssetDataSource!
 
     override func viewDidLoad() {
         super.viewDidLoad()
