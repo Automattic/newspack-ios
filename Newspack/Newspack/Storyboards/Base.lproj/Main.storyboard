@@ -455,7 +455,7 @@
             </objects>
             <point key="canvasLocation" x="964" y="-504"/>
         </scene>
-        <!--Title-->
+        <!--New Story-->
         <scene sceneID="B6C-np-jWC">
             <objects>
                 <tableViewController storyboardIdentifier="FolderViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RTl-op-Js6" customClass="FolderViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
@@ -477,7 +477,7 @@
                                                 <constraint firstAttribute="height" constant="36" id="PCL-yf-oLw"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                         </textField>
                                     </subviews>
                                     <constraints>
@@ -497,7 +497,7 @@
                             <outlet property="delegate" destination="RTl-op-Js6" id="E9K-aG-Qqz"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="k39-8d-rnO">
+                    <navigationItem key="navigationItem" title="New Story" id="k39-8d-rnO">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="PgT-9V-gG7">
                             <connections>
                                 <action selector="handleCancelTappedWithSender:" destination="RTl-op-Js6" id="ylA-w7-iWg"/>

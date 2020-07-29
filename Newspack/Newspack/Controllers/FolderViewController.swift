@@ -43,7 +43,7 @@ extension FolderViewController {
     }
 
     func saveStoryTitle() {
-        guard let title = textField?.text else {
+        guard let title = textField?.text, title.count > 0 else {
             return
         }
 
@@ -79,6 +79,9 @@ extension FolderViewController {
 
         // We only have one cell, so this works okay.
         textField = cell.textField
+        textField?.on(.editingChanged, call: { [weak self] textField in
+            self?.saveButton.isEnabled = (textField.text?.characterCount ?? 0) > 0
+        })
 
         let placeholder = NSLocalizedString("New Story", comment: "Noun. This is the default title of a new story before the author provides a title.")
         textField?.placeholder = placeholder
