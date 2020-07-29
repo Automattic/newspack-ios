@@ -71,9 +71,9 @@ final class MainNavController: UINavigationController {
 // MARK: - State Restoration
 
 extension MainNavController: UIViewControllerRestoration {
-    static let sidebarControllerIdentifier = String(describing: type(of: SidebarContainerViewController.self))
-    static let storyNavIdentifier = String(describing: type(of: StoryNavigationController.self))
-    static let menuControllerIdentifier = String(describing: type(of: MenuViewController.self))
+    static let sidebarControllerIdentifier = SidebarContainerViewController.classnameWithoutNamespaces
+    static let storyNavIdentifier = StoryNavigationController.classnameWithoutNamespaces
+    static let menuControllerIdentifier = MenuViewController.classnameWithoutNamespaces
 
     static func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
         guard

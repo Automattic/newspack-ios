@@ -19,7 +19,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var videoButton: UIBarButtonItem!
     @IBOutlet var audioNoteButton: UIBarButtonItem!
 
-    var dataSource: AssetDataSource!
+    private var dataSource: AssetDataSource!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +30,12 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
         configureToolbar()
         configureStyle()
         tableView.tableFooterView = UIView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        navigationController?.setToolbarHidden(false, animated: false)
     }
 
     func configureDataSource() {
@@ -64,8 +70,6 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
         photoButton.image = .gridicon(.imageMultiple)
         videoButton.image = .gridicon(.video)
         audioNoteButton.image = .gridicon(.microphone)
-
-        navigationController?.setToolbarHidden(false, animated: false)
     }
 
     func configureStyle() {
