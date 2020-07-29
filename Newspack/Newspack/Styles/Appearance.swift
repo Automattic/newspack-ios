@@ -33,6 +33,7 @@ class Appearance {
     static func style(cell: UITableViewCell) {
         cell.backgroundColor = .cellBackground // semantic pass-thru to basicBackground.
 
+        cell.textLabel?.textColor = .text
         cell.textLabel?.font = .tableViewText
         cell.textLabel?.sizeToFit()
 
