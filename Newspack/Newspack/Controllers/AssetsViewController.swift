@@ -32,6 +32,12 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
         tableView.tableFooterView = UIView()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        navigationController?.setToolbarHidden(false, animated: false)
+    }
+
     func configureDataSource() {
         dataSource = AssetDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, storyAsset) -> UITableViewCell? in
             return self?.cellFor(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
@@ -64,8 +70,6 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
         photoButton.image = .gridicon(.imageMultiple)
         videoButton.image = .gridicon(.video)
         audioNoteButton.image = .gridicon(.microphone)
-
-        navigationController?.setToolbarHidden(false, animated: false)
     }
 
     func configureStyle() {
