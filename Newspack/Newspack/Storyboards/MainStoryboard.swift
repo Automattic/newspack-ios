@@ -10,6 +10,7 @@ class MainStoryboard {
         case postList = "PostListViewController"
         case editor = "EditorViewController"
         case mediaDetail = "MediaDetailViewController"
+        case storyNav = "StoryNavigationController"
         case folderList = "FoldersViewController"
         case assetsList = "AssetsViewController"
         case menu = "MenuViewController"

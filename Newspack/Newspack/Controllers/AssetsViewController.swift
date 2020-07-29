@@ -2,89 +2,48 @@ import UIKit
 import CoreData
 import WordPressFlux
 
-class AssetsViewController: UITableViewController {
+class AssetsViewController: UIViewController, UITableViewDelegate {
+
+    struct Constants {
+        static let edit = NSLocalizedString("Edit", comment: "Verb. Title of a control to enable editing.")
+        static let done = NSLocalizedString("Done", comment: "Verb (past participle). Title of a control to disable editing when finished.")
+    }
 
     @IBOutlet var sortControl: UISegmentedControl!
+    @IBOutlet var syncButton: UIBarButtonItem!
+    @IBOutlet var editButton: UIBarButtonItem!
+    @IBOutlet var tableView: UITableView!
 
-    var dataSource: AssetDataSource!
+    @IBOutlet var textNoteButton: UIBarButtonItem!
+    @IBOutlet var photoButton: UIBarButtonItem!
+    @IBOutlet var videoButton: UIBarButtonItem!
+    @IBOutlet var audioNoteButton: UIBarButtonItem!
+
+    private var dataSource: AssetDataSource!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureDataSource()
         configureSortControl()
-
-        // Temporary measure. The UI will change so right now this doesn't need to be pretty.
-        let headerView = tableView.tableHeaderView!
-        var frame = headerView.frame
-        frame.size.height = 44.0
-        headerView.frame = frame
-        tableView.tableHeaderView = headerView
+        configureNavbar()
+        configureToolbar()
+        configureStyle()
+        tableView.tableFooterView = UIView()
     }
 
-}
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
 
-// MARK: - Actions
-
-extension AssetsViewController {
-
-    @IBAction func handleAddTapped(sender: Any) {
-        let action = AssetAction.createAssetFor(text: "New Text Note")
-        SessionManager.shared.sessionDispatcher.dispatch(action)
+        navigationController?.setToolbarHidden(false, animated: false)
     }
 
-    @IBAction func handleSortChanged(sender: Any) {
-        let action = AssetAction.sortMode(index: sortControl.selectedSegmentIndex)
-        SessionManager.shared.sessionDispatcher.dispatch(action)
-
-        tableView.isEditing = false
-        // refresh data source.
-        dataSource.refresh()
+    func configureDataSource() {
+        dataSource = AssetDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, storyAsset) -> UITableViewCell? in
+            return self?.cellFor(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+        })
+        dataSource.update()
     }
-
-    @IBAction func handleToggleEditing(sender: Any) {
-        if tableView.isEditing {
-            tableView.setEditing(false, animated: true)
-        } else if StoreContainer.shared.assetStore.canSortAssets {
-            tableView.setEditing(true, animated: true)
-        }
-    }
-
-}
-
-// MARK: - TableViewDelegate methods
-extension AssetsViewController {
-
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectSelectedRowWithAnimation(true)
-        guard let asset = dataSource.object(at: indexPath) else {
-            return
-        }
-
-        // HACK HACK HACK: Just for testing. Tap on a cell to change which section it should be sorted to.
-        asset.order = (asset.order == -1) ? 1 : -1
-        CoreDataManager.shared.saveContext(context: asset.managedObjectContext!)
-    }
-
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return tableView.isEditing ? .none : .delete
-    }
-
-    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return tableView.isEditing ? false : true
-    }
-
-    override func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
-        // No droppiing into the unsorted section, so just return the source indexpath.
-        if proposedDestinationIndexPath.section == 1 {
-            return sourceIndexPath
-        }
-        return proposedDestinationIndexPath
-    }
-}
-
-// MARK: - DataSource related methods
-extension AssetsViewController {
 
     func configureSortControl() {
         let assetStore = StoreContainer.shared.assetStore
@@ -97,6 +56,113 @@ extension AssetsViewController {
         sortControl.selectedSegmentIndex = assetStore.sortOrganizer.selectedIndex
     }
 
+    func configureNavbar() {
+        guard let currentStory = StoreContainer.shared.folderStore.currentStoryFolder else {
+            return
+        }
+        navigationItem.title = currentStory.name
+        syncButton.image = .gridicon(.sync)
+        editButton.title = Constants.edit
+    }
+
+    func configureToolbar() {
+        textNoteButton.image = .gridicon(.posts)
+        photoButton.image = .gridicon(.imageMultiple)
+        videoButton.image = .gridicon(.video)
+        audioNoteButton.image = .gridicon(.microphone)
+    }
+
+    func configureStyle() {
+        Appearance.style(view: view, tableView: tableView)
+    }
+
+}
+
+// MARK: - Actions
+
+extension AssetsViewController {
+
+    @IBAction func handleSortChanged(sender: UISegmentedControl) {
+        let action = AssetAction.sortMode(index: sortControl.selectedSegmentIndex)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+
+        tableView.isEditing = false
+        // refresh data source.
+        dataSource.refresh()
+    }
+
+    @IBAction func handleToggleEditing(sender: UIBarButtonItem) {
+        if tableView.isEditing {
+            editButton.title = Constants.edit
+            tableView.setEditing(false, animated: true)
+        } else if StoreContainer.shared.assetStore.canSortAssets {
+            editButton.title = Constants.done
+            tableView.setEditing(true, animated: true)
+        }
+    }
+
+    @IBAction func handleSyncTapped(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped sync")
+    }
+
+}
+
+extension AssetsViewController {
+
+    @IBAction func handleTextNoteButton(sender: UIBarButtonItem) {
+        // Temporary action just for testing.
+        let action = AssetAction.createAssetFor(text: "New Text Note")
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+    }
+
+    @IBAction func handlePhotoButton(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped \(sender.description)")
+    }
+
+    @IBAction func handleVideoButton(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped \(sender.description)")
+    }
+
+    @IBAction func handleAudioNoteButton(sender: UIBarButtonItem) {
+        LogDebug(message: "tapped \(sender.description)")
+    }
+
+}
+
+// MARK: - TableViewDelegate methods
+extension AssetsViewController {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectSelectedRowWithAnimation(true)
+        guard let asset = dataSource.object(at: indexPath) else {
+            return
+        }
+
+        // HACK HACK HACK: Just for testing. Tap on a cell to change which section it should be sorted to.
+        asset.order = (asset.order == -1) ? 1 : -1
+        CoreDataManager.shared.saveContext(context: asset.managedObjectContext!)
+    }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return tableView.isEditing ? .none : .delete
+    }
+
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return tableView.isEditing ? false : true
+    }
+
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        // No droppiing into the unsorted section, so just return the source indexpath.
+        if proposedDestinationIndexPath.section == 1 {
+            return sourceIndexPath
+        }
+        return proposedDestinationIndexPath
+    }
+}
+
+// MARK: - DataSource related methods
+extension AssetsViewController {
+
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell", for: indexPath)
         cell.textLabel?.text = storyAsset.name + " " + String(storyAsset.order)
@@ -104,13 +170,6 @@ extension AssetsViewController {
         cell.accessoryType = .disclosureIndicator
 
         return cell
-    }
-
-    func configureDataSource() {
-        dataSource = AssetDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, storyAsset) -> UITableViewCell? in
-            return self?.cellFor(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
-        })
-        dataSource.update()
     }
 
 }

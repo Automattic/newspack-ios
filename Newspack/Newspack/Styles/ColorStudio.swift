@@ -64,7 +64,7 @@ struct ColorStudio {
     // MARK: - Semantic colors
     static let newspackBlue = ColorStudio(name: .newspackBlue)
     static let brand = ColorStudio(name: .newspackBlue)
-    static let accent = ColorStudio(name: .pink)
+    static let accent = ColorStudio(name: .newspackBlue)
     static let divider = ColorStudio(name: .gray, shade: .shade10)
     static let error = ColorStudio(name: .red)
     static let gray = ColorStudio(name: .gray)

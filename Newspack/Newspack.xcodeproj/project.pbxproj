@@ -148,6 +148,7 @@
 		E66CCA1C2303527D00F1CA59 /* Revision+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CCA002303527C00F1CA59 /* Revision+CoreDataClass.swift */; };
 		E66CCA1D2303527D00F1CA59 /* AccountDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CCA012303527C00F1CA59 /* AccountDetails+CoreDataClass.swift */; };
 		E66CCA1E2303527D00F1CA59 /* Status+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66CCA022303527C00F1CA59 /* Status+CoreDataClass.swift */; };
+		E66E85A124CFA1010056E8AB /* StoryNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E85A024CFA1010056E8AB /* StoryNavigationController.swift */; };
 		E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A04223596FE00E8DD88 /* CoreDataManagerTests.swift */; };
 		E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A062235979500E8DD88 /* BaseTest.swift */; };
 		E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */; };
@@ -398,6 +399,7 @@
 		E66CCA002303527C00F1CA59 /* Revision+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Revision+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E66CCA012303527C00F1CA59 /* AccountDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AccountDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E66CCA022303527C00F1CA59 /* Status+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Status+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E66E85A024CFA1010056E8AB /* StoryNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryNavigationController.swift; sourceTree = "<group>"; };
 		E66E8A04223596FE00E8DD88 /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
 		E66E8A062235979500E8DD88 /* BaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTest.swift; sourceTree = "<group>"; };
 		E66E8A0822359FE200E8DD88 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
@@ -793,6 +795,7 @@
 				E604EE4D24C77BD10015D284 /* AboutViewController.swift */,
 				E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */,
 				E68689BF243C080400B7E363 /* FoldersViewController.swift */,
+				E66E85A024CFA1010056E8AB /* StoryNavigationController.swift */,
 				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
 				E62982292303667E00E8CEC7 /* EditorViewController.swift */,
 				E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */,
@@ -1458,6 +1461,7 @@
 				E63F3F3C236350BE00DB760E /* MediaTypeDiscerner.swift in Sources */,
 				E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */,
 				E695A7E7244FD686007B29BB /* StoryAsset+CoreDataProperties.swift in Sources */,
+				E66E85A124CFA1010056E8AB /* StoryNavigationController.swift in Sources */,
 				E6B7728824BCD8DA00CA8AB8 /* SortOrganizer.swift in Sources */,
 				E641A66322A7584A008BBD85 /* AccountDetailsStore.swift in Sources */,
 				E636C262234FBE6800564B63 /* RemoteMedia.swift in Sources */,

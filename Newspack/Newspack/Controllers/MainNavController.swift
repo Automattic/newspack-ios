@@ -6,9 +6,39 @@ final class MainNavController: UINavigationController {
     var sessionReceipt: Any?
     var authenticationManager: AuthenticationManager?
 
+    private lazy var menuController: MenuViewController = {
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .menu) as! MenuViewController
+        controller.restorationClass = MainNavController.self
+        controller.restorationIdentifier = MainNavController.menuControllerIdentifier
+        return controller
+    }()
+
+    private lazy var storyNavigationController: StoryNavigationController = {
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .storyNav) as! StoryNavigationController
+        controller.restorationClass = MainNavController.self
+        controller.restorationIdentifier = MainNavController.storyNavIdentifier
+        return controller
+    }()
+
+    private lazy var sidebarContainerController: SidebarContainerViewController = {
+        let controller = SidebarContainerViewController(mainViewController: storyNavigationController, sidebarViewController: menuController)
+        controller.delegate = self
+        controller.view.backgroundColor = .basicBackground
+        controller.modalTransitionStyle = .crossDissolve
+
+        controller.restorationClass = MainNavController.self
+        controller.restorationIdentifier = MainNavController.sidebarControllerIdentifier
+
+        return controller
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Call handleSessionChange initially to create the starting view hierarchy.
+        // Important as the intial session is configured before the app has
+        // finished launching.
+        handleSessionChange()
         listenForSessionChanges()
         delegate = self
     }
@@ -31,23 +61,46 @@ final class MainNavController: UINavigationController {
             return
         }
 
-        let menuController = MainStoryboard.instantiateViewController(withIdentifier: .menu)
-        let folderController = MainStoryboard.instantiateViewController(withIdentifier: .folderList)
-        let navController = UINavigationController(rootViewController: folderController)
-
-        let controller = SidebarContainerViewController(mainViewController: navController, sidebarViewController: menuController)
-        controller.delegate = self
-        controller.view.backgroundColor = .basicBackground
-        controller.modalTransitionStyle = .crossDissolve
-        setViewControllers([controller], animated: true)
+        setViewControllers([sidebarContainerController], animated: true)
 
         presentedViewController?.dismiss(animated: true, completion: nil)
     }
+
 }
 
+// MARK: - State Restoration
 
-// Session related
-//
+extension MainNavController: UIViewControllerRestoration {
+    static let sidebarControllerIdentifier = SidebarContainerViewController.classnameWithoutNamespaces
+    static let storyNavIdentifier = StoryNavigationController.classnameWithoutNamespaces
+    static let menuControllerIdentifier = MenuViewController.classnameWithoutNamespaces
+
+    static func viewController(withRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
+        guard
+            let controller = AppDelegate.shared.window?.rootViewController as? MainNavController,
+            let component = identifierComponents.last
+        else {
+            return nil
+        }
+
+        if component == menuControllerIdentifier {
+            return controller.menuController
+        }
+
+        if component == storyNavIdentifier {
+            return controller.storyNavigationController
+        }
+
+        if component == sidebarControllerIdentifier {
+            return controller.sidebarContainerController
+        }
+
+        return controller
+    }
+}
+
+// MARK: - Session related
+
 extension MainNavController {
 
     func listenForSessionChanges() {
@@ -85,7 +138,7 @@ extension MainNavController {
 
 
 // MARK: - Nav Delegate Related
-//
+
 extension MainNavController: UINavigationControllerDelegate {
 
     func navigationController(_ navigationController: UINavigationController,
