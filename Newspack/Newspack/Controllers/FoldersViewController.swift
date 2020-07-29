@@ -111,8 +111,27 @@ extension FoldersViewController {
     }
 
     @IBAction func handleAddTapped(sender: UIBarButtonItem) {
-        let action = FolderAction.createStoryFolder
+        presentFolderScreen(for: nil)
+    }
+
+    func editActionHandler(indexPath: IndexPath) {
+        let storyFolder = dataSource.resultsController.object(at: indexPath)
+        presentFolderScreen(for: storyFolder.uuid)
+    }
+
+    func deleteActionHandler(indexPath: IndexPath) {
+        let storyFolder = dataSource.resultsController.object(at: indexPath)
+        let action = FolderAction.deleteStoryFolder(folderID: storyFolder.uuid)
         SessionManager.shared.sessionDispatcher.dispatch(action)
+    }
+
+    func presentFolderScreen(for storyUUID: UUID?) {
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .folder) as! FolderViewController
+        controller.storyUUID = storyUUID
+
+        let navController = UINavigationController(rootViewController: controller)
+        navController.modalPresentationStyle = .formSheet
+        self.present(navController, animated: true, completion: nil)
     }
 
 }
@@ -152,9 +171,30 @@ extension FoldersViewController {
         let controller = MainStoryboard.instantiateViewController(withIdentifier: .assetsList)
         navigationController?.pushViewController(controller, animated: true)
     }
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        let editAction = UIContextualAction(style: .normal,
+                                            title: NSLocalizedString("Edit", comment: "Verb. Name of a control to edit an object."),
+                                            handler: { (action, view, completion) in
+                                                self.editActionHandler(indexPath: indexPath)
+                                                completion(true)
+        })
+
+        let deleteAction = UIContextualAction(style: .destructive,
+                                            title: NSLocalizedString("Delete", comment: "Verb. Name of a control to delete an object."),
+                                            handler: { (action, view, completion) in
+                                                self.deleteActionHandler(indexPath: indexPath)
+                                                completion(true)
+        })
+
+        return UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+    }
+
 }
 
 // MARK: - DataSource related methods
+
 extension FoldersViewController {
 
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyFolder: StoryFolder) -> UITableViewCell {
@@ -187,6 +227,7 @@ class FolderCell: UITableViewCell {
 
         selectedStory = false
     }
+
 }
 
 // MARK: - FolderDataSource
@@ -211,6 +252,8 @@ class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, 
     // animate changes.
     weak var tableView: UITableView?
 
+    private var sorting = false
+
     override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<FolderDataSource.Section, StoryFolder>.CellProvider) {
         self.tableView = tableView
         super.init(tableView: tableView, cellProvider: cellProvider)
@@ -231,7 +274,9 @@ class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, 
         resultsController.fetchRequest.sortDescriptors = StoreContainer.shared.folderStore.sortMode.descriptors
         try? resultsController.performFetch()
 
+        sorting = true
         update()
+        sorting = false
     }
 
     /// Updates the current datasource snapshot. Changes are animated only if
@@ -245,23 +290,12 @@ class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, 
         snapshot.appendSections([.main])
         snapshot.appendItems(items)
 
-        let shouldAnimate = tableView?.window != nil
-        apply(snapshot, animatingDifferences: shouldAnimate, completion: nil)
+        apply(snapshot, animatingDifferences: sorting, completion: nil)
     }
 
     // MARK: - Overrides for cell deletion behaviors
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
-    }
-
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        guard let storyFolder = resultsController.fetchedObjects?[indexPath.row] else {
-            return
-        }
-        if editingStyle == .delete {
-            let action = FolderAction.deleteStoryFolder(folderID: storyFolder.uuid)
-            SessionManager.shared.sessionDispatcher.dispatch(action)
-        }
     }
 
 }

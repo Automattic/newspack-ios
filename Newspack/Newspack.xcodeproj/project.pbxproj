@@ -160,6 +160,7 @@
 		E67B9D60236775FC00860A6C /* MediaCache+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67B9D5E236775FB00860A6C /* MediaCache+CoreDataClass.swift */; };
 		E67B9D61236775FC00860A6C /* MediaCache+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67B9D5F236775FC00860A6C /* MediaCache+CoreDataProperties.swift */; };
 		E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67F56D42230914800BFD38B /* CoreDataManager.swift */; };
+		E68408A024D0D0ED00C36AB9 /* FolderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E684089F24D0D0ED00C36AB9 /* FolderViewController.swift */; };
 		E684D05324C8980700C0B777 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = E684D05224C8980700C0B777 /* Appearance.swift */; };
 		E68689C0243C080400B7E363 /* FoldersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E68689BF243C080400B7E363 /* FoldersViewController.swift */; };
 		E6871F1922C3FD8A008D3D46 /* SiteMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */; };
@@ -414,6 +415,7 @@
 		E67B9D5E236775FB00860A6C /* MediaCache+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MediaCache+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E67B9D5F236775FC00860A6C /* MediaCache+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MediaCache+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E67F56D42230914800BFD38B /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataManager.swift; path = Newspack/System/CoreDataManager.swift; sourceTree = SOURCE_ROOT; };
+		E684089F24D0D0ED00C36AB9 /* FolderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderViewController.swift; sourceTree = "<group>"; };
 		E684D05224C8980700C0B777 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		E68689BF243C080400B7E363 /* FoldersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldersViewController.swift; sourceTree = "<group>"; };
 		E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMenuViewController.swift; sourceTree = "<group>"; };
@@ -795,6 +797,7 @@
 				E604EE4D24C77BD10015D284 /* AboutViewController.swift */,
 				E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */,
 				E68689BF243C080400B7E363 /* FoldersViewController.swift */,
+				E684089F24D0D0ED00C36AB9 /* FolderViewController.swift */,
 				E66E85A024CFA1010056E8AB /* StoryNavigationController.swift */,
 				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
 				E62982292303667E00E8CEC7 /* EditorViewController.swift */,
@@ -1368,6 +1371,7 @@
 				E67339A6232EFEA3007C5E45 /* Logging.swift in Sources */,
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
 				E6500F9D2368F36500CB8C6C /* MediaDetailViewController.swift in Sources */,
+				E68408A024D0D0ED00C36AB9 /* FolderViewController.swift in Sources */,
 				E67B9D60236775FC00860A6C /* MediaCache+CoreDataClass.swift in Sources */,
 				E68B29FF23048C6C0021283C /* EditCoordinator.swift in Sources */,
 				E66CCA162303527D00F1CA59 /* Post+CoreDataProperties.swift in Sources */,
