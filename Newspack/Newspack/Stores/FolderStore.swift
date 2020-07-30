@@ -254,7 +254,7 @@ extension FolderStore {
     func renameStoryFolder(uuid: UUID, to name: String) {
         // Get the folder.
         guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
-            LogError(message: "Unable to rename story folder")
+            LogError(message: "Unable to find the story folder to rename.")
             return
         }
 
@@ -267,7 +267,7 @@ extension FolderStore {
             return
         }
 
-        LogDebug(message: "Success: \(newUrl)")
+        LogInfo(message: "Success: \(newUrl)")
 
         // Save the name in core data.
         let objID = storyFolder.objectID
