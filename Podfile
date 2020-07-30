@@ -75,11 +75,11 @@ target 'Newspack' do
     pod 'KeychainAccess', '3.2.0'
     pod 'AlamofireImage', '3.5.2'
 
-    pod 'WordPressAuthenticator', '~> 1.16.0-beta.5'
-    pod 'WordPressKit', '~> 4.8.0'
+    pod 'WordPressAuthenticator', '~> 1.21.0'
+    pod 'WordPressKit', '~> 4.13.0'
     pod 'WPMediaPicker', '~> 1.6.0'
     pod 'WordPressFlux', '1.0.0'
-    pod 'WordPressUI', '~> 1.6.0'
+    pod 'WordPressUI', '~> 1.7.0'
     pod 'WordPress-Editor-iOS', '~> 1.13.0' # A gutenberg dependency.z
 
     ## Gutenberg

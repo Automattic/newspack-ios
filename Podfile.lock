@@ -3,6 +3,11 @@ PODS:
   - Alamofire (4.8.0)
   - AlamofireImage (3.5.2):
     - Alamofire (~> 4.8)
+  - AppAuth (1.4.0):
+    - AppAuth/Core (= 1.4.0)
+    - AppAuth/ExternalUserAgent (= 1.4.0)
+  - AppAuth/Core (1.4.0)
+  - AppAuth/ExternalUserAgent (1.4.0)
   - boost-for-react-native (1.63.0)
   - CocoaLumberjack (3.5.3):
     - CocoaLumberjack/Core (= 3.5.3)
@@ -23,20 +28,19 @@ PODS:
   - FormatterKit/TimeIntervalFormatter (1.8.2):
     - FormatterKit/Resources
   - glog (0.3.5)
-  - GoogleSignIn (4.4.0):
-    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
-    - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
+  - GoogleSignIn (5.0.2):
+    - AppAuth (~> 1.2)
+    - GTMAppAuth (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleToolboxForMac/DebugUtils (2.2.2):
-    - GoogleToolboxForMac/Defines (= 2.2.2)
-  - GoogleToolboxForMac/Defines (2.2.2)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.2)":
-    - GoogleToolboxForMac/DebugUtils (= 2.2.2)
-    - GoogleToolboxForMac/Defines (= 2.2.2)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.2)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.2.2)"
   - Gridicons (1.0.1)
+  - GTMAppAuth (1.0.0):
+    - AppAuth/Core (~> 1.0)
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.4.0):
+    - GTMSessionFetcher/Full (= 1.4.0)
   - GTMSessionFetcher/Core (1.4.0)
+  - GTMSessionFetcher/Full (1.4.0):
+    - GTMSessionFetcher/Core (= 1.4.0)
   - Gutenberg (1.18.0):
     - React (= 0.60.0-patched)
     - React-RCTImage (= 0.60.0-patched)
@@ -157,34 +161,34 @@ PODS:
     - React-Core
     - WordPress-Aztec-iOS
   - SVProgressHUD (2.2.5)
-  - UIDeviceIdentifier (1.4.0)
+  - UIDeviceIdentifier (1.5.0)
   - WordPress-Aztec-iOS (1.13.0)
   - WordPress-Editor-iOS (1.13.0):
     - WordPress-Aztec-iOS (= 1.13.0)
-  - WordPressAuthenticator (1.16.0):
+  - WordPressAuthenticator (1.21.0):
     - 1PasswordExtension (= 1.8.6)
     - Alamofire (= 4.8)
     - CocoaLumberjack (~> 3.5)
-    - GoogleSignIn (~> 4.4)
+    - GoogleSignIn (~> 5.0.2)
     - Gridicons (~> 1.0)
     - lottie-ios (= 3.1.6)
     - "NSURL+IDN (= 0.4)"
     - SVProgressHUD (= 2.2.5)
-    - WordPressKit (~> 4.8.0)
-    - WordPressShared (~> 1.8.16)
-    - WordPressUI (~> 1.6.0)
+    - WordPressKit (~> 4.0-beta.0)
+    - WordPressShared (~> 1.9-beta)
+    - WordPressUI (~> 1.7.0)
   - WordPressFlux (1.0.0)
-  - WordPressKit (4.8.0):
+  - WordPressKit (4.13.0):
     - Alamofire (~> 4.8.0)
     - CocoaLumberjack (~> 3.4)
     - NSObject-SafeExpectations (= 0.0.4)
     - UIDeviceIdentifier (~> 1)
-    - WordPressShared (~> 1.8.16)
+    - WordPressShared (~> 1.9)
     - wpxmlrpc (= 0.8.5)
-  - WordPressShared (1.8.16):
+  - WordPressShared (1.10.0-beta.1):
     - CocoaLumberjack (~> 3.4)
     - FormatterKit/TimeIntervalFormatter (= 1.8.2)
-  - WordPressUI (1.6.0)
+  - WordPressUI (1.7.1)
   - WPMediaPicker (1.6.1)
   - wpxmlrpc (0.8.5)
   - yoga (0.60.0-patched.React)
@@ -222,10 +226,10 @@ DEPENDENCIES:
   - RNSVG (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.18.0/react-native-gutenberg-bridge/third-party-podspecs/RNSVG.podspec.json`)
   - RNTAztecView (from `http://github.com/wordpress-mobile/gutenberg-mobile/`, tag `v1.18.0`)
   - WordPress-Editor-iOS (~> 1.13.0)
-  - WordPressAuthenticator (~> 1.16.0-beta.5)
+  - WordPressAuthenticator (~> 1.21.0)
   - WordPressFlux (= 1.0.0)
-  - WordPressKit (~> 4.8.0)
-  - WordPressUI (~> 1.6.0)
+  - WordPressKit (~> 4.13.0)
+  - WordPressUI (~> 1.7.0)
   - WPMediaPicker (~> 1.6.0)
   - yoga (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.18.0/react-native-gutenberg-bridge/third-party-podspecs/yoga.podspec.json`)
 
@@ -234,13 +238,14 @@ SPEC REPOS:
     - 1PasswordExtension
     - Alamofire
     - AlamofireImage
+    - AppAuth
     - boost-for-react-native
     - CocoaLumberjack
     - DoubleConversion
     - FormatterKit
     - GoogleSignIn
-    - GoogleToolboxForMac
     - Gridicons
+    - GTMAppAuth
     - GTMSessionFetcher
     - KeychainAccess
     - lottie-ios
@@ -329,15 +334,16 @@ SPEC CHECKSUMS:
   1PasswordExtension: f97cc80ae58053c331b2b6dc8843ba7103b33794
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
   AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
+  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaLumberjack: 2f44e60eb91c176d471fdba43b9e3eae6a721947
   DoubleConversion: e22e0762848812a87afd67ffda3998d9ef29170c
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   FormatterKit: 4b8f29acc9b872d5d12a63efb560661e8f2e1b98
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
-  GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
-  GoogleToolboxForMac: 800648f8b3127618c1b59c7f97684427630c5ea3
+  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   Gridicons: 8e19276b20bb15d1fda1d4d0db96d066d170135b
+  GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
   Gutenberg: c74aabb7d599b5782b3366f30563a204d5b14c45
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
@@ -369,18 +375,18 @@ SPEC CHECKSUMS:
   RNSVG: c820516df826221ce4969594bf3e822a464abd51
   RNTAztecView: 9e477702bdfc456e27f9efbf9d9a27de24becab2
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  UIDeviceIdentifier: 44f805037d21b94394821828f4fcaba34b38c2d0
+  UIDeviceIdentifier: a79ccdfc940373835a7d8e9fc7541e6bf61b6319
   WordPress-Aztec-iOS: 450cb7095c6852c9c933d2062c318c4d7fa4d9a6
   WordPress-Editor-iOS: c3373b246efe59adf7b6ac476c8e562964724bf9
-  WordPressAuthenticator: 39eac4d224927f8feb73a5f2e9baac0907b62417
+  WordPressAuthenticator: 57538dea44fb0d05119c0dd3fc176cbe78fa8a78
   WordPressFlux: a381542b0a0414ef85fb0b2a0f9dbde78ffe0637
-  WordPressKit: 84045e236949248632a2c644149e5657733011bb
-  WordPressShared: 1bc316ed162f42af4e0fa2869437e9e28b532b01
-  WordPressUI: cbe8cce4bd529caf5969750c34ba2d2026a342a9
+  WordPressKit: b912e3436d7203e6a0d04b477aba05c7b78d495a
+  WordPressShared: b77083325416b075c99155ab2770f0dff8ba04eb
+  WordPressUI: 9da5d966b8beb091950cd96880db398d7f30e246
   WPMediaPicker: 59559813ec8a7929a91aa5a1db74998d8485fb9f
   wpxmlrpc: 6a9bdd6ab9d1b159b384b0df0f3f39de9af4fecf
   yoga: 4e71c9a33abf45ba55af55ae9cbc86f4234bb2a9
 
-PODFILE CHECKSUM: ef91936704a69ccf451e3ec24371abe16507efdb
+PODFILE CHECKSUM: f2567723dd89b00fbf714497e2edba81bca68fac
 
 COCOAPODS: 1.8.4
