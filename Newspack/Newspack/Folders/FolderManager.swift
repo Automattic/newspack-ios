@@ -241,6 +241,7 @@ class FolderManager {
         }
 
         let destination = destination.deletingLastPathComponent().appendingPathComponent(name, isDirectory: true)
+
         guard folderExists(url: source) && !folderExists(url: destination) else {
             return false
         }
@@ -264,7 +265,13 @@ class FolderManager {
     /// renamed.
     ///
     func renameFolder(at source: URL, to name: String) -> URL? {
-        let newURL = source.deletingLastPathComponent().appendingPathComponent(name, isDirectory: true)
+        let sanitizedName = sanitizedFolderName(name: name)
+        var newURL = source.deletingLastPathComponent().appendingPathComponent(sanitizedName, isDirectory: true)
+
+        if folderExists(url: newURL) {
+            newURL = urlForFolderAtPath(path: name, ifExistsAppendSuffix: true)
+        }
+
         if moveFolder(at: source, to: newURL) {
             return newURL
         }
