@@ -23,10 +23,18 @@ class Appearance {
 
     // MARK: - Tableview Styles
 
-    static func style(view: UIView, tableView: UITableView) {
+    static func style(view: UIView) {
         view.backgroundColor = .basicBackground
+    }
+
+    static func style(tableView: UITableView) {
         tableView.backgroundColor = .neutral(.shade0)
         tableView.separatorColor = .neutral(.shade10)
+    }
+
+    static func style(view: UIView, tableView: UITableView) {
+        style(view: view)
+        style(tableView: tableView)
     }
 
     static func style(cell: UITableViewCell) {

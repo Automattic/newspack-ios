@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
-        return !Environment.isTesting()
+        return !Environment.isTesting() && StoreContainer.shared.accountStore.getAccounts().count > 0
     }
 
 }
