@@ -240,7 +240,11 @@ class FolderManager {
             return false
         }
 
-        let destination = destination.deletingLastPathComponent().appendingPathComponent(name, isDirectory: true)
+        var destination = destination.deletingLastPathComponent().appendingPathComponent(name, isDirectory: true)
+        if folderExists(url: destination) {
+            destination = urlForFolderAtPath(path: destination.path, ifExistsAppendSuffix: true)
+        }
+
         guard folderExists(url: source) && !folderExists(url: destination) else {
             return false
         }
