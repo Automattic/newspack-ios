@@ -75,11 +75,7 @@ extension UIColor {
     /// Text. Gray-80 (< iOS 13) and `UIColor.label` (> iOS 13)
     ///
     static var text: UIColor {
-        if #available(iOS 13, *) {
-            return .label
-        }
-
-        return .gray(.shade80)
+        return .neutral(.shade80)
     }
 
     /// Text Subtle. Gray-50 (< iOS 13) and `UIColor.secondaryLabel` (> iOS 13)
@@ -89,7 +85,7 @@ extension UIColor {
             return .secondaryLabel
         }
 
-        return .gray(.shade50)
+        return .neutral(.shade50)
     }
 
     /// Text Tertiary. Gray-20 (< iOS 13) and `UIColor.tertiaryLabel` (> iOS 13)
@@ -188,13 +184,7 @@ extension UIColor {
     /// App Navigation Bar. brand (< iOS 13 and Light Mode) and `UIColor.systemThickMaterial` (Dark Mode)
     ///
     static var appBar: UIColor {
-        if #available(iOS 13, *) {
-            return UIColor(light: .withColorStudio(.newspackBlue, shade: .shade60),
-                           dark: .secondarySystemGroupedBackground)
-        }
-
-
-        return .withColorStudio(.newspackBlue, shade: .shade60)
+        return .systemBackground
     }
 
     /// App Tab Bar.
