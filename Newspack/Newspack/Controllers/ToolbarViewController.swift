@@ -47,30 +47,23 @@ extension ToolbarViewController {
     }
 
     @IBAction func handlePhotoButton(sender: UIBarButtonItem) {
-        LogDebug(message: "tapped \(sender.description)")
-
         // Configure media picker for photos.
         let options = WPMediaPickerOptions()
         let picker = WPNavigationMediaPickerViewController(options: options)
         picker.delegate = self
         picker.dataSource = WPPHAssetDataSource.sharedInstance()
         picker.selectionActionTitle = NSLocalizedString("Select", comment: "Verb. Title of a control that selects a set of images.")
-        picker.modalPresentationStyle = .popover
-        let controller = picker.popoverPresentationController
-        controller?.barButtonItem = sender
 
         navigationController?.present(picker, animated: true, completion: nil)
     }
 
     @IBAction func handleCameraButton(sender: UIBarButtonItem) {
-        LogDebug(message: "tapped \(sender.description)")
-
         guard WPMediaCapturePresenter.isCaptureAvailable() else {
             // TODO: Show alert that the camera is not available.
             return
         }
 
-        // Configure media picker for camera.
+        // Configure camera capture.
         let presenter = WPMediaCapturePresenter(presenting: self)
         presenter.mediaType = [.image, .video]
         presenter.completionBlock = { media in
@@ -92,8 +85,14 @@ extension ToolbarViewController {
 // MARK: - MediaPicker related
 
 extension ToolbarViewController: WPMediaPickerViewControllerDelegate {
+
     func mediaPickerController(_ picker: WPMediaPickerViewController, didFinishPicking assets: [WPMediaAsset]) {
+        dismiss(animated: true, completion: nil)
         print(assets.description)
     }
-}
 
+    func mediaPickerControllerDidCancel(_ picker: WPMediaPickerViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+
+}
