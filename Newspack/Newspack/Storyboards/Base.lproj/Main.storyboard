@@ -270,7 +270,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="uZF-dx-aBe"/>
-                        <barButtonItem title="Item" image="video" id="PMa-Ad-aM0">
+                        <barButtonItem title="Item" image="camera" id="PMa-Ad-aM0">
                             <connections>
                                 <action selector="handleVideoButtonWithSender:" destination="HoW-Ma-W9C" id="0JT-na-hBx"/>
                             </connections>
@@ -412,7 +412,7 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="gCW-ke-f2d"/>
-                        <barButtonItem title="Item" image="video" id="QOd-iL-h26">
+                        <barButtonItem title="Item" image="camera" id="QOd-iL-h26">
                             <connections>
                                 <action selector="handleVideoButtonWithSender:" destination="NWk-Co-Z8t" id="Pe0-eK-IU9"/>
                             </connections>
@@ -426,7 +426,7 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Assets" id="YtF-a8-687">
                         <rightBarButtonItems>
-                            <barButtonItem title="Item" image="sync" largeContentSizeImage="sync" id="YoR-aT-oGj">
+                            <barButtonItem image="cloud-upload" largeContentSizeImage="cloud-upload" id="YoR-aT-oGj">
                                 <connections>
                                     <action selector="handleSyncTappedWithSender:" destination="NWk-Co-Z8t" id="gLL-2i-pfm"/>
                                 </connections>
@@ -625,7 +625,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7f8-9p-9lu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="292" y="149"/>
+            <point key="canvasLocation" x="964" y="798"/>
         </scene>
         <!--Posts-->
         <scene sceneID="ypd-wT-HGz">
@@ -666,7 +666,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ATV-Ck-5iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="964" y="149"/>
+            <point key="canvasLocation" x="1641" y="798"/>
         </scene>
         <!--Edit-->
         <scene sceneID="euE-WE-sAy">
@@ -698,7 +698,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WKJ-qY-5tg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1641" y="149"/>
+            <point key="canvasLocation" x="2313" y="797"/>
         </scene>
         <!--Media Detail View Controller-->
         <scene sceneID="DAV-IO-aSm">
@@ -734,9 +734,11 @@
     <color key="tintColor" name="NewspackBlue"/>
     <resources>
         <image name="Icon" width="32" height="32"/>
+        <image name="camera" width="24" height="24"/>
         <image name="chevron-down" width="24" height="24"/>
         <image name="chevron-left" width="24" height="24"/>
         <image name="chevron-right" width="24" height="24"/>
+        <image name="cloud-upload" width="24" height="24"/>
         <image name="create folder" width="128" height="128"/>
         <image name="cross" width="24" height="24"/>
         <image name="image-multiple" width="24" height="24"/>
@@ -747,8 +749,6 @@
         <image name="refresh" width="24" height="24"/>
         <image name="safari" catalog="system" width="128" height="121"/>
         <image name="share-ios" width="24" height="24"/>
-        <image name="sync" width="24" height="24"/>
-        <image name="video" width="24" height="24"/>
         <namedColor name="NewspackBlue">
             <color red="0.20000000000000001" green="0.40000000000000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

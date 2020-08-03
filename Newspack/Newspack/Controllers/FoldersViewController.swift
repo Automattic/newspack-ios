@@ -68,7 +68,7 @@ class FoldersViewController: UIViewController, UITableViewDelegate {
     func configureToolbar() {
         textNoteButton.image = .gridicon(.posts)
         photoButton.image = .gridicon(.imageMultiple)
-        videoButton.image = .gridicon(.video)
+        videoButton.image = .gridicon(.camera)
         audioNoteButton.image = .gridicon(.microphone)
     }
 

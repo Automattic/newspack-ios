@@ -61,14 +61,14 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
             return
         }
         navigationItem.title = currentStory.name
-        syncButton.image = .gridicon(.sync)
+        syncButton.image = .gridicon(.cloudUpload)
         editButton.title = Constants.edit
     }
 
     func configureToolbar() {
         textNoteButton.image = .gridicon(.posts)
         photoButton.image = .gridicon(.imageMultiple)
-        videoButton.image = .gridicon(.video)
+        videoButton.image = .gridicon(.camera)
         audioNoteButton.image = .gridicon(.microphone)
     }
 
