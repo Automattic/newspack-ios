@@ -16,7 +16,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
 
     @IBOutlet var textNoteButton: UIBarButtonItem!
     @IBOutlet var photoButton: UIBarButtonItem!
-    @IBOutlet var videoButton: UIBarButtonItem!
+    @IBOutlet var cameraButton: UIBarButtonItem!
     @IBOutlet var audioNoteButton: UIBarButtonItem!
 
     private var dataSource: AssetDataSource!
@@ -68,7 +68,7 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
     func configureToolbar() {
         textNoteButton.image = .gridicon(.posts)
         photoButton.image = .gridicon(.imageMultiple)
-        videoButton.image = .gridicon(.camera)
+        cameraButton.image = .gridicon(.camera)
         audioNoteButton.image = .gridicon(.microphone)
     }
 
@@ -119,7 +119,7 @@ extension AssetsViewController {
         LogDebug(message: "tapped \(sender.description)")
     }
 
-    @IBAction func handleVideoButton(sender: UIBarButtonItem) {
+    @IBAction func handleCameraButton(sender: UIBarButtonItem) {
         LogDebug(message: "tapped \(sender.description)")
     }
 
