@@ -3,16 +3,11 @@ import CoreData
 import Gridicons
 import WordPressFlux
 
-class FoldersViewController: UIViewController, UITableViewDelegate {
+class FoldersViewController: ToolbarViewController, UITableViewDelegate {
 
     @IBOutlet var sortControl: UISegmentedControl!
     @IBOutlet var directionButton: UIButton!
     @IBOutlet var tableView: UITableView!
-
-    @IBOutlet var textNoteButton: UIBarButtonItem!
-    @IBOutlet var photoButton: UIBarButtonItem!
-    @IBOutlet var cameraButton: UIBarButtonItem!
-    @IBOutlet var audioNoteButton: UIBarButtonItem!
 
     private var dataSource: FolderDataSource!
 
@@ -22,15 +17,8 @@ class FoldersViewController: UIViewController, UITableViewDelegate {
         configureDataSource()
         configureSortControls()
         configureNavbar()
-        configureToolbar()
         configureStyle()
         tableView.tableFooterView = UIView()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        navigationController?.setToolbarHidden(false, animated: false)
     }
 
     func configureDataSource() {
@@ -63,13 +51,6 @@ class FoldersViewController: UIViewController, UITableViewDelegate {
         navigationItem.title = NSLocalizedString("Stories", comment: "Noun. The title of the list of stories the reporter is working on.")
         navigationItem.leftBarButtonItem?.image = .gridicon(.menu)
         navigationItem.rightBarButtonItem?.image = .gridicon(.plus)
-    }
-
-    func configureToolbar() {
-        textNoteButton.image = .gridicon(.posts)
-        photoButton.image = .gridicon(.imageMultiple)
-        cameraButton.image = .gridicon(.camera)
-        audioNoteButton.image = .gridicon(.microphone)
     }
 
     func configureStyle() {
@@ -132,26 +113,6 @@ extension FoldersViewController {
         let navController = UINavigationController(rootViewController: controller)
         navController.modalPresentationStyle = .formSheet
         self.present(navController, animated: true, completion: nil)
-    }
-
-}
-
-extension FoldersViewController {
-
-    @IBAction func handleTextNoteButton(sender: UIBarButtonItem) {
-        LogDebug(message: "tapped \(sender.description)")
-    }
-
-    @IBAction func handlePhotoButton(sender: UIBarButtonItem) {
-        LogDebug(message: "tapped \(sender.description)")
-    }
-
-    @IBAction func handleCameraButton(sender: UIBarButtonItem) {
-        LogDebug(message: "tapped \(sender.description)")
-    }
-
-    @IBAction func handleAudioNoteButton(sender: UIBarButtonItem) {
-        LogDebug(message: "tapped \(sender.description)")
     }
 
 }

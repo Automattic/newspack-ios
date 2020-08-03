@@ -46,6 +46,7 @@
 		E6051DEF23075F8A005AAF0B /* DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6051DEE23075F8A005AAF0B /* DateTests.swift */; };
 		E6051DF123076191005AAF0B /* DictionaryMergeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6051DF023076191005AAF0B /* DictionaryMergeTests.swift */; };
 		E605418F2369E1920078D978 /* Diagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E605418E2369E1920078D978 /* Diagnostics.swift */; };
+		E606E71924D8AED9000DD9C5 /* ToolbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E606E71824D8AED9000DD9C5 /* ToolbarViewController.swift */; };
 		E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */; };
 		E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */; };
 		E607386122A9A5EF00504EA4 /* AccountDetailsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */; };
@@ -292,6 +293,7 @@
 		E6051DEE23075F8A005AAF0B /* DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTests.swift; sourceTree = "<group>"; };
 		E6051DF023076191005AAF0B /* DictionaryMergeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryMergeTests.swift; sourceTree = "<group>"; };
 		E605418E2369E1920078D978 /* Diagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnostics.swift; sourceTree = "<group>"; };
+		E606E71824D8AED9000DD9C5 /* ToolbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewController.swift; sourceTree = "<group>"; };
 		E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStoreTests.swift; sourceTree = "<group>"; };
 		E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStoreTests.swift; sourceTree = "<group>"; };
 		E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsStoreTests.swift; sourceTree = "<group>"; };
@@ -792,6 +794,7 @@
 				E6710A1522CE9ED00036156E /* Transitions */,
 				E6AC98B723CCD5DE00E95381 /* MainNavController.swift */,
 				E6138FD32211FE86004E5B91 /* InitialViewController.swift */,
+				E606E71824D8AED9000DD9C5 /* ToolbarViewController.swift */,
 				E679AD7224C0E831000FDF90 /* SidebarContainerViewController.swift */,
 				E62A6BA324C6198300013092 /* MenuViewController.swift */,
 				E604EE4D24C77BD10015D284 /* AboutViewController.swift */,
@@ -1351,6 +1354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E606E71924D8AED9000DD9C5 /* ToolbarViewController.swift in Sources */,
 				E6710A1722CE9F040036156E /* FadeTransitionController.swift in Sources */,
 				E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */,
 				E66CCA1D2303527D00F1CA59 /* AccountDetails+CoreDataClass.swift in Sources */,

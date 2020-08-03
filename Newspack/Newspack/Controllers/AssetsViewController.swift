@@ -2,7 +2,7 @@ import UIKit
 import CoreData
 import WordPressFlux
 
-class AssetsViewController: UIViewController, UITableViewDelegate {
+class AssetsViewController: ToolbarViewController, UITableViewDelegate {
 
     struct Constants {
         static let edit = NSLocalizedString("Edit", comment: "Verb. Title of a control to enable editing.")
@@ -14,11 +14,6 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var editButton: UIBarButtonItem!
     @IBOutlet var tableView: UITableView!
 
-    @IBOutlet var textNoteButton: UIBarButtonItem!
-    @IBOutlet var photoButton: UIBarButtonItem!
-    @IBOutlet var cameraButton: UIBarButtonItem!
-    @IBOutlet var audioNoteButton: UIBarButtonItem!
-
     private var dataSource: AssetDataSource!
 
     override func viewDidLoad() {
@@ -27,15 +22,8 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
         configureDataSource()
         configureSortControl()
         configureNavbar()
-        configureToolbar()
         configureStyle()
         tableView.tableFooterView = UIView()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        navigationController?.setToolbarHidden(false, animated: false)
     }
 
     func configureDataSource() {
@@ -63,13 +51,6 @@ class AssetsViewController: UIViewController, UITableViewDelegate {
         navigationItem.title = currentStory.name
         syncButton.image = .gridicon(.cloudUpload)
         editButton.title = Constants.edit
-    }
-
-    func configureToolbar() {
-        textNoteButton.image = .gridicon(.posts)
-        photoButton.image = .gridicon(.imageMultiple)
-        cameraButton.image = .gridicon(.camera)
-        audioNoteButton.image = .gridicon(.microphone)
     }
 
     func configureStyle() {
@@ -103,28 +84,6 @@ extension AssetsViewController {
 
     @IBAction func handleSyncTapped(sender: UIBarButtonItem) {
         LogDebug(message: "tapped sync")
-    }
-
-}
-
-extension AssetsViewController {
-
-    @IBAction func handleTextNoteButton(sender: UIBarButtonItem) {
-        // Temporary action just for testing.
-        let action = AssetAction.createAssetFor(text: "New Text Note")
-        SessionManager.shared.sessionDispatcher.dispatch(action)
-    }
-
-    @IBAction func handlePhotoButton(sender: UIBarButtonItem) {
-        LogDebug(message: "tapped \(sender.description)")
-    }
-
-    @IBAction func handleCameraButton(sender: UIBarButtonItem) {
-        LogDebug(message: "tapped \(sender.description)")
-    }
-
-    @IBAction func handleAudioNoteButton(sender: UIBarButtonItem) {
-        LogDebug(message: "tapped \(sender.description)")
     }
 
 }
