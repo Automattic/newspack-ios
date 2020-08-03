@@ -189,7 +189,7 @@ PODS:
     - CocoaLumberjack (~> 3.4)
     - FormatterKit/TimeIntervalFormatter (= 1.8.2)
   - WordPressUI (1.7.1)
-  - WPMediaPicker (1.6.1)
+  - WPMediaPicker (1.7.0)
   - wpxmlrpc (0.8.5)
   - yoga (0.60.0-patched.React)
 
@@ -230,7 +230,7 @@ DEPENDENCIES:
   - WordPressFlux (= 1.0.0)
   - WordPressKit (~> 4.13.0)
   - WordPressUI (~> 1.7.0)
-  - WPMediaPicker (~> 1.6.0)
+  - WPMediaPicker (~> 1.7.0)
   - yoga (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.18.0/react-native-gutenberg-bridge/third-party-podspecs/yoga.podspec.json`)
 
 SPEC REPOS:
@@ -383,10 +383,10 @@ SPEC CHECKSUMS:
   WordPressKit: b912e3436d7203e6a0d04b477aba05c7b78d495a
   WordPressShared: b77083325416b075c99155ab2770f0dff8ba04eb
   WordPressUI: 9da5d966b8beb091950cd96880db398d7f30e246
-  WPMediaPicker: 59559813ec8a7929a91aa5a1db74998d8485fb9f
+  WPMediaPicker: 754bc043ea42abc2eae8a07e5680c777c112666a
   wpxmlrpc: 6a9bdd6ab9d1b159b384b0df0f3f39de9af4fecf
   yoga: 4e71c9a33abf45ba55af55ae9cbc86f4234bb2a9
 
-PODFILE CHECKSUM: f2567723dd89b00fbf714497e2edba81bca68fac
+PODFILE CHECKSUM: ac6da294bc794a6cc605e0e8b1374493fd436797
 
 COCOAPODS: 1.8.4
