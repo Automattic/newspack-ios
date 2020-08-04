@@ -20,7 +20,7 @@ struct SiteMenuViewModel {
         }
 
         let mediaRow = SiteMenuRow(title: "Media") {
-            let controller = MediaViewController()
+            let controller = SiteMediaViewController()
             presenter.navigationController?.pushViewController(controller, animated: true)
         }
 

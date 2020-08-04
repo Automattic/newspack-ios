@@ -86,7 +86,7 @@
 		E62C7C692235E73F000FEB33 /* AccountStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */; };
 		E62C7C6C2235F061000FEB33 /* AuthenticationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */; };
 		E632F9A123515116003737BF /* SiteMediaDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E632F9A023515116003737BF /* SiteMediaDataSource.swift */; };
-		E6343ADF23A077C80033D369 /* MediaSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6343ADE23A077C80033D369 /* MediaSelectViewController.swift */; };
+		E6343ADF23A077C80033D369 /* SiteMediaSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6343ADE23A077C80033D369 /* SiteMediaSelectViewController.swift */; };
 		E636C260234FBACC00564B63 /* MediaItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C25F234FBACC00564B63 /* MediaItemStore.swift */; };
 		E636C262234FBE6800564B63 /* RemoteMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C261234FBE6800564B63 /* RemoteMedia.swift */; };
 		E636C264234FD16F00564B63 /* MediaApiActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C263234FD16F00564B63 /* MediaApiActions.swift */; };
@@ -203,7 +203,7 @@
 		E6BA1322243F9D1E00635A8A /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */; };
 		E6C3988C24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C3988B24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift */; };
 		E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE56AE22B19001004895E5 /* ModelFactory.swift */; };
-		E6D44DEC234BC56C00B51438 /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEB234BC56C00B51438 /* MediaViewController.swift */; };
+		E6D44DEC234BC56C00B51438 /* SiteMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEB234BC56C00B51438 /* SiteMediaViewController.swift */; };
 		E6D44DEF234BDB8400B51438 /* MediaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEE234BDB8400B51438 /* MediaStore.swift */; };
 		E6D44DF1234BDBA000B51438 /* MediaApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF0234BDBA000B51438 /* MediaApiService.swift */; };
 		E6D44DF3234BDBB500B51438 /* MediaServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */; };
@@ -339,7 +339,7 @@
 		E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStoreTests.swift; sourceTree = "<group>"; };
 		E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManagerTests.swift; sourceTree = "<group>"; };
 		E632F9A023515116003737BF /* SiteMediaDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMediaDataSource.swift; sourceTree = "<group>"; };
-		E6343ADE23A077C80033D369 /* MediaSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaSelectViewController.swift; sourceTree = "<group>"; };
+		E6343ADE23A077C80033D369 /* SiteMediaSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMediaSelectViewController.swift; sourceTree = "<group>"; };
 		E636C25F234FBACC00564B63 /* MediaItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemStore.swift; sourceTree = "<group>"; };
 		E636C261234FBE6800564B63 /* RemoteMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteMedia.swift; sourceTree = "<group>"; };
 		E636C263234FD16F00564B63 /* MediaApiActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaApiActions.swift; sourceTree = "<group>"; };
@@ -459,7 +459,7 @@
 		E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewController.swift; sourceTree = "<group>"; };
 		E6C3988B24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Newspack.swift"; sourceTree = "<group>"; };
 		E6CE56AE22B19001004895E5 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
-		E6D44DEB234BC56C00B51438 /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
+		E6D44DEB234BC56C00B51438 /* SiteMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMediaViewController.swift; sourceTree = "<group>"; };
 		E6D44DEE234BDB8400B51438 /* MediaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStore.swift; sourceTree = "<group>"; };
 		E6D44DF0234BDBA000B51438 /* MediaApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaApiService.swift; sourceTree = "<group>"; };
 		E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceRemote.swift; sourceTree = "<group>"; };
@@ -802,18 +802,18 @@
 				E68689BF243C080400B7E363 /* FoldersViewController.swift */,
 				E684089F24D0D0ED00C36AB9 /* FolderViewController.swift */,
 				E66E85A024CFA1010056E8AB /* StoryNavigationController.swift */,
-				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
+				E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */,
+				E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */,
+				E65469F824C7A1950083FAA5 /* WebViewController.swift */,
 				E62982292303667E00E8CEC7 /* EditorViewController.swift */,
 				E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */,
 				E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */,
 				E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */,
-				E6D44DEB234BC56C00B51438 /* MediaViewController.swift */,
-				E6343ADE23A077C80033D369 /* MediaSelectViewController.swift */,
-				E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */,
+				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
+				E6D44DEB234BC56C00B51438 /* SiteMediaViewController.swift */,
+				E6343ADE23A077C80033D369 /* SiteMediaSelectViewController.swift */,
 				E632F9A023515116003737BF /* SiteMediaDataSource.swift */,
-				E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */,
 				E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */,
-				E65469F824C7A1950083FAA5 /* WebViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1382,14 +1382,14 @@
 				E63EECD9234289F700669FFC /* SiteApiService.swift in Sources */,
 				E6A4D743230A08A700929376 /* StagedEdits+CoreDataClass.swift in Sources */,
 				E602E69222C1666C00795CBA /* AccountAction.swift in Sources */,
-				E6D44DEC234BC56C00B51438 /* MediaViewController.swift in Sources */,
+				E6D44DEC234BC56C00B51438 /* SiteMediaViewController.swift in Sources */,
 				E67B9D61236775FC00860A6C /* MediaCache+CoreDataProperties.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E66CCA192303527D00F1CA59 /* Media+CoreDataProperties.swift in Sources */,
 				E66CCA1E2303527D00F1CA59 /* Status+CoreDataClass.swift in Sources */,
 				E6051DEC23075A3A005AAF0B /* Dictionary+Merge.swift in Sources */,
 				E677AAEB24B3C954000FAA3D /* AssetStore.swift in Sources */,
-				E6343ADF23A077C80033D369 /* MediaSelectViewController.swift in Sources */,
+				E6343ADF23A077C80033D369 /* SiteMediaSelectViewController.swift in Sources */,
 				E69634102440C1C400D906E0 /* UITableViewCell+Helpers.swift in Sources */,
 				E61BBD6822FA0470008A6D4C /* StartupHelper.swift in Sources */,
 				E636C26C234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift in Sources */,

@@ -2,7 +2,7 @@ import Foundation
 import Gutenberg
 import WPMediaPicker
 
-class MediaSelectViewController: MediaViewController {
+class SiteMediaSelectViewController: SiteMediaViewController {
 
     let editorCallback: MediaPickerDidPickMediaCallback
 

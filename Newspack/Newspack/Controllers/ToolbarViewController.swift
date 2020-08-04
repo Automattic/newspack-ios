@@ -66,11 +66,11 @@ extension ToolbarViewController {
         // Configure camera capture.
         let presenter = WPMediaCapturePresenter(presenting: self)
         presenter.mediaType = [.image, .video]
-        presenter.completionBlock = { media in
-            guard let media = media else {
+        presenter.completionBlock = { mediaInfo in
+            guard let media = mediaInfo else {
                 return
             }
-            print(media.description)
+            self.processCapturedMedia(mediaInfo: media)
         }
 
         presenter.presentCapture()
@@ -88,11 +88,25 @@ extension ToolbarViewController: WPMediaPickerViewControllerDelegate {
 
     func mediaPickerController(_ picker: WPMediaPickerViewController, didFinishPicking assets: [WPMediaAsset]) {
         dismiss(animated: true, completion: nil)
-        print(assets.description)
+        processSelectedAssets(assets: assets)
     }
 
     func mediaPickerControllerDidCancel(_ picker: WPMediaPickerViewController) {
         dismiss(animated: true, completion: nil)
+    }
+
+}
+
+// MARK - Image asset processing
+
+extension ToolbarViewController {
+
+    func processSelectedAssets(assets: [WPMediaAsset]) {
+        print(assets.description)
+    }
+
+    func processCapturedMedia(mediaInfo: [AnyHashable: Any]) {
+        print(mediaInfo.description)
     }
 
 }
