@@ -803,7 +803,6 @@
 				E68689BF243C080400B7E363 /* FoldersViewController.swift */,
 				E684089F24D0D0ED00C36AB9 /* FolderViewController.swift */,
 				E66E85A024CFA1010056E8AB /* StoryNavigationController.swift */,
-				E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */,
 				E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */,
 				E65469F824C7A1950083FAA5 /* WebViewController.swift */,
 			);
@@ -1005,6 +1004,7 @@
 				E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */,
 				E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */,
 				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
+				E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */,
 				E6D44DEB234BC56C00B51438 /* SiteMediaViewController.swift */,
 				E6343ADE23A077C80033D369 /* SiteMediaSelectViewController.swift */,
 				E632F9A023515116003737BF /* SiteMediaDataSource.swift */,
