@@ -791,6 +791,7 @@
 		E6138FFE22120467004E5B91 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E6D605A524D9B24E00A09920 /* Archive */,
 				E6710A1522CE9ED00036156E /* Transitions */,
 				E6AC98B723CCD5DE00E95381 /* MainNavController.swift */,
 				E6138FD32211FE86004E5B91 /* InitialViewController.swift */,
@@ -805,15 +806,6 @@
 				E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */,
 				E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */,
 				E65469F824C7A1950083FAA5 /* WebViewController.swift */,
-				E62982292303667E00E8CEC7 /* EditorViewController.swift */,
-				E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */,
-				E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */,
-				E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */,
-				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
-				E6D44DEB234BC56C00B51438 /* SiteMediaViewController.swift */,
-				E6343ADE23A077C80033D369 /* SiteMediaSelectViewController.swift */,
-				E632F9A023515116003737BF /* SiteMediaDataSource.swift */,
-				E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1003,6 +995,22 @@
 				E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */,
 			);
 			path = SystemTests;
+			sourceTree = "<group>";
+		};
+		E6D605A524D9B24E00A09920 /* Archive */ = {
+			isa = PBXGroup;
+			children = (
+				E62982292303667E00E8CEC7 /* EditorViewController.swift */,
+				E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */,
+				E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */,
+				E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */,
+				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
+				E6D44DEB234BC56C00B51438 /* SiteMediaViewController.swift */,
+				E6343ADE23A077C80033D369 /* SiteMediaSelectViewController.swift */,
+				E632F9A023515116003737BF /* SiteMediaDataSource.swift */,
+				E6871F1822C3FD8A008D3D46 /* SiteMenuViewController.swift */,
+			);
+			path = Archive;
 			sourceTree = "<group>";
 		};
 		E6DCB05024AE3BBF00C4FD01 /* Utils */ = {
