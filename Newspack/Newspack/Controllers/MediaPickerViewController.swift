@@ -28,7 +28,12 @@ class MediaPickerViewController: WPNavigationMediaPickerViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // TODO: Apply styles?
+
+        configureStyle()
+    }
+
+    func configureStyle() {
+        UICollectionView.appearance(whenContainedInInstancesOf: [WPNavigationMediaPickerViewController.self]).backgroundColor = .systemBackground
     }
 }
 
