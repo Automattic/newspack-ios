@@ -17,6 +17,9 @@ class ToolbarViewController: UIViewController {
     @IBOutlet var cameraButton: UIBarButtonItem!
     @IBOutlet var audioNoteButton: UIBarButtonItem!
 
+    // Storage for a capture controller while it is needed.
+    var captureController: MediaCaptureController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureToolbar()
@@ -47,66 +50,23 @@ extension ToolbarViewController {
     }
 
     @IBAction func handlePhotoButton(sender: UIBarButtonItem) {
-        // Configure media picker for photos.
-        let options = WPMediaPickerOptions()
-        let picker = WPNavigationMediaPickerViewController(options: options)
-        picker.delegate = self
-        picker.dataSource = WPPHAssetDataSource.sharedInstance()
-        picker.selectionActionTitle = NSLocalizedString("Select", comment: "Verb. Title of a control that selects a set of images.")
-
+        let picker = MediaPickerViewController()
         navigationController?.present(picker, animated: true, completion: nil)
     }
 
     @IBAction func handleCameraButton(sender: UIBarButtonItem) {
-        guard WPMediaCapturePresenter.isCaptureAvailable() else {
+        guard MediaCaptureController.isCaptureAvailable() else {
             // TODO: Show alert that the camera is not available.
             return
         }
 
-        // Configure camera capture.
-        let presenter = WPMediaCapturePresenter(presenting: self)
-        presenter.mediaType = [.image, .video]
-        presenter.completionBlock = { mediaInfo in
-            guard let media = mediaInfo else {
-                return
-            }
-            self.processCapturedMedia(mediaInfo: media)
-        }
-
-        presenter.presentCapture()
+        captureController = MediaCaptureController(presenting: self, onComplete: { [weak self] in
+            self?.captureController = nil
+        })
     }
 
     @IBAction func handleAudioNoteButton(sender: UIBarButtonItem) {
         LogDebug(message: "tapped \(sender.description)")
-    }
-
-}
-
-// MARK: - MediaPicker related
-
-extension ToolbarViewController: WPMediaPickerViewControllerDelegate {
-
-    func mediaPickerController(_ picker: WPMediaPickerViewController, didFinishPicking assets: [WPMediaAsset]) {
-        dismiss(animated: true, completion: nil)
-        processSelectedAssets(assets: assets)
-    }
-
-    func mediaPickerControllerDidCancel(_ picker: WPMediaPickerViewController) {
-        dismiss(animated: true, completion: nil)
-    }
-
-}
-
-// MARK - Image asset processing
-
-extension ToolbarViewController {
-
-    func processSelectedAssets(assets: [WPMediaAsset]) {
-        print(assets.description)
-    }
-
-    func processCapturedMedia(mediaInfo: [AnyHashable: Any]) {
-        print(mediaInfo.description)
     }
 
 }

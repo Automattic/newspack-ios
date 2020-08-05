@@ -1,5 +1,6 @@
 import Foundation
 import CoreData
+import Photos
 import WordPressFlux
 
 /// Responsible for managing asset related things.
@@ -71,12 +72,16 @@ class AssetStore: Store {
                 createAssetFor(text: text)
             case .deleteAsset(let uuid):
                 deleteAsset(assetID: uuid)
+            case .importMedia(let assets):
+                importMedia(assets: assets)
+                break
             }
         }
     }
 }
 
 // MARK: - Actions
+
 extension AssetStore {
 
     /// Update the sort rules for story assets returned by the stores results controller.
@@ -264,6 +269,24 @@ extension AssetStore {
             CoreDataManager.shared.saveContext(context: context)
         }
     }
+
+    /// Import the array of PHAssets from PHotoKit to the current StoryFolder
+    ///
+    /// - Parameter assets: An array of PHAsset instances.
+    ///
+    func importMedia(assets: [PHAsset]) {
+        guard
+            let storyFolder = StoreContainer.shared.folderStore.currentStoryFolder,
+            let url = SessionManager.shared.folderManager.urlFromBookmark(bookmark: storyFolder.bookmark)
+        else {
+            LogError(message: "Unable to determine current folder path.")
+            return
+        }
+
+        let importer = try? MediaImporter(destination: url)
+        importer?.importAssets(assets: assets)
+    }
+
 }
 
 extension AssetStore {

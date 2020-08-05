@@ -175,6 +175,8 @@
 		E690D57223722BB700676B1D /* PhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */; };
 		E692CA9F24CA2E6D008FB96B /* EventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E692CA9E24CA2E6D008FB96B /* EventMonitor.swift */; };
 		E694469C24D9FB0100D0BF56 /* MediaImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E694469B24D9FB0100D0BF56 /* MediaImporter.swift */; };
+		E694469E24DB3FA100D0BF56 /* MediaCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E694469D24DB3FA100D0BF56 /* MediaCaptureController.swift */; };
+		E69446A024DB3FB100D0BF56 /* MediaPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E694469F24DB3FB100D0BF56 /* MediaPickerViewController.swift */; };
 		E695A7E6244FD686007B29BB /* StoryFolder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E695A7E2244FD686007B29BB /* StoryFolder+CoreDataProperties.swift */; };
 		E695A7E7244FD686007B29BB /* StoryAsset+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E695A7E3244FD686007B29BB /* StoryAsset+CoreDataProperties.swift */; };
 		E695A7E8244FD686007B29BB /* StoryFolder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E695A7E4244FD686007B29BB /* StoryFolder+CoreDataClass.swift */; };
@@ -432,6 +434,8 @@
 		E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryViewController.swift; sourceTree = "<group>"; };
 		E692CA9E24CA2E6D008FB96B /* EventMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventMonitor.swift; sourceTree = "<group>"; };
 		E694469B24D9FB0100D0BF56 /* MediaImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaImporter.swift; sourceTree = "<group>"; };
+		E694469D24DB3FA100D0BF56 /* MediaCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCaptureController.swift; sourceTree = "<group>"; };
+		E694469F24DB3FB100D0BF56 /* MediaPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPickerViewController.swift; sourceTree = "<group>"; };
 		E695A7E2244FD686007B29BB /* StoryFolder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoryFolder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E695A7E3244FD686007B29BB /* StoryAsset+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoryAsset+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E695A7E4244FD686007B29BB /* StoryFolder+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoryFolder+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -807,6 +811,8 @@
 				E66E85A024CFA1010056E8AB /* StoryNavigationController.swift */,
 				E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */,
 				E65469F824C7A1950083FAA5 /* WebViewController.swift */,
+				E694469D24DB3FA100D0BF56 /* MediaCaptureController.swift */,
+				E694469F24DB3FB100D0BF56 /* MediaPickerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1473,6 +1479,7 @@
 				E66CCA132303527C00F1CA59 /* Status+CoreDataProperties.swift in Sources */,
 				E605418F2369E1920078D978 /* Diagnostics.swift in Sources */,
 				E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */,
+				E69446A024DB3FB100D0BF56 /* MediaPickerViewController.swift in Sources */,
 				E640D27823883ED800887FD9 /* StagedMediaImporter.swift in Sources */,
 				E61D8F6C2375EC3E005FECED /* StagedMediaStore.swift in Sources */,
 				E66CCA0D2303527C00F1CA59 /* Site+CoreDataProperties.swift in Sources */,
@@ -1487,6 +1494,7 @@
 				E636C262234FBE6800564B63 /* RemoteMedia.swift in Sources */,
 				E6DF5575242E7139007DDC47 /* FolderManager.swift in Sources */,
 				E6D44DF1234BDBA000B51438 /* MediaApiService.swift in Sources */,
+				E694469E24DB3FA100D0BF56 /* MediaCaptureController.swift in Sources */,
 				E66CCA0C2303527C00F1CA59 /* Media+CoreDataClass.swift in Sources */,
 				E692CA9F24CA2E6D008FB96B /* EventMonitor.swift in Sources */,
 				E677AAED24B4EED9000FAA3D /* AssetAction.swift in Sources */,
