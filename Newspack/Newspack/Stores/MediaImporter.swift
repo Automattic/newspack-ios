@@ -204,11 +204,37 @@ extension MediaImporter {
         }
 
         let image = prepareImage(image: originalImage)
-        let fileURL = directoryPath.appendingPathComponent(UUID().uuidString).appendingPathExtension(originalFileURL.pathExtension)
+        let fileURL = importURLForOriginalURL(originalURL: originalFileURL)
 
         try writeImage(image: image, withUTI: uti, toFile: fileURL)
 
         return fileURL
+    }
+
+    /// Find a usable import URL for the original URL. If a file already exists
+    /// at a candidate URL, a numeric suffix is added. The suffix will be
+    /// incremented until an available filename is found.
+    ///
+    /// - Parameter originalURL: The original file URL.
+    /// - Returns: An available URL for an imported asset.
+    ///
+    func importURLForOriginalURL(originalURL: URL) -> URL {
+        let fileManager = FileManager()
+
+        var candidateURL = directoryPath.appendingPathComponent(originalURL.lastPathComponent)
+        guard fileManager.fileExists(atPath: candidateURL.path) else {
+            return candidateURL
+        }
+
+        let filename = originalURL.lastPathComponent.components(separatedBy: ".").first!
+        var counter = 1
+        repeat {
+            let path = "\(filename)-\(counter).\(originalURL.pathExtension)"
+            candidateURL = directoryPath.appendingPathComponent(path)
+            counter = counter + 1
+        } while fileManager.fileExists(atPath: candidateURL.path)
+
+        return candidateURL
     }
 
     /// Create a new image file from the provided CIImage at the specified location.
