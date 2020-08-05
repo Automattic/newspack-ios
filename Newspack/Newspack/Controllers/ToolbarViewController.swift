@@ -63,6 +63,7 @@ extension ToolbarViewController {
         captureController = MediaCaptureController(presenting: self, onComplete: { [weak self] in
             self?.captureController = nil
         })
+        captureController?.presentCapture()
     }
 
     @IBAction func handleAudioNoteButton(sender: UIBarButtonItem) {
