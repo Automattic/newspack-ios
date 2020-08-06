@@ -244,24 +244,25 @@ extension MediaImporter {
     /// - Parameter fileURL: The location to save the file.
     ///
     func writeImage(image: CIImage, withUTI uti: String, toFile fileURL: URL) throws {
-        if uti == Constants.utiJPG {
-            try writeJPGImage(image: image, toFile: fileURL)
+        switch uti {
+            case Constants.utiJPG:
+                try writeJPGImage(image: image, toFile: fileURL)
 
-        } else if uti == Constants.utiPNG {
-            try writePNGImage(image: image, fileURL: fileURL)
+            case Constants.utiPNG:
+                try writePNGImage(image: image, fileURL: fileURL)
 
-        } else if uti == Constants.utiLivePhoto {
-            // Needs special handling. TBD
+            case Constants.utiLivePhoto:
+                // Needs special handling. TBD
+                break
+            case Constants.utiGIF:
+                // Needs special handling. TBD
+                break
+            case Constants.utiHEIC:
+                try writeHEICImage(image: image, fileURL: fileURL)
 
-        } else if uti == Constants.utiGIF {
-            // Needs special handling. TBD
-
-        } else if uti == Constants.utiHEIC {
-            try writeHEICImage(image: image, fileURL: fileURL)
-
-        } else {
-            // Treat as JPG
-            try writeJPGImage(image: image, toFile: fileURL)
+            default:
+                // Treat as JPG
+                try writeJPGImage(image: image, toFile: fileURL)
         }
     }
 
