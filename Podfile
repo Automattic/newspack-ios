@@ -77,7 +77,7 @@ target 'Newspack' do
 
     pod 'WordPressAuthenticator', '~> 1.21.0'
     pod 'WordPressKit', '~> 4.13.0'
-    pod 'WPMediaPicker', '~> 1.6.0'
+    pod 'WPMediaPicker', '~> 1.7.0'
     pod 'WordPressFlux', '1.0.0'
     pod 'WordPressUI', '~> 1.7.0'
     pod 'WordPress-Editor-iOS', '~> 1.13.0' # A gutenberg dependency.z

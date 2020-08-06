@@ -1,7 +1,7 @@
 import UIKit
 import WPMediaPicker
 
-class MediaViewController: WPMediaPickerViewController {
+class SiteMediaViewController: WPMediaPickerViewController {
 
     let mediaDataSource = SiteMediaDataSource()
 
@@ -18,7 +18,7 @@ class MediaViewController: WPMediaPickerViewController {
     }
 
     init() {
-        super.init(options: MediaViewController.pickerOptions())
+        super.init(options: SiteMediaViewController.pickerOptions())
 
         self.mediaPickerDelegate = self
         self.dataSource = mediaDataSource
@@ -61,7 +61,7 @@ class MediaViewController: WPMediaPickerViewController {
     }
 }
 
-extension MediaViewController: WPMediaPickerViewControllerDelegate {
+extension SiteMediaViewController: WPMediaPickerViewControllerDelegate {
     func mediaPickerController(_ picker: WPMediaPickerViewController, didFinishPicking assets: [WPMediaAsset]) {
         guard let asset = assets.first as? MediaAsset else {
             return

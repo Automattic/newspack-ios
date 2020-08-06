@@ -227,7 +227,7 @@
                                     <constraint firstItem="PfQ-Pm-Ra2" firstAttribute="centerY" secondItem="E9o-Tv-ax7" secondAttribute="centerY" id="zeq-NR-Zf8"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DE7-1p-iKS">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DE7-1p-iKS">
                                 <rect key="frame" x="0.0" y="45" width="375" height="529"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="FolderCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FolderCell" id="8Pc-C0-8g3" customClass="FolderCell" customModule="Newspack" customModuleProvider="target">
@@ -258,25 +258,25 @@
                         <viewLayoutGuide key="safeArea" id="Ppq-kB-bNS"/>
                     </view>
                     <toolbarItems>
-                        <barButtonItem title="Item" image="posts" id="YXs-K9-y6Z">
+                        <barButtonItem title="Text Note" image="posts" id="YXs-K9-y6Z">
                             <connections>
                                 <action selector="handleTextNoteButtonWithSender:" destination="HoW-Ma-W9C" id="uo1-Bf-hDU"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="yz5-cB-IPh"/>
-                        <barButtonItem title="Item" image="image-multiple" id="CDY-v8-QbT">
+                        <barButtonItem title="Photos" image="image-multiple" id="CDY-v8-QbT">
                             <connections>
                                 <action selector="handlePhotoButtonWithSender:" destination="HoW-Ma-W9C" id="T9T-cL-Jd7"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="uZF-dx-aBe"/>
-                        <barButtonItem title="Item" image="video" id="PMa-Ad-aM0">
+                        <barButtonItem title="Camera" image="camera" id="PMa-Ad-aM0">
                             <connections>
-                                <action selector="handleVideoButtonWithSender:" destination="HoW-Ma-W9C" id="0JT-na-hBx"/>
+                                <action selector="handleCameraButtonWithSender:" destination="HoW-Ma-W9C" id="Cu9-L5-V56"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="fGN-o6-DsB"/>
-                        <barButtonItem title="Item" image="microphone" id="EVv-Df-1uE">
+                        <barButtonItem title="Audio Note" image="microphone" id="EVv-Df-1uE">
                             <connections>
                                 <action selector="handleAudioNoteButtonWithSender:" destination="HoW-Ma-W9C" id="ycQ-az-umX"/>
                             </connections>
@@ -298,12 +298,12 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="audioNoteButton" destination="EVv-Df-1uE" id="IWr-Ow-uGO"/>
+                        <outlet property="cameraButton" destination="PMa-Ad-aM0" id="2dm-WD-5Md"/>
                         <outlet property="directionButton" destination="PfQ-Pm-Ra2" id="9Pi-ob-YAD"/>
                         <outlet property="photoButton" destination="CDY-v8-QbT" id="KbD-Bv-oUP"/>
                         <outlet property="sortControl" destination="M20-Ij-iSu" id="RXf-Yn-Hbq"/>
                         <outlet property="tableView" destination="DE7-1p-iKS" id="rma-Rg-3tp"/>
                         <outlet property="textNoteButton" destination="YXs-K9-y6Z" id="aAz-p7-Ftk"/>
-                        <outlet property="videoButton" destination="PMa-Ad-aM0" id="AI9-g5-1RI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GUw-mL-IDK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -352,7 +352,7 @@
                                     <constraint firstItem="AMB-nt-ccw" firstAttribute="leading" secondItem="4KS-uW-XyS" secondAttribute="leading" id="ymL-Fz-Nj1"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="IC9-M0-AO4">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="IC9-M0-AO4">
                                 <rect key="frame" x="0.0" y="45" width="375" height="529"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
@@ -400,25 +400,25 @@
                         <viewLayoutGuide key="safeArea" id="WK3-Qr-Vcx"/>
                     </view>
                     <toolbarItems>
-                        <barButtonItem title="Item" image="posts" id="I7i-cV-h16">
+                        <barButtonItem title="Text Note" image="posts" id="I7i-cV-h16">
                             <connections>
                                 <action selector="handleTextNoteButtonWithSender:" destination="NWk-Co-Z8t" id="Nek-rD-dKx"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="ooB-Tp-2HQ"/>
-                        <barButtonItem title="Item" image="image-multiple" id="fcy-JG-eKM">
+                        <barButtonItem title="Photos" image="image-multiple" id="fcy-JG-eKM">
                             <connections>
                                 <action selector="handlePhotoButtonWithSender:" destination="NWk-Co-Z8t" id="1YQ-KO-iJG"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="gCW-ke-f2d"/>
-                        <barButtonItem title="Item" image="video" id="QOd-iL-h26">
+                        <barButtonItem title="Camera" image="camera" id="QOd-iL-h26">
                             <connections>
-                                <action selector="handleVideoButtonWithSender:" destination="NWk-Co-Z8t" id="Pe0-eK-IU9"/>
+                                <action selector="handleCameraButtonWithSender:" destination="NWk-Co-Z8t" id="GTJ-nK-c5b"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="5ql-PT-64F"/>
-                        <barButtonItem title="Item" image="microphone" id="GnL-gZ-eCi">
+                        <barButtonItem title="Audio Note" image="microphone" id="GnL-gZ-eCi">
                             <connections>
                                 <action selector="handleAudioNoteButtonWithSender:" destination="NWk-Co-Z8t" id="qPU-EK-zxk"/>
                             </connections>
@@ -426,7 +426,7 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Assets" id="YtF-a8-687">
                         <rightBarButtonItems>
-                            <barButtonItem title="Item" image="sync" largeContentSizeImage="sync" id="YoR-aT-oGj">
+                            <barButtonItem image="cloud-upload" largeContentSizeImage="cloud-upload" id="YoR-aT-oGj">
                                 <connections>
                                     <action selector="handleSyncTappedWithSender:" destination="NWk-Co-Z8t" id="gLL-2i-pfm"/>
                                 </connections>
@@ -442,13 +442,13 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="audioNoteButton" destination="GnL-gZ-eCi" id="RlS-n1-NlY"/>
+                        <outlet property="cameraButton" destination="QOd-iL-h26" id="Vak-vA-3Ie"/>
                         <outlet property="editButton" destination="7ng-Vi-nSB" id="Kcj-ya-LdH"/>
                         <outlet property="photoButton" destination="fcy-JG-eKM" id="Ctf-YY-KUS"/>
                         <outlet property="sortControl" destination="iLK-I6-MuO" id="aAT-mL-p5F"/>
                         <outlet property="syncButton" destination="YoR-aT-oGj" id="IqL-DZ-n6V"/>
                         <outlet property="tableView" destination="IC9-M0-AO4" id="7tv-iN-yXH"/>
                         <outlet property="textNoteButton" destination="I7i-cV-h16" id="Izx-j7-0Rf"/>
-                        <outlet property="videoButton" destination="QOd-iL-h26" id="sLn-BN-7DO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rPD-5z-GAP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -625,7 +625,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7f8-9p-9lu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="292" y="149"/>
+            <point key="canvasLocation" x="964" y="798"/>
         </scene>
         <!--Posts-->
         <scene sceneID="ypd-wT-HGz">
@@ -666,7 +666,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ATV-Ck-5iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="964" y="149"/>
+            <point key="canvasLocation" x="1641" y="798"/>
         </scene>
         <!--Edit-->
         <scene sceneID="euE-WE-sAy">
@@ -698,7 +698,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WKJ-qY-5tg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1641" y="149"/>
+            <point key="canvasLocation" x="2313" y="797"/>
         </scene>
         <!--Media Detail View Controller-->
         <scene sceneID="DAV-IO-aSm">
@@ -734,9 +734,11 @@
     <color key="tintColor" name="NewspackBlue"/>
     <resources>
         <image name="Icon" width="32" height="32"/>
+        <image name="camera" width="24" height="24"/>
         <image name="chevron-down" width="24" height="24"/>
         <image name="chevron-left" width="24" height="24"/>
         <image name="chevron-right" width="24" height="24"/>
+        <image name="cloud-upload" width="24" height="24"/>
         <image name="create folder" width="128" height="128"/>
         <image name="cross" width="24" height="24"/>
         <image name="image-multiple" width="24" height="24"/>
@@ -747,8 +749,6 @@
         <image name="refresh" width="24" height="24"/>
         <image name="safari" catalog="system" width="128" height="121"/>
         <image name="share-ios" width="24" height="24"/>
-        <image name="sync" width="24" height="24"/>
-        <image name="video" width="24" height="24"/>
         <namedColor name="NewspackBlue">
             <color red="0.20000000000000001" green="0.40000000000000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

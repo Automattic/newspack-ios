@@ -146,7 +146,7 @@ extension EditorViewController: GutenbergBridgeDelegate {
 
     func gutenbergDidRequestMedia(from source: Gutenberg.MediaSource, filter: [Gutenberg.MediaType], allowMultipleSelection: Bool, with callback: @escaping MediaPickerDidPickMediaCallback) {
         // Present media picker with call back to handle selected media.
-        let controller = MediaSelectViewController(callback: callback)
+        let controller = SiteMediaSelectViewController(callback: callback)
         navigationController?.pushViewController(controller, animated: true)
     }
 
