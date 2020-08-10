@@ -176,6 +176,7 @@ extension MenuDataSource {
         let action = AccountAction.removeAccount(uuid: account.uuid)
         SessionManager.shared.sessionDispatcher.dispatch(action)
         Notification.send(.logoutTapped)
+        NotificationCenter.default.post(name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
     }
 
     func showAbout() {
