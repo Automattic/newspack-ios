@@ -149,6 +149,7 @@ extension MainNavController: UINavigationControllerDelegate {
         if state == .uninitialized && viewController is InitialViewController {
             authenticationManager = AuthenticationManager()
             authenticationManager?.showAuthenticator(controller: self)
+            return
         }
 
         if state == .initialized {
