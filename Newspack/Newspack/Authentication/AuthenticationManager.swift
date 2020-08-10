@@ -46,7 +46,7 @@ class AuthenticationManager {
                                                 secondaryHighlightBorderColor: .secondaryButtonDownBorder,
                                                 disabledBackgroundColor: .textInverted,
                                                 disabledBorderColor: .neutral(.shade10),
-                                                primaryTitleColor: .neutral(.shade90),
+                                                primaryTitleColor: .white,
                                                 secondaryTitleColor: .text,
                                                 disabledTitleColor: .neutral(.shade20),
                                                 textButtonColor: .primary,
