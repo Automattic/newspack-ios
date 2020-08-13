@@ -28,7 +28,7 @@
         <attribute name="username" attributeType="String"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="details" inverseEntity="Account"/>
     </entity>
-    <entity name="AttachmentInfo" representedClassName="AttachmentInfo" syncable="YES" codeGenerationType="class">
+    <entity name="AttachmentInfo" representedClassName="AttachmentInfo" syncable="YES">
         <attribute name="altText" attributeType="String" defaultValueString=""/>
         <attribute name="attachmentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="caption" attributeType="String" defaultValueString=""/>
