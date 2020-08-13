@@ -38,6 +38,15 @@ class MediaImporter {
     /// Staging array for PHAssets to import.
     private var assets = [PHAsset]()
 
+    /// Container dictionary. Imported asset identifiers are keys and their fileURLs are values.
+    private var imported = [String: URL]()
+
+    /// Container dictionary. Errored asset identifiers are keys and their errors are values.
+    private var errors = [String: Error]()
+
+    /// Callback executed when importing is complete.
+    private var completionHandler: (( [String: URL], [String: Error] ) -> Void)?
+
     /// Designated initializer.
     ///
     /// - Parameter destination: A file URL pointing to the existing intended
@@ -53,10 +62,13 @@ class MediaImporter {
 
     /// Begins importing the specified assets.
     ///
-    /// - Parameter assets: An array of PHAssets to copy to the destination directory.
+    /// - Parameters:
+    ///   - assets: An array of PHAssets to copy to the destination directory.
+    ///   - onComplete: An optional completion handler.
     ///
-    func importAssets(assets: [PHAsset]) {
+    func importAssets(assets: [PHAsset], onComplete: (([String: URL], [String: Error]) -> Void)?) {
         self.assets.append(contentsOf: assets)
+        completionHandler = onComplete
         importNext()
     }
 
@@ -80,7 +92,8 @@ extension MediaImporter {
         }
 
         guard assets.count > 0 else {
-            // No PHAssets to processs.
+            // No more PHAssets to processs.
+            completionHandler?(imported, errors)
             return
         }
 
@@ -90,12 +103,16 @@ extension MediaImporter {
         currentImportID = asset.identifier()
 
         importAsset(asset: asset) { [weak self] (asset, fileURL, filename, mimeType, error) in
-            if let error = error {
-                LogError(message: "Error importing asset: \(error)")
-                // TODO: handle error.
-                // If networking, we can just abort.
-                return
+            if let fileURL = fileURL {
+                self?.imported[asset.identifier()] = fileURL
             }
+
+            if let error = error {
+                // Log the error and continue.
+                LogError(message: "Error importing asset: \(error)")
+                self?.errors[asset.identifier()] = error
+            }
+
             self?.currentImportID = nil
             self?.importNext()
         }
