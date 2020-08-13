@@ -28,5 +28,5 @@ extension StoryAsset {
     @NSManaged public var text: String?
     @NSManaged public var sorted: Bool
     @NSManaged public var folder: StoryFolder!
-
+    @NSManaged public var attachmentInfo: AttachmentInfo?
 }
