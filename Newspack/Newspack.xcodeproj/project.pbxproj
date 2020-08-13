@@ -122,11 +122,16 @@
 		E65875A823A811F100185C75 /* MediaItemStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A723A811F100185C75 /* MediaItemStoreTests.swift */; };
 		E65875AA23A8139500185C75 /* StagedMediaImporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */; };
 		E65875AC23A813EA00185C75 /* StagedMediaStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875AB23A813EA00185C75 /* StagedMediaStoreTests.swift */; };
-		E65F1A2C24E5DBED00C9D04E /* StoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A2B24E5DBED00C9D04E /* StoryTableViewCell.swift */; };
-		E65F1A2E24E5DC0000C9D04E /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A2D24E5DC0000C9D04E /* PhotoTableViewCell.swift */; };
-		E65F1A3024E5DC0C00C9D04E /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A2F24E5DC0C00C9D04E /* VideoTableViewCell.swift */; };
-		E65F1A3224E5DC1A00C9D04E /* TextNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A3124E5DC1A00C9D04E /* TextNoteTableViewCell.swift */; };
-		E65F1A3424E5DC2800C9D04E /* AudioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A3324E5DC2800C9D04E /* AudioTableViewCell.swift */; };
+		E65F1A3724E5DCFA00C9D04E /* StoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A3524E5DCFA00C9D04E /* StoryTableViewCell.swift */; };
+		E65F1A3824E5DCFA00C9D04E /* StoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65F1A3624E5DCFA00C9D04E /* StoryTableViewCell.xib */; };
+		E65F1A3B24E5DD2900C9D04E /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A3924E5DD2900C9D04E /* PhotoTableViewCell.swift */; };
+		E65F1A3C24E5DD2900C9D04E /* PhotoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65F1A3A24E5DD2900C9D04E /* PhotoTableViewCell.xib */; };
+		E65F1A3F24E5DD4300C9D04E /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A3D24E5DD4300C9D04E /* VideoTableViewCell.swift */; };
+		E65F1A4024E5DD4300C9D04E /* VideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65F1A3E24E5DD4300C9D04E /* VideoTableViewCell.xib */; };
+		E65F1A4324E5DD5700C9D04E /* TextNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A4124E5DD5700C9D04E /* TextNoteTableViewCell.swift */; };
+		E65F1A4424E5DD5700C9D04E /* TextNoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65F1A4224E5DD5700C9D04E /* TextNoteTableViewCell.xib */; };
+		E65F1A4724E5DD7600C9D04E /* AudioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A4524E5DD7600C9D04E /* AudioTableViewCell.swift */; };
+		E65F1A4824E5DD7600C9D04E /* AudioTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65F1A4624E5DD7600C9D04E /* AudioTableViewCell.xib */; };
 		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
 		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
 		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
@@ -383,11 +388,16 @@
 		E65875A723A811F100185C75 /* MediaItemStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemStoreTests.swift; sourceTree = "<group>"; };
 		E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedMediaImporterTests.swift; sourceTree = "<group>"; };
 		E65875AB23A813EA00185C75 /* StagedMediaStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedMediaStoreTests.swift; sourceTree = "<group>"; };
-		E65F1A2B24E5DBED00C9D04E /* StoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTableViewCell.swift; sourceTree = "<group>"; };
-		E65F1A2D24E5DC0000C9D04E /* PhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell.swift; sourceTree = "<group>"; };
-		E65F1A2F24E5DC0C00C9D04E /* VideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTableViewCell.swift; sourceTree = "<group>"; };
-		E65F1A3124E5DC1A00C9D04E /* TextNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextNoteTableViewCell.swift; sourceTree = "<group>"; };
-		E65F1A3324E5DC2800C9D04E /* AudioTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTableViewCell.swift; sourceTree = "<group>"; };
+		E65F1A3524E5DCFA00C9D04E /* StoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTableViewCell.swift; sourceTree = "<group>"; };
+		E65F1A3624E5DCFA00C9D04E /* StoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StoryTableViewCell.xib; sourceTree = "<group>"; };
+		E65F1A3924E5DD2900C9D04E /* PhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell.swift; sourceTree = "<group>"; };
+		E65F1A3A24E5DD2900C9D04E /* PhotoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PhotoTableViewCell.xib; sourceTree = "<group>"; };
+		E65F1A3D24E5DD4300C9D04E /* VideoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTableViewCell.swift; sourceTree = "<group>"; };
+		E65F1A3E24E5DD4300C9D04E /* VideoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoTableViewCell.xib; sourceTree = "<group>"; };
+		E65F1A4124E5DD5700C9D04E /* TextNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextNoteTableViewCell.swift; sourceTree = "<group>"; };
+		E65F1A4224E5DD5700C9D04E /* TextNoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextNoteTableViewCell.xib; sourceTree = "<group>"; };
+		E65F1A4524E5DD7600C9D04E /* AudioTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTableViewCell.swift; sourceTree = "<group>"; };
+		E65F1A4624E5DD7600C9D04E /* AudioTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioTableViewCell.xib; sourceTree = "<group>"; };
 		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
 		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
 		E66B7D4422162754004355D3 /* replace_secrets.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = replace_secrets.rb; sourceTree = "<group>"; };
@@ -800,11 +810,16 @@
 				E604EE4624C76FAD0015D284 /* CircularImageView.swift */,
 				E604EE4A24C774FB0015D284 /* SimpleTableViewCell.swift */,
 				E604EE4824C774A80015D284 /* UserView.swift */,
-				E65F1A2B24E5DBED00C9D04E /* StoryTableViewCell.swift */,
-				E65F1A2D24E5DC0000C9D04E /* PhotoTableViewCell.swift */,
-				E65F1A2F24E5DC0C00C9D04E /* VideoTableViewCell.swift */,
-				E65F1A3124E5DC1A00C9D04E /* TextNoteTableViewCell.swift */,
-				E65F1A3324E5DC2800C9D04E /* AudioTableViewCell.swift */,
+				E65F1A3524E5DCFA00C9D04E /* StoryTableViewCell.swift */,
+				E65F1A3624E5DCFA00C9D04E /* StoryTableViewCell.xib */,
+				E65F1A3924E5DD2900C9D04E /* PhotoTableViewCell.swift */,
+				E65F1A3A24E5DD2900C9D04E /* PhotoTableViewCell.xib */,
+				E65F1A3D24E5DD4300C9D04E /* VideoTableViewCell.swift */,
+				E65F1A3E24E5DD4300C9D04E /* VideoTableViewCell.xib */,
+				E65F1A4124E5DD5700C9D04E /* TextNoteTableViewCell.swift */,
+				E65F1A4224E5DD5700C9D04E /* TextNoteTableViewCell.xib */,
+				E65F1A4524E5DD7600C9D04E /* AudioTableViewCell.swift */,
+				E65F1A4624E5DD7600C9D04E /* AudioTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1204,11 +1219,16 @@
 			files = (
 				E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */,
 				E65469F724C78C420083FAA5 /* acknowledgements.htm in Resources */,
+				E65F1A3C24E5DD2900C9D04E /* PhotoTableViewCell.xib in Resources */,
 				E6138FDF2211FE88004E5B91 /* LaunchScreen.storyboard in Resources */,
 				E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */,
 				E6138FDC2211FE88004E5B91 /* Assets.xcassets in Resources */,
 				E6138FD72211FE86004E5B91 /* Main.storyboard in Resources */,
+				E65F1A4024E5DD4300C9D04E /* VideoTableViewCell.xib in Resources */,
+				E65F1A4424E5DD5700C9D04E /* TextNoteTableViewCell.xib in Resources */,
 				E6190C4724BF834B0060D00A /* ColorStudio.xcassets in Resources */,
+				E65F1A3824E5DCFA00C9D04E /* StoryTableViewCell.xib in Resources */,
+				E65F1A4824E5DD7600C9D04E /* AudioTableViewCell.xib in Resources */,
 				E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1398,7 +1418,6 @@
 				E61D8F6F2378C95B005FECED /* StagedMedia+CoreDataProperties.swift in Sources */,
 				E61D8F702378C95B005FECED /* StagedMedia+CoreDataClass.swift in Sources */,
 				E602E69822C1670800795CBA /* PostAction.swift in Sources */,
-				E65F1A3224E5DC1A00C9D04E /* TextNoteTableViewCell.swift in Sources */,
 				E6138FD42211FE86004E5B91 /* InitialViewController.swift in Sources */,
 				E66CCA072303527C00F1CA59 /* Account+CoreDataClass.swift in Sources */,
 				E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */,
@@ -1406,8 +1425,10 @@
 				E6A4D742230A08A700929376 /* StagedEdits+CoreDataProperties.swift in Sources */,
 				E636C26B234FEAD800564B63 /* MediaQuery+CoreDataClass.swift in Sources */,
 				E67339A6232EFEA3007C5E45 /* Logging.swift in Sources */,
+				E65F1A3724E5DCFA00C9D04E /* StoryTableViewCell.swift in Sources */,
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
 				E6500F9D2368F36500CB8C6C /* MediaDetailViewController.swift in Sources */,
+				E65F1A3F24E5DD4300C9D04E /* VideoTableViewCell.swift in Sources */,
 				E68408A024D0D0ED00C36AB9 /* FolderViewController.swift in Sources */,
 				E67B9D60236775FC00860A6C /* MediaCache+CoreDataClass.swift in Sources */,
 				E68B29FF23048C6C0021283C /* EditCoordinator.swift in Sources */,
@@ -1419,8 +1440,8 @@
 				E67B9D61236775FC00860A6C /* MediaCache+CoreDataProperties.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E66CCA192303527D00F1CA59 /* Media+CoreDataProperties.swift in Sources */,
-				E65F1A2E24E5DC0000C9D04E /* PhotoTableViewCell.swift in Sources */,
 				E66CCA1E2303527D00F1CA59 /* Status+CoreDataClass.swift in Sources */,
+				E65F1A3B24E5DD2900C9D04E /* PhotoTableViewCell.swift in Sources */,
 				E6051DEC23075A3A005AAF0B /* Dictionary+Merge.swift in Sources */,
 				E677AAEB24B3C954000FAA3D /* AssetStore.swift in Sources */,
 				E6343ADF23A077C80033D369 /* SiteMediaSelectViewController.swift in Sources */,
@@ -1436,7 +1457,6 @@
 				E64594A122B448C2003BF6C0 /* PostServiceRemote.swift in Sources */,
 				E68BA80C2347BAA300AB60F9 /* Environment.swift in Sources */,
 				E636C269234FEAD800564B63 /* MediaItem+CoreDataClass.swift in Sources */,
-				E65F1A3024E5DC0C00C9D04E /* VideoTableViewCell.swift in Sources */,
 				E66CCA1C2303527D00F1CA59 /* Revision+CoreDataClass.swift in Sources */,
 				E66CCA062303527C00F1CA59 /* Site+CoreDataClass.swift in Sources */,
 				E69E59FD22541ABD00899DE2 /* WordPressCoreRestApi.swift in Sources */,
@@ -1467,6 +1487,7 @@
 				E636C264234FD16F00564B63 /* MediaApiActions.swift in Sources */,
 				E690D57223722BB700676B1D /* PhotoLibraryViewController.swift in Sources */,
 				E602E68522C15ECC00795CBA /* RemoteSiteSettings.swift in Sources */,
+				E65F1A4324E5DD5700C9D04E /* TextNoteTableViewCell.swift in Sources */,
 				E68B2A0323048E510021283C /* EditorAttachmentDelegate.swift in Sources */,
 				E68A965E246098C700BE664B /* NSObject+Helpers.swift in Sources */,
 				E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */,
@@ -1477,8 +1498,8 @@
 				E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */,
 				E602E69F22C1747D00795CBA /* Dictionary+Unwrappers.swift in Sources */,
 				E6A800F324380A5300A14E6C /* FolderStore.swift in Sources */,
+				E65F1A4724E5DD7600C9D04E /* AudioTableViewCell.swift in Sources */,
 				E629822A2303667E00E8CEC7 /* EditorViewController.swift in Sources */,
-				E65F1A3424E5DC2800C9D04E /* AudioTableViewCell.swift in Sources */,
 				E66CCA1B2303527D00F1CA59 /* User+CoreDataClass.swift in Sources */,
 				E6051DE323071A3A005AAF0B /* RemoteRevision.swift in Sources */,
 				E695A7E9244FD686007B29BB /* StoryAsset+CoreDataClass.swift in Sources */,
@@ -1503,7 +1524,6 @@
 				E61D8F6C2375EC3E005FECED /* StagedMediaStore.swift in Sources */,
 				E66CCA0D2303527C00F1CA59 /* Site+CoreDataProperties.swift in Sources */,
 				E604EE4924C774A80015D284 /* UserView.swift in Sources */,
-				E65F1A2C24E5DBED00C9D04E /* StoryTableViewCell.swift in Sources */,
 				E66CCA0B2303527C00F1CA59 /* Account+CoreDataProperties.swift in Sources */,
 				E63F3F3C236350BE00DB760E /* MediaTypeDiscerner.swift in Sources */,
 				E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */,
