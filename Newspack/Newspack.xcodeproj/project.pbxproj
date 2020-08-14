@@ -132,6 +132,7 @@
 		E65F1A4424E5DD5700C9D04E /* TextNoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65F1A4224E5DD5700C9D04E /* TextNoteTableViewCell.xib */; };
 		E65F1A4724E5DD7600C9D04E /* AudioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A4524E5DD7600C9D04E /* AudioTableViewCell.swift */; };
 		E65F1A4824E5DD7600C9D04E /* AudioTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E65F1A4624E5DD7600C9D04E /* AudioTableViewCell.xib */; };
+		E6663E4A24E70E09006553B3 /* CellBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6663E4924E70E09006553B3 /* CellBackgroundView.swift */; };
 		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
 		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
 		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
@@ -398,6 +399,7 @@
 		E65F1A4224E5DD5700C9D04E /* TextNoteTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextNoteTableViewCell.xib; sourceTree = "<group>"; };
 		E65F1A4524E5DD7600C9D04E /* AudioTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTableViewCell.swift; sourceTree = "<group>"; };
 		E65F1A4624E5DD7600C9D04E /* AudioTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioTableViewCell.xib; sourceTree = "<group>"; };
+		E6663E4924E70E09006553B3 /* CellBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellBackgroundView.swift; sourceTree = "<group>"; };
 		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
 		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
 		E66B7D4422162754004355D3 /* replace_secrets.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = replace_secrets.rb; sourceTree = "<group>"; };
@@ -820,6 +822,7 @@
 				E65F1A4224E5DD5700C9D04E /* TextNoteTableViewCell.xib */,
 				E65F1A4524E5DD7600C9D04E /* AudioTableViewCell.swift */,
 				E65F1A4624E5DD7600C9D04E /* AudioTableViewCell.xib */,
+				E6663E4924E70E09006553B3 /* CellBackgroundView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1504,6 +1507,7 @@
 				E6051DE323071A3A005AAF0B /* RemoteRevision.swift in Sources */,
 				E695A7E9244FD686007B29BB /* StoryAsset+CoreDataClass.swift in Sources */,
 				E66CCA0F2303527C00F1CA59 /* Revision+CoreDataProperties.swift in Sources */,
+				E6663E4A24E70E09006553B3 /* CellBackgroundView.swift in Sources */,
 				E641A66522A75866008BBD85 /* AccountCapabilitiesStore.swift in Sources */,
 				E602E68D22C1634900795CBA /* SiteApiActions.swift in Sources */,
 				E63EECD7234289DD00669FFC /* PostApiService.swift in Sources */,
