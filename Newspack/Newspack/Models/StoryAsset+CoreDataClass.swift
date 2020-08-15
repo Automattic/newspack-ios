@@ -2,7 +2,11 @@ import Foundation
 import CoreData
 
 @objc(StoryAsset)
-public class StoryAsset: NSManagedObject, TextNoteCellProvider {
+public class StoryAsset: NSManagedObject, TextNoteCellProvider, PhotoCellProvider {
+
+    var caption: String! {
+        return ""
+    }
 
     public override func willSave() {
         super.willSave()

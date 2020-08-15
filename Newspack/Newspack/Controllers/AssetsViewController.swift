@@ -29,6 +29,7 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
 
     func configureCells() {
         tableView.register(UINib(nibName: "TextNoteTableViewCell", bundle: nil), forCellReuseIdentifier: TextNoteTableViewCell.reuseIdentifier)
+        tableView.register(UINib(nibName: "PhotoTableViewCell", bundle: nil), forCellReuseIdentifier: PhotoTableViewCell.reuseIdentifier)
     }
 
     func configureDataSource() {
@@ -132,6 +133,10 @@ extension AssetsViewController {
             return configureTextCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
         }
 
+        if storyAsset.assetType == .image {
+            return configurePhotoCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+        }
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell", for: indexPath)
         cell.textLabel?.text = storyAsset.name + " " + String(storyAsset.order)
         cell.detailTextLabel?.text = storyAsset.uuid.uuidString
@@ -146,6 +151,12 @@ extension AssetsViewController {
         return cell
     }
 
+    func configurePhotoCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> PhotoTableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: PhotoTableViewCell.reuseIdentifier, for: indexPath) as! PhotoTableViewCell
+        let image = UIImage()
+        cell.configure(photo: storyAsset, image: image)
+        return cell
+    }
 }
 
 // MARK: - AssetDataSource
