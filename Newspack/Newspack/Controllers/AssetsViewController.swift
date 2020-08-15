@@ -19,11 +19,16 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureCells()
         configureDataSource()
         configureSortControl()
         configureNavbar()
         configureStyle()
         tableView.tableFooterView = UIView()
+    }
+
+    func configureCells() {
+        tableView.register(UINib(nibName: "TextNoteTableViewCell", bundle: nil), forCellReuseIdentifier: TextNoteTableViewCell.reuseIdentifier)
     }
 
     func configureDataSource() {
@@ -123,11 +128,21 @@ extension AssetsViewController {
 extension AssetsViewController {
 
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> UITableViewCell {
+        if storyAsset.assetType == .textNote {
+            return configureTextCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+        }
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell", for: indexPath)
         cell.textLabel?.text = storyAsset.name + " " + String(storyAsset.order)
         cell.detailTextLabel?.text = storyAsset.uuid.uuidString
         cell.accessoryType = .disclosureIndicator
 
+        return cell
+    }
+
+    func configureTextCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> TextNoteTableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TextNoteTableViewCell.reuseIdentifier, for: indexPath) as! TextNoteTableViewCell
+        cell.configure(note: storyAsset)
         return cell
     }
 

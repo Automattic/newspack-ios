@@ -80,7 +80,7 @@
                             </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="42" id="pVM-pu-2q1"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="pVM-pu-2q1"/>
                         </constraints>
                     </stackView>
                 </subviews>

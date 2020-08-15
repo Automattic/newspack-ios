@@ -2,14 +2,13 @@ import Foundation
 import CoreData
 
 @objc(StoryAsset)
-public class StoryAsset: NSManagedObject {
+public class StoryAsset: NSManagedObject, TextNoteCellProvider {
 
     public override func willSave() {
         super.willSave()
 
         updateSortedIfNeeded()
     }
-
 
     /// Called from willSave which will be called again if there are any changes
     /// so only update the property if necessary.

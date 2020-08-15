@@ -13,6 +13,7 @@ class FoldersViewController: ToolbarViewController, UITableViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         registerCells()
         configureDataSource()
         configureSortControls()

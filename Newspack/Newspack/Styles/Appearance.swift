@@ -65,6 +65,11 @@ class Appearance {
         button.tintColor = .newspackBlue(.shade30)
     }
 
+    static func style(cellSyncButton button: UIButton, iconType: GridiconType) {
+        let size = CGSize(width: 24, height: 24)
+        button.setImage(.gridicon(iconType, size: size), for: .normal)
+        button.tintColor = .newspackBlue(.shade30)
+    }
 }
 
 // MARK: - Fonts
