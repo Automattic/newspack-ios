@@ -284,7 +284,27 @@ extension AssetStore {
         }
 
         let importer = try? MediaImporter(destination: url)
-        importer?.importAssets(assets: assets)
+        importer?.importAssets(assets: assets, onComplete: { [weak self] (imported, errors) in
+            self?.createAssetsForImports(imports: imported, errors: errors)
+        })
+    }
+
+    /// Create assets for imported media.
+    ///
+    /// - Parameters:
+    ///   - imports: A dictionary of imported assets. PHAsset IDs are keys.
+    ///   - errors: A dictionary of errors. PHAsset IDs are keys.
+    ///
+    func createAssetsForImports(imports: [String: URL], errors: [String: Error]) {
+        guard let storyFolder = StoreContainer.shared.folderStore.currentStoryFolder else {
+            return
+        }
+        if imports.count > 0 {
+            createAssetsForURLs(urls: Array(imports.values), storyFolder: storyFolder)
+        }
+        if errors.count > 0 {
+            //TODO: Handle errors
+        }
     }
 
 }
