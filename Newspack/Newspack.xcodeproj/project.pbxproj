@@ -213,6 +213,8 @@
 		E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */; };
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
 		E6B7728824BCD8DA00CA8AB8 /* SortOrganizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B7728724BCD8DA00CA8AB8 /* SortOrganizer.swift */; };
+		E6B779E824EB2F9D007EA033 /* ImageResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B779E724EB2F9D007EA033 /* ImageResizer.swift */; };
+		E6B779EA24EB2FC5007EA033 /* CGSize+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B779E924EB2FC5007EA033 /* CGSize+Helpers.swift */; };
 		E6B8CFDB24AB91430068C6BE /* URLFileReferenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDA24AB91430068C6BE /* URLFileReferenceTests.swift */; };
 		E6B8CFDD24ABC48C0068C6BE /* FolderStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDC24ABC48C0068C6BE /* FolderStoreTests.swift */; };
 		E6B8CFE024ABD6EB0068C6BE /* ReconcilerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */; };
@@ -485,6 +487,8 @@
 		E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-ids-edit.json"; sourceTree = "<group>"; };
 		E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-edit.json"; sourceTree = "<group>"; };
 		E6B7728724BCD8DA00CA8AB8 /* SortOrganizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrganizer.swift; sourceTree = "<group>"; };
+		E6B779E724EB2F9D007EA033 /* ImageResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizer.swift; sourceTree = "<group>"; };
+		E6B779E924EB2FC5007EA033 /* CGSize+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGSize+Helpers.swift"; sourceTree = "<group>"; };
 		E6B8CFDA24AB91430068C6BE /* URLFileReferenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLFileReferenceTests.swift; sourceTree = "<group>"; };
 		E6B8CFDC24ABC48C0068C6BE /* FolderStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderStoreTests.swift; sourceTree = "<group>"; };
 		E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconcilerTests.swift; sourceTree = "<group>"; };
@@ -1032,6 +1036,7 @@
 			isa = PBXGroup;
 			children = (
 				E6B7728724BCD8DA00CA8AB8 /* SortOrganizer.swift */,
+				E6B779E724EB2F9D007EA033 /* ImageResizer.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1088,6 +1093,7 @@
 		E6FB51FE22B9677A0010FDF8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				E6B779E924EB2FC5007EA033 /* CGSize+Helpers.swift */,
 				E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */,
 				E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */,
 				E6051DEB23075A3A005AAF0B /* Dictionary+Merge.swift */,
@@ -1505,6 +1511,7 @@
 				E66CCA102303527C00F1CA59 /* User+CoreDataProperties.swift in Sources */,
 				E6E2ACF722E10F3400A8E85D /* MainStoryboard.swift in Sources */,
 				E6AB672A24E88182003D5D2A /* StoryTableViewCell.swift in Sources */,
+				E6B779E824EB2F9D007EA033 /* ImageResizer.swift in Sources */,
 				E6A800F524380A6600A14E6C /* FolderAction.swift in Sources */,
 				E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */,
 				E602E69F22C1747D00795CBA /* Dictionary+Unwrappers.swift in Sources */,
@@ -1536,6 +1543,7 @@
 				E66CCA0D2303527C00F1CA59 /* Site+CoreDataProperties.swift in Sources */,
 				E604EE4924C774A80015D284 /* UserView.swift in Sources */,
 				E66CCA0B2303527C00F1CA59 /* Account+CoreDataProperties.swift in Sources */,
+				E6B779EA24EB2FC5007EA033 /* CGSize+Helpers.swift in Sources */,
 				E63F3F3C236350BE00DB760E /* MediaTypeDiscerner.swift in Sources */,
 				E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */,
 				E695A7E7244FD686007B29BB /* StoryAsset+CoreDataProperties.swift in Sources */,
