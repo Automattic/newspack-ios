@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 import WordPressFlux
-
+import AVFoundation
 class AssetsViewController: ToolbarViewController, UITableViewDelegate {
 
     struct Constants {
@@ -153,9 +153,31 @@ extension AssetsViewController {
 
     func configurePhotoCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> PhotoTableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PhotoTableViewCell.reuseIdentifier, for: indexPath) as! PhotoTableViewCell
-        let image = UIImage()
+
+        let image = thumbnail(from: storyAsset, size: PhotoTableViewCell.imageSize)
         cell.configure(photo: storyAsset, image: image)
         return cell
+    }
+
+    func thumbnail(from asset: StoryAsset, size: CGSize) -> UIImage? {
+        guard asset.assetType == .image else {
+            return nil
+        }
+
+        if let thumb = ImageResizer.shared.resizedImage(identifier: asset.uuid.uuidString, size: size) {
+            return thumb
+        }
+
+        let folderManager = SessionManager.shared.folderManager
+        guard
+            let bookmark = asset.bookmark,
+            let url = folderManager.urlFromBookmark(bookmark: bookmark),
+            let image = UIImage(contentsOfFile: url.path)
+        else {
+            return nil
+        }
+
+        return ImageResizer.shared.resizeImage(image: image, identifier: asset.uuid.uuidString, fillingSize: size)
     }
 }
 

@@ -7,6 +7,8 @@ protocol PhotoCellProvider {
 
 class PhotoTableViewCell: UITableViewCell {
 
+    static let imageSize = CGSize(width: 32, height: 32)
+
     @IBOutlet var thumbnail: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var captionLabel: UILabel!
@@ -29,7 +31,7 @@ class PhotoTableViewCell: UITableViewCell {
         print("tapped")
     }
 
-    func configure(photo: PhotoCellProvider, image: UIImage) {
+    func configure(photo: PhotoCellProvider, image: UIImage?) {
         thumbnail.image = image
         titleLabel.text = photo.name
         captionLabel.text = photo.caption
