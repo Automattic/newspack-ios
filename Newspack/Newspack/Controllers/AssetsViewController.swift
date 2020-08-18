@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 import WordPressFlux
-import AVFoundation
+
 class AssetsViewController: ToolbarViewController, UITableViewDelegate {
 
     struct Constants {
