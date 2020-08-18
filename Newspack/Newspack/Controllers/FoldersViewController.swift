@@ -14,11 +14,16 @@ class FoldersViewController: ToolbarViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        registerCells()
         configureDataSource()
         configureSortControls()
         configureNavbar()
         configureStyle()
         tableView.tableFooterView = UIView()
+    }
+
+    func registerCells() {
+        tableView.register(UINib(nibName: "StoryTableViewCell", bundle: nil), forCellReuseIdentifier: StoryTableViewCell.reuseIdentifier)
     }
 
     func configureDataSource() {
@@ -159,34 +164,14 @@ extension FoldersViewController {
 extension FoldersViewController {
 
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyFolder: StoryFolder) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: FolderCell.reuseIdentifier, for: indexPath) as? FolderCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: StoryTableViewCell.reuseIdentifier, for: indexPath) as? StoryTableViewCell else {
             fatalError("Cannot create new cell")
         }
-        Appearance.style(cell: cell)
 
-        cell.textLabel?.text = storyFolder.name
-        cell.accessoryType = .disclosureIndicator
-        cell.selectedStory = storyFolder.uuid == StoreContainer.shared.folderStore.currentStoryFolderID
+        let current = storyFolder.uuid == StoreContainer.shared.folderStore.currentStoryFolderID
+        cell.configure(story: storyFolder, current: current)
 
         return cell
-    }
-
-}
-
-// MARK: - Folder Cell
-
-class FolderCell: UITableViewCell {
-
-    var selectedStory: Bool = false {
-        didSet {
-            textLabel?.textColor = selectedStory ? .textLink : .text
-        }
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-
-        selectedStory = false
     }
 
 }

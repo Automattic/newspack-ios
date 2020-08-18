@@ -19,11 +19,18 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureCells()
         configureDataSource()
         configureSortControl()
         configureNavbar()
         configureStyle()
         tableView.tableFooterView = UIView()
+    }
+
+    func configureCells() {
+        tableView.register(UINib(nibName: "TextNoteTableViewCell", bundle: nil), forCellReuseIdentifier: TextNoteTableViewCell.reuseIdentifier)
+        tableView.register(UINib(nibName: "PhotoTableViewCell", bundle: nil), forCellReuseIdentifier: PhotoTableViewCell.reuseIdentifier)
+        tableView.register(UINib(nibName: "VideoTableViewCell", bundle: nil), forCellReuseIdentifier: VideoTableViewCell.reuseIdentifier)
     }
 
     func configureDataSource() {
@@ -123,14 +130,67 @@ extension AssetsViewController {
 extension AssetsViewController {
 
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell", for: indexPath)
-        cell.textLabel?.text = storyAsset.name + " " + String(storyAsset.order)
-        cell.detailTextLabel?.text = storyAsset.uuid.uuidString
-        cell.accessoryType = .disclosureIndicator
+        switch storyAsset.assetType {
+        case .textNote:
+            return configureTextCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+        case .image:
+            return configurePhotoCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+        case .video:
+            return configureVideoCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+        case .audioNote:
+            return configureAudioCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+        }
+    }
 
+    func configureTextCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> TextNoteTableViewCell {
+        let cell = tableView.dequeueReusableCell(ofType: TextNoteTableViewCell.self, for: indexPath)
+        cell.configure(note: storyAsset)
         return cell
     }
 
+    func configurePhotoCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> PhotoTableViewCell {
+        let cell = tableView.dequeueReusableCell(ofType: PhotoTableViewCell.self, for: indexPath)
+
+        let image = thumbnail(from: storyAsset, size: PhotoTableViewCell.imageSize)
+        cell.configure(photo: storyAsset, image: image)
+        return cell
+    }
+
+    func configureVideoCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> VideoTableViewCell {
+        let cell = tableView.dequeueReusableCell(ofType: VideoTableViewCell.self, for: indexPath)
+
+        let image = thumbnail(from: storyAsset, size: VideoTableViewCell.imageSize)
+        cell.configure(video: storyAsset, image: image)
+        return cell
+    }
+
+    func configureAudioCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> AudioTableViewCell {
+        let cell = tableView.dequeueReusableCell(ofType: AudioTableViewCell.self, for: indexPath)
+
+        cell.configure(audio: storyAsset)
+        return cell
+    }
+
+    func thumbnail(from asset: StoryAsset, size: CGSize) -> UIImage? {
+        guard asset.assetType == .image else {
+            return nil
+        }
+
+        if let thumb = ImageResizer.shared.resizedImage(identifier: asset.uuid.uuidString, size: size) {
+            return thumb
+        }
+
+        let folderManager = SessionManager.shared.folderManager
+        guard
+            let bookmark = asset.bookmark,
+            let url = folderManager.urlFromBookmark(bookmark: bookmark),
+            let image = UIImage(contentsOfFile: url.path)
+        else {
+            return nil
+        }
+
+        return ImageResizer.shared.resizeImage(image: image, identifier: asset.uuid.uuidString, fillingSize: size)
+    }
 }
 
 // MARK: - AssetDataSource
