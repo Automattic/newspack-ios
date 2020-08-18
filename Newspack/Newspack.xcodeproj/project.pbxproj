@@ -53,6 +53,7 @@
 		E60A250E2425418E003F3C81 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60A250D2425418E003F3C81 /* ShareViewController.swift */; };
 		E60A25112425418E003F3C81 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E60A250F2425418E003F3C81 /* MainInterface.storyboard */; };
 		E60A25152425418E003F3C81 /* NewspackShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E60A250B2425418E003F3C81 /* NewspackShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E610B64324EC59040011FBA8 /* UITableView+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E610B64224EC59040011FBA8 /* UITableView+Helpers.swift */; };
 		E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD12211FE86004E5B91 /* AppDelegate.swift */; };
 		E6138FD42211FE86004E5B91 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD32211FE86004E5B91 /* InitialViewController.swift */; };
 		E6138FD72211FE86004E5B91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E6138FD52211FE86004E5B91 /* Main.storyboard */; };
@@ -319,6 +320,7 @@
 		E60A250D2425418E003F3C81 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		E60A25102425418E003F3C81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E60A25122425418E003F3C81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E610B64224EC59040011FBA8 /* UITableView+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Helpers.swift"; sourceTree = "<group>"; };
 		E6138FCE2211FE86004E5B91 /* Newspack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Newspack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6138FD12211FE86004E5B91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6138FD32211FE86004E5B91 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
@@ -1100,6 +1102,7 @@
 				E6E2ACF822E2840C00A8E85D /* Date+FormatGMTString.swift */,
 				E68A965F2460990B00BE664B /* NSManagedObject+Helpers.swift */,
 				E68A965D246098C700BE664B /* NSObject+Helpers.swift */,
+				E610B64224EC59040011FBA8 /* UITableView+Helpers.swift */,
 				E696340F2440C1C400D906E0 /* UITableViewCell+Helpers.swift */,
 				E63FF0EB24AA864C0002A32F /* URL+FileReference.swift */,
 				E6C3988B24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift */,
@@ -1443,6 +1446,7 @@
 				E636C26B234FEAD800564B63 /* MediaQuery+CoreDataClass.swift in Sources */,
 				E6AB672224E88182003D5D2A /* CellBackgroundView.swift in Sources */,
 				E67339A6232EFEA3007C5E45 /* Logging.swift in Sources */,
+				E610B64324EC59040011FBA8 /* UITableView+Helpers.swift in Sources */,
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
 				E6500F9D2368F36500CB8C6C /* MediaDetailViewController.swift in Sources */,
 				E68408A024D0D0ED00C36AB9 /* FolderViewController.swift in Sources */,

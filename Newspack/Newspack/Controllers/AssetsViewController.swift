@@ -143,13 +143,13 @@ extension AssetsViewController {
     }
 
     func configureTextCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> TextNoteTableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TextNoteTableViewCell.reuseIdentifier, for: indexPath) as! TextNoteTableViewCell
+        let cell = tableView.dequeueReusableCell(ofType: TextNoteTableViewCell.self, for: indexPath)
         cell.configure(note: storyAsset)
         return cell
     }
 
     func configurePhotoCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> PhotoTableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PhotoTableViewCell.reuseIdentifier, for: indexPath) as! PhotoTableViewCell
+        let cell = tableView.dequeueReusableCell(ofType: PhotoTableViewCell.self, for: indexPath)
 
         let image = thumbnail(from: storyAsset, size: PhotoTableViewCell.imageSize)
         cell.configure(photo: storyAsset, image: image)
@@ -157,7 +157,7 @@ extension AssetsViewController {
     }
 
     func configureVideoCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> VideoTableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: VideoTableViewCell.reuseIdentifier, for: indexPath) as! VideoTableViewCell
+        let cell = tableView.dequeueReusableCell(ofType: VideoTableViewCell.self, for: indexPath)
 
         let image = thumbnail(from: storyAsset, size: VideoTableViewCell.imageSize)
         cell.configure(video: storyAsset, image: image)
@@ -165,7 +165,8 @@ extension AssetsViewController {
     }
 
     func configureAudioCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> AudioTableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: AudioTableViewCell.reuseIdentifier, for: indexPath) as! AudioTableViewCell
+        let cell = tableView.dequeueReusableCell(ofType: AudioTableViewCell.self, for: indexPath)
+
         cell.configure(audio: storyAsset)
         return cell
     }
