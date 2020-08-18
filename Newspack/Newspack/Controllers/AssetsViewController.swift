@@ -130,24 +130,16 @@ extension AssetsViewController {
 extension AssetsViewController {
 
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> UITableViewCell {
-        if storyAsset.assetType == .textNote {
+        switch storyAsset.assetType {
+        case .textNote:
             return configureTextCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
-        }
-
-        if storyAsset.assetType == .image {
+        case .image:
             return configurePhotoCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
-        }
-
-        if storyAsset.assetType == .video {
+        case .video:
             return configureVideoCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+        case .audioNote:
+            return configureAudioCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
         }
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell", for: indexPath)
-        cell.textLabel?.text = storyAsset.name + " " + String(storyAsset.order)
-        cell.detailTextLabel?.text = storyAsset.uuid.uuidString
-        cell.accessoryType = .disclosureIndicator
-
-        return cell
     }
 
     func configureTextCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> TextNoteTableViewCell {
@@ -168,7 +160,13 @@ extension AssetsViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: VideoTableViewCell.reuseIdentifier, for: indexPath) as! VideoTableViewCell
 
         let image = thumbnail(from: storyAsset, size: VideoTableViewCell.imageSize)
-        cell.configure(photo: storyAsset, image: image)
+        cell.configure(video: storyAsset, image: image)
+        return cell
+    }
+
+    func configureAudioCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> AudioTableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: AudioTableViewCell.reuseIdentifier, for: indexPath) as! AudioTableViewCell
+        cell.configure(audio: storyAsset)
         return cell
     }
 

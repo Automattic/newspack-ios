@@ -2,7 +2,7 @@ import Foundation
 import CoreData
 
 @objc(StoryAsset)
-public class StoryAsset: NSManagedObject, TextNoteCellProvider, PhotoCellProvider, VideoCellProvider {
+public class StoryAsset: NSManagedObject, TextNoteCellProvider, PhotoCellProvider, VideoCellProvider, AudioCellProvider {
 
     var caption: String! {
         return ""

@@ -1,16 +1,35 @@
 import UIKit
 
+protocol AudioCellProvider {
+    var name: String! { get }
+    var caption: String! { get }
+}
+
 class AudioTableViewCell: UITableViewCell {
+
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var captionLabel: UILabel!
+    @IBOutlet var syncButton: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
+        applyStyles()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    func applyStyles() {
+        titleLabel.textColor = .text
+        captionLabel.textColor = .text
+        Appearance.style(cellSyncButton: syncButton, iconType: .cloudUpload)
+    }
 
-        // Configure the view for the selected state
+    @IBAction func handleSyncTapped() {
+        print("tapped")
+    }
+
+    func configure(audio: AudioCellProvider) {
+        titleLabel.text = audio.name
+        captionLabel.text = audio.caption
     }
 
 }

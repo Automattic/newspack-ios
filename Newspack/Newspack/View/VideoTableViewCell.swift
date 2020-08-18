@@ -31,10 +31,10 @@ class VideoTableViewCell: UITableViewCell {
         print("tapped")
     }
 
-    func configure(photo: VideoCellProvider, image: UIImage?) {
+    func configure(video: VideoCellProvider, image: UIImage?) {
         thumbnail.image = image
-        titleLabel.text = photo.name
-        captionLabel.text = photo.caption
+        titleLabel.text = video.name
+        captionLabel.text = video.caption
     }
 
 }
