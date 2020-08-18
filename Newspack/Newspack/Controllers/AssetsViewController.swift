@@ -30,6 +30,7 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
     func configureCells() {
         tableView.register(UINib(nibName: "TextNoteTableViewCell", bundle: nil), forCellReuseIdentifier: TextNoteTableViewCell.reuseIdentifier)
         tableView.register(UINib(nibName: "PhotoTableViewCell", bundle: nil), forCellReuseIdentifier: PhotoTableViewCell.reuseIdentifier)
+        tableView.register(UINib(nibName: "VideoTableViewCell", bundle: nil), forCellReuseIdentifier: VideoTableViewCell.reuseIdentifier)
     }
 
     func configureDataSource() {
@@ -137,6 +138,10 @@ extension AssetsViewController {
             return configurePhotoCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
         }
 
+        if storyAsset.assetType == .video {
+            return configureVideoCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+        }
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "AssetCell", for: indexPath)
         cell.textLabel?.text = storyAsset.name + " " + String(storyAsset.order)
         cell.detailTextLabel?.text = storyAsset.uuid.uuidString
@@ -155,6 +160,14 @@ extension AssetsViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: PhotoTableViewCell.reuseIdentifier, for: indexPath) as! PhotoTableViewCell
 
         let image = thumbnail(from: storyAsset, size: PhotoTableViewCell.imageSize)
+        cell.configure(photo: storyAsset, image: image)
+        return cell
+    }
+
+    func configureVideoCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> VideoTableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: VideoTableViewCell.reuseIdentifier, for: indexPath) as! VideoTableViewCell
+
+        let image = thumbnail(from: storyAsset, size: VideoTableViewCell.imageSize)
         cell.configure(photo: storyAsset, image: image)
         return cell
     }
