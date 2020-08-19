@@ -583,6 +583,68 @@
             </objects>
             <point key="canvasLocation" x="-353" y="149"/>
         </scene>
+        <!--Photo Details-->
+        <scene sceneID="H4I-Xf-XVI">
+            <objects>
+                <tableViewController storyboardIdentifier="PhotoDetailViewController" title="Photo Details" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cen-pi-eRG" customClass="PhotoDetailViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="GNq-BY-put">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="cen-pi-eRG" id="J40-pP-0RU"/>
+                            <outlet property="delegate" destination="cen-pi-eRG" id="Goq-2m-QUD"/>
+                        </connections>
+                    </tableView>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="git-xv-79o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="964" y="152"/>
+        </scene>
+        <!--Image-->
+        <scene sceneID="1Yb-Pc-f3E">
+            <objects>
+                <viewController storyboardIdentifier="ImageViewController" title="Image" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LaR-r9-IOg" customClass="ImageViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sUq-Ib-kJu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bX8-yh-EoJ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="375" placeholderIntrinsicHeight="623" translatesAutoresizingMaskIntoConstraints="NO" id="Csz-g8-SCV">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Csz-g8-SCV" firstAttribute="bottom" secondItem="dvh-Hw-BOF" secondAttribute="bottom" id="0ST-ne-taM"/>
+                                    <constraint firstItem="Csz-g8-SCV" firstAttribute="top" secondItem="dvh-Hw-BOF" secondAttribute="top" id="N7s-mn-AjV"/>
+                                    <constraint firstItem="Csz-g8-SCV" firstAttribute="leading" secondItem="dvh-Hw-BOF" secondAttribute="leading" id="Zqf-kO-Vci"/>
+                                    <constraint firstItem="Csz-g8-SCV" firstAttribute="trailing" secondItem="dvh-Hw-BOF" secondAttribute="trailing" id="oWa-jo-v2j"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="dvh-Hw-BOF"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="x8P-kJ-P08"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="bX8-yh-EoJ" firstAttribute="leading" secondItem="JmJ-WC-hof" secondAttribute="leading" id="2RH-me-eZZ"/>
+                            <constraint firstItem="JmJ-WC-hof" firstAttribute="bottom" secondItem="bX8-yh-EoJ" secondAttribute="bottom" id="71Y-jI-C7O"/>
+                            <constraint firstItem="JmJ-WC-hof" firstAttribute="trailing" secondItem="bX8-yh-EoJ" secondAttribute="trailing" id="DnK-0Y-hAd"/>
+                            <constraint firstItem="bX8-yh-EoJ" firstAttribute="top" secondItem="JmJ-WC-hof" secondAttribute="top" id="hdn-83-CTL"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="JmJ-WC-hof"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="Csz-g8-SCV" id="6tX-ki-HG4"/>
+                        <outlet property="scrollView" destination="bX8-yh-EoJ" id="b06-r6-8ee"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G60-XS-raS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1640.8" y="151.57421289355324"/>
+        </scene>
         <!--Menu-->
         <scene sceneID="qcG-kl-9ad">
             <objects>
@@ -615,7 +677,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7f8-9p-9lu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="964" y="798"/>
+            <point key="canvasLocation" x="964" y="815"/>
         </scene>
         <!--Posts-->
         <scene sceneID="ypd-wT-HGz">
@@ -656,7 +718,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ATV-Ck-5iN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1641" y="798"/>
+            <point key="canvasLocation" x="1641" y="815"/>
         </scene>
         <!--Edit-->
         <scene sceneID="euE-WE-sAy">
@@ -688,7 +750,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WKJ-qY-5tg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2313" y="797"/>
+            <point key="canvasLocation" x="2313" y="814"/>
         </scene>
         <!--Media Detail View Controller-->
         <scene sceneID="DAV-IO-aSm">
@@ -718,7 +780,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bpn-pM-fL3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="288.80000000000001" y="798.35082458770626"/>
+            <point key="canvasLocation" x="289" y="815"/>
         </scene>
     </scenes>
     <color key="tintColor" name="NewspackBlue"/>

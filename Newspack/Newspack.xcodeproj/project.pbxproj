@@ -222,6 +222,8 @@
 		E6BA1322243F9D1E00635A8A /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */; };
 		E6C3988C24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C3988B24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift */; };
 		E6CE56AF22B19001004895E5 /* ModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CE56AE22B19001004895E5 /* ModelFactory.swift */; };
+		E6D0F28124EDC6C000DBE52E /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0F28024EDC6C000DBE52E /* PhotoDetailViewController.swift */; };
+		E6D0F28324EDC6F800DBE52E /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0F28224EDC6F800DBE52E /* ImageViewController.swift */; };
 		E6D44DEC234BC56C00B51438 /* SiteMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEB234BC56C00B51438 /* SiteMediaViewController.swift */; };
 		E6D44DEF234BDB8400B51438 /* MediaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEE234BDB8400B51438 /* MediaStore.swift */; };
 		E6D44DF1234BDBA000B51438 /* MediaApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF0234BDBA000B51438 /* MediaApiService.swift */; };
@@ -497,6 +499,8 @@
 		E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetsViewController.swift; sourceTree = "<group>"; };
 		E6C3988B24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Newspack.swift"; sourceTree = "<group>"; };
 		E6CE56AE22B19001004895E5 /* ModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFactory.swift; sourceTree = "<group>"; };
+		E6D0F28024EDC6C000DBE52E /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
+		E6D0F28224EDC6F800DBE52E /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		E6D44DEB234BC56C00B51438 /* SiteMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMediaViewController.swift; sourceTree = "<group>"; };
 		E6D44DEE234BDB8400B51438 /* MediaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStore.swift; sourceTree = "<group>"; };
 		E6D44DF0234BDBA000B51438 /* MediaApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaApiService.swift; sourceTree = "<group>"; };
@@ -853,8 +857,9 @@
 				E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */,
 				E68689BF243C080400B7E363 /* FoldersViewController.swift */,
 				E684089F24D0D0ED00C36AB9 /* FolderViewController.swift */,
+				E6D0F28024EDC6C000DBE52E /* PhotoDetailViewController.swift */,
 				E66E85A024CFA1010056E8AB /* StoryNavigationController.swift */,
-				E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */,
+				E6D0F28224EDC6F800DBE52E /* ImageViewController.swift */,
 				E65469F824C7A1950083FAA5 /* WebViewController.swift */,
 				E694469D24DB3FA100D0BF56 /* MediaCaptureController.swift */,
 				E694469F24DB3FB100D0BF56 /* MediaPickerViewController.swift */,
@@ -1058,6 +1063,7 @@
 				E68B2A0023048E050021283C /* EditorAttachmentImageProvider.swift */,
 				E68B2A0223048E510021283C /* EditorAttachmentDelegate.swift */,
 				E6451AC12322F737005809E2 /* EditorSaveAlertController.swift */,
+				E6500F9C2368F36500CB8C6C /* MediaDetailViewController.swift */,
 				E6871F1A22C3FDE7008D3D46 /* PostListViewController.swift */,
 				E690D57123722BB700676B1D /* PhotoLibraryViewController.swift */,
 				E6D44DEB234BC56C00B51438 /* SiteMediaViewController.swift */,
@@ -1441,6 +1447,7 @@
 				E6138FD42211FE86004E5B91 /* InitialViewController.swift in Sources */,
 				E66CCA072303527C00F1CA59 /* Account+CoreDataClass.swift in Sources */,
 				E69E59F922540D0900899DE2 /* SiteServiceRemote.swift in Sources */,
+				E6D0F28324EDC6F800DBE52E /* ImageViewController.swift in Sources */,
 				E6BA1322243F9D1E00635A8A /* AssetsViewController.swift in Sources */,
 				E6A4D742230A08A700929376 /* StagedEdits+CoreDataProperties.swift in Sources */,
 				E636C26B234FEAD800564B63 /* MediaQuery+CoreDataClass.swift in Sources */,
@@ -1462,6 +1469,7 @@
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E66CCA192303527D00F1CA59 /* Media+CoreDataProperties.swift in Sources */,
 				E66CCA1E2303527D00F1CA59 /* Status+CoreDataClass.swift in Sources */,
+				E6D0F28124EDC6C000DBE52E /* PhotoDetailViewController.swift in Sources */,
 				E6051DEC23075A3A005AAF0B /* Dictionary+Merge.swift in Sources */,
 				E677AAEB24B3C954000FAA3D /* AssetStore.swift in Sources */,
 				E6343ADF23A077C80033D369 /* SiteMediaSelectViewController.swift in Sources */,
