@@ -1,82 +1,193 @@
 import UIKit
 
+/// Displays details about a photo asset
+///
 class PhotoDetailViewController: UITableViewController {
+
+    var asset: StoryAsset!
+
+    lazy var photoDataSource: PhotoDetailDataSource = {
+        return PhotoDetailDataSource(asset: asset, presenter: self)
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        guard asset != nil else {
+            fatalError()
+        }
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        configureCells()
+        configureNavbar()
+        configureToolbar()
+        configureStyle()
     }
 
-    // MARK: - Table view data source
+    func configureCells() {
+        tableView.register(SimpleTableViewCell.self, forCellReuseIdentifier: SimpleTableViewCell.reuseIdentifier)
+        tableView.register(UINib(nibName: "ImageTableViewCell", bundle: nil), forCellReuseIdentifier: ImageTableViewCell.reuseIdentifier)
+        tableView.register(UINib(nibName: "TextViewTableViewCell", bundle: nil), forCellReuseIdentifier: TextViewTableViewCell.reuseIdentifier)
+    }
+
+    func configureNavbar() {
+        navigationItem.title = asset.name
+    }
+
+    func configureToolbar() {
+        navigationController?.setToolbarHidden(true, animated: true)
+    }
+
+    func configureStyle() {
+        Appearance.style(tableView: tableView)
+    }
+
+}
+
+// MARK: - Table view related
+
+extension PhotoDetailViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return photoDataSource.sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return photoDataSource.sections[section].rows.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        guard let row = photoDataSource.row(indexPath: indexPath) else {
+            fatalError()
+        }
 
-        // Configure the cell...
+        switch row {
+        case is InfoRow:
+            return configureTextCell(tableView: tableView, indexPath: indexPath, row: row as! InfoRow)
+        case is ImageRow:
+            return configureImageCell(tableView: tableView, indexPath: indexPath, row: row as! ImageRow)
+        default:
+            break
+        }
 
+        let cell = tableView.dequeueReusableCell(withIdentifier: SimpleTableViewCell.reuseIdentifier, for: indexPath)
+        Appearance.style(cell: cell)
         return cell
     }
-    */
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    func configureTextCell(tableView: UITableView, indexPath: IndexPath, row: InfoRow) -> TextViewTableViewCell {
+        let cell = tableView.dequeueReusableCell(ofType: TextViewTableViewCell.self, for: indexPath)
+        cell.textView.text = row.title
+        return cell
     }
-    */
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    func configureImageCell(tableView: UITableView, indexPath: IndexPath, row: ImageRow) -> ImageTableViewCell {
+        let cell = tableView.dequeueReusableCell(ofType: ImageTableViewCell.self, for: indexPath)
+        cell.configureCell(image: row.image)
+        return cell
     }
-    */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+}
 
+// MARK: - Data Model
+
+protocol PhotoDetailsRow {}
+
+struct InfoRow: PhotoDetailsRow {
+    let title: String
+    let callback: () -> Void
+}
+
+struct ImageRow: PhotoDetailsRow {
+    let image: UIImage?
+    let callback: () -> Void
+}
+
+struct PhotoDetailSection {
+    let rows: [PhotoDetailsRow]
+}
+
+class PhotoDetailDataSource {
+
+    let asset: StoryAsset
+    weak var presenter: UIViewController?
+    var sections = [PhotoDetailSection]()
+
+    init(asset: StoryAsset, presenter: UIViewController) {
+        self.asset = asset
+
+        updateSections()
     }
-    */
 
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    func updateSections() {
+        sections = [
+            buildPhotoSection(),
+            buildInfoSection()
+        ]
     }
-    */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func buildPhotoSection() -> PhotoDetailSection {
+        let image = buildRowImage()
+        let row = ImageRow(image: image) { [weak self] in
+            self?.showImage()
+        }
+        return PhotoDetailSection(rows: [row])
     }
-    */
+
+    func buildRowImage() -> UIImage? {
+        let size = CGSize(width: 300, height: 100)
+
+        if let image = ImageResizer.shared.resizedImage(identifier: asset.uuid.uuidString, size: size) {
+            return image
+        }
+        let folderManager = SessionManager.shared.folderManager
+        guard
+            let bookmark = asset.bookmark,
+            let url = folderManager.urlFromBookmark(bookmark: bookmark),
+            let image = UIImage(contentsOfFile: url.path)
+        else {
+            return nil
+        }
+
+        return ImageResizer.shared.resizeImage(image: image, identifier: asset.uuid.uuidString, fillingSize: size)
+    }
+
+    func buildInfoSection() -> PhotoDetailSection {
+        var rows = [InfoRow]()
+
+        rows.append(InfoRow(title: asset.caption, callback: {
+
+        }))
+
+        return PhotoDetailSection(rows: rows)
+    }
+
+    func section(indexPath: IndexPath) -> PhotoDetailSection? {
+        return sections[indexPath.section]
+    }
+
+    func row(indexPath: IndexPath) -> PhotoDetailsRow? {
+        return sections[indexPath.section].rows[indexPath.row]
+    }
+
+}
+
+extension PhotoDetailDataSource {
+
+    func showImage() {
+        let folderManager = SessionManager.shared.folderManager
+        guard
+            let bookmark = asset.bookmark,
+            let url = folderManager.urlFromBookmark(bookmark: bookmark),
+            let image = UIImage(contentsOfFile: url.path)
+        else {
+            return
+        }
+
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .imageView) as! ImageViewController
+        controller.image = image
+        controller.modalPresentationStyle = .fullScreen
+        controller.modalTransitionStyle = .crossDissolve
+        presenter?.present(controller, animated: true)
+    }
 
 }

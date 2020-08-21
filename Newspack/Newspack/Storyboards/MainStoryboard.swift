@@ -18,6 +18,7 @@ class MainStoryboard {
         case web = "WebViewController"
         case folder = "FolderViewController"
         case imageView = "ImageViewController"
+        case photoDetails = "PhotoDetailViewController"
     }
 
     static func instantiateViewController(withIdentifier identifier: Identifier) -> UIViewController {
