@@ -26,7 +26,6 @@ class PhotoDetailViewController: UITableViewController {
     func configureCells() {
         tableView.register(SimpleTableViewCell.self, forCellReuseIdentifier: SimpleTableViewCell.reuseIdentifier)
         tableView.register(UINib(nibName: "ImageTableViewCell", bundle: nil), forCellReuseIdentifier: ImageTableViewCell.reuseIdentifier)
-        tableView.register(UINib(nibName: "TextViewTableViewCell", bundle: nil), forCellReuseIdentifier: TextViewTableViewCell.reuseIdentifier)
     }
 
     func configureNavbar() {
@@ -55,28 +54,35 @@ extension PhotoDetailViewController {
         return photoDataSource.sections[section].rows.count
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let row = photoDataSource.row(indexPath: indexPath) else {
+            return
+        }
+        row.callback()
+    }
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let row = photoDataSource.row(indexPath: indexPath) else {
             fatalError()
         }
 
-        switch row {
-        case is InfoRow:
-            return configureTextCell(tableView: tableView, indexPath: indexPath, row: row as! InfoRow)
-        case is ImageRow:
+        if row is ImageRow {
             return configureImageCell(tableView: tableView, indexPath: indexPath, row: row as! ImageRow)
-        default:
-            break
         }
 
-        let cell = tableView.dequeueReusableCell(withIdentifier: SimpleTableViewCell.reuseIdentifier, for: indexPath)
-        Appearance.style(cell: cell)
-        return cell
+        return configureInfoCell(tableView: tableView, indexPath: indexPath, row: row as! InfoRow)
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let sec = photoDataSource.sections[section]
+        return sec.title
     }
 
     func configureTextCell(tableView: UITableView, indexPath: IndexPath, row: InfoRow) -> TextViewTableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: TextViewTableViewCell.self, for: indexPath)
         cell.textView.text = row.title
+
         return cell
     }
 
@@ -86,14 +92,32 @@ extension PhotoDetailViewController {
         return cell
     }
 
+    func configureInfoCell(tableView: UITableView, indexPath: IndexPath, row: InfoRow) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SimpleTableViewCell.reuseIdentifier, for: indexPath)
+        cell.accessoryType = .disclosureIndicator
+
+        if row.title.count > 0 {
+            cell.textLabel?.text = row.title
+            Appearance.style(cell: cell)
+        } else {
+            cell.textLabel?.text = row.placeholder
+            Appearance.style(placeholderCell: cell)
+        }
+
+        return cell
+    }
+
 }
 
 // MARK: - Data Model
 
-protocol PhotoDetailsRow {}
+protocol PhotoDetailsRow {
+    var callback: () -> Void { get }
+}
 
 struct InfoRow: PhotoDetailsRow {
     let title: String
+    let placeholder: String
     let callback: () -> Void
 }
 
@@ -103,6 +127,7 @@ struct ImageRow: PhotoDetailsRow {
 }
 
 struct PhotoDetailSection {
+    let title: String?
     let rows: [PhotoDetailsRow]
 }
 
@@ -114,14 +139,24 @@ class PhotoDetailDataSource {
 
     init(asset: StoryAsset, presenter: UIViewController) {
         self.asset = asset
+        self.presenter = presenter
 
         updateSections()
+    }
+
+    func section(indexPath: IndexPath) -> PhotoDetailSection? {
+        return sections[indexPath.section]
+    }
+
+    func row(indexPath: IndexPath) -> PhotoDetailsRow? {
+        return sections[indexPath.section].rows[indexPath.row]
     }
 
     func updateSections() {
         sections = [
             buildPhotoSection(),
-            buildInfoSection()
+            buildCaptionSection(),
+            buildAltSection()
         ]
     }
 
@@ -130,11 +165,14 @@ class PhotoDetailDataSource {
         let row = ImageRow(image: image) { [weak self] in
             self?.showImage()
         }
-        return PhotoDetailSection(rows: [row])
+        return PhotoDetailSection(title: nil, rows: [row])
     }
 
     func buildRowImage() -> UIImage? {
-        let size = CGSize(width: 300, height: 100)
+        let height = CGFloat(ImageTableViewCell.imageHeight)
+        let width = presenter?.view.readableContentGuide.layoutFrame.width ?? height * 2
+
+        let size = CGSize(width: width, height: height)
 
         if let image = ImageResizer.shared.resizedImage(identifier: asset.uuid.uuidString, size: size) {
             return image
@@ -151,22 +189,28 @@ class PhotoDetailDataSource {
         return ImageResizer.shared.resizeImage(image: image, identifier: asset.uuid.uuidString, fillingSize: size)
     }
 
-    func buildInfoSection() -> PhotoDetailSection {
+    func buildCaptionSection() -> PhotoDetailSection {
         var rows = [InfoRow]()
 
-        rows.append(InfoRow(title: asset.caption, callback: {
-
+        let placeholder = NSLocalizedString("Enter a caption", comment: "Instruction. A prompt to enter a caption for an image.")
+        rows.append(InfoRow(title: asset.caption, placeholder: placeholder, callback: {
+            // TODO: Edit caption.
         }))
 
-        return PhotoDetailSection(rows: rows)
+        let title = NSLocalizedString("Caption", comment: "Noun. An image caption.")
+        return PhotoDetailSection(title: title, rows: rows)
     }
 
-    func section(indexPath: IndexPath) -> PhotoDetailSection? {
-        return sections[indexPath.section]
-    }
+    func buildAltSection() -> PhotoDetailSection {
+        var rows = [InfoRow]()
 
-    func row(indexPath: IndexPath) -> PhotoDetailsRow? {
-        return sections[indexPath.section].rows[indexPath.row]
+        let placeholder = NSLocalizedString("Enter alt text", comment: "Instruction. A prompt to enter alt text for an image.")
+        rows.append(InfoRow(title: asset.caption, placeholder: placeholder, callback: {
+            // TODO: Edit alt text.
+        }))
+
+        let title = NSLocalizedString("Alt Text", comment: "Noun. The name of the Alternative Text attribute of an HTML image tag.")
+        return PhotoDetailSection(title: title, rows: rows)
     }
 
 }
