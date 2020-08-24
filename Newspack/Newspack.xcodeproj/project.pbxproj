@@ -46,6 +46,9 @@
 		E6051DEF23075F8A005AAF0B /* DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6051DEE23075F8A005AAF0B /* DateTests.swift */; };
 		E6051DF123076191005AAF0B /* DictionaryMergeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6051DF023076191005AAF0B /* DictionaryMergeTests.swift */; };
 		E605418F2369E1920078D978 /* Diagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = E605418E2369E1920078D978 /* Diagnostics.swift */; };
+		E605B32F24F4499F00E1768B /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E605B32D24F4499F00E1768B /* TextFieldTableViewCell.swift */; };
+		E605B33024F4499F00E1768B /* TextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E605B32E24F4499F00E1768B /* TextFieldTableViewCell.xib */; };
+		E605B33224F44B1300E1768B /* TextFieldViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E605B33124F44B1300E1768B /* TextFieldViewController.swift */; };
 		E606E71924D8AED9000DD9C5 /* ToolbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E606E71824D8AED9000DD9C5 /* ToolbarViewController.swift */; };
 		E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */; };
 		E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */; };
@@ -316,6 +319,9 @@
 		E6051DEE23075F8A005AAF0B /* DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTests.swift; sourceTree = "<group>"; };
 		E6051DF023076191005AAF0B /* DictionaryMergeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryMergeTests.swift; sourceTree = "<group>"; };
 		E605418E2369E1920078D978 /* Diagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diagnostics.swift; sourceTree = "<group>"; };
+		E605B32D24F4499F00E1768B /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		E605B32E24F4499F00E1768B /* TextFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		E605B33124F44B1300E1768B /* TextFieldViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldViewController.swift; sourceTree = "<group>"; };
 		E606E71824D8AED9000DD9C5 /* ToolbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewController.swift; sourceTree = "<group>"; };
 		E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteStoreTests.swift; sourceTree = "<group>"; };
 		E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStoreTests.swift; sourceTree = "<group>"; };
@@ -845,6 +851,8 @@
 				E604EE4824C774A80015D284 /* UserView.swift */,
 				E6D2193E24EF27F90011A2C1 /* ImageTableViewCell.swift */,
 				E6D2193F24EF27F90011A2C1 /* ImageTableViewCell.xib */,
+				E605B32D24F4499F00E1768B /* TextFieldTableViewCell.swift */,
+				E605B32E24F4499F00E1768B /* TextFieldTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -866,6 +874,7 @@
 				E6D0F28024EDC6C000DBE52E /* PhotoDetailViewController.swift */,
 				E66E85A024CFA1010056E8AB /* StoryNavigationController.swift */,
 				E6D0F28224EDC6F800DBE52E /* ImageViewController.swift */,
+				E605B33124F44B1300E1768B /* TextFieldViewController.swift */,
 				E65469F824C7A1950083FAA5 /* WebViewController.swift */,
 				E694469D24DB3FA100D0BF56 /* MediaCaptureController.swift */,
 				E694469F24DB3FB100D0BF56 /* MediaPickerViewController.swift */,
@@ -1254,6 +1263,7 @@
 				E6AB672924E88182003D5D2A /* VideoTableViewCell.xib in Resources */,
 				E6138FDF2211FE88004E5B91 /* LaunchScreen.storyboard in Resources */,
 				E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */,
+				E605B33024F4499F00E1768B /* TextFieldTableViewCell.xib in Resources */,
 				E6D2194124EF27F90011A2C1 /* ImageTableViewCell.xib in Resources */,
 				E6AB672424E88182003D5D2A /* AudioTableViewCell.xib in Resources */,
 				E6138FDC2211FE88004E5B91 /* Assets.xcassets in Resources */,
@@ -1521,9 +1531,11 @@
 				E6190C4B24BF8A540060D00A /* ColorStudio.swift in Sources */,
 				E6D44DEF234BDB8400B51438 /* MediaStore.swift in Sources */,
 				E66CCA172303527D00F1CA59 /* PostItem+CoreDataClass.swift in Sources */,
+				E605B33224F44B1300E1768B /* TextFieldViewController.swift in Sources */,
 				E636C264234FD16F00564B63 /* MediaApiActions.swift in Sources */,
 				E690D57223722BB700676B1D /* PhotoLibraryViewController.swift in Sources */,
 				E602E68522C15ECC00795CBA /* RemoteSiteSettings.swift in Sources */,
+				E605B32F24F4499F00E1768B /* TextFieldTableViewCell.swift in Sources */,
 				E68B2A0323048E510021283C /* EditorAttachmentDelegate.swift in Sources */,
 				E68A965E246098C700BE664B /* NSObject+Helpers.swift in Sources */,
 				E6A7C06D2257A42400CC2191 /* UserServiceRemote.swift in Sources */,
