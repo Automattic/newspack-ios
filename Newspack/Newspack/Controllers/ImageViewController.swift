@@ -1,4 +1,5 @@
 import UIKit
+import WordPressUI
 
 /// A controller that displays an image. The image can be pinched and zoomed,
 /// or zoomed in/out by double tapping.
@@ -8,6 +9,12 @@ class ImageViewController: UIViewController {
 
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var imageView: UIImageView!
+
+    lazy var flingableViewHandler: FlingableViewHandler = {
+        let handler = FlingableViewHandler(targetView: self.scrollView)
+        handler.delegate = self
+        return handler
+    }()
 
     lazy var doubleTapRecognizer: UITapGestureRecognizer = {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(recognizer:)))
@@ -44,6 +51,7 @@ class ImageViewController: UIViewController {
         super.viewDidLoad()
         configureImage()
         configureGestures()
+        configureFlingableViewHandler()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +82,10 @@ class ImageViewController: UIViewController {
         imageView.sizeToFit()
         scrollView.contentSize = img.size
         centerImage()
+    }
+
+    func configureFlingableViewHandler() {
+        flingableViewHandler.isActive = scrollView.zoomScale == scrollView.minimumZoomScale
     }
 
     func centerImage() {
@@ -134,4 +146,23 @@ extension ImageViewController: UIScrollViewDelegate {
         scrollView.contentInset = UIEdgeInsets(top: y, left: x, bottom: 0, right: 0)
     }
 
+}
+
+// MARK: - Flingable View Handler Delegate
+extension ImageViewController: FlingableViewHandlerDelegate {
+
+    func flingableViewHandlerDidBeginRecognizingGesture(_ handler: FlingableViewHandler) {
+        scrollView.isMultipleTouchEnabled = false
+    }
+
+    func flingableViewHandlerWasCancelled(_ handler: FlingableViewHandler) {
+        scrollView.isMultipleTouchEnabled = true
+    }
+
+    func flingableViewHandlerDidEndRecognizingGesture(_ handler: FlingableViewHandler) {
+        let time = DispatchTime.now() + 0.2
+        DispatchQueue.main.asyncAfter(deadline: time) { [weak self] in
+            self?.dismiss(animated: true, completion: nil)
+        }
+    }
 }
