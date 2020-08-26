@@ -42,7 +42,16 @@ class AccountDetailsStoreTests: BaseTest {
 
         XCTAssertNotNil(receipt)
 
-        let expect = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (_) -> Bool in
+        let expect = expectation(forNotification: .NSManagedObjectContextObjectsDidChange, object: CoreDataManager.shared.mainContext) { (notification) -> Bool in
+            guard
+                let objects = notification.userInfo![NSInsertedObjectsKey] as? NSSet,
+                (objects.contains { (object) -> Bool in
+                    return object is AccountDetails
+                })
+            else {
+                return false
+            }
+
             XCTAssertNotNil(account.details)
             XCTAssertEqual(remoteUser.email, account.details!.email)
             return true
