@@ -40,6 +40,10 @@ class TextFieldViewController: UITableViewController {
         navigationItem.title = model.title
     }
 
+    private func configureSave() {
+        saveButton.isEnabled = textField?.text != model.text
+    }
+
 }
 
 // MARK: - Actions
@@ -88,11 +92,13 @@ extension TextFieldViewController {
         // We only have one cell, so this works okay.
         textField = cell.textField
         textField?.on(.editingChanged, call: { [weak self] textField in
-            self?.saveButton.isEnabled = (textField.text?.characterCount ?? 0) > 0
+            self?.configureSave()
         })
 
         textField?.placeholder = model.placeholder
         textField?.text = model.text
+
+        configureSave()
 
         return cell
     }
@@ -110,9 +116,11 @@ extension TextFieldViewController {
 // MARK: - Text Field Delegate
 
 extension TextFieldViewController: UITextFieldDelegate {
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         saveChanges()
         dismiss()
         return true
     }
+
 }
