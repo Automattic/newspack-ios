@@ -611,7 +611,7 @@
         <!--Image-->
         <scene sceneID="1Yb-Pc-f3E">
             <objects>
-                <viewController storyboardIdentifier="ImageViewController" title="Image" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LaR-r9-IOg" customClass="ImageViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImageViewController" title="Image" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LaR-r9-IOg" customClass="ImageViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sUq-Ib-kJu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

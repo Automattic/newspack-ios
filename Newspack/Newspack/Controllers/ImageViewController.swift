@@ -56,7 +56,20 @@ class ImageViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        // Because we do not have final view geometry when this is called we'll
+        // hide the image, then center and animate its appearance later.
+        imageView.alpha = 0
+    }
+
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
         centerImage()
+        UIView.animate(withDuration: 0.3) { [weak self] in
+            self?.imageView.alpha = 1
+        }
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -141,7 +154,7 @@ extension ImageViewController: UIScrollViewDelegate {
         let w = scrollView.bounds.size.width - scrollView.contentSize.width
         let h = scrollView.bounds.size.height - scrollView.contentSize.height
         let x = max(w / 2, 0)
-        let y = max(h / 2, 0)
+        var y = max(h / 2, 0)
 
         scrollView.contentInset = UIEdgeInsets(top: y, left: x, bottom: 0, right: 0)
     }
