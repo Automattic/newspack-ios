@@ -213,7 +213,7 @@ class PhotoDetailDataSource {
     private func buildAltSection() -> PhotoDetailSection {
         var rows = [InfoRow]()
 
-        let title = asset.attachmentInfo?.altText ?? ""
+        let title = asset.altText ?? ""
         rows.append(InfoRow(title: title, placeholder: Constants.altPlaceholder, callback: { [weak self] in
             self?.showEditAltText()
         }))
@@ -269,7 +269,7 @@ extension PhotoDetailDataSource {
 
     private func showEditAltText() {
         let title = Constants.altTitle
-        let text = asset.caption
+        let text = asset.altText
         let placeholder = Constants.altTitle
         let instructions = Constants.altPlaceholder
 

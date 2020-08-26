@@ -126,8 +126,6 @@
 		E65875A823A811F100185C75 /* MediaItemStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A723A811F100185C75 /* MediaItemStoreTests.swift */; };
 		E65875AA23A8139500185C75 /* StagedMediaImporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */; };
 		E65875AC23A813EA00185C75 /* StagedMediaStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875AB23A813EA00185C75 /* StagedMediaStoreTests.swift */; };
-		E65F1A2924E5D63000C9D04E /* AttachmentInfo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A2724E5D63000C9D04E /* AttachmentInfo+CoreDataClass.swift */; };
-		E65F1A2A24E5D63000C9D04E /* AttachmentInfo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65F1A2824E5D63000C9D04E /* AttachmentInfo+CoreDataProperties.swift */; };
 		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
 		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
 		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
@@ -405,8 +403,6 @@
 		E65875A723A811F100185C75 /* MediaItemStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemStoreTests.swift; sourceTree = "<group>"; };
 		E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedMediaImporterTests.swift; sourceTree = "<group>"; };
 		E65875AB23A813EA00185C75 /* StagedMediaStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StagedMediaStoreTests.swift; sourceTree = "<group>"; };
-		E65F1A2724E5D63000C9D04E /* AttachmentInfo+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AttachmentInfo+CoreDataClass.swift"; sourceTree = "<group>"; };
-		E65F1A2824E5D63000C9D04E /* AttachmentInfo+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AttachmentInfo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
 		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
 		E66B7D4422162754004355D3 /* replace_secrets.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = replace_secrets.rb; sourceTree = "<group>"; };
@@ -774,8 +770,6 @@
 				E66CC9F92303527A00F1CA59 /* AccountCapabilities+CoreDataProperties.swift */,
 				E66CCA012303527C00F1CA59 /* AccountDetails+CoreDataClass.swift */,
 				E66CC9F82303527900F1CA59 /* AccountDetails+CoreDataProperties.swift */,
-				E65F1A2724E5D63000C9D04E /* AttachmentInfo+CoreDataClass.swift */,
-				E65F1A2824E5D63000C9D04E /* AttachmentInfo+CoreDataProperties.swift */,
 				E66CC9F02303527800F1CA59 /* Media+CoreDataClass.swift */,
 				E66CC9FD2303527C00F1CA59 /* Media+CoreDataProperties.swift */,
 				E67B9D5E236775FB00860A6C /* MediaCache+CoreDataClass.swift */,
@@ -1448,7 +1442,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E606E71924D8AED9000DD9C5 /* ToolbarViewController.swift in Sources */,
-				E65F1A2924E5D63000C9D04E /* AttachmentInfo+CoreDataClass.swift in Sources */,
 				E6710A1722CE9F040036156E /* FadeTransitionController.swift in Sources */,
 				E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */,
 				E66CCA1D2303527D00F1CA59 /* AccountDetails+CoreDataClass.swift in Sources */,
@@ -1557,7 +1550,6 @@
 				E602E68D22C1634900795CBA /* SiteApiActions.swift in Sources */,
 				E63EECD7234289DD00669FFC /* PostApiService.swift in Sources */,
 				E623C6F62220516600F9865C /* ApiCredentials.swift in Sources */,
-				E65F1A2A24E5D63000C9D04E /* AttachmentInfo+CoreDataProperties.swift in Sources */,
 				E66CCA1A2303527D00F1CA59 /* Post+CoreDataClass.swift in Sources */,
 				E61AE63C2237373E00E6A489 /* StoreContainer.swift in Sources */,
 				E63FF0EC24AA864C0002A32F /* URL+FileReference.swift in Sources */,

@@ -4,10 +4,6 @@ import CoreData
 @objc(StoryAsset)
 public class StoryAsset: NSManagedObject, TextNoteCellProvider, PhotoCellProvider, VideoCellProvider, AudioCellProvider {
 
-    var caption: String! {
-        return attachmentInfo?.caption ?? ""
-    }
-
     public override func willSave() {
         super.willSave()
 

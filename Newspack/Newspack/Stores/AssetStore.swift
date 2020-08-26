@@ -176,7 +176,6 @@ extension AssetStore {
         asset.date = Date()
         asset.uuid = UUID()
         asset.folder = storyFolder
-        asset.attachmentInfo = AttachmentInfo(context: context)
 
         return asset
     }
@@ -312,33 +311,27 @@ extension AssetStore {
     }
 
     func updateCaption(assetID: UUID, caption: String) {
-        guard
-            let asset = getStoryAssetByID(uuid: assetID),
-            let info = asset.attachmentInfo
-        else {
+        guard let asset = getStoryAssetByID(uuid: assetID) else {
             return
         }
 
-        let objID = info.objectID
+        let objID = asset.objectID
         CoreDataManager.shared.performOnWriteContext { context in
-            let info = context.object(with: objID) as! AttachmentInfo
-            info.caption = caption
+            let asset = context.object(with: objID) as! StoryAsset
+            asset.caption = caption
             CoreDataManager.shared.saveContext(context: context)
         }
     }
 
     func updateAltText(assetID: UUID, altText: String) {
-        guard
-            let asset = getStoryAssetByID(uuid: assetID),
-            let info = asset.attachmentInfo
-        else {
+        guard let asset = getStoryAssetByID(uuid: assetID) else {
             return
         }
 
-        let objID = info.objectID
+        let objID = asset.objectID
         CoreDataManager.shared.performOnWriteContext { context in
-            let info = context.object(with: objID) as! AttachmentInfo
-            info.altText = altText
+            let asset = context.object(with: objID) as! StoryAsset
+            asset.altText = altText
             CoreDataManager.shared.saveContext(context: context)
         }
     }

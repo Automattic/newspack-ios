@@ -1,7 +1,7 @@
 import UIKit
 
 protocol TextNoteCellProvider {
-    var text: String? { get }
+    var text: String! { get }
 }
 
 class TextNoteTableViewCell: UITableViewCell {
