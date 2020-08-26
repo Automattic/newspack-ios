@@ -11,8 +11,13 @@ class FolderViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureCells()
         configureStyle()
         configureTitle()
+    }
+
+    private func configureCells() {
+        tableView.register(UINib(nibName: "TextFieldTableViewCell", bundle: nil), forCellReuseIdentifier: TextFieldTableViewCell.reuseIdentifier)
     }
 
     private func configureStyle() {
@@ -73,7 +78,7 @@ extension FolderViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldCell.reuseIdentifier, for: indexPath) as! TextFieldCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.reuseIdentifier, for: indexPath) as! TextFieldTableViewCell
         Appearance.style(cell: cell)
         cell.delegate = self
 
@@ -112,31 +117,11 @@ extension FolderViewController {
 // MARK: - Text Field Delegate
 
 extension FolderViewController: UITextFieldDelegate {
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         saveStoryTitle()
         dismiss(animated: true, completion: nil)
         return true
-    }
-}
-
-class TextFieldCell: UITableViewCell {
-
-    @IBOutlet var textField: UITextField!
-
-    var delegate: UITextFieldDelegate? {
-        get {
-            return textField.delegate
-        }
-        set {
-            textField.delegate = newValue
-        }
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        textField.font = .tableViewText
-        textField.textColor = .text
     }
 
 }

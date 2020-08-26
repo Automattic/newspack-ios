@@ -453,35 +453,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="TextFieldCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextFieldCell" id="Ico-hJ-m17" customClass="TextFieldCell" customModule="Newspack" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="46"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ico-hJ-m17" id="4Jz-Uz-hka">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Placeholder" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1Pa-zE-YIR">
-                                            <rect key="frame" x="16" y="4" width="343" height="36.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="36" id="PCL-yf-oLw"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                            <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                        </textField>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="1Pa-zE-YIR" secondAttribute="bottom" constant="5.5" id="Tyd-M3-b0p"/>
-                                        <constraint firstItem="1Pa-zE-YIR" firstAttribute="leading" secondItem="4Jz-Uz-hka" secondAttribute="leading" constant="16" id="YOK-A6-oxe"/>
-                                        <constraint firstItem="1Pa-zE-YIR" firstAttribute="top" secondItem="4Jz-Uz-hka" secondAttribute="top" constant="4" id="nkk-SJ-9Tn"/>
-                                        <constraint firstAttribute="trailing" secondItem="1Pa-zE-YIR" secondAttribute="trailing" constant="16" id="u0c-pf-sbM"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="textField" destination="1Pa-zE-YIR" id="uQe-Cq-r5i"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="RTl-op-Js6" id="EaH-2r-eJ7"/>
                             <outlet property="delegate" destination="RTl-op-Js6" id="E9K-aG-Qqz"/>
