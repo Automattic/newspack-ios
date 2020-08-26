@@ -1,4 +1,5 @@
 import UIKit
+import CoreData
 
 /// Displays details about a photo asset
 ///
@@ -21,6 +22,17 @@ class PhotoDetailViewController: UITableViewController {
         configureNavbar()
         configureToolbar()
         configureStyle()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        // This is a little annoying but it's the simplest mechanism to refresh
+        // cells after an edit.
+        if photoDataSource.needsRefresh {
+            photoDataSource.reload()
+            tableView.reloadData()
+        }
     }
 
     func configureCells() {
@@ -79,13 +91,6 @@ extension PhotoDetailViewController {
         return sec.title
     }
 
-    func configureTextCell(tableView: UITableView, indexPath: IndexPath, row: InfoRow) -> TextViewTableViewCell {
-        let cell = tableView.dequeueReusableCell(ofType: TextViewTableViewCell.self, for: indexPath)
-        cell.textView.text = row.title
-
-        return cell
-    }
-
     func configureImageCell(tableView: UITableView, indexPath: IndexPath, row: ImageRow) -> ImageTableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: ImageTableViewCell.self, for: indexPath)
         cell.configureCell(image: row.image)
@@ -98,6 +103,7 @@ extension PhotoDetailViewController {
 
         if row.title.count > 0 {
             cell.textLabel?.text = row.title
+            cell.textLabel?.numberOfLines = 0
             Appearance.style(cell: cell)
         } else {
             cell.textLabel?.text = row.placeholder
@@ -133,14 +139,19 @@ struct PhotoDetailSection {
 
 class PhotoDetailDataSource {
 
-    let asset: StoryAsset
-    weak var presenter: UIViewController?
-    var sections = [PhotoDetailSection]()
+    private let asset: StoryAsset
+    private weak var presenter: UIViewController?
+    private(set) var sections = [PhotoDetailSection]()
+    private(set) var needsRefresh = false
 
     init(asset: StoryAsset, presenter: UIViewController) {
         self.asset = asset
         self.presenter = presenter
 
+        updateSections()
+    }
+
+    func reload() {
         updateSections()
     }
 
@@ -152,7 +163,7 @@ class PhotoDetailDataSource {
         return sections[indexPath.section].rows[indexPath.row]
     }
 
-    func updateSections() {
+    private func updateSections() {
         sections = [
             buildPhotoSection(),
             buildCaptionSection(),
@@ -160,7 +171,7 @@ class PhotoDetailDataSource {
         ]
     }
 
-    func buildPhotoSection() -> PhotoDetailSection {
+    private func buildPhotoSection() -> PhotoDetailSection {
         let image = buildRowImage()
         let row = ImageRow(image: image) { [weak self] in
             self?.showImage()
@@ -168,7 +179,7 @@ class PhotoDetailDataSource {
         return PhotoDetailSection(title: nil, rows: [row])
     }
 
-    func buildRowImage() -> UIImage? {
+    private func buildRowImage() -> UIImage? {
         let height = CGFloat(ImageTableViewCell.imageHeight)
         let width = presenter?.view.readableContentGuide.layoutFrame.width ?? height * 2
 
@@ -189,35 +200,38 @@ class PhotoDetailDataSource {
         return ImageResizer.shared.resizeImage(image: image, identifier: asset.uuid.uuidString, fillingSize: size)
     }
 
-    func buildCaptionSection() -> PhotoDetailSection {
+    private func buildCaptionSection() -> PhotoDetailSection {
         var rows = [InfoRow]()
 
-        let placeholder = NSLocalizedString("Enter a caption", comment: "Instruction. A prompt to enter a caption for an image.")
-        rows.append(InfoRow(title: asset.caption, placeholder: placeholder, callback: {
-            // TODO: Edit caption.
+        rows.append(InfoRow(title: asset.caption, placeholder: Constants.captionPlaceholder, callback: { [weak self] in
+            self?.showEditCaption()
         }))
 
-        let title = NSLocalizedString("Caption", comment: "Noun. An image caption.")
-        return PhotoDetailSection(title: title, rows: rows)
+        return PhotoDetailSection(title: Constants.captionTitle, rows: rows)
     }
 
-    func buildAltSection() -> PhotoDetailSection {
+    private func buildAltSection() -> PhotoDetailSection {
         var rows = [InfoRow]()
 
-        let placeholder = NSLocalizedString("Enter alt text", comment: "Instruction. A prompt to enter alt text for an image.")
-        rows.append(InfoRow(title: asset.caption, placeholder: placeholder, callback: {
-            // TODO: Edit alt text.
+        let title = asset.attachmentInfo?.altText ?? ""
+        rows.append(InfoRow(title: title, placeholder: Constants.altPlaceholder, callback: { [weak self] in
+            self?.showEditAltText()
         }))
 
-        let title = NSLocalizedString("Alt Text", comment: "Noun. The name of the Alternative Text attribute of an HTML image tag.")
-        return PhotoDetailSection(title: title, rows: rows)
+        return PhotoDetailSection(title: Constants.altTitle, rows: rows)
     }
 
+    struct Constants {
+        static let captionTitle = NSLocalizedString("Caption", comment: "Noun. An image caption.")
+        static let captionPlaceholder = NSLocalizedString("Enter a caption", comment: "Instruction. A prompt to enter a caption for an image.")
+        static let altTitle = NSLocalizedString("Alt Text", comment: "Noun. The name of the Alternative Text attribute of an HTML image tag.")
+        static let altPlaceholder = NSLocalizedString("Enter alt text", comment: "Instruction. A prompt to enter alt text for an image.")
+    }
 }
 
 extension PhotoDetailDataSource {
 
-    func showImage() {
+    private func showImage() {
         let folderManager = SessionManager.shared.folderManager
         guard
             let bookmark = asset.bookmark,
@@ -232,6 +246,56 @@ extension PhotoDetailDataSource {
         controller.modalPresentationStyle = .fullScreen
         controller.modalTransitionStyle = .crossDissolve
         presenter?.present(controller, animated: true)
+    }
+
+    private func showEditCaption() {
+        let title = Constants.captionTitle
+        let text = asset.caption
+        let placeholder = Constants.captionTitle
+        let instructions = Constants.captionPlaceholder
+
+        let model = TextFieldModel(title: title,
+                                   text: text,
+                                   placeholder: placeholder,
+                                   instructions: instructions) { [weak self] (newValue) in
+                                    self?.handleEditCaption(newValue: newValue)
+        }
+
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .textField) as! TextFieldViewController
+        controller.model = model
+
+        presenter?.navigationController?.pushViewController(controller, animated: true)
+    }
+
+    private func showEditAltText() {
+        let title = Constants.altTitle
+        let text = asset.caption
+        let placeholder = Constants.altTitle
+        let instructions = Constants.altPlaceholder
+
+        let model = TextFieldModel(title: title,
+                                   text: text,
+                                   placeholder: placeholder,
+                                   instructions: instructions) { [weak self] (newValue) in
+                                    self?.handleEditAltText(newValue: newValue)
+        }
+
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .textField) as! TextFieldViewController
+        controller.model = model
+
+        presenter?.navigationController?.pushViewController(controller, animated: true)
+    }
+
+    private func handleEditCaption(newValue: String?) {
+        let action = AssetAction.updateCaption(assetID: asset.uuid, caption: newValue ?? "")
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+        needsRefresh = true
+    }
+
+    private func handleEditAltText(newValue: String?) {
+        let action = AssetAction.updateAltText(assetID: asset.uuid, altText: newValue ?? "")
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+        needsRefresh = true
     }
 
 }
