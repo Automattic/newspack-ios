@@ -166,7 +166,7 @@ extension AssetStore {
     ///   - context: A NSManagedObjectContext to use.
     /// - Returns: A new StoryAsset
     ///
-    func createAsset(type: StoryAssetType ,name: String, url: URL?, storyFolder: StoryFolder, in context: NSManagedObjectContext) -> StoryAsset {
+    func createAsset(type: StoryAssetType, name: String, url: URL?, storyFolder: StoryFolder, in context: NSManagedObjectContext) -> StoryAsset {
         let asset = StoryAsset(context: context)
         if let url = url {
             asset.bookmark = folderManager.bookmarkForURL(url: url)
