@@ -9,9 +9,9 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
         static let done = NSLocalizedString("Done", comment: "Verb (past participle). Title of a control to disable editing when finished.")
     }
 
+    @IBOutlet var editButton: UIButton!
     @IBOutlet var sortControl: UISegmentedControl!
     @IBOutlet var syncButton: UIBarButtonItem!
-    @IBOutlet var editButton: UIBarButtonItem!
     @IBOutlet var tableView: UITableView!
 
     private var dataSource: AssetDataSource!
@@ -24,6 +24,7 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
         configureSortControl()
         configureNavbar()
         configureStyle()
+        configureEditButton()
         tableView.tableFooterView = UIView()
     }
 
@@ -57,11 +58,16 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
         }
         navigationItem.title = currentStory.name
         syncButton.image = .gridicon(.cloudUpload)
-        editButton.title = Constants.edit
     }
 
     func configureStyle() {
         Appearance.style(view: view, tableView: tableView)
+    }
+
+    func configureEditButton() {
+        let title = tableView.isEditing ? Constants.done : Constants.edit
+        editButton.setTitle(title, for: .normal)
+        editButton.isHidden = !dataSource.isSortable
     }
 
 }
@@ -75,18 +81,19 @@ extension AssetsViewController {
         SessionManager.shared.sessionDispatcher.dispatch(action)
 
         tableView.isEditing = false
+        configureEditButton()
+
         // refresh data source.
         dataSource.refresh()
     }
 
-    @IBAction func handleToggleEditing(sender: UIBarButtonItem) {
+    @IBAction func handleToggleEditing(sender: UIButton) {
         if tableView.isEditing {
-            editButton.title = Constants.edit
             tableView.setEditing(false, animated: true)
         } else if StoreContainer.shared.assetStore.canSortAssets {
-            editButton.title = Constants.done
             tableView.setEditing(true, animated: true)
         }
+        configureEditButton()
     }
 
     @IBAction func handleSyncTapped(sender: UIBarButtonItem) {
@@ -230,6 +237,11 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
         return StoreContainer.shared.assetStore.getResultsController()
     }()
 
+    var isSortable: Bool {
+        let mode = StoreContainer.shared.assetStore.sortOrganizer.selectedMode
+        return mode.rules.first?.field == "sorted"
+    }
+
     // Hang on to a reference to the tableView. We'll use it to know when to
     // animate changes.
     weak var tableView: UITableView?
@@ -314,8 +326,7 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
     }
 
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        let mode = StoreContainer.shared.assetStore.sortOrganizer.selectedMode
-        return mode.rules.first?.field == "sorted"
+        return isSortable
     }
 
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
