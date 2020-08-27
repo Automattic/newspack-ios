@@ -325,7 +325,8 @@
                                         </connections>
                                     </segmentedControl>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PRZ-Np-Cex">
-                                        <rect key="frame" x="283.5" y="7" width="30" height="30"/>
+                                        <rect key="frame" x="275.5" y="5.5" width="30" height="33"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Edit"/>
                                         <connections>
                                             <action selector="handleToggleEditingWithSender:" destination="NWk-Co-Z8t" eventType="touchUpInside" id="mgg-qt-4DC"/>
@@ -346,7 +347,7 @@
                                     <constraint firstAttribute="bottom" secondItem="AMB-nt-ccw" secondAttribute="bottom" id="MX9-eX-bou"/>
                                     <constraint firstAttribute="trailing" secondItem="AMB-nt-ccw" secondAttribute="trailing" id="ZFs-b2-u4Z"/>
                                     <constraint firstItem="iLK-I6-MuO" firstAttribute="centerX" secondItem="4KS-uW-XyS" secondAttribute="centerX" id="bus-Nq-SZy"/>
-                                    <constraint firstItem="PRZ-Np-Cex" firstAttribute="leading" secondItem="iLK-I6-MuO" secondAttribute="trailing" constant="16" id="eGv-K1-Aup"/>
+                                    <constraint firstItem="PRZ-Np-Cex" firstAttribute="leading" secondItem="iLK-I6-MuO" secondAttribute="trailing" constant="8" id="eGv-K1-Aup"/>
                                     <constraint firstAttribute="height" constant="44" id="pyr-ic-t2l"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PRZ-Np-Cex" secondAttribute="trailing" priority="750" id="tcF-q9-JCe"/>
                                     <constraint firstItem="AMB-nt-ccw" firstAttribute="leading" secondItem="4KS-uW-XyS" secondAttribute="leading" id="ymL-Fz-Nj1"/>
