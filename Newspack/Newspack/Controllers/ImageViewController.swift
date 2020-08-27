@@ -10,20 +10,20 @@ class ImageViewController: UIViewController {
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var imageView: UIImageView!
 
-    lazy var flingableViewHandler: FlingableViewHandler = {
+    private lazy var flingableViewHandler: FlingableViewHandler = {
         let handler = FlingableViewHandler(targetView: self.scrollView)
         handler.delegate = self
         return handler
     }()
 
-    lazy var doubleTapRecognizer: UITapGestureRecognizer = {
+    private lazy var doubleTapRecognizer: UITapGestureRecognizer = {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(recognizer:)))
         recognizer.numberOfTapsRequired = 2
         imageView.addGestureRecognizer(recognizer)
         return recognizer
     }()
 
-    lazy var tapRecognizer: UITapGestureRecognizer = {
+    private lazy var tapRecognizer: UITapGestureRecognizer = {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(recognizer:)))
         recognizer.numberOfTapsRequired = 1
         recognizer.require(toFail: self.doubleTapRecognizer)
@@ -82,12 +82,12 @@ class ImageViewController: UIViewController {
         }, completion: nil)
     }
 
-    func configureGestures() {
+    private func configureGestures() {
         _ = doubleTapRecognizer
         _ = tapRecognizer
     }
 
-    func configureImage() {
+    private func configureImage() {
         guard let img = image else {
             return
         }
@@ -97,11 +97,11 @@ class ImageViewController: UIViewController {
         centerImage()
     }
 
-    func configureFlingableViewHandler() {
+    private func configureFlingableViewHandler() {
         flingableViewHandler.isActive = scrollView.zoomScale == scrollView.minimumZoomScale
     }
 
-    func centerImage() {
+    private func centerImage() {
         guard let image = imageView.image else {
             return
         }
@@ -154,9 +154,10 @@ extension ImageViewController: UIScrollViewDelegate {
         let w = scrollView.bounds.size.width - scrollView.contentSize.width
         let h = scrollView.bounds.size.height - scrollView.contentSize.height
         let x = max(w / 2, 0)
-        var y = max(h / 2, 0)
+        let y = max(h / 2, 0)
 
         scrollView.contentInset = UIEdgeInsets(top: y, left: x, bottom: 0, right: 0)
+        configureFlingableViewHandler()
     }
 
 }
@@ -173,9 +174,6 @@ extension ImageViewController: FlingableViewHandlerDelegate {
     }
 
     func flingableViewHandlerDidEndRecognizingGesture(_ handler: FlingableViewHandler) {
-        let time = DispatchTime.now() + 0.2
-        DispatchQueue.main.asyncAfter(deadline: time) { [weak self] in
-            self?.dismiss(animated: true, completion: nil)
-        }
+        dismiss(animated: true, completion: nil)
     }
 }

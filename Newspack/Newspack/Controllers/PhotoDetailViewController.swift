@@ -93,6 +93,7 @@ extension PhotoDetailViewController {
 
     func configureImageCell(tableView: UITableView, indexPath: IndexPath, row: ImageRow) -> ImageTableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: ImageTableViewCell.self, for: indexPath)
+        cell.selectionStyle = .none
         cell.configureCell(image: row.image)
         return cell
     }
