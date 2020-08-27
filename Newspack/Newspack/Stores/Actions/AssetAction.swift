@@ -10,4 +10,6 @@ enum AssetAction: Action {
     case createAssetFor(text: String)
     case deleteAsset(assetID: UUID)
     case importMedia(assets: [PHAsset])
+    case updateCaption(assetID: UUID, caption: String)
+    case updateAltText(assetID: UUID, altText: String)
 }

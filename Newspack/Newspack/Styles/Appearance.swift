@@ -53,6 +53,21 @@ class Appearance {
         cell.imageView?.tintColor = .neutral(.shade30)
     }
 
+    static func style(placeholderCell cell: UITableViewCell) {
+        cell.backgroundColor = .cellBackground // semantic pass-thru to basicBackground.
+
+        cell.textLabel?.textColor = .placeholderText
+        cell.textLabel?.font = .tableViewText
+        cell.textLabel?.sizeToFit()
+
+        cell.detailTextLabel?.font = .tableViewSubtitle
+        cell.detailTextLabel?.sizeToFit()
+        // we only set the text subtle color, so that system colors are used otherwise
+        cell.detailTextLabel?.textColor = .placeholderText
+
+        cell.imageView?.tintColor = .neutral(.shade30)
+    }
+
     static func style(centeredFooter footer: UITableViewHeaderFooterView) {
         footer.textLabel?.textColor = .textSubtle
         footer.textLabel?.textAlignment = .center

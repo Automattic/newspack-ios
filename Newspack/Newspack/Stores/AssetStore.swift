@@ -74,7 +74,10 @@ class AssetStore: Store {
                 deleteAsset(assetID: uuid)
             case .importMedia(let assets):
                 importMedia(assets: assets)
-                break
+            case .updateCaption(let assetID, let caption):
+                updateCaption(assetID: assetID, caption: caption)
+            case .updateAltText(let assetID, let altText):
+                updateAltText(assetID: assetID, altText: altText)
             }
         }
     }
@@ -112,9 +115,8 @@ extension AssetStore {
                 return
             }
             let folder = context.object(with: objID) as! StoryFolder
-            let asset = self.createAsset(name: name, url: nil, storyFolder: folder, in: context)
+            let asset = self.createAsset(type: .textNote, name: name, url: nil, storyFolder: folder, in: context)
             asset.text = text
-            asset.assetType = .textNote
             CoreDataManager.shared.saveContext(context: context)
             DispatchQueue.main.async {
                 onComplete?()
@@ -140,11 +142,10 @@ extension AssetStore {
             let folder = context.object(with: objID) as! StoryFolder
 
             for url in urls {
-                let asset = self.createAsset(name: url.lastPathComponent, url: url, storyFolder: folder, in: context)
                 // TODO: There is more to do depending on the type of item.
                 // But we'll deal with this as we build out the individual features.
                 // For testing purposes we'll default to image for now.
-                asset.assetType = .image
+                let _ = self.createAsset(type: .image, name: url.lastPathComponent, url: url, storyFolder: folder, in: context)
             }
 
             CoreDataManager.shared.saveContext(context: context)
@@ -158,17 +159,19 @@ extension AssetStore {
     /// Create a new StoryAsset.
     ///
     /// - Parameters:
+    ///   - type: The type of asset.
     ///   - name: The asset's name.
     ///   - url: The file URL of the asset if there is a corresponding file system object.
     ///   - storyFolder: The asset's StoryFolder.
     ///   - context: A NSManagedObjectContext to use.
     /// - Returns: A new StoryAsset
     ///
-    func createAsset(name: String, url: URL?, storyFolder: StoryFolder, in context: NSManagedObjectContext) -> StoryAsset {
+    func createAsset(type: StoryAssetType, name: String, url: URL?, storyFolder: StoryFolder, in context: NSManagedObjectContext) -> StoryAsset {
         let asset = StoryAsset(context: context)
         if let url = url {
             asset.bookmark = folderManager.bookmarkForURL(url: url)
         }
+        asset.assetType = type
         asset.name = assetName(from: name)
         asset.date = Date()
         asset.uuid = UUID()
@@ -304,6 +307,32 @@ extension AssetStore {
         }
         if errors.count > 0 {
             //TODO: Handle errors
+        }
+    }
+
+    func updateCaption(assetID: UUID, caption: String) {
+        guard let asset = getStoryAssetByID(uuid: assetID) else {
+            return
+        }
+
+        let objID = asset.objectID
+        CoreDataManager.shared.performOnWriteContext { context in
+            let asset = context.object(with: objID) as! StoryAsset
+            asset.caption = caption
+            CoreDataManager.shared.saveContext(context: context)
+        }
+    }
+
+    func updateAltText(assetID: UUID, altText: String) {
+        guard let asset = getStoryAssetByID(uuid: assetID) else {
+            return
+        }
+
+        let objID = asset.objectID
+        CoreDataManager.shared.performOnWriteContext { context in
+            let asset = context.object(with: objID) as! StoryAsset
+            asset.altText = altText
+            CoreDataManager.shared.saveContext(context: context)
         }
     }
 

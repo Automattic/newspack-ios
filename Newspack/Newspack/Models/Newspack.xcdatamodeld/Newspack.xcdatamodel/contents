@@ -28,14 +28,6 @@
         <attribute name="username" attributeType="String"/>
         <relationship name="account" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Account" inverseName="details" inverseEntity="Account"/>
     </entity>
-    <entity name="AttachmentInfo" representedClassName="AttachmentInfo" syncable="YES">
-        <attribute name="altText" attributeType="String" defaultValueString=""/>
-        <attribute name="attachmentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="caption" attributeType="String" defaultValueString=""/>
-        <attribute name="pageURL" attributeType="URI"/>
-        <attribute name="srcURL" attributeType="URI"/>
-        <relationship name="asset" maxCount="1" deletionRule="Nullify" destinationEntity="StoryAsset" inverseName="attachmentInfo" inverseEntity="StoryAsset"/>
-    </entity>
     <entity name="Media" representedClassName="Media" syncable="YES">
         <attribute name="altText" attributeType="String"/>
         <attribute name="authorID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -259,17 +251,21 @@
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="statuses" inverseEntity="Site"/>
     </entity>
     <entity name="StoryAsset" representedClassName="StoryAsset" syncable="YES">
+        <attribute name="altText" attributeType="String" defaultValueString=""/>
         <attribute name="bookmark" optional="YES" attributeType="Binary"/>
+        <attribute name="caption" attributeType="String" defaultValueString=""/>
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lastSync" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="modified" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="order" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="pageURL" optional="YES" attributeType="URI"/>
+        <attribute name="remoteID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sorted" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="srcURL" optional="YES" attributeType="URI"/>
+        <attribute name="text" attributeType="String" defaultValueString=""/>
         <attribute name="type" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
-        <relationship name="attachmentInfo" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="AttachmentInfo" inverseName="asset" inverseEntity="AttachmentInfo"/>
         <relationship name="folder" maxCount="1" deletionRule="Nullify" destinationEntity="StoryFolder" inverseName="assets" inverseEntity="StoryFolder"/>
     </entity>
     <entity name="StoryFolder" representedClassName="StoryFolder" syncable="YES">
@@ -309,9 +305,8 @@
         <element name="StagedEdits" positionX="-868.6484375" positionY="-275.66015625" width="128" height="118"/>
         <element name="StagedMedia" positionX="-2097.73828125" positionY="129.59765625" width="128" height="208"/>
         <element name="Status" positionX="-1600.76953125" positionY="-2.2265625" width="128" height="165"/>
-        <element name="StoryAsset" positionX="-1702.796875" positionY="382.8671875" width="128" height="223"/>
+        <element name="StoryAsset" positionX="-1702.796875" positionY="382.8671875" width="128" height="283"/>
         <element name="StoryFolder" positionX="-1515.86328125" positionY="210.171875" width="128" height="163"/>
         <element name="User" positionX="-976.9921875" positionY="-127.2734375" width="128" height="163"/>
-        <element name="AttachmentInfo" positionX="-1944" positionY="-828" width="128" height="133"/>
     </elements>
 </model>

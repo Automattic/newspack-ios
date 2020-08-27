@@ -95,13 +95,34 @@ extension AssetsViewController {
 
 }
 
+// MARK: - Cell Actions
+
+extension AssetsViewController {
+
+    func showImageDetail(asset: StoryAsset) {
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .photoDetails) as! PhotoDetailViewController
+        controller.asset = asset
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
+}
+
 // MARK: - TableViewDelegate methods
+
 extension AssetsViewController {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectSelectedRowWithAnimation(true)
         guard let asset = dataSource.object(at: indexPath) else {
             return
+        }
+
+        switch asset.assetType {
+        case .image:
+            showImageDetail(asset: asset)
+            return
+        default:
+            break
         }
 
         // HACK HACK HACK: Just for testing. Tap on a cell to change which section it should be sorted to.
@@ -124,9 +145,11 @@ extension AssetsViewController {
         }
         return proposedDestinationIndexPath
     }
+
 }
 
 // MARK: - DataSource related methods
+
 extension AssetsViewController {
 
     func cellFor(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> UITableViewCell {
@@ -194,6 +217,7 @@ extension AssetsViewController {
 }
 
 // MARK: - AssetDataSource
+
 class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
 
     // Receipt so we can respond to any emitted changes in the AssetStore.
@@ -347,6 +371,7 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
 }
 
 // MARK: - Fetched Results Controller Delegate methods
+
 extension AssetDataSource: NSFetchedResultsControllerDelegate {
 
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

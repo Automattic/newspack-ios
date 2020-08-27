@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:Newspack/Newspack/Models/StoryAsset+CoreDataProperties.swift">
+   </FileRef>
+   <FileRef
       location = "group:Newspack/Newspack.xcodeproj">
    </FileRef>
    <FileRef

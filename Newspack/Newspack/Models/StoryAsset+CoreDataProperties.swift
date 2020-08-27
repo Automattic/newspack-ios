@@ -25,8 +25,12 @@ extension StoryAsset {
     @NSManaged public var date: Date!
     @NSManaged public var lastSync: Date?
     @NSManaged public var modified: Date?
-    @NSManaged public var text: String?
+    @NSManaged public var text: String!
     @NSManaged public var sorted: Bool
+    @NSManaged public var altText: String!
+    @NSManaged public var caption: String!
+    @NSManaged public var remoteID: Int64
+    @NSManaged public var srcURL: URL?
+    @NSManaged public var pageURL: URL?
     @NSManaged public var folder: StoryFolder!
-    @NSManaged public var attachmentInfo: AttachmentInfo?
 }
