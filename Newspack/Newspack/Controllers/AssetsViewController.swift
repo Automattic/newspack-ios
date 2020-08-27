@@ -243,7 +243,7 @@ class AssetDataSource: UITableViewDiffableDataSource<String, NSManagedObjectID> 
     // animate changes.
     weak var tableView: UITableView?
 
-    override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Int, NSManagedObjectID>.CellProvider) {
+    override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<String, NSManagedObjectID>.CellProvider) {
         self.tableView = tableView
         super.init(tableView: tableView, cellProvider: cellProvider)
 
@@ -260,7 +260,7 @@ class AssetDataSource: UITableViewDiffableDataSource<String, NSManagedObjectID> 
     /// by the entities index path.
     ///
     /// - Parameter indexPath: The desired entity's index path.
-    /// - Returns: A story asset instance or nil.
+    /// - Returns: A story asset instance.
     ///
     func object(at indexPath: IndexPath) -> StoryAsset {
         return resultsController.object(at: indexPath)
