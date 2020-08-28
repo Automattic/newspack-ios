@@ -9,9 +9,9 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
         static let done = NSLocalizedString("Done", comment: "Verb (past participle). Title of a control to disable editing when finished.")
     }
 
+    @IBOutlet var editButton: UIButton!
     @IBOutlet var sortControl: UISegmentedControl!
     @IBOutlet var syncButton: UIBarButtonItem!
-    @IBOutlet var editButton: UIBarButtonItem!
     @IBOutlet var tableView: UITableView!
 
     private var dataSource: AssetDataSource!
@@ -24,6 +24,7 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
         configureSortControl()
         configureNavbar()
         configureStyle()
+        configureEditButton()
         tableView.tableFooterView = UIView()
     }
 
@@ -34,10 +35,9 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
     }
 
     func configureDataSource() {
-        dataSource = AssetDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, storyAsset) -> UITableViewCell? in
-            return self?.cellFor(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+        dataSource = AssetDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, objectID) -> UITableViewCell? in
+            return self?.cellFor(tableView: tableView, indexPath: indexPath)
         })
-        dataSource.update()
     }
 
     func configureSortControl() {
@@ -57,11 +57,16 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
         }
         navigationItem.title = currentStory.name
         syncButton.image = .gridicon(.cloudUpload)
-        editButton.title = Constants.edit
     }
 
     func configureStyle() {
         Appearance.style(view: view, tableView: tableView)
+    }
+
+    func configureEditButton() {
+        let title = tableView.isEditing ? Constants.done : Constants.edit
+        editButton.setTitle(title, for: .normal)
+        editButton.isHidden = !dataSource.isSortable
     }
 
 }
@@ -75,18 +80,19 @@ extension AssetsViewController {
         SessionManager.shared.sessionDispatcher.dispatch(action)
 
         tableView.isEditing = false
+        configureEditButton()
+
         // refresh data source.
         dataSource.refresh()
     }
 
-    @IBAction func handleToggleEditing(sender: UIBarButtonItem) {
+    @IBAction func handleToggleEditing(sender: UIButton) {
         if tableView.isEditing {
-            editButton.title = Constants.edit
             tableView.setEditing(false, animated: true)
         } else if StoreContainer.shared.assetStore.canSortAssets {
-            editButton.title = Constants.done
             tableView.setEditing(true, animated: true)
         }
+        configureEditButton()
     }
 
     @IBAction func handleSyncTapped(sender: UIBarButtonItem) {
@@ -113,9 +119,7 @@ extension AssetsViewController {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectSelectedRowWithAnimation(true)
-        guard let asset = dataSource.object(at: indexPath) else {
-            return
-        }
+        let asset = dataSource.object(at: indexPath)
 
         switch asset.assetType {
         case .image:
@@ -152,16 +156,17 @@ extension AssetsViewController {
 
 extension AssetsViewController {
 
-    func cellFor(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> UITableViewCell {
-        switch storyAsset.assetType {
+    func cellFor(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
+        let asset = dataSource.object(at: indexPath)
+        switch asset.assetType {
         case .textNote:
-            return configureTextCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+            return configureTextCell(tableView: tableView, indexPath: indexPath, storyAsset: asset)
         case .image:
-            return configurePhotoCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+            return configurePhotoCell(tableView: tableView, indexPath: indexPath, storyAsset: asset)
         case .video:
-            return configureVideoCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+            return configureVideoCell(tableView: tableView, indexPath: indexPath, storyAsset: asset)
         case .audioNote:
-            return configureAudioCell(tableView: tableView, indexPath: indexPath, storyAsset: storyAsset)
+            return configureAudioCell(tableView: tableView, indexPath: indexPath, storyAsset: asset)
         }
     }
 
@@ -218,7 +223,7 @@ extension AssetsViewController {
 
 // MARK: - AssetDataSource
 
-class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
+class AssetDataSource: UITableViewDiffableDataSource<String, NSManagedObjectID> {
 
     // Receipt so we can respond to any emitted changes in the AssetStore.
     private var receipt: Any?
@@ -230,11 +235,15 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
         return StoreContainer.shared.assetStore.getResultsController()
     }()
 
+    var isSortable: Bool {
+        return StoreContainer.shared.assetStore.canSortAssets
+    }
+
     // Hang on to a reference to the tableView. We'll use it to know when to
     // animate changes.
     weak var tableView: UITableView?
 
-    override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Int, StoryAsset>.CellProvider) {
+    override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<String, NSManagedObjectID>.CellProvider) {
         self.tableView = tableView
         super.init(tableView: tableView, cellProvider: cellProvider)
 
@@ -251,9 +260,9 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
     /// by the entities index path.
     ///
     /// - Parameter indexPath: The desired entity's index path.
-    /// - Returns: A story asset instance or nil.
+    /// - Returns: A story asset instance.
     ///
-    func object(at indexPath: IndexPath) -> StoryAsset? {
+    func object(at indexPath: IndexPath) -> StoryAsset {
         return resultsController.object(at: indexPath)
     }
 
@@ -262,27 +271,12 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
         resultsController = StoreContainer.shared.assetStore.getResultsController()
         resultsController.delegate = self
         try? resultsController.performFetch()
-        update()
     }
 
     /// Updates the current datasource snapshot. Changes are animated only if
     /// the tableView has a window (and is presumed visible).
     ///
-    func update() {
-
-        guard let sections = resultsController.sections else {
-            return
-        }
-        var snapshot = NSDiffableDataSourceSnapshot<Int, StoryAsset>()
-
-        for (i, section) in sections.enumerated() {
-            snapshot.appendSections([i])
-            guard let items = section.objects as? [StoryAsset] else {
-                continue
-            }
-            snapshot.appendItems(items, toSection: i)
-        }
-
+    func update(snapshot: NSDiffableDataSourceSnapshot<String, NSManagedObjectID>) {
         // Note: When animating cells, for some reason individual cells are not
         // redrawn, nor are section titles. (i.e. cellForRow is not being called).
         // Needs further exploration to figure out why.
@@ -314,8 +308,7 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
     }
 
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        let mode = StoreContainer.shared.assetStore.sortOrganizer.selectedMode
-        return mode.rules.first?.field == "sorted"
+        return isSortable
     }
 
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -374,8 +367,8 @@ class AssetDataSource: UITableViewDiffableDataSource<Int, StoryAsset> {
 
 extension AssetDataSource: NSFetchedResultsControllerDelegate {
 
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        update()
-   }
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
+        update(snapshot: snapshot as NSDiffableDataSourceSnapshot<String, NSManagedObjectID>)
+    }
 
 }

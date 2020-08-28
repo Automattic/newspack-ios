@@ -27,10 +27,9 @@ class FoldersViewController: ToolbarViewController, UITableViewDelegate {
     }
 
     func configureDataSource() {
-        dataSource = FolderDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, storyFolder) -> UITableViewCell? in
-            return self?.cellFor(tableView: tableView, indexPath: indexPath, storyFolder: storyFolder)
+        dataSource = FolderDataSource(tableView: tableView, cellProvider: { [weak self] (tableView, indexPath, _) -> UITableViewCell? in
+            return self?.cellFor(tableView: tableView, indexPath: indexPath)
         })
-        dataSource.update()
     }
 
     func configureSortControls() {
@@ -163,11 +162,12 @@ extension FoldersViewController {
 
 extension FoldersViewController {
 
-    func cellFor(tableView: UITableView, indexPath: IndexPath, storyFolder: StoryFolder) -> UITableViewCell {
+    func cellFor(tableView: UITableView, indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: StoryTableViewCell.reuseIdentifier, for: indexPath) as? StoryTableViewCell else {
             fatalError("Cannot create new cell")
         }
 
+        let storyFolder = dataSource.object(at: indexPath)
         let current = storyFolder.uuid == StoreContainer.shared.folderStore.currentStoryFolderID
         cell.configure(story: storyFolder, current: current)
 
@@ -178,7 +178,7 @@ extension FoldersViewController {
 
 // MARK: - FolderDataSource
 
-class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, StoryFolder> {
+class FolderDataSource: UITableViewDiffableDataSource<String, NSManagedObjectID> {
 
     enum Section: CaseIterable {
         case main
@@ -200,7 +200,7 @@ class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, 
 
     private var sorting = false
 
-    override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<FolderDataSource.Section, StoryFolder>.CellProvider) {
+    override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<Int, NSManagedObjectID>.CellProvider) {
         self.tableView = tableView
         super.init(tableView: tableView, cellProvider: cellProvider)
 
@@ -213,30 +213,33 @@ class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, 
         try? resultsController.performFetch()
     }
 
+    /// A pass through method to get an entity from the backing results controller
+    /// by the entities index path.
+    ///
+    /// - Parameter indexPath: The desired entity's index path.
+    /// - Returns: A story folder instance.
+    ///
+    func object(at indexPath: IndexPath) -> StoryFolder {
+        return resultsController.object(at: indexPath)
+    }
+
     func sortBy(field: String, ascending: Bool) {
         let action = FolderAction.sortBy(field: field, ascending: ascending)
         SessionManager.shared.sessionDispatcher.dispatch(action)
 
+        // Set the sorting flag so we animate any changes.
+        sorting = true
         resultsController.fetchRequest.sortDescriptors = StoreContainer.shared.folderStore.sortMode.descriptors
         try? resultsController.performFetch()
-
-        sorting = true
-        update()
-        sorting = false
     }
 
     /// Updates the current datasource snapshot. Changes are animated only if
     /// the tableView has a window (and is presumed visible).
     ///
-    func update() {
-        guard let items = resultsController.fetchedObjects else {
-            return
-        }
-        var snapshot = NSDiffableDataSourceSnapshot<FolderDataSource.Section, StoryFolder>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(items)
-
+    func update(snapshot: NSDiffableDataSourceSnapshot<String, NSManagedObjectID>) {
         apply(snapshot, animatingDifferences: sorting, completion: nil)
+        // Clear the sorting flag now that we're done.
+        sorting = false
     }
 
     // MARK: - Overrides for cell deletion behaviors
@@ -250,8 +253,8 @@ class FolderDataSource: UITableViewDiffableDataSource<FolderDataSource.Section, 
 
 extension FolderDataSource: NSFetchedResultsControllerDelegate {
 
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        update()
-   }
+      func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
+         update(snapshot: snapshot as NSDiffableDataSourceSnapshot<String, NSManagedObjectID>)
+     }
 
 }
