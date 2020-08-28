@@ -683,7 +683,6 @@
 		E6138FD02211FE86004E5B91 /* Newspack */ = {
 			isa = PBXGroup;
 			children = (
-				E62018A824F971A200D96AFF /* Newspack.entitlements */,
 				E6138FF922120368004E5B91 /* Api */,
 				E6138FF822120363004E5B91 /* Authentication */,
 				E6138FFE22120467004E5B91 /* Controllers */,
@@ -825,6 +824,7 @@
 			isa = PBXGroup;
 			children = (
 				E6138FE02211FE88004E5B91 /* Info.plist */,
+				E62018A824F971A200D96AFF /* Newspack.entitlements */,
 				E65469F624C78C420083FAA5 /* acknowledgements.htm */,
 			);
 			path = Resources;
