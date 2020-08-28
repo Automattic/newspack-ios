@@ -355,6 +355,8 @@
 		E61FC60B229F3361009E1748 /* remote-site-settings.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "remote-site-settings.json"; sourceTree = "<group>"; };
 		E61FC60D229F3377009E1748 /* remote-user-edit.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "remote-user-edit.json"; sourceTree = "<group>"; };
 		E61FC60F229F33C5009E1748 /* remote-user-view.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "remote-user-view.json"; sourceTree = "<group>"; };
+		E62018A824F971A200D96AFF /* Newspack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Newspack.entitlements; sourceTree = "<group>"; };
+		E62018A924F971DC00D96AFF /* NewspackShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NewspackShare.entitlements; sourceTree = "<group>"; };
 		E623C6F42220516600F9865C /* InfoPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoPlist.h; sourceTree = "<group>"; };
 		E623C6F52220516600F9865C /* ApiCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiCredentials.swift; sourceTree = "<group>"; };
 		E6241B95224EC8CD00B578F5 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
@@ -646,6 +648,7 @@
 		E60A250C2425418E003F3C81 /* NewspackShare */ = {
 			isa = PBXGroup;
 			children = (
+				E62018A924F971DC00D96AFF /* NewspackShare.entitlements */,
 				E60A250D2425418E003F3C81 /* ShareViewController.swift */,
 				E60A250F2425418E003F3C81 /* MainInterface.storyboard */,
 				E60A25122425418E003F3C81 /* Info.plist */,
@@ -680,6 +683,7 @@
 		E6138FD02211FE86004E5B91 /* Newspack */ = {
 			isa = PBXGroup;
 			children = (
+				E62018A824F971A200D96AFF /* Newspack.entitlements */,
 				E6138FF922120368004E5B91 /* Api */,
 				E6138FF822120363004E5B91 /* Authentication */,
 				E6138FFE22120467004E5B91 /* Controllers */,
@@ -1688,6 +1692,7 @@
 		E60A25172425418E003F3C81 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NewspackShare/NewspackShare.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PZYM8XX95Q;
 				INFOPLIST_FILE = NewspackShare/Info.plist;
@@ -1708,6 +1713,7 @@
 		E60A25182425418E003F3C81 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NewspackShare/NewspackShare.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PZYM8XX95Q;
 				INFOPLIST_FILE = NewspackShare/Info.plist;
@@ -1728,6 +1734,7 @@
 		E60A25192425418E003F3C81 /* Release-Alpha */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = NewspackShare/NewspackShare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
@@ -1873,6 +1880,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Newspack/Newspack.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PZYM8XX95Q;
 				INFOPLIST_FILE = "$(SRCROOT)/Newspack/Resources/Info.plist";
@@ -1894,6 +1902,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Newspack/Newspack.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = PZYM8XX95Q;
 				INFOPLIST_FILE = "$(SRCROOT)/Newspack/Resources/Info.plist";
@@ -2036,6 +2045,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Newspack/Newspack.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 99KV9Z6BKV;
