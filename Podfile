@@ -71,7 +71,6 @@ target 'Newspack' do
     project 'Newspack/Newspack.xcodeproj'
     shared_with_networking_pods
 
-#    pod 'CocoaLumberjack/Swift', '3.5.3'
     pod 'KeychainAccess', '3.2.0'
     pod 'AlamofireImage', '3.5.2'
 
