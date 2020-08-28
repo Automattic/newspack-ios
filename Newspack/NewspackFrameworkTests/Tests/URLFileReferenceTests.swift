@@ -1,6 +1,6 @@
 
 import XCTest
-@testable import Newspack
+@testable import NewspackFramework
 
 class URLFileReferenceTests: XCTestCase {
 

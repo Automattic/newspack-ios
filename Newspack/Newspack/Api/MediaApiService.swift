@@ -2,6 +2,7 @@ import Foundation
 import Alamofire
 import AlamofireImage
 import WordPressFlux
+import NewspackFramework
 
 class MediaApiService: ApiService {
 

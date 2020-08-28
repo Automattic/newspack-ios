@@ -1,6 +1,7 @@
 import Foundation
 import WordPressKit
 import WordPressFlux
+import NewspackFramework
 
 enum SessionState {
     case pending

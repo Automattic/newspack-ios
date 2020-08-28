@@ -3,7 +3,7 @@ import Foundation
 /// FolderManager provides a simplified interface for working with the file system.
 /// Operations are conducted relative to the current working folder.
 ///
-class FolderManager {
+public class FolderManager {
 
     // An instance of a FileManager
     private let fileManager: FileManager
@@ -13,14 +13,14 @@ class FolderManager {
 
     // The current working folder. This will be either the rootFolder or
     // one of its children.
-    private(set) var currentFolder: URL
+    public private(set) var currentFolder: URL
 
     /// A convenience method to create a new temporary directory and returns its URL.
     ///
     /// - Returns: A file url to the newly created temporary directory, or nil
     /// if the directory could not be created.
     ///
-    static func createTemporaryDirectory() -> URL? {
+    public static func createTemporaryDirectory() -> URL? {
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         return try? FileManager.default.url(for: .itemReplacementDirectory, in: .userDomainMask, appropriateFor: documentDirectory, create: true)
     }
@@ -32,7 +32,7 @@ class FolderManager {
     /// use as the root of any relative paths. The folder must be writable.
     /// If not specified the default rootFolder is the document directory.
     ///
-    init(rootFolder: URL? = nil) {
+    public init(rootFolder: URL? = nil) {
         fileManager = FileManager()
 
         guard let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
@@ -58,8 +58,7 @@ class FolderManager {
     ///
     /// - Parameter url: A file url to a folder.
     /// - Returns: true if the folder exists, otherwise false.
-
-    func folderExists(url: URL) -> Bool {
+    public func folderExists(url: URL) -> Bool {
         var isDirectory: ObjCBool = false
         let exists = fileManager.fileExists(atPath: url.path, isDirectory: &isDirectory)
         return exists && isDirectory.boolValue
@@ -74,7 +73,7 @@ class FolderManager {
     /// - Returns: The file URL of the folder or nil if the folder could not be
     /// created.
     ///
-    func createFolderAtPath(path: String, ifExistsAppendSuffix: Bool = false) -> URL? {
+    public func createFolderAtPath(path: String, ifExistsAppendSuffix: Bool = false) -> URL? {
         let url = urlForFolderAtPath(path: path, ifExistsAppendSuffix: ifExistsAppendSuffix)
 
         guard !folderExists(url: url) else {
@@ -100,7 +99,7 @@ class FolderManager {
     ///   a numberic index is appended to the path. Default is false.
     /// - Returns: A URL
     ///
-    func urlForFolderAtPath(path: String, ifExistsAppendSuffix: Bool = false) -> URL {
+    public func urlForFolderAtPath(path: String, ifExistsAppendSuffix: Bool = false) -> URL {
         var url = URL(fileURLWithPath: path, isDirectory: true, relativeTo: currentFolder).absoluteURL
 
         if !ifExistsAppendSuffix || !folderExists(url: url) {
@@ -125,7 +124,7 @@ class FolderManager {
     /// - Returns: true if successful, false otherwise.
     ///
     @discardableResult
-    func setCurrentFolder(url: URL) -> Bool {
+    public func setCurrentFolder(url: URL) -> Bool {
         var didSetCurrentFolder = false
 
         let relation = UnsafeMutablePointer<FileManager.URLRelationship>.allocate(capacity: 1)
@@ -148,7 +147,7 @@ class FolderManager {
 
     /// Reset the current folder to the root folder.
     ///
-    func resetCurrentFolder() {
+    public func resetCurrentFolder() {
         setCurrentFolder(url: rootFolder)
     }
 
@@ -158,7 +157,7 @@ class FolderManager {
     /// - Parameter url: A file URL to the parent folder.
     /// - Returns: An array of file URLs
     ///
-    func enumerateFolders(url: URL) -> [URL] {
+    public func enumerateFolders(url: URL) -> [URL] {
         var folders = [URL]()
         let keys: [URLResourceKey] = [.isDirectoryKey]
         do {
@@ -179,7 +178,7 @@ class FolderManager {
     /// - Parameter url: A file URL to the parent folder.
     /// - Returns: An array of file URLs
     ///
-    func enumerateFolderContents(url: URL) -> [URL] {
+    public func enumerateFolderContents(url: URL) -> [URL] {
         var contents = [URL]()
         do {
             contents = try fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles).map {
@@ -198,7 +197,7 @@ class FolderManager {
     /// - Returns: true if the folder was deleted, otherwise false
     ///
     @discardableResult
-    func deleteFolder(at source: URL) -> Bool {
+    public func deleteFolder(at source: URL) -> Bool {
         guard folderExists(url: source) else {
             return false
         }
@@ -211,7 +210,7 @@ class FolderManager {
     /// - Returns: true if the item was deleted, otherwise false
     ///
     @discardableResult
-    func deleteItem(at source: URL) -> Bool {
+    public func deleteItem(at source: URL) -> Bool {
         // Do not perform a delete operation on anything outside of our root folder.
         if !folder(rootFolder, contains: source) {
             return false
@@ -234,7 +233,7 @@ class FolderManager {
     ///   - destination: The new location for the folder.
     /// - Returns: true if successful, false otherwise
     ///
-    func moveFolder(at source: URL, to destination: URL) -> Bool {
+    public func moveFolder(at source: URL, to destination: URL) -> Bool {
         let name = sanitizedFolderName(name: destination.lastPathComponent)
         guard isValidFolderName(name: name) else {
             return false
@@ -264,7 +263,7 @@ class FolderManager {
     /// - Returns: The new URL of the folder, or nil if the folder could not be
     /// renamed.
     ///
-    func renameFolder(at source: URL, to name: String) -> URL? {
+    public func renameFolder(at source: URL, to name: String) -> URL? {
         let sanitizedName = sanitizedFolderName(name: name)
         var newURL = source.deletingLastPathComponent().appendingPathComponent(sanitizedName, isDirectory: true)
 
@@ -283,7 +282,7 @@ class FolderManager {
     /// - Parameter name: A prospective folder name.
     /// - Returns: The sanitized version of the name.
     ///
-    func sanitizedFolderName(name: String) -> String {
+    public func sanitizedFolderName(name: String) -> String {
         var sanitizedName = name.replacingOccurrences(of: "/", with: "-")
         sanitizedName = sanitizedName.replacingOccurrences(of: ".", with: "-")
         sanitizedName = sanitizedName.trimmingCharacters(in: CharacterSet(charactersIn: "-"))
@@ -296,7 +295,7 @@ class FolderManager {
     /// - Returns: true if valid, otherwise false.
     ///
     func isValidFolderName(name: String) -> Bool {
-        guard name.characterCount > 0 else {
+        guard !name.isEmpty else {
             return false
         }
         return true
@@ -335,7 +334,7 @@ class FolderManager {
     ///   - child: A file URL to the child folder.
     /// - Returns: true if there is a parent/child relationship.
     ///
-    func folder(_ folder: URL, isParentOf child: URL) -> Bool {
+    public func folder(_ folder: URL, isParentOf child: URL) -> Bool {
         let parent = child.deletingLastPathComponent()
         guard
             let folderRef = folder.getFileReferenceURL(),
@@ -351,7 +350,7 @@ class FolderManager {
     /// - Parameter url: A file URL.
     /// - Returns: Bookmark data or nil if there was an error.
     ///
-    func bookmarkForURL(url: URL) -> Data? {
+    public func bookmarkForURL(url: URL) -> Data? {
         do {
             return try url.bookmarkData()
         } catch {
@@ -367,7 +366,7 @@ class FolderManager {
     ///   - bookmarkIsStale: An inout bool indicating if the bookmark is stale.
     /// - Returns: A URL or nil if there was an error.
     ///
-    func urlFromBookmark(bookmark: Data, bookmarkIsStale: inout Bool) -> URL? {
+    public func urlFromBookmark(bookmark: Data, bookmarkIsStale: inout Bool) -> URL? {
         do {
             var isStale = false
             let url = try URL(resolvingBookmarkData: bookmark, bookmarkDataIsStale: &isStale)
@@ -390,7 +389,7 @@ class FolderManager {
     /// - Parameter bookmark: The bookmark data.
     /// - Returns: A URL or nil if there was an error.
     ///
-    func urlFromBookmark(bookmark: Data) -> URL? {
+    public func urlFromBookmark(bookmark: Data) -> URL? {
         var isStale = false
         return urlFromBookmark(bookmark: bookmark, bookmarkIsStale: &isStale)
     }

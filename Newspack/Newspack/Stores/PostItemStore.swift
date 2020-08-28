@@ -1,6 +1,7 @@
 import Foundation
 import CoreData
 import WordPressFlux
+import NewspackFramework
 
 enum PostItemStoreState {
     case ready

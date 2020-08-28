@@ -1,6 +1,7 @@
 import Foundation
 import CoreData
 import WordPressFlux
+import NewspackFramework
 
 /// Responsible for managing folder related things.
 ///

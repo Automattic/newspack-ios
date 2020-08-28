@@ -1,4 +1,5 @@
 import Foundation
+import NewspackFramework
 
 enum AccountSetupErrors: Error {
     case noValidSitesFound

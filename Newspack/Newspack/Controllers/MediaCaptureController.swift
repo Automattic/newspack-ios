@@ -2,6 +2,7 @@ import Foundation
 import CoreServices
 import UIKit
 import WPMediaPicker
+import NewspackFramework
 
 /// A convenience class encapsulating the config and boiler-plate for the
 /// WPMediaCapturePresenter

@@ -1,5 +1,6 @@
 import Foundation
 import WordPressFlux
+import NewspackFramework
 
 class PostApiService: ApiService {
 

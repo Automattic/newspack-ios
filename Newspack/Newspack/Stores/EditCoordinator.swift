@@ -2,6 +2,7 @@ import Foundation
 import WordPressFlux
 import Gutenberg
 import Aztec
+import NewspackFramework
 
 /// Provides a bridge between the Editor, and the content being edited.
 ///

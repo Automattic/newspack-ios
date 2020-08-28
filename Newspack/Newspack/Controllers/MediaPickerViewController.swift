@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import WPMediaPicker
+import NewspackFramework
 
 /// A convenience class for handling some WPNavigationMediaPickerViewController
 /// configuration and boiler-plate.

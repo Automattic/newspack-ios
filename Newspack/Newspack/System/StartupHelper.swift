@@ -1,5 +1,6 @@
 import Foundation
 import CoreData
+import NewspackFramework
 
 /// A helper class for wrangling tasks that should happen whenever the app is
 /// launched or a new session is started.

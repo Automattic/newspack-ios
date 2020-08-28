@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import NewspackFramework
 
 /// Responsible for resolving any differences between what is currently in the
 /// file system with what is currently stored in core data.

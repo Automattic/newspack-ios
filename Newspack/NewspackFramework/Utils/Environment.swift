@@ -1,8 +1,8 @@
 import Foundation
 
-class Environment {
+public class Environment {
 
-    static func isTesting() -> Bool {
+    public static func isTesting() -> Bool {
         return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
     }
 
