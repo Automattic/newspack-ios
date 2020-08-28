@@ -2,10 +2,11 @@ import Foundation
 
 extension UserDefaults {
 
-    static let testDefaults = UserDefaults(suiteName: "NewspackTests")!
+    private static let testDefaults = UserDefaults(suiteName: "NewspackTests")!
+    private static let groupDefaults = UserDefaults(suiteName: "group.com.automattic.newspack")!
 
     static var shared: UserDefaults {
-        return Environment.isTesting() ? testDefaults : standard
+        return Environment.isTesting() ? testDefaults : groupDefaults
     }
 
 }
