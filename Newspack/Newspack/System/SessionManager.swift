@@ -21,7 +21,7 @@ class SessionManager: StatefulStore<SessionState> {
 
     /// Used with UserDefaults to store the current site's uuid for later recovery.
     ///
-    private var currentSiteIDKey = "currentSiteIDKey"
+    private var currentSiteIDKey = AppConstants.currentSiteIDKey
 
     /// Read only.  The ActionDispatcher for the current session.
     ///
