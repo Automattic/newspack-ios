@@ -295,7 +295,7 @@ public class FolderManager {
     /// - Returns: true if valid, otherwise false.
     ///
     func isValidFolderName(name: String) -> Bool {
-        guard !name.isEmpty else {
+        guard !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return false
         }
         return true
