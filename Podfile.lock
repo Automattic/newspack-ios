@@ -196,6 +196,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (= 4.8.0)
   - AlamofireImage (= 3.5.2)
+  - CocoaLumberjack (= 3.5.3)
   - CocoaLumberjack/Swift (= 3.5.3)
   - Folly (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.18.0/react-native-gutenberg-bridge/third-party-podspecs/Folly.podspec.json`)
   - glog (from `https://raw.githubusercontent.com/wordpress-mobile/gutenberg-mobile/v1.18.0/react-native-gutenberg-bridge/third-party-podspecs/glog.podspec.json`)
@@ -387,6 +388,6 @@ SPEC CHECKSUMS:
   wpxmlrpc: 6a9bdd6ab9d1b159b384b0df0f3f39de9af4fecf
   yoga: 4e71c9a33abf45ba55af55ae9cbc86f4234bb2a9
 
-PODFILE CHECKSUM: d416148bd801db2ae643bffb7af0e9a9881e6ab1
+PODFILE CHECKSUM: f5a1f99c548b3edf7b73fc0be86123c604d51d8a
 
 COCOAPODS: 1.8.4
