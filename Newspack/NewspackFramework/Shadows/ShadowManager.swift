@@ -1,9 +1,16 @@
 import Foundation
 
+/// Manages saving and retrieving shadow sites and assets from shared defaults
+/// and wrangling files in shared storage.
+///
 public class ShadowManager {
 
-    // Creates a cannonical copy
-    public func storeSiteShadows() {
+    /// Stores the passed array of shadow sites in shared defaults.
+    /// This will overwrite whatever information is currently stored.
+    ///
+    /// - Parameter sites: An array of ShadowSite objects.
+    ///
+    public func storeShadowSites(sites: [ShadowSite]) {
         // create empty shadow array
         // Get sites
         // for each site
@@ -12,52 +19,95 @@ public class ShadowManager {
         // generate shadow folder
         // generate shadow site
         // get shadow site dictionary
+
         // add shadow site dictionary to shadow array
+        var arr = [[String: Any]]()
+
+        for site in sites {
+            arr.append(site.dictionary)
+        }
+
         // save shadow array in user defaults
+        UserDefaults.shared.set(arr, forKey: AppConstants.shadowSitesKey)
     }
 
-    // Creates an non-cannonical copy based on the last saved info. Might be out of date.
-    public func retrieveSiteShadows() {
-        // Get shadow array from user defaults
-        // create Shadow Site array
-        // for each shadow site dictionary in the shadow array
-        // create a shadowsite from the dictionary
-        // add the shadow site to the shadow site array
+    /// Retrieve any stored shadow sites from shared defaults. This returned
+    /// array should be considered non-cannonical and potentially out of date.
+    /// Use with caution.
+    ///
+    /// - Returns: An array of shadow sites or nil.
+    ///
+    public func retrieveSiteShadows() -> [ShadowSite]? {
+        guard let arr = UserDefaults.shared.object(forKey: AppConstants.shadowSitesKey) as? [[String: Any]] else {
+            return nil
+        }
+
+        var sites = [ShadowSite]()
+
+        for dict in arr {
+            sites.append(ShadowSite(dict: dict))
+        }
+
+        return sites
     }
 
-    // Store shadow assets in group user defaults
+    /// Store the supplied array of shadow assets in shared user defaults.
+    /// Existing info in user defaults is retained.
+    ///
+    /// - Parameter assets: An array of shadow assets.
+    ///
     public func storeShadowAssets(assets: [ShadowAsset]) {
-        // retrieve array of existing shadow assets from user defaults, or create new array
-        // for each asset
-        // get asset dictionary
-        // add to shadow array
-        // save shadow array to user defaults
+        var arr = assets
+
+        arr.append(contentsOf: retrieveShadowAssets())
+
+        UserDefaults.shared.set(arr, forKey: AppConstants.shadowAssetsKey)
     }
 
-    // Retrieve shadow assets from group user defaults
-    public func retrieveShadowAssets() {
-        // create shadow asset array
-        // retrieve array of existing shadow assets from user defaults, or create new array
-        // for item in array
-        // create shadow asset from dict
-        // add shadow asset to shadow asset array
-        // return
-    }
+    /// Retrieves the array of shadow assets currently stored in shared user defaults.
+    ///
+    /// - Returns: An array of shadow assets.
+    ///
+    public func retrieveShadowAssets() -> [ShadowAsset] {
+        var arr = [ShadowAsset]()
 
-    // TODO: Write file to group folder and return file URL.
-    public func saveInGroupStorage(rawAsset: Any) -> Data? {
-        // create group storage if needed.
-        return nil
-    }
+        if let existing = UserDefaults.shared.object(forKey: AppConstants.shadowAssetsKey) as? [[String: Any]] {
+            for dict in existing {
+                arr.append(ShadowAsset(dict: dict))
+            }
+        }
 
-    // Remove all shadow assets. Do this after importing.
+        return arr
+    }
 
     /// Removes the shadow asset dictionary fron shared defaults and
     /// removes all files from shared storage.
     ///
     public func clearShadowAssets() {
+        // Purge stored defaults.
         UserDefaults.shared.removeObject(forKey: AppConstants.shadowAssetsKey)
-        //TODO: remove files from shared storage.
+
+        guard let folderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppConstants.appGroupIdentifier) else {
+            LogWarn(message: "Unable to retrieve group directory URL.")
+            return
+        }
+
+        // Purge stored files.
+        let manager = FolderManager(rootFolder: folderURL)
+        if !manager.deleteContentsOfFolder(folder: folderURL) {
+            LogWarn(message: "There was an error deleting shadow asset files.")
+        }
+    }
+
+    /// Save the specified file to shared storage.
+    ///
+    /// - Parameter file: The file to save.
+    /// - Returns: File URL bookmark data for the saved file.
+    ///
+    public func saveInGroupStorage(file: Any) -> Data? {
+        // TODO: Write file to group folder and return file URL.
+        // create group storage if needed.
+        return nil
     }
 
 }
