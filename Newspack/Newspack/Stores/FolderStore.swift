@@ -241,6 +241,7 @@ extension FolderStore {
             DispatchQueue.main.async {
                 self?.selectDefaultStoryFolderIfNeeded()
                 onComplete?()
+                ShadowCaster.shared.castShadows()
             }
         }
     }
@@ -386,6 +387,7 @@ extension FolderStore {
             DispatchQueue.main.async {
                 self?.createDefaultStoryFolderIfNeeded()
                 onComplete?()
+                ShadowCaster.shared.castShadows()
             }
         }
     }

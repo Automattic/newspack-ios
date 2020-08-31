@@ -5,6 +5,8 @@ import Foundation
 ///
 public class ShadowManager {
 
+    public init() {}
+
     /// Stores the passed array of shadow sites in shared defaults.
     /// This will overwrite whatever information is currently stored.
     ///
@@ -37,7 +39,7 @@ public class ShadowManager {
     ///
     /// - Returns: An array of shadow sites or nil.
     ///
-    public func retrieveSiteShadows() -> [ShadowSite]? {
+    public func retrieveShadowSites() -> [ShadowSite]? {
         guard let arr = UserDefaults.shared.object(forKey: AppConstants.shadowSitesKey) as? [[String: Any]] else {
             return nil
         }

@@ -79,6 +79,7 @@
 		E61FA93E24FD76730060D301 /* ShadowAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FA93D24FD76730060D301 /* ShadowAsset.swift */; };
 		E61FA94024FD768C0060D301 /* ShadowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FA93F24FD768C0060D301 /* ShadowManager.swift */; };
 		E61FA94324FD777C0060D301 /* ModelConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FA94224FD777C0060D301 /* ModelConstants.swift */; };
+		E61FA94524FD9BC40060D301 /* ShadowCaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FA94424FD9BC40060D301 /* ShadowCaster.swift */; };
 		E61FC603229F2EEE009E1748 /* UserServiceRemoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FC602229F2EEE009E1748 /* UserServiceRemoteTests.swift */; };
 		E61FC605229F2F10009E1748 /* SiteServiceRemoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FC604229F2F10009E1748 /* SiteServiceRemoteTests.swift */; };
 		E61FC609229F329A009E1748 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61FC608229F329A009E1748 /* Loader.swift */; };
@@ -409,6 +410,7 @@
 		E61FA93D24FD76730060D301 /* ShadowAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowAsset.swift; sourceTree = "<group>"; };
 		E61FA93F24FD768C0060D301 /* ShadowManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowManager.swift; sourceTree = "<group>"; };
 		E61FA94224FD777C0060D301 /* ModelConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelConstants.swift; sourceTree = "<group>"; };
+		E61FA94424FD9BC40060D301 /* ShadowCaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowCaster.swift; sourceTree = "<group>"; };
 		E61FC602229F2EEE009E1748 /* UserServiceRemoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserServiceRemoteTests.swift; sourceTree = "<group>"; };
 		E61FC604229F2F10009E1748 /* SiteServiceRemoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteServiceRemoteTests.swift; sourceTree = "<group>"; };
 		E61FC608229F329A009E1748 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
@@ -821,6 +823,7 @@
 				E6034B1322529414007DB6DD /* UserAgent.swift */,
 				E605418E2369E1920078D978 /* Diagnostics.swift */,
 				E63FF0E724AA4ECD0002A32F /* Reconciler.swift */,
+				E61FA94424FD9BC40060D301 /* ShadowCaster.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -1823,6 +1826,7 @@
 				E6D44DF1234BDBA000B51438 /* MediaApiService.swift in Sources */,
 				E6AB672724E88182003D5D2A /* PhotoTableViewCell.swift in Sources */,
 				E694469E24DB3FA100D0BF56 /* MediaCaptureController.swift in Sources */,
+				E61FA94524FD9BC40060D301 /* ShadowCaster.swift in Sources */,
 				E66CCA0C2303527C00F1CA59 /* Media+CoreDataClass.swift in Sources */,
 				E692CA9F24CA2E6D008FB96B /* EventMonitor.swift in Sources */,
 				E677AAED24B4EED9000FAA3D /* AssetAction.swift in Sources */,
