@@ -12,7 +12,7 @@ class Diagnostics {
             return
         }
 
-        LogDebug(message: "Diagnostics: Counting entities in core data.")
+        LogInfo(message: "Counting entities in core data.")
 
         let names:[String] = model.entities.compactMap { (entity) -> String in
             guard !entity.isAbstract, let name = entity.name else {
@@ -37,14 +37,28 @@ class Diagnostics {
         }
 
         if counts.count == 0 {
-            LogDebug(message: "Diagnostics: Nothing saved in core data.")
+            LogInfo(message: "Nothing saved in core data.")
             return
         }
 
         for (k, v) in counts {
-            LogDebug(message: "\(k): has \(v) records.")
+            LogInfo(message: "\(k): has \(v) records.")
         }
     }
 
+
+    static func countShadows() {
+        LogInfo(message: "Counting shadows.")
+        let manager = ShadowManager.init()
+        guard let sites = manager.retrieveShadowSites() else {
+            LogInfo(message: "No shadows found.")
+            return
+        }
+        LogInfo(message: "Found \(sites.count) shadow site(s).")
+
+        for site in sites {
+            LogInfo(message: "Found \(site.stories.count) stories for \(site.title)")
+        }
+    }
 
 }
