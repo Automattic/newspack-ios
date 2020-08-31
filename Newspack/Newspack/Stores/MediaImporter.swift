@@ -3,6 +3,7 @@ import CoreData
 import CoreImage
 import CoreServices
 import Photos
+import NewspackFramework
 
 /// Errors thrown by the MediaImporter
 ///

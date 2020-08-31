@@ -1,5 +1,6 @@
 import Foundation
 import CoreData
+import NewspackFramework
 
 /// CoreDataManager is a singleton wrapper around a NSPersistentContainer.
 /// Its responsible for providing NSManagedObjectContexts and saving contexts.

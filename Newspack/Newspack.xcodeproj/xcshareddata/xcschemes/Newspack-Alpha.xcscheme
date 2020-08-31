@@ -58,6 +58,16 @@
                ReferencedContainer = "container:Newspack.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "E62018B824F9AB6700D96AFF"
+               BuildableName = "NewspackFrameworkTests.xctest"
+               BlueprintName = "NewspackFrameworkTests"
+               ReferencedContainer = "container:Newspack.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

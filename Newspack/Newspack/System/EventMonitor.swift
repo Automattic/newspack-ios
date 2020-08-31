@@ -1,4 +1,5 @@
 import Foundation
+import NewspackFramework
 
 /// EventMonitor provides a proxy mechanism for analytics tracking.
 /// Significant events may be dispatched via NSNotifications vs some custom type

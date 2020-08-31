@@ -2,6 +2,7 @@ import Foundation
 import CoreData
 import Photos
 import WordPressFlux
+import NewspackFramework
 
 /// Responsible for managing asset related things.
 ///

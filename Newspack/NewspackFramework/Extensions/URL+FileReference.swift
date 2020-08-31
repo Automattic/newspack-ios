@@ -7,7 +7,7 @@ extension URL {
     ///
     /// - Returns: An NSURL or nil if self is not a file URL.
     ///
-    func getFileReferenceURL() -> NSURL? {
+    public func getFileReferenceURL() -> NSURL? {
         return (self as NSURL).perform(#selector(NSURL.fileReferenceURL))?.takeUnretainedValue() as? NSURL
     }
 }

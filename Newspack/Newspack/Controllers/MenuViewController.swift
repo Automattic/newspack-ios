@@ -1,5 +1,6 @@
 import UIKit
 import Gridicons
+import NewspackFramework
 
 class MenuViewController: UITableViewController {
 

@@ -1,6 +1,7 @@
 import UIKit
 import WordPressFlux
 import WPMediaPicker
+import NewspackFramework
 
 struct SiteMenuRow {
     let title: String

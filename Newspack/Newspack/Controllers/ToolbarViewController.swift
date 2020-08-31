@@ -1,6 +1,7 @@
 import Foundation
 import Gridicons
 import WPMediaPicker
+import NewspackFramework
 
 /// The ToolbarViewController encapsulates common functionality around toolbar
 /// behaviors between the FoldersViewController and AssetsViewController.

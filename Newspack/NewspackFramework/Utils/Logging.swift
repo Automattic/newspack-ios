@@ -1,7 +1,7 @@
 import Foundation
 import CocoaLumberjack
 
-class Log {
+public class Log {
     private init() {}
 
     private static func fileName(filePath: String) -> String {
@@ -31,7 +31,7 @@ class Log {
         DDLogWarn("⚠️ WARNING: \(name) \(function): \(message)")
     }
 
-    static func setup() {
+    public static func setup() {
         DDLog.add(DDOSLogger.sharedInstance) // Uses os_log
         DDLog.add(DDTTYLogger.sharedInstance) // Uses the console
 

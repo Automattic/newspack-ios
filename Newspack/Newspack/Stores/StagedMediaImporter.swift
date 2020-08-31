@@ -3,6 +3,7 @@ import CoreData
 import CoreImage
 import MobileCoreServices
 import Photos
+import NewspackFramework
 
 enum ImporterError: Error {
     case unableToWriteFile

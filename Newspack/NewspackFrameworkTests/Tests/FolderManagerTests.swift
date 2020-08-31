@@ -1,5 +1,5 @@
 import XCTest
-@testable import Newspack
+@testable import NewspackFramework
 
 class FolderManagerTests: XCTestCase {
 

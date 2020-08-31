@@ -2,6 +2,7 @@ import Foundation
 import WordPressAuthenticator
 import WordPressFlux
 import Gridicons
+import NewspackFramework
 
 class AuthenticationManager {
 

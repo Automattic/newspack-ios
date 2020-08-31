@@ -1,4 +1,5 @@
 import UIKit
+import NewspackFramework
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

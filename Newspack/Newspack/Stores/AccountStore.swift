@@ -2,6 +2,7 @@ import Foundation
 import CoreData
 import KeychainAccess
 import WordPressFlux
+import NewspackFramework
 
 /// Responsible for managing account and keychain related things.
 ///

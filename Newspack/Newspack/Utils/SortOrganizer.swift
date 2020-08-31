@@ -1,5 +1,6 @@
 import Foundation
 import CoreData
+import NewspackFramework
 
 /// A struct that defines a single sort rule.
 ///

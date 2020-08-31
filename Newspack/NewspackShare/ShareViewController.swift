@@ -1,11 +1,3 @@
-//
-//  ShareViewController.swift
-//  NewspackShare
-//
-//  Created by aerych on 3/20/20.
-//  Copyright © 2020 Automattic. All rights reserved.
-//
-
 import UIKit
 import Social
 
@@ -17,8 +9,13 @@ class ShareViewController: SLComposeServiceViewController {
     }
 
     override func didSelectPost() {
-        // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
-    
+        // HACK: Temp debuging while wrangling the share extension.
+        let defaults = UserDefaults(suiteName: "group.com.automattic.newspack")!
+        let obj = defaults.string(forKey: "currentSiteIDKey")!
+        print(obj)
+
+
+
         // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
         self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
     }

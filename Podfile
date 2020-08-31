@@ -7,8 +7,9 @@ platform :ios, '13.0'
 plugin 'cocoapods-repo-update'
 workspace 'Newspack.xcworkspace'
 
-def shared_with_networking_pods
-    pod 'Alamofire', '4.8.0'
+def shared_pods
+  pod 'CocoaLumberjack', '3.5.3'
+  pod 'CocoaLumberjack/Swift', '3.5.3'
 end
 
 def gutenberg(options)
@@ -69,10 +70,10 @@ end
 ##
 target 'Newspack' do
     project 'Newspack/Newspack.xcodeproj'
-    shared_with_networking_pods
+    shared_pods
 
-    pod 'CocoaLumberjack/Swift', '3.5.3'
     pod 'KeychainAccess', '3.2.0'
+    pod 'Alamofire', '4.8.0'
     pod 'AlamofireImage', '3.5.2'
 
     pod 'WordPressAuthenticator', '~> 1.21.0'
@@ -94,3 +95,13 @@ target 'Newspack' do
 
 end
 
+
+
+## Newspack
+##
+target 'NewspackFramework' do
+  project 'Newspack/Newspack.xcodeproj'
+
+  shared_pods
+
+end

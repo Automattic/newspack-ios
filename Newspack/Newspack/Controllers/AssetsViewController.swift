@@ -1,6 +1,7 @@
 import UIKit
 import CoreData
 import WordPressFlux
+import NewspackFramework
 
 class AssetsViewController: ToolbarViewController, UITableViewDelegate {
 
