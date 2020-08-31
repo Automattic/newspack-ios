@@ -1,5 +1,8 @@
 import Foundation
 
+/// Stores select information about a story.
+/// Facilitates storage in shared defautls.
+///
 public struct ShadowStory {
     public let uuid: String
     public let title: String

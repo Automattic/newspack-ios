@@ -1,5 +1,8 @@
 import Foundation
 
+/// Stores select information about a site.
+/// Facilitates storage in shared defautls.
+///
 public struct ShadowSite {
     public let uuid: String
     public let title: String

@@ -1,5 +1,8 @@
 import Foundation
 
+/// Stores select information about an asset.
+/// Facilitates storage in shared defautls.
+///
 public struct ShadowAsset {
     public let storyUUID: String // The UUID of the destination story folder.
     public let bookmarkData: Data
