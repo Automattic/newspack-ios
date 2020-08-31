@@ -1,5 +1,6 @@
 import UIKit
 import Social
+import NewspackFramework
 
 class ShareViewController: SLComposeServiceViewController {
 
@@ -12,9 +13,20 @@ class ShareViewController: SLComposeServiceViewController {
         // HACK: Temp debuging while wrangling the share extension.
         let defaults = UserDefaults(suiteName: "group.com.automattic.newspack")!
         let obj = defaults.string(forKey: "currentSiteIDKey")!
-        print(obj)
+        print("Current Key: \(obj)")
 
 
+        print("Counting shadows.")
+        let manager = ShadowManager.init()
+        guard let sites = manager.retrieveShadowSites() else {
+            print("No shadows found.")
+            return
+        }
+        print("Found \(sites.count) shadow site(s).")
+
+        for site in sites {
+            print("Found \(site.stories.count) stories for \(site.title)")
+        }
 
         // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
         self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
