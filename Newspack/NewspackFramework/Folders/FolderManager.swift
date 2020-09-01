@@ -193,6 +193,7 @@ public class FolderManager {
 
     /// Delete the folder at the specified file URL. If the URL is not a folder
     /// it will not be deleted.
+    ///
     /// - Parameter source: A file URL.
     /// - Returns: true if the folder was deleted, otherwise false
     ///
@@ -205,7 +206,24 @@ public class FolderManager {
         return deleteItem(at: source)
     }
 
+    /// Delete the contents of the specified folder.
+    ///
+    /// - Parameter folder: The fileURL pointing to the folder whose contents should be deleted.
+    /// - Returns: True if successful. False if there were any errors.
+    ///
+    public func deleteContentsOfFolder(folder: URL) -> Bool {
+        var success = true
+        let arr = enumerateFolderContents(url: folder)
+        for item in arr {
+            if !deleteItem(at: item) {
+                success = false
+            }
+        }
+        return success
+    }
+
     /// Delete the item at the specified file URL
+    ///
     /// - Parameter source: A file URL.
     /// - Returns: true if the item was deleted, otherwise false
     ///
