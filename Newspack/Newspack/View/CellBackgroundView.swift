@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import NewspackFramework
 
 // Apparently views used for a cell's background do not have their traits updated
 // correctly. So we'll use this class to inspect the parent's traits to see if

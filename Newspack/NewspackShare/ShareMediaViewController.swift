@@ -20,11 +20,11 @@ class ShareMediaViewController: UIViewController {
     }
 
     func configureStyle() {
-
+        ShareAppearance.style(view: view, tableView: tableView)
     }
 
     func configureNav() {
-
+        navigationItem.title = NSLocalizedString("Share", comment: "Verb. Title of the screen shown when sharing from another app to Newspack.")
     }
 
     func setupDataSource() {
@@ -80,6 +80,8 @@ extension ShareMediaViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TargetSiteCellIdentifier", for: indexPath)
+
+        ShareAppearance.style(cell: cell)
 
         cell.textLabel?.text = targetStory?.title
         cell.detailTextLabel?.text = NSLocalizedString("Change", comment: "Verb. An action. Indicates that a selection can be changed via an interaction.")

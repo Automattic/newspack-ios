@@ -17,7 +17,7 @@ class StorySelectorViewController: UITableViewController {
     }
 
     func configureStyle() {
-
+        ShareAppearance.style(view: view, tableView: tableView)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -31,6 +31,8 @@ class StorySelectorViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BasicCellIdentifier", for: indexPath)
         let story = shadowSites[indexPath.section].stories[indexPath.row]
+
+        ShareAppearance.style(cell: cell)
 
         cell.textLabel?.text = story.title
 

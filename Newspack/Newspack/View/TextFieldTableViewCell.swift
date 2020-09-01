@@ -1,4 +1,5 @@
 import UIKit
+import NewspackFramework
 
 class TextFieldTableViewCell: UITableViewCell {
 

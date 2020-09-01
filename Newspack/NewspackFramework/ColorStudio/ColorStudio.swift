@@ -1,5 +1,5 @@
 /// Generates the names of the named colors in the ColorPalette.xcasset
-enum ColorStudioName: String, CustomStringConvertible {
+public enum ColorStudioName: String, CustomStringConvertible {
     // MARK: - Base colors
     case blue
     case celadon
@@ -12,7 +12,7 @@ enum ColorStudioName: String, CustomStringConvertible {
     case yellow
     case newspackBlue
 
-    var description: String {
+    public var description: String {
         // can't use .capitalized because it lowercases the B in "newspackBlue"
         return rawValue.prefix(1).uppercased() + rawValue.dropFirst()
     }
@@ -22,7 +22,7 @@ enum ColorStudioName: String, CustomStringConvertible {
 ///
 /// Note: There are a finite number of acceptable values. Not just any Int works.
 ///       Also, enum cases cannot begin with a number, thus the `shade` prefix.
-enum ColorStudioShade: Int, CustomStringConvertible {
+public enum ColorStudioShade: Int, CustomStringConvertible {
     case shade0 = 0
     case shade5 = 5
     case shade10 = 10
@@ -36,7 +36,7 @@ enum ColorStudioShade: Int, CustomStringConvertible {
     case shade90 = 90
     case shade100 = 100
 
-    var description: String {
+    public var description: String {
         return "\(rawValue)"
     }
 }
@@ -47,32 +47,32 @@ extension ColorStudioShade: CaseIterable { }
 
 
 /// A specific color and shade from Color Studio
-struct ColorStudio {
+public struct ColorStudio {
     let name: ColorStudioName
     let shade: ColorStudioShade
 
-    init(name: ColorStudioName, shade: ColorStudioShade = .shade50) {
+    public init(name: ColorStudioName, shade: ColorStudioShade = .shade50) {
         self.name = name
         self.shade = shade
     }
 
-    init(from identifier: ColorStudio, shade: ColorStudioShade) {
+    public init(from identifier: ColorStudio, shade: ColorStudioShade) {
         self.name = identifier.name
         self.shade = shade
     }
 
     // MARK: - Semantic colors
-    static let newspackBlue = ColorStudio(name: .newspackBlue)
-    static let brand = ColorStudio(name: .newspackBlue)
-    static let accent = ColorStudio(name: .newspackBlue)
-    static let divider = ColorStudio(name: .gray, shade: .shade10)
-    static let error = ColorStudio(name: .red)
-    static let gray = ColorStudio(name: .gray)
-    static let primary = ColorStudio(name: .blue)
-    static let success = ColorStudio(name: .green)
-    static let text = ColorStudio(name: .gray, shade: .shade80)
-    static let textSubtle = ColorStudio(name: .gray, shade: .shade50)
-    static let warning = ColorStudio(name: .yellow)
+    public static let newspackBlue = ColorStudio(name: .newspackBlue)
+    public static let brand = ColorStudio(name: .newspackBlue)
+    public static let accent = ColorStudio(name: .newspackBlue)
+    public static let divider = ColorStudio(name: .gray, shade: .shade10)
+    public static let error = ColorStudio(name: .red)
+    public static let gray = ColorStudio(name: .gray)
+    public static let primary = ColorStudio(name: .blue)
+    public static let success = ColorStudio(name: .green)
+    public static let text = ColorStudio(name: .gray, shade: .shade80)
+    public static let textSubtle = ColorStudio(name: .gray, shade: .shade50)
+    public static let warning = ColorStudio(name: .yellow)
 
     /// The full name of the color, with required shade value
     func assetName() -> String {

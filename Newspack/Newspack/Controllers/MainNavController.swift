@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import NewspackFramework
 
 final class MainNavController: UINavigationController {
 
