@@ -7,7 +7,6 @@ import NewspackFramework
 ///
 class FolderStore: Store {
 
-    private let lastSelectedStoryFolderKey = "LastSelectedStoryFolder_"
     private(set) var currentSiteID: UUID?
 
     private let folderManager: FolderManager
@@ -162,7 +161,7 @@ extension FolderStore {
             return nil
         }
 
-        let key = lastSelectedStoryFolderKey + siteID.uuidString
+        let key = AppConstants.lastSelectedStoryFolderKey + siteID.uuidString
         guard
             let uuidString = UserDefaults.shared.string(forKey: key),
             let uuid = UUID(uuidString: uuidString),
@@ -466,7 +465,7 @@ extension FolderStore {
     ///
     func selectStoryFolder(folder: StoryFolder) {
         if let siteID = currentSiteID {
-            let key = lastSelectedStoryFolderKey + siteID.uuidString
+            let key = AppConstants.lastSelectedStoryFolderKey + siteID.uuidString
             UserDefaults.shared.set(folder.uuid.uuidString, forKey: key)
         }
         currentStoryFolderID = folder.uuid

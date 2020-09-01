@@ -121,6 +121,8 @@
 		E637A6E222F0ED5D00229C1D /* RequestQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E637A6E122F0ED5D00229C1D /* RequestQueue.swift */; };
 		E637A6E422F0EE1500229C1D /* RequestQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */; };
 		E638804E22DFC07900B3C16A /* PostItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E638804D22DFC07900B3C16A /* PostItemStore.swift */; };
+		E63A3A3124FECD2300ACA871 /* ShareMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63A3A2F24FECD2300ACA871 /* ShareMediaViewController.swift */; };
+		E63A3A3424FEDEB300ACA871 /* StorySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63A3A3324FEDEB300ACA871 /* StorySelectorViewController.swift */; };
 		E63EECD7234289DD00669FFC /* PostApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECD6234289DD00669FFC /* PostApiService.swift */; };
 		E63EECD9234289F700669FFC /* SiteApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECD8234289F700669FFC /* SiteApiService.swift */; };
 		E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E63EECDA23428A0900669FFC /* UserApiService.swift */; };
@@ -449,6 +451,8 @@
 		E637A6E122F0ED5D00229C1D /* RequestQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestQueue.swift; sourceTree = "<group>"; };
 		E637A6E322F0EE1500229C1D /* RequestQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestQueueTests.swift; sourceTree = "<group>"; };
 		E638804D22DFC07900B3C16A /* PostItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostItemStore.swift; sourceTree = "<group>"; };
+		E63A3A2F24FECD2300ACA871 /* ShareMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareMediaViewController.swift; sourceTree = "<group>"; };
+		E63A3A3324FEDEB300ACA871 /* StorySelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorySelectorViewController.swift; sourceTree = "<group>"; };
 		E63EECD6234289DD00669FFC /* PostApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostApiService.swift; sourceTree = "<group>"; };
 		E63EECD8234289F700669FFC /* SiteApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteApiService.swift; sourceTree = "<group>"; };
 		E63EECDA23428A0900669FFC /* UserApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiService.swift; sourceTree = "<group>"; };
@@ -741,6 +745,8 @@
 				E60A250D2425418E003F3C81 /* ShareViewController.swift */,
 				E60A250F2425418E003F3C81 /* MainInterface.storyboard */,
 				E60A25122425418E003F3C81 /* Info.plist */,
+				E63A3A2F24FECD2300ACA871 /* ShareMediaViewController.swift */,
+				E63A3A3324FEDEB300ACA871 /* StorySelectorViewController.swift */,
 			);
 			path = NewspackShare;
 			sourceTree = "<group>";
@@ -1685,7 +1691,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E63A3A3424FEDEB300ACA871 /* StorySelectorViewController.swift in Sources */,
 				E60A250E2425418E003F3C81 /* ShareViewController.swift in Sources */,
+				E63A3A3124FECD2300ACA871 /* ShareMediaViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
