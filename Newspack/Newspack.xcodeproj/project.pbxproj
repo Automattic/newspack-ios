@@ -99,6 +99,8 @@
 		E6257887222F0B2E00DE6F26 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6257886222F0B2E00DE6F26 /* Photos.framework */; };
 		E6257889222F0B3C00DE6F26 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6257888222F0B3C00DE6F26 /* AVFoundation.framework */; };
 		E625788B222F0B4C00DE6F26 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E625788A222F0B4B00DE6F26 /* ImageIO.framework */; };
+		E625B03525004F3300C55EDC /* ImageResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B779E724EB2F9D007EA033 /* ImageResizer.swift */; };
+		E625B03625004F5700C55EDC /* CGSize+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B779E924EB2FC5007EA033 /* CGSize+Helpers.swift */; };
 		E629822A2303667E00E8CEC7 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62982292303667E00E8CEC7 /* EditorViewController.swift */; };
 		E62A6BA424C6198300013092 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62A6BA324C6198300013092 /* MenuViewController.swift */; };
 		E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C652235E16E000FEB33 /* AccountStore.swift */; };
@@ -238,8 +240,6 @@
 		E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */; };
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
 		E6B7728824BCD8DA00CA8AB8 /* SortOrganizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B7728724BCD8DA00CA8AB8 /* SortOrganizer.swift */; };
-		E6B779E824EB2F9D007EA033 /* ImageResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B779E724EB2F9D007EA033 /* ImageResizer.swift */; };
-		E6B779EA24EB2FC5007EA033 /* CGSize+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B779E924EB2FC5007EA033 /* CGSize+Helpers.swift */; };
 		E6B8CFDD24ABC48C0068C6BE /* FolderStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDC24ABC48C0068C6BE /* FolderStoreTests.swift */; };
 		E6B8CFE024ABD6EB0068C6BE /* ReconcilerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */; };
 		E6BA1322243F9D1E00635A8A /* AssetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BA1321243F9D1E00635A8A /* AssetsViewController.swift */; };
@@ -1101,6 +1101,7 @@
 			children = (
 				E62018AA24F97BB100D96AFF /* AppConstants.swift */,
 				E68BA80B2347BAA300AB60F9 /* Environment.swift */,
+				E6B779E724EB2F9D007EA033 /* ImageResizer.swift */,
 				E67339A5232EFEA3007C5E45 /* Logging.swift */,
 			);
 			path = Utils;
@@ -1109,6 +1110,7 @@
 		E62018D924F9AF2100D96AFF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				E6B779E924EB2FC5007EA033 /* CGSize+Helpers.swift */,
 				E63FF0EB24AA864C0002A32F /* URL+FileReference.swift */,
 				E6C3988B24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift */,
 				E630E33E250029020028BBF2 /* FileManager+Helpers.swift */,
@@ -1283,7 +1285,6 @@
 			isa = PBXGroup;
 			children = (
 				E6B7728724BCD8DA00CA8AB8 /* SortOrganizer.swift */,
-				E6B779E724EB2F9D007EA033 /* ImageResizer.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1325,7 +1326,6 @@
 		E6FB51FE22B9677A0010FDF8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				E6B779E924EB2FC5007EA033 /* CGSize+Helpers.swift */,
 				E6FB51FF22B967910010FDF8 /* Dictionary+KeyPath.swift */,
 				E602E69E22C1747D00795CBA /* Dictionary+Unwrappers.swift */,
 				E6051DEB23075A3A005AAF0B /* Dictionary+Merge.swift */,
@@ -1846,7 +1846,6 @@
 				E66CCA102303527C00F1CA59 /* User+CoreDataProperties.swift in Sources */,
 				E6E2ACF722E10F3400A8E85D /* MainStoryboard.swift in Sources */,
 				E6AB672A24E88182003D5D2A /* StoryTableViewCell.swift in Sources */,
-				E6B779E824EB2F9D007EA033 /* ImageResizer.swift in Sources */,
 				E6A800F524380A6600A14E6C /* FolderAction.swift in Sources */,
 				E67F56D52230914800BFD38B /* CoreDataManager.swift in Sources */,
 				E602E69F22C1747D00795CBA /* Dictionary+Unwrappers.swift in Sources */,
@@ -1875,7 +1874,6 @@
 				E66CCA0D2303527C00F1CA59 /* Site+CoreDataProperties.swift in Sources */,
 				E604EE4924C774A80015D284 /* UserView.swift in Sources */,
 				E66CCA0B2303527C00F1CA59 /* Account+CoreDataProperties.swift in Sources */,
-				E6B779EA24EB2FC5007EA033 /* CGSize+Helpers.swift in Sources */,
 				E63F3F3C236350BE00DB760E /* MediaTypeDiscerner.swift in Sources */,
 				E602E68F22C1637800795CBA /* PostApiActions.swift in Sources */,
 				E695A7E7244FD686007B29BB /* StoryAsset+CoreDataProperties.swift in Sources */,
@@ -1951,8 +1949,10 @@
 				E61FA94324FD777C0060D301 /* ModelConstants.swift in Sources */,
 				E62018DD24F9B1C700D96AFF /* Environment.swift in Sources */,
 				E63A3A3624FEF84700ACA871 /* ColorStudio.swift in Sources */,
+				E625B03525004F3300C55EDC /* ImageResizer.swift in Sources */,
 				E61FA93924FD76330060D301 /* ShadowSite.swift in Sources */,
 				E62018D424F9ACFD00D96AFF /* FolderManager.swift in Sources */,
+				E625B03625004F5700C55EDC /* CGSize+Helpers.swift in Sources */,
 				E62018DC24F9B18F00D96AFF /* URL+FileReference.swift in Sources */,
 				E63A3A3724FEF84C00ACA871 /* UIColor+ColorStudio.swift in Sources */,
 				E62018DA24F9AF4900D96AFF /* AppConstants.swift in Sources */,
