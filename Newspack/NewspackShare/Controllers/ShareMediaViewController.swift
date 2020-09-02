@@ -10,10 +10,11 @@ class ShareMediaViewController: UIViewController {
     let shadowManager = ShadowManager()
     var shadowSites: [ShadowSite]?
     var targetStory: ShadowStory?
+    var imageURLs = [URL]()
 
     lazy var extracter: ShareExtractor = {
         guard let tmpDir = FolderManager.createTemporaryDirectory() else {
-            // This should not happen.
+            // This should never happen.
             fatalError()
         }
         return ShareExtractor(extensionContext: self.extensionContext!, tempDirectory: tmpDir)
@@ -24,11 +25,14 @@ class ShareMediaViewController: UIViewController {
 
         configureStyle()
         configureNav()
-        setupDataSource()
+        configureShadows()
 
-        extracter.loadShare { (extracted) in
-            self.handleSharedItems(items: extracted)
-        }
+        // TODO: Check that we have valid data to work with.
+        // There should be shadow sites, and at least one target story.
+        // If missing show error.
+
+
+        configureSharedItems()
     }
 
     func configureStyle() {
@@ -39,7 +43,7 @@ class ShareMediaViewController: UIViewController {
         navigationItem.title = NSLocalizedString("Share", comment: "Verb. Title of the screen shown when sharing from another app to Newspack.")
     }
 
-    func setupDataSource() {
+    func configureShadows() {
         shadowSites = shadowManager.retrieveShadowSites()
 
         guard
@@ -58,13 +62,48 @@ class ShareMediaViewController: UIViewController {
         }
     }
 
+    func configureSharedItems() {
+        extracter.loadShare { (extracted) in
+            self.handleSharedItems(items: extracted)
+        }
+    }
+
+}
+
+// MARK: - Shared Item Wrangling
+
+extension ShareMediaViewController {
+
     func handleSharedItems(items: ExtractedShare) {
-        print(items)
+        // Obtain image previews for each shared image.
+        imageURLs = items.images.map { (item) -> URL in
+            return item.url
+        }
+
+        // TODO: Show previews in collection view. Reload collection view?
+
     }
 
     func processSharedItems() {
 
     }
+
+
+    func thumbnailForImage(at url: URL, size: CGSize) -> UIImage? {
+        if let thumb = ImageResizer.shared.resizedImage(identifier: url.path, size: size) {
+            return thumb
+        }
+
+        guard
+            url.isFileURL,
+            let image = UIImage(contentsOfFile: url.path)
+        else {
+            return nil
+        }
+
+        return ImageResizer.shared.resizeImage(image: image, identifier: url.path, fillingSize: size)
+    }
+
 }
 
 // MARK: - Actions
@@ -88,12 +127,16 @@ extension ShareMediaViewController {
 extension ShareMediaViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+        guard let sites = shadowSites else {
+            return 0
+        }
+        return sites.count > 0 ? 1 : 0
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        guard let _ = targetStory else {
+            return 0
+        }
         return 1
     }
 
