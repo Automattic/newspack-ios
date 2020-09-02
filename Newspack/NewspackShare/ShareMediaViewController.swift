@@ -11,12 +11,24 @@ class ShareMediaViewController: UIViewController {
     var shadowSites: [ShadowSite]?
     var targetStory: ShadowStory?
 
+    lazy var extracter: ShareExtractor = {
+        guard let tmpDir = FolderManager.createTemporaryDirectory() else {
+            // This should not happen.
+            fatalError()
+        }
+        return ShareExtractor(extensionContext: self.extensionContext!, tempDirectory: tmpDir)
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureStyle()
         configureNav()
         setupDataSource()
+
+        extracter.loadShare { (extracted) in
+            self.handleSharedItems(items: extracted)
+        }
     }
 
     func configureStyle() {
@@ -46,6 +58,13 @@ class ShareMediaViewController: UIViewController {
         }
     }
 
+    func handleSharedItems(items: ExtractedShare) {
+        print(items)
+    }
+
+    func processSharedItems() {
+
+    }
 }
 
 // MARK: - Actions
@@ -53,13 +72,13 @@ class ShareMediaViewController: UIViewController {
 extension ShareMediaViewController {
 
     @IBAction func handleSaveTapped(sender: UIBarButtonItem) {
-        // TODO:
+        processSharedItems()
         self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
     }
 
     @IBAction func handleCancelTapped(sender: UIBarButtonItem) {
         let error = NSError(domain: "com.auttomattic.newspack.share", code: 0, userInfo: nil)
-        self.extensionContext!.cancelRequest(withError: error)
+        extensionContext?.cancelRequest(withError: error)
     }
 
 }

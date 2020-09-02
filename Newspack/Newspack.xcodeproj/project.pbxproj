@@ -105,6 +105,10 @@
 		E62C7C662235E16E000FEB33 /* AccountStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C652235E16E000FEB33 /* AccountStore.swift */; };
 		E62C7C692235E73F000FEB33 /* AccountStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */; };
 		E62C7C6C2235F061000FEB33 /* AuthenticationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */; };
+		E630E33924FFF3510028BBF2 /* ShareExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630E33824FFF3510028BBF2 /* ShareExtractor.swift */; };
+		E630E33B24FFF6710028BBF2 /* NSExtensionContext+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630E33A24FFF6710028BBF2 /* NSExtensionContext+Helpers.swift */; };
+		E630E33D24FFF6E80028BBF2 /* UIImage+ExtensionHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630E33C24FFF6E80028BBF2 /* UIImage+ExtensionHelpers.swift */; };
+		E630E33F250029020028BBF2 /* FileManager+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E630E33E250029020028BBF2 /* FileManager+Helpers.swift */; };
 		E632F9A123515116003737BF /* SiteMediaDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E632F9A023515116003737BF /* SiteMediaDataSource.swift */; };
 		E6343ADF23A077C80033D369 /* SiteMediaSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6343ADE23A077C80033D369 /* SiteMediaSelectViewController.swift */; };
 		E636C260234FBACC00564B63 /* MediaItemStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E636C25F234FBACC00564B63 /* MediaItemStore.swift */; };
@@ -440,6 +444,10 @@
 		E62C7C652235E16E000FEB33 /* AccountStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStore.swift; sourceTree = "<group>"; };
 		E62C7C682235E73F000FEB33 /* AccountStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountStoreTests.swift; sourceTree = "<group>"; };
 		E62C7C6B2235F061000FEB33 /* AuthenticationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationManagerTests.swift; sourceTree = "<group>"; };
+		E630E33824FFF3510028BBF2 /* ShareExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtractor.swift; sourceTree = "<group>"; };
+		E630E33A24FFF6710028BBF2 /* NSExtensionContext+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSExtensionContext+Helpers.swift"; sourceTree = "<group>"; };
+		E630E33C24FFF6E80028BBF2 /* UIImage+ExtensionHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ExtensionHelpers.swift"; sourceTree = "<group>"; };
+		E630E33E250029020028BBF2 /* FileManager+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+Helpers.swift"; sourceTree = "<group>"; };
 		E632F9A023515116003737BF /* SiteMediaDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMediaDataSource.swift; sourceTree = "<group>"; };
 		E6343ADE23A077C80033D369 /* SiteMediaSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiteMediaSelectViewController.swift; sourceTree = "<group>"; };
 		E636C25F234FBACC00564B63 /* MediaItemStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemStore.swift; sourceTree = "<group>"; };
@@ -750,6 +758,10 @@
 				E63A3A2F24FECD2300ACA871 /* ShareMediaViewController.swift */,
 				E63A3A3324FEDEB300ACA871 /* StorySelectorViewController.swift */,
 				E63A3A3A24FF007F00ACA871 /* ShareAppearance.swift */,
+				E630E33824FFF3510028BBF2 /* ShareExtractor.swift */,
+				E630E33A24FFF6710028BBF2 /* NSExtensionContext+Helpers.swift */,
+				E630E33C24FFF6E80028BBF2 /* UIImage+ExtensionHelpers.swift */,
+				E630E33E250029020028BBF2 /* FileManager+Helpers.swift */,
 			);
 			path = NewspackShare;
 			sourceTree = "<group>";
@@ -1705,6 +1717,10 @@
 				E63A3A3424FEDEB300ACA871 /* StorySelectorViewController.swift in Sources */,
 				E63A3A3B24FF007F00ACA871 /* ShareAppearance.swift in Sources */,
 				E60A250E2425418E003F3C81 /* ShareViewController.swift in Sources */,
+				E630E33D24FFF6E80028BBF2 /* UIImage+ExtensionHelpers.swift in Sources */,
+				E630E33B24FFF6710028BBF2 /* NSExtensionContext+Helpers.swift in Sources */,
+				E630E33F250029020028BBF2 /* FileManager+Helpers.swift in Sources */,
+				E630E33924FFF3510028BBF2 /* ShareExtractor.swift in Sources */,
 				E63A3A3124FECD2300ACA871 /* ShareMediaViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
