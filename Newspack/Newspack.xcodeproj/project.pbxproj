@@ -54,7 +54,6 @@
 		E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */; };
 		E607385F22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */; };
 		E607386122A9A5EF00504EA4 /* AccountDetailsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */; };
-		E60A250E2425418E003F3C81 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60A250D2425418E003F3C81 /* ShareViewController.swift */; };
 		E60A25112425418E003F3C81 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E60A250F2425418E003F3C81 /* MainInterface.storyboard */; };
 		E60A25152425418E003F3C81 /* NewspackShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E60A250B2425418E003F3C81 /* NewspackShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E610B64324EC59040011FBA8 /* UITableView+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E610B64224EC59040011FBA8 /* UITableView+Helpers.swift */; };
@@ -388,7 +387,6 @@
 		E607385E22A9A5DB00504EA4 /* AccountCapabilitiesStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCapabilitiesStoreTests.swift; sourceTree = "<group>"; };
 		E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDetailsStoreTests.swift; sourceTree = "<group>"; };
 		E60A250B2425418E003F3C81 /* NewspackShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NewspackShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		E60A250D2425418E003F3C81 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		E60A25102425418E003F3C81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E60A25122425418E003F3C81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E610B64224EC59040011FBA8 /* UITableView+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Helpers.swift"; sourceTree = "<group>"; };
@@ -756,7 +754,6 @@
 				E630E34425003F730028BBF2 /* UI */,
 				E630E34325003EF70028BBF2 /* Utils */,
 				E62018A924F971DC00D96AFF /* NewspackShare.entitlements */,
-				E60A250D2425418E003F3C81 /* ShareViewController.swift */,
 				E60A25122425418E003F3C81 /* Info.plist */,
 			);
 			path = NewspackShare;
@@ -1748,7 +1745,6 @@
 			files = (
 				E63A3A3424FEDEB300ACA871 /* StorySelectorViewController.swift in Sources */,
 				E63A3A3B24FF007F00ACA871 /* ShareAppearance.swift in Sources */,
-				E60A250E2425418E003F3C81 /* ShareViewController.swift in Sources */,
 				E630E33D24FFF6E80028BBF2 /* UIImage+ShareExtractor.swift in Sources */,
 				E630E33B24FFF6710028BBF2 /* NSExtensionContext+ShareExtractor.swift in Sources */,
 				E630E33924FFF3510028BBF2 /* ShareExtractor.swift in Sources */,
