@@ -1,5 +1,6 @@
 import Foundation
 import UIKit
+import NewspackFramework
 
 /// Contains appearance methos for the share extension. There is some duplication
 /// with Appearance.swift used by the main app, but this is preferred over importing
@@ -32,6 +33,12 @@ class ShareAppearance {
         cell.detailTextLabel?.sizeToFit()
         // we only set the text subtle color, so that system colors are used otherwise
         cell.detailTextLabel?.textColor = .textSubtle
+    }
+
+    static func style(collectionHeader: CollectionHeaderView) {
+        collectionHeader.backgroundColor = .neutral(.shade0)
+        collectionHeader.textLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+        collectionHeader.textLabel.textColor = .sectionLableTextColor
     }
 
 }

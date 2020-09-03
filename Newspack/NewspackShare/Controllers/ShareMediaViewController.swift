@@ -6,6 +6,11 @@ class ShareMediaViewController: UIViewController {
     @IBOutlet var cancelButton: UIBarButtonItem!
     @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var stackView: UIStackView!
+
+    let minThumbSize = CGFloat(88)
+    let interItemSpacing = CGFloat(2)
 
     let shadowManager = ShadowManager()
     var shadowSites: [ShadowSite]?
@@ -80,8 +85,7 @@ extension ShareMediaViewController {
             return item.url
         }
 
-        // TODO: Show previews in collection view. Reload collection view?
-
+        collectionView.reloadData()
     }
 
     func processSharedItems() {
@@ -178,6 +182,63 @@ extension ShareMediaViewController: StorySelectorViewControllerDelegate {
         targetStory = story
         tableView.reloadData()
         navigationController?.popViewController(animated: true)
+    }
+
+}
+
+// MARK: - Collection View Related
+
+extension ShareMediaViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageURLs.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCellReuseIdentifier", for: indexPath) as! PhotoCell
+
+        let url = imageURLs[indexPath.row]
+        let thumbnail = thumbnailForImage(at: url, size: CGSize(width: minThumbSize, height: minThumbSize))
+        cell.imageView.image = thumbnail
+
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        var availableWidth = collectionView.bounds.width
+        availableWidth += interItemSpacing // add one to the available width to allow for the last cell
+
+        let count = floor(availableWidth / minThumbSize) // minThumbSize is inclusive of padding
+        let side = (availableWidth / count) - interItemSpacing // Subtract spacing to get correct width.
+        let size =  CGSize(width: side, height: side)
+
+        return size
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return interItemSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return interItemSpacing
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CollectionHeaderView", for: indexPath) as? CollectionHeaderView {
+            ShareAppearance.style(collectionHeader: sectionHeader)
+            sectionHeader.textLabel.text = NSLocalizedString("Photos", comment: "Noun. A collection of thumbnails of images the user is sharing.").uppercased()
+            return sectionHeader
+        }
+        return CollectionHeaderView()
     }
 
 }

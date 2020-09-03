@@ -355,6 +355,13 @@ extension UIColor {
         return .white
     }
 
+    /// Section Header Text Color
+    ///
+    public static var sectionLableTextColor: UIColor {
+        let light = UIColor(red: 109.0/255.0, green: 109.0/255.0, blue: 114.0/255.0, alpha: 1.0)
+        let dark = UIColor(red: 142.0/255.0, green: 142.0/255.0, blue: 147.0/255.0, alpha: 1.0)
+        return UIColor(light: light, dark: dark)
+    }
 }
 
 
