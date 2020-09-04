@@ -50,7 +50,8 @@ class Diagnostics {
     static func countShadows() {
         LogInfo(message: "Counting shadows.")
         let manager = ShadowManager.init()
-        guard let sites = manager.retrieveShadowSites() else {
+        let sites = manager.retrieveShadowSites()
+        if sites.count == 0 {
             LogInfo(message: "No shadows found.")
             return
         }

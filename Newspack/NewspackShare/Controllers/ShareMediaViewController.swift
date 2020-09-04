@@ -13,7 +13,7 @@ class ShareMediaViewController: UIViewController {
     let interItemSpacing = CGFloat(2)
 
     let shadowManager = ShadowManager()
-    var shadowSites: [ShadowSite]?
+    var shadowSites = [ShadowSite]()
     var targetStory: ShadowStory?
     var imageURLs = [URL]()
 
@@ -32,6 +32,10 @@ class ShareMediaViewController: UIViewController {
         configureNav()
         configureShadows()
 
+        guard validateData() else {
+            interruptSharing()
+            return
+        }
         // TODO: Check that we have valid data to work with.
         // There should be shadow sites, and at least one target story.
         // If missing show error.
@@ -55,9 +59,9 @@ class ShareMediaViewController: UIViewController {
             let currentSiteIdentifer = UserDefaults.shared.string(forKey: AppConstants.currentSiteIDKey),
             let currentStoryIdentifier = UserDefaults.shared.string(forKey: AppConstants.lastSelectedStoryFolderKey + currentSiteIdentifer)
         else {
-                return
+            return
         }
-        for site in shadowSites! {
+        for site in shadowSites {
             for story in site.stories {
                 if story.uuid == currentStoryIdentifier {
                     targetStory = story
@@ -71,6 +75,53 @@ class ShareMediaViewController: UIViewController {
         extracter.loadShare { (extracted) in
             self.handleSharedItems(items: extracted)
         }
+    }
+
+}
+
+// MARK: - Validation and prompts
+
+extension ShareMediaViewController {
+
+    /// In order to share to the main app, the main app must have at least one
+    /// site and at least one story. Since we don't have direct access to the main
+    /// app's data, we'll trust that shadowSites are an accurate reflection. If
+    /// either shadowSites are empty, or there is not a target story retrieved
+    /// we'll assume the app has no sites or stories.
+    /// Note that there is an edge case where shadowSites and a targetStory could
+    /// be stale, and the app actually have no sites or stories (e.g. if the site
+    /// or story folders were manually deleted via the files app.
+    ///
+    func validateData() -> Bool {
+        guard
+            shadowSites.count > 0,
+            let _ = targetStory
+        else {
+            return false
+        }
+
+        return true
+    }
+
+    func interruptSharing() {
+        stackView.isHidden = true
+
+        let alertTitle = NSLocalizedString("Unable to share", comment: "The title of an error message shown when a user tries to share but the app is not in a state where sharing is possible..")
+        let alertMessage = NSLocalizedString("Please launch the Newspack app, log in to your site, and make sure you have at least one story to share to, then try again.", comment: "A message shown in a prompt when trying to share to the app but there are not yet any sites or stories in the app.")
+        let actionTitle = NSLocalizedString("OK", comment: "OK. A button title. Tapping closes the share screen.")
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
+        let action = UIAlertAction(title: actionTitle, style: .default, handler: { [weak self] _ in
+            self?.cancelSharing()
+        })
+        alert.addAction(action)
+
+        present(alert, animated: true, completion: nil)
+    }
+
+    func cancelSharing() {
+        let error = NSError(domain: "com.auttomattic.newspack.share", code: 0, userInfo: nil)
+        extensionContext?.cancelRequest(withError: error)
     }
 
 }
@@ -154,8 +205,7 @@ extension ShareMediaViewController {
     }
 
     @IBAction func handleCancelTapped(sender: UIBarButtonItem) {
-        let error = NSError(domain: "com.auttomattic.newspack.share", code: 0, userInfo: nil)
-        extensionContext?.cancelRequest(withError: error)
+        cancelSharing()
     }
 
 }
@@ -165,10 +215,7 @@ extension ShareMediaViewController {
 extension ShareMediaViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let sites = shadowSites else {
-            return 0
-        }
-        return sites.count > 0 ? 1 : 0
+        return shadowSites.count > 0 ? 1 : 0
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

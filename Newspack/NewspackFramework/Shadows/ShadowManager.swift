@@ -37,14 +37,14 @@ public class ShadowManager {
     /// array should be considered non-cannonical and potentially out of date.
     /// Use with caution.
     ///
-    /// - Returns: An array of shadow sites or nil.
+    /// - Returns: An array of shadow sites.
     ///
-    public func retrieveShadowSites() -> [ShadowSite]? {
-        guard let arr = UserDefaults.shared.object(forKey: AppConstants.shadowSitesKey) as? [[String: Any]] else {
-            return nil
-        }
-
+    public func retrieveShadowSites() -> [ShadowSite] {
         var sites = [ShadowSite]()
+
+        guard let arr = UserDefaults.shared.object(forKey: AppConstants.shadowSitesKey) as? [[String: Any]] else {
+            return sites
+        }
 
         for dict in arr {
             sites.append(ShadowSite(dict: dict))
