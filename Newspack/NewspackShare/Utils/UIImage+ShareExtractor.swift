@@ -1,6 +1,7 @@
 import UIKit
 
 extension UIImage {
+
     convenience init?(contentsOfURL url: URL) {
         guard let rawImage = try? Data(contentsOf: url) else {
             return nil
@@ -13,5 +14,4 @@ extension UIImage {
         return self.jpegData(compressionQuality: quality)
     }
 
-    // TODO: NEEDS PNG Encoded option
 }
