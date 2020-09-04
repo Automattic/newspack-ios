@@ -25,6 +25,14 @@ class ShareMediaViewController: UIViewController {
         return ShareExtractor(extensionContext: self.extensionContext!, tempDirectory: tmpDir)
     }()
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (context) in
+            self.collectionView?.reloadData()
+        }, completion: nil)
+
+        super.viewWillTransition(to: size, with: coordinator)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -238,8 +246,6 @@ extension ShareMediaViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("tapped cell")
-
         guard let controller = UIStoryboard.init(name: "MainInterface", bundle: nil).instantiateViewController(withIdentifier: "StorySelectorViewController") as? StorySelectorViewController else {
             return
         }
@@ -250,7 +256,7 @@ extension ShareMediaViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return NSLocalizedString("Share to:", comment: "A title. What follows is the destination of where things will be shared.")
+        return NSLocalizedString("Share to", comment: "A title. What follows is the destination of where things will be shared.")
     }
 
 }

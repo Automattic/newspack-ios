@@ -109,7 +109,6 @@ private extension TypeBasedExtensionContentExtractor {
 
     func extract(context: NSExtensionContext, completion: @escaping ([ExtractedItem]) -> Void) {
         let itemProviders = context.itemProviders(ofType: acceptedType)
-        print(acceptedType)
         var results = [ExtractedItem]()
         guard itemProviders.count > 0 else {
             DispatchQueue.main.async {
@@ -140,7 +139,7 @@ private extension TypeBasedExtensionContentExtractor {
 
     }
 
-    // TODO: WE need a PNG option as well.  Not just jpgs.
+    // TODO: We probably need PNG and HEIC options as well.  Not just JPGs. TBD.
     func saveToSharedContainer(image: UIImage) -> URL? {
         guard let encodedMedia = image.JPEGEncoded(),
             let fullPath = tempPath(for: "jpg") else {
