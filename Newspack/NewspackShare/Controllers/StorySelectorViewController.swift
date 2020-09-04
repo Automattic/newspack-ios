@@ -8,6 +8,7 @@ protocol StorySelectorViewControllerDelegate: UIViewController {
 class StorySelectorViewController: UITableViewController {
 
     var shadowSites: [ShadowSite]!
+    var currentStory: ShadowStory!
     weak var delegate: StorySelectorViewControllerDelegate?
 
     override func viewDidLoad() {
@@ -35,6 +36,7 @@ class StorySelectorViewController: UITableViewController {
         ShareAppearance.style(cell: cell)
 
         cell.textLabel?.text = story.title
+        cell.accessoryType = story.uuid == currentStory.uuid ? .checkmark : .none
 
         return cell
     }

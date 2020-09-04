@@ -252,6 +252,7 @@ extension ShareMediaViewController: UITableViewDelegate, UITableViewDataSource {
 
         controller.delegate = self
         controller.shadowSites = shadowSites
+        controller.currentStory = targetStory
         navigationController?.pushViewController(controller, animated: true)
     }
 
