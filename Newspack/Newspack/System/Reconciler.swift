@@ -29,12 +29,56 @@ class Reconciler {
             return
         }
 
+        materializeShadows()
+
         guard hasInconsistencies() else {
             LogInfo(message: "No inconsistencies found.")
             return
         }
 
         reconcile()
+    }
+
+    /// Check for any shadow assets. If found, move the shared assets to the
+    /// correct story folder.
+    ///
+    func materializeShadows() {
+        let manager = ShadowManager()
+        let assets = manager.retrieveShadowAssets()
+
+        guard assets.count > 0 else {
+            return
+        }
+
+        for asset in assets {
+            materializeShadow(asset: asset)
+        }
+
+        /// Clean up group storage.
+        manager.clearShadowAssets()
+
+    }
+
+    /// Attempt to copy the file referenced by the specified shadow asset to it's
+    /// intended destination StoryFolder.
+    ///
+    /// - Parameter asset: A shadow asset
+    ///
+    func materializeShadow(asset: ShadowAsset) {
+        let folderManager = SessionManager.shared.folderManager
+        let store = StoreContainer.shared.folderStore
+
+        guard
+            let source = folderManager.urlFromBookmark(bookmark: asset.bookmarkData),
+            let uuid = UUID(uuidString: asset.storyUUID),
+            let story = store.getStoryFolderByID(uuid: uuid),
+            let storyURL = folderManager.urlFromBookmark(bookmark: story.bookmark)
+        else {
+            return
+        }
+
+        let destination = FileManager.default.availableFileURL(for: source.lastPathComponent, isDirectory: false, relativeTo: storyURL)
+        folderManager.moveItem(at: source, to: destination)
     }
 
     /// Checks for inconsistencies between the file system and what is stored in
