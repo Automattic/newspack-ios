@@ -101,14 +101,7 @@ extension ShareMediaViewController {
     /// or story folders were manually deleted via the files app.
     ///
     func validateData() -> Bool {
-        guard
-            shadowSites.count > 0,
-            let _ = targetStory
-        else {
-            return false
-        }
-
-        return true
+        return shadowSites.count > 0 && targetStory != nil
     }
 
     func interruptSharing() {
@@ -128,7 +121,7 @@ extension ShareMediaViewController {
     }
 
     func cancelSharing() {
-        let error = NSError(domain: "com.auttomattic.newspack.share", code: 0, userInfo: nil)
+        let error = NSError(domain: AppConstants.appShareDomain, code: 0, userInfo: nil)
         extensionContext?.cancelRequest(withError: error)
     }
 
@@ -246,7 +239,7 @@ extension ShareMediaViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let controller = UIStoryboard.init(name: "MainInterface", bundle: nil).instantiateViewController(withIdentifier: "StorySelectorViewController") as? StorySelectorViewController else {
+        guard let controller = UIStoryboard(name: "MainInterface", bundle: nil).instantiateViewController(withIdentifier: "StorySelectorViewController") as? StorySelectorViewController else {
             return
         }
 
