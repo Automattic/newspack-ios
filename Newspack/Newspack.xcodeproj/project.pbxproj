@@ -207,6 +207,8 @@
 		E694469C24D9FB0100D0BF56 /* MediaImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E694469B24D9FB0100D0BF56 /* MediaImporter.swift */; };
 		E694469E24DB3FA100D0BF56 /* MediaCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E694469D24DB3FA100D0BF56 /* MediaCaptureController.swift */; };
 		E69446A024DB3FB100D0BF56 /* MediaPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E694469F24DB3FB100D0BF56 /* MediaPickerViewController.swift */; };
+		E694B0E72502D1E700D6C203 /* ShadowCasterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E694B0E62502D1E700D6C203 /* ShadowCasterTest.swift */; };
+		E694B0E92502E50200D6C203 /* ShadowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E694B0E82502E50200D6C203 /* ShadowTests.swift */; };
 		E695A7E6244FD686007B29BB /* StoryFolder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E695A7E2244FD686007B29BB /* StoryFolder+CoreDataProperties.swift */; };
 		E695A7E7244FD686007B29BB /* StoryAsset+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E695A7E3244FD686007B29BB /* StoryAsset+CoreDataProperties.swift */; };
 		E695A7E8244FD686007B29BB /* StoryFolder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E695A7E4244FD686007B29BB /* StoryFolder+CoreDataClass.swift */; };
@@ -546,6 +548,8 @@
 		E694469B24D9FB0100D0BF56 /* MediaImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaImporter.swift; sourceTree = "<group>"; };
 		E694469D24DB3FA100D0BF56 /* MediaCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCaptureController.swift; sourceTree = "<group>"; };
 		E694469F24DB3FB100D0BF56 /* MediaPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPickerViewController.swift; sourceTree = "<group>"; };
+		E694B0E62502D1E700D6C203 /* ShadowCasterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowCasterTest.swift; sourceTree = "<group>"; };
+		E694B0E82502E50200D6C203 /* ShadowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowTests.swift; sourceTree = "<group>"; };
 		E695A7E2244FD686007B29BB /* StoryFolder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoryFolder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E695A7E3244FD686007B29BB /* StoryAsset+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoryAsset+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E695A7E4244FD686007B29BB /* StoryFolder+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StoryFolder+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -1093,6 +1097,7 @@
 			children = (
 				E6DF5577242E7242007DDC47 /* FolderManagerTests.swift */,
 				E6B8CFDA24AB91430068C6BE /* URLFileReferenceTests.swift */,
+				E694B0E82502E50200D6C203 /* ShadowTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1295,6 +1300,7 @@
 		E6B8CFDE24ABD6B20068C6BE /* SystemTests */ = {
 			isa = PBXGroup;
 			children = (
+				E694B0E62502D1E700D6C203 /* ShadowCasterTest.swift */,
 				E6B8CFDF24ABD6EB0068C6BE /* ReconcilerTests.swift */,
 			);
 			path = SystemTests;
@@ -1939,6 +1945,7 @@
 				E6B8CFDD24ABC48C0068C6BE /* FolderStoreTests.swift in Sources */,
 				E65875AC23A813EA00185C75 /* StagedMediaStoreTests.swift in Sources */,
 				E61FC605229F2F10009E1748 /* SiteServiceRemoteTests.swift in Sources */,
+				E694B0E72502D1E700D6C203 /* ShadowCasterTest.swift in Sources */,
 				E65875A623A811A400185C75 /* MediaStoreTests.swift in Sources */,
 				E61FC609229F329A009E1748 /* Loader.swift in Sources */,
 				E607386122A9A5EF00504EA4 /* AccountDetailsStoreTests.swift in Sources */,
@@ -1976,6 +1983,7 @@
 			files = (
 				E62018DE24F9BB4700D96AFF /* URLFileReferenceTests.swift in Sources */,
 				E62018D524F9AD3900D96AFF /* FolderManagerTests.swift in Sources */,
+				E694B0E92502E50200D6C203 /* ShadowTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

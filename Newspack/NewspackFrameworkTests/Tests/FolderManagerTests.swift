@@ -222,4 +222,13 @@ class FolderManagerTests: XCTestCase {
         name = folderManager.sanitizedFolderName(name: expectedName)
         XCTAssertTrue(name == expectedName)
     }
+
+    func testMoveItem() {
+
+    }
+
+    func testDeleteContentsOfFolder() {
+
+    }
+
 }
