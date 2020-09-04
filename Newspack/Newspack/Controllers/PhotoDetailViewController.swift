@@ -1,5 +1,6 @@
 import UIKit
 import CoreData
+import NewspackFramework
 
 /// Displays details about a photo asset
 ///

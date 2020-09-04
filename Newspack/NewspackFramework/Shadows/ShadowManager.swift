@@ -37,14 +37,14 @@ public class ShadowManager {
     /// array should be considered non-cannonical and potentially out of date.
     /// Use with caution.
     ///
-    /// - Returns: An array of shadow sites or nil.
+    /// - Returns: An array of shadow sites.
     ///
-    public func retrieveShadowSites() -> [ShadowSite]? {
-        guard let arr = UserDefaults.shared.object(forKey: AppConstants.shadowSitesKey) as? [[String: Any]] else {
-            return nil
-        }
-
+    public func retrieveShadowSites() -> [ShadowSite] {
         var sites = [ShadowSite]()
+
+        guard let arr = UserDefaults.shared.object(forKey: AppConstants.shadowSitesKey) as? [[String: Any]] else {
+            return sites
+        }
 
         for dict in arr {
             sites.append(ShadowSite(dict: dict))
@@ -59,9 +59,13 @@ public class ShadowManager {
     /// - Parameter assets: An array of shadow assets.
     ///
     public func storeShadowAssets(assets: [ShadowAsset]) {
-        var arr = assets
+        var shadows = assets
+        shadows.append(contentsOf: retrieveShadowAssets())
 
-        arr.append(contentsOf: retrieveShadowAssets())
+        var arr = [[String: Any]]()
+        for shadow in shadows {
+            arr.append(shadow.dictionary)
+        }
 
         UserDefaults.shared.set(arr, forKey: AppConstants.shadowAssetsKey)
     }

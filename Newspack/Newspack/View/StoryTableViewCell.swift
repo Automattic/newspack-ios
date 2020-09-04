@@ -1,5 +1,6 @@
 import UIKit
 import Gridicons
+import NewspackFramework
 
 /// A convenience potocol to avoid tightly coupling the StoryFolder model to the
 /// cell. Any object implementing the protocol can be a provider.

@@ -5,10 +5,10 @@ import Foundation
 /// for quick retrieval.  The resized images are resized so they will aspectFill
 /// their target size. (No letterboxing!)
 ///
-class ImageResizer {
+public class ImageResizer {
 
     /// Singleton reference.
-    static let shared = ImageResizer()
+    public static let shared = ImageResizer()
 
     private var cache = NSCache<NSString, UIImage>()
 
@@ -27,7 +27,7 @@ class ImageResizer {
     ///   - force: Whether to skip the cache and create a freshly resized image. Default is false.
     /// - Returns: The resized image.
     ///
-    func resizeImage(image: UIImage, identifier: String, fillingSize size: CGSize, force: Bool = false) -> UIImage {
+    public func resizeImage(image: UIImage, identifier: String, fillingSize size: CGSize, force: Bool = false) -> UIImage {
 
         // Return a cached iamge if one exists.
         if !force, let thumb = resizedImage(identifier: identifier, size: size) {
@@ -56,7 +56,7 @@ class ImageResizer {
     ///   - size: The size of the image.
     /// - Returns: The cached image or nil if one was not found.
     ///
-    func resizedImage(identifier: String, size: CGSize) -> UIImage? {
+    public func resizedImage(identifier: String, size: CGSize) -> UIImage? {
         let key = cacheKey(for: identifier, size: size)
         return cache.object(forKey: key)
     }

@@ -1,4 +1,5 @@
 import UIKit
+import NewspackFramework
 
 protocol PhotoCellProvider {
     var name: String! { get }

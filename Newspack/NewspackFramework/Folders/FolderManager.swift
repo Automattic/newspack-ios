@@ -100,21 +100,13 @@ public class FolderManager {
     /// - Returns: A URL
     ///
     public func urlForFolderAtPath(path: String, ifExistsAppendSuffix: Bool = false) -> URL {
-        var url = URL(fileURLWithPath: path, isDirectory: true, relativeTo: currentFolder).absoluteURL
+        let url = URL(fileURLWithPath: path, isDirectory: true, relativeTo: currentFolder).absoluteURL
 
         if !ifExistsAppendSuffix || !folderExists(url: url) {
             return url
         }
 
-        var newPath = path
-        var counter = 1
-        repeat {
-            counter = counter + 1
-            newPath = "\(path) \(counter)"
-            url = URL(fileURLWithPath: newPath, isDirectory: true, relativeTo: currentFolder).absoluteURL
-        } while folderExists(url: url)
-
-        return url
+        return fileManager.availableFileURL(for: path, isDirectory: true, relativeTo: currentFolder).absoluteURL
     }
 
     /// Sets the current folder to the specified URL provided the URL is the

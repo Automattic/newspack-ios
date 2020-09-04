@@ -1,14 +1,19 @@
 import UIKit
 
+/// HACK: Since ColorStudio is made up of enums, structs, and extensions, we will
+/// use this empty class stub to reference the containing bundle. If Bundle(for:)
+/// ever supports structs or enums we can switch to that approach instead.
+private final class ColorStudioClass {}
+
 extension UIColor {
     /// Get a UIColor from the Color Studio color palette
     ///
     /// - Parameters:
     ///   - color: an instance of a ColorStudio
     /// - Returns: UIColor. Red in cases of error
-    class func withColorStudio(_ colorStudio: ColorStudio) -> UIColor {
+    public class func withColorStudio(_ colorStudio: ColorStudio) -> UIColor {
         let assetName = colorStudio.assetName()
-        let color = UIColor(named: assetName)
+        let color = UIColor(named: assetName, in: Bundle(for: ColorStudioClass.self), compatibleWith: nil)
 
         guard let unwrappedColor = color else {
             return .red
@@ -19,7 +24,7 @@ extension UIColor {
     /// Get a UIColor from the Color Studio color palette, adjusted to a given shade
     /// - Parameter color: an instance of a ColorStudio
     /// - Parameter shade: a ColorStudioShade
-    class func withColorStudio(_ colorStudio: ColorStudio, shade: ColorStudioShade) -> UIColor {
+    public class func withColorStudio(_ colorStudio: ColorStudio, shade: ColorStudioShade) -> UIColor {
         let newColor = ColorStudio(from: colorStudio, shade: shade)
         return withColorStudio(newColor)
     }
@@ -28,7 +33,7 @@ extension UIColor {
 
 extension UIColor {
     // A way to create dynamic colors that's compatible with iOS 11 & 12
-    convenience init(light: UIColor, dark: UIColor) {
+    public convenience init(light: UIColor, dark: UIColor) {
         if #available(iOS 13, *) {
             self.init { traitCollection in
                 if traitCollection.userInterfaceStyle == .dark {
@@ -55,7 +60,7 @@ extension UIColor {
 }
 
 extension UIColor {
-    func color(for trait: UITraitCollection?) -> UIColor {
+    public func color(for trait: UITraitCollection?) -> UIColor {
         if #available(iOS 13, *), let trait = trait {
             return resolvedColor(with: trait)
         }

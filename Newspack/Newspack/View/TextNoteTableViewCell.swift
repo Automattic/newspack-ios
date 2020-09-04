@@ -1,4 +1,5 @@
 import UIKit
+import NewspackFramework
 
 protocol TextNoteCellProvider {
     var text: String! { get }

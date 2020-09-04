@@ -24,8 +24,8 @@ class FolderManagerTests: XCTestCase {
 
     func testCreatingExistingFolder() {
         let path = "TestFolder"
-        let expectedPath2 = "TestFolder 2"
-        let expectedPath3 = "TestFolder 3"
+        let expectedPath2 = "TestFolder1"
+        let expectedPath3 = "TestFolder2"
 
         // Create the starting folder
         _ = folderManager.createFolderAtPath(path: path)
