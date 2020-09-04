@@ -105,15 +105,4 @@ public class ShadowManager {
         }
     }
 
-    /// Save the specified file to shared storage.
-    ///
-    /// - Parameter file: The file to save.
-    /// - Returns: File URL bookmark data for the saved file.
-    ///
-    public func saveInGroupStorage(file: Any) -> Data? {
-        // TODO: Write file to group folder and return file URL.
-        // create group storage if needed.
-        return nil
-    }
-
 }
