@@ -59,6 +59,9 @@ class Diagnostics {
         for site in sites {
             LogInfo(message: "Found \(site.stories.count) stories for \(site.title)")
         }
+
+        let assets = manager.retrieveShadowAssets()
+        LogInfo(message: "Found \(assets.count) shadow asset(s).")
     }
 
 }

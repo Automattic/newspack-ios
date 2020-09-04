@@ -59,9 +59,13 @@ public class ShadowManager {
     /// - Parameter assets: An array of shadow assets.
     ///
     public func storeShadowAssets(assets: [ShadowAsset]) {
-        var arr = assets
+        var shadows = assets
+        shadows.append(contentsOf: retrieveShadowAssets())
 
-        arr.append(contentsOf: retrieveShadowAssets())
+        var arr = [[String: Any]]()
+        for shadow in shadows {
+            arr.append(shadow.dictionary)
+        }
 
         UserDefaults.shared.set(arr, forKey: AppConstants.shadowAssetsKey)
     }

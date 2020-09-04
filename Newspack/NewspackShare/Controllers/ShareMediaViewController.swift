@@ -89,9 +89,43 @@ extension ShareMediaViewController {
     }
 
     func processSharedItems() {
-
+        let movedImages = moveImages(images: imageURLs)
+        castShadows(images: movedImages)
     }
 
+    func moveImages(images: [URL]) -> [URL] {
+        let groupFolder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppConstants.appGroupIdentifier)
+        var movedImages = [URL]()
+        for image in imageURLs {
+            let destination = FileManager.default.availableFileURL(for: image.lastPathComponent, isDirectory: false, relativeTo: groupFolder)
+            do {
+                try FileManager.default.copyItem(at: image, to: destination)
+                movedImages.append(destination)
+            } catch {
+                print(error)
+            }
+        }
+        return movedImages
+    }
+
+    func castShadows(images: [URL]) {
+        guard let story = targetStory else {
+            // TODO: Handle error
+            return
+        }
+
+        let folderManager = FolderManager()
+        var shadows = [ShadowAsset]()
+        for image in images {
+            guard let data = folderManager.bookmarkForURL(url: image) else {
+                continue
+            }
+            let asset = ShadowAsset(storyUUID: story.uuid, bookmarkData: data)
+            shadows.append(asset)
+        }
+
+        shadowManager.storeShadowAssets(assets: shadows)
+    }
 
     func thumbnailForImage(at url: URL, size: CGSize) -> UIImage? {
         if let thumb = ImageResizer.shared.resizedImage(identifier: url.path, size: size) {
