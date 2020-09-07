@@ -13,23 +13,12 @@ public class ShadowManager {
     /// - Parameter sites: An array of ShadowSite objects.
     ///
     public func storeShadowSites(sites: [ShadowSite]) {
-        // create empty shadow array
-        // Get sites
-        // for each site
-        // get folders
-        // for each folder
-        // generate shadow folder
-        // generate shadow site
-        // get shadow site dictionary
-
-        // add shadow site dictionary to shadow array
         var arr = [[String: Any]]()
 
         for site in sites {
             arr.append(site.dictionary)
         }
 
-        // save shadow array in user defaults
         UserDefaults.shared.set(arr, forKey: AppConstants.shadowSitesKey)
     }
 
