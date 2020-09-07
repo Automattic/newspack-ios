@@ -13,23 +13,12 @@ public class ShadowManager {
     /// - Parameter sites: An array of ShadowSite objects.
     ///
     public func storeShadowSites(sites: [ShadowSite]) {
-        // create empty shadow array
-        // Get sites
-        // for each site
-        // get folders
-        // for each folder
-        // generate shadow folder
-        // generate shadow site
-        // get shadow site dictionary
-
-        // add shadow site dictionary to shadow array
         var arr = [[String: Any]]()
 
         for site in sites {
             arr.append(site.dictionary)
         }
 
-        // save shadow array in user defaults
         UserDefaults.shared.set(arr, forKey: AppConstants.shadowSitesKey)
     }
 
@@ -103,17 +92,6 @@ public class ShadowManager {
         if !manager.deleteContentsOfFolder(folder: folderURL) {
             LogWarn(message: "There was an error deleting shadow asset files.")
         }
-    }
-
-    /// Save the specified file to shared storage.
-    ///
-    /// - Parameter file: The file to save.
-    /// - Returns: File URL bookmark data for the saved file.
-    ///
-    public func saveInGroupStorage(file: Any) -> Data? {
-        // TODO: Write file to group folder and return file URL.
-        // create group storage if needed.
-        return nil
     }
 
 }

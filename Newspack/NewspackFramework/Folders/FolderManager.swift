@@ -236,6 +236,24 @@ public class FolderManager {
         return false
     }
 
+    /// Move the item at the specified source file URL to the specified destination.
+    ///
+    /// - Parameter source: A file URL.
+    /// - Parameter destination: A file URL.
+    /// - Returns: true if the item was moved, otherwise false
+    ///
+    @discardableResult
+    public func moveItem(at source: URL, to destination: URL) -> Bool {
+        do {
+            try fileManager.moveItem(at: source, to: destination)
+            return true
+        } catch {
+            LogError(message: "Unable to move file at \(source) to \(destination).  Error: \(error)")
+        }
+
+        return false
+    }
+
     /// Move the folder at the specified URL to a new location.
     ///
     /// - Parameters:

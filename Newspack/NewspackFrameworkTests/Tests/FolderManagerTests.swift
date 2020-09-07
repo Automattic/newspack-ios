@@ -222,4 +222,47 @@ class FolderManagerTests: XCTestCase {
         name = folderManager.sanitizedFolderName(name: expectedName)
         XCTAssertTrue(name == expectedName)
     }
+
+    func testMoveItem() {
+        let folder1 = folderManager.createFolderAtPath(path: "folder1")!
+        let folder2 = folderManager.createFolderAtPath(path: "folder2")!
+        let data = "Test".data(using: .ascii)
+
+        let source = FileManager.default.availableFileURL(for: "testFile.txt", isDirectory: false, relativeTo: folder1)
+        var success = FileManager.default.createFile(atPath: source.path, contents: data, attributes: nil)
+
+        // Make sure the file was created.
+        XCTAssertTrue(success)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: source.path))
+
+        let destination = FileManager.default.availableFileURL(for: source.lastPathComponent, isDirectory: false, relativeTo: folder2)
+        success = folderManager.moveItem(at: source, to: destination)
+
+        XCTAssertTrue(success)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: source.path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: destination.path))
+    }
+
+    func testDeleteContentsOfFolder() {
+        let folder = folderManager.createFolderAtPath(path: "testFolder")!
+        let data = "Test".data(using: .ascii)
+        let file1 = FileManager.default.availableFileURL(for: "file1.txt", isDirectory: false, relativeTo: folder)
+        let file2 = FileManager.default.availableFileURL(for: "file2.txt", isDirectory: false, relativeTo: folder)
+
+        var success = false
+        success = FileManager.default.createFile(atPath: file1.path, contents: data, attributes: nil)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: file1.path))
+        XCTAssertTrue(success)
+
+        success = FileManager.default.createFile(atPath: file2.path, contents: data, attributes: nil)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: file2.path))
+        XCTAssertTrue(success)
+
+        success = folderManager.deleteContentsOfFolder(folder: folder)
+        XCTAssertTrue(success)
+
+        XCTAssertFalse(FileManager.default.fileExists(atPath: file1.path))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: file2.path))
+    }
+
 }
