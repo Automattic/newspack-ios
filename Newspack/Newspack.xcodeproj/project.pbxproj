@@ -254,6 +254,7 @@
 		E6D44DEF234BDB8400B51438 /* MediaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DEE234BDB8400B51438 /* MediaStore.swift */; };
 		E6D44DF1234BDBA000B51438 /* MediaApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF0234BDBA000B51438 /* MediaApiService.swift */; };
 		E6D44DF3234BDBB500B51438 /* MediaServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */; };
+		E6D6346D251940E8001F20BF /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D6346C251940E8001F20BF /* SyncManager.swift */; };
 		E6DCB05224AE3BF300C4FD01 /* SortOrganizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DCB05124AE3BF300C4FD01 /* SortOrganizerTests.swift */; };
 		E6E1834D22D6D44D009C2D0A /* remote-post-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */; };
 		E6E1834E22D6D44D009C2D0A /* remote-post-id-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834C22D6D44D009C2D0A /* remote-post-id-edit.json */; };
@@ -598,6 +599,7 @@
 		E6D44DEE234BDB8400B51438 /* MediaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaStore.swift; sourceTree = "<group>"; };
 		E6D44DF0234BDBA000B51438 /* MediaApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaApiService.swift; sourceTree = "<group>"; };
 		E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceRemote.swift; sourceTree = "<group>"; };
+		E6D6346C251940E8001F20BF /* SyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		E6DCB05124AE3BF300C4FD01 /* SortOrganizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrganizerTests.swift; sourceTree = "<group>"; };
 		E6DF5574242E7139007DDC47 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		E6DF5577242E7242007DDC47 /* FolderManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManagerTests.swift; sourceTree = "<group>"; };
@@ -841,6 +843,7 @@
 				E605418E2369E1920078D978 /* Diagnostics.swift */,
 				E63FF0E724AA4ECD0002A32F /* Reconciler.swift */,
 				E61FA94424FD9BC40060D301 /* ShadowCaster.swift */,
+				E6D6346C251940E8001F20BF /* SyncManager.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -1808,6 +1811,7 @@
 				E6343ADF23A077C80033D369 /* SiteMediaSelectViewController.swift in Sources */,
 				E69634102440C1C400D906E0 /* UITableViewCell+Helpers.swift in Sources */,
 				E61BBD6822FA0470008A6D4C /* StartupHelper.swift in Sources */,
+				E6D6346D251940E8001F20BF /* SyncManager.swift in Sources */,
 				E636C26C234FEAD800564B63 /* MediaQuery+CoreDataProperties.swift in Sources */,
 				E66CCA112303527C00F1CA59 /* AccountCapabilities+CoreDataClass.swift in Sources */,
 				E66CCA152303527D00F1CA59 /* AccountCapabilities+CoreDataProperties.swift in Sources */,
