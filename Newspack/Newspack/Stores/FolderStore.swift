@@ -472,6 +472,39 @@ extension FolderStore {
         emitChange()
     }
 
+    /// Get a list of the post IDs for stories that have backing drafts.
+    ///
+    /// - Returns: An array of integers.
+    ///
+    func getStoryFolderPostIDs() -> [Int64] {
+        var postIDs = [Int64]()
+        guard let siteID = currentSiteID else {
+            LogError(message: "Attempted to fetch story folders without a current site.")
+            return postIDs
+        }
+
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = StoryFolder.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "postID > 0 AND site.uuid = %@", siteID as CVarArg)
+        fetchRequest.propertiesToFetch = ["postID"]
+        fetchRequest.resultType = .dictionaryResultType
+
+        let context = CoreDataManager.shared.mainContext
+
+        guard let results = try? context.fetch(fetchRequest) as? [[String: Int64]] else {
+            LogError(message: "Error fetching Story postIDs.")
+            return postIDs
+        }
+
+        for item in results {
+            guard let postID = item["postID"] else {
+                continue
+            }
+            postIDs.append(postID)
+        }
+
+        return postIDs
+    }
+
 }
 
 extension FolderStore {
