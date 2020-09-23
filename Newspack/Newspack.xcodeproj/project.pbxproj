@@ -254,7 +254,6 @@
 		E6D44DF1234BDBA000B51438 /* MediaApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF0234BDBA000B51438 /* MediaApiService.swift */; };
 		E6D44DF3234BDBB500B51438 /* MediaServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */; };
 		E6DCB05224AE3BF300C4FD01 /* SortOrganizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DCB05124AE3BF300C4FD01 /* SortOrganizerTests.swift */; };
-		E6DFEF12251BC912001A700E /* Alpha-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6DFEF11251BC912001A700E /* Alpha-Info.plist */; };
 		E6E1834D22D6D44D009C2D0A /* remote-post-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */; };
 		E6E1834E22D6D44D009C2D0A /* remote-post-id-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834C22D6D44D009C2D0A /* remote-post-id-edit.json */; };
 		E6E1835022D79473009C2D0A /* RemoteTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6E1834F22D79473009C2D0A /* RemoteTestCase.swift */; };
@@ -1540,7 +1539,6 @@
 				E6AB672524E88182003D5D2A /* TextNoteTableViewCell.xib in Resources */,
 				E65469F724C78C420083FAA5 /* acknowledgements.htm in Resources */,
 				E6AB672924E88182003D5D2A /* VideoTableViewCell.xib in Resources */,
-				E6DFEF12251BC912001A700E /* Alpha-Info.plist in Resources */,
 				E6138FDF2211FE88004E5B91 /* LaunchScreen.storyboard in Resources */,
 				E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */,
 				E605B33024F4499F00E1768B /* TextFieldTableViewCell.xib in Resources */,
@@ -2070,7 +2068,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack.NewspackShare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack.share;
 				PRODUCT_NAME = NewspackShare;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2091,7 +2089,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack.NewspackShare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack.share;
 				PRODUCT_NAME = NewspackShare;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2113,9 +2111,9 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack.NewspackShare.alpha;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack.alpha.share;
 				PRODUCT_NAME = NewspackShare;
-				PROVISIONING_PROFILE_SPECIFIER = "match InHouse com.automattic.newspack.Share.alpha";
+				PROVISIONING_PROFILE_SPECIFIER = "match InHouse com.automattic.newspack.alpha.share";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
