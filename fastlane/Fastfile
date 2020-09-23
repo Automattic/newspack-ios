@@ -106,6 +106,10 @@ platform :ios do
   ########################################################################
   # Fastlane match code signing
   ########################################################################
+  lane :download_certs_and_profiles do |options|
+    alpha_code_signing
+  end
+
   private_lane :alpha_code_signing do |options|
     match(
       type: "enterprise",
