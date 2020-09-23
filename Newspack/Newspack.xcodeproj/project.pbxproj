@@ -600,6 +600,7 @@
 		E6DCB05124AE3BF300C4FD01 /* SortOrganizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrganizerTests.swift; sourceTree = "<group>"; };
 		E6DF5574242E7139007DDC47 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		E6DF5577242E7242007DDC47 /* FolderManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManagerTests.swift; sourceTree = "<group>"; };
+		E6DFEF10251BA5F7001A700E /* NewspackShare-Alpha.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "NewspackShare-Alpha.entitlements"; sourceTree = "<group>"; };
 		E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-post-edit.json"; sourceTree = "<group>"; };
 		E6E1834C22D6D44D009C2D0A /* remote-post-id-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-post-id-edit.json"; sourceTree = "<group>"; };
 		E6E1834F22D79473009C2D0A /* RemoteTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTestCase.swift; sourceTree = "<group>"; };
@@ -757,6 +758,7 @@
 				E630E34425003F730028BBF2 /* UI */,
 				E630E34325003EF70028BBF2 /* Utils */,
 				E62018A924F971DC00D96AFF /* NewspackShare.entitlements */,
+				E6DFEF10251BA5F7001A700E /* NewspackShare-Alpha.entitlements */,
 				E60A25122425418E003F3C81 /* Info.plist */,
 			);
 			path = NewspackShare;
@@ -2096,10 +2098,10 @@
 		E60A25192425418E003F3C81 /* Release-Alpha */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = NewspackShare/NewspackShare.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "NewspackShare/NewspackShare-Alpha.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 99KV9Z6BKV;
 				INFOPLIST_FILE = NewspackShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2107,9 +2109,9 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack.NewspackShare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack.NewspackShare.alpha;
 				PRODUCT_NAME = NewspackShare;
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "match InHouse com.automattic.newspack.Share.alpha";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
