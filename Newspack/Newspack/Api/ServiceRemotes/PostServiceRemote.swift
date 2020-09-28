@@ -44,7 +44,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
     func fetchPostStubs(for postIDs: [Int64],
                         page: Int,
                         perPage: Int,
-                        onComplete: @escaping (_ postIDs: [RemotePost]?, _ error: Error?) -> Void) {
+                        onComplete: @escaping (_ postIDs: [RemotePostStub]?, _ error: Error?) -> Void) {
         let ids = postIDs.map { (item) -> String in
             String(item)
         }.joined(separator: ",")
@@ -59,7 +59,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
 
         api.GET("posts", parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
             let array = response as! [[String: AnyObject]]
-            let posts = self.remotePostsFromResponse(response: array)
+            let posts = self.remotePostStubsFromResponse(response: array)
 
             onComplete(posts, nil)
 
