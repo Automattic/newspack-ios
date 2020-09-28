@@ -70,6 +70,8 @@ class FolderStore: Store {
     }
 }
 
+// MARK: - Results Controller
+
 extension FolderStore {
 
     /// Convenience method for getting an NSFetchedResultsController configured
@@ -94,6 +96,8 @@ extension FolderStore {
 
     }
 }
+
+// MARK: - Sorting
 
 extension FolderStore {
 
@@ -123,6 +127,12 @@ extension FolderStore {
         return ""
     }
 
+}
+
+// MARK: - Story Folder Creation
+
+extension FolderStore {
+
     /// Creates a single, default, folder under the site's folder if there is a
     /// site, and there are currently no folders.
     ///
@@ -131,46 +141,6 @@ extension FolderStore {
             return
         }
         createStoryFolder()
-    }
-
-    /// Select the default story folder if needed.
-    ///
-    private func selectDefaultStoryFolderIfNeeded() {
-        // Make sure there are story folders to retrieve.
-        guard
-            let _ = currentSiteID,
-            getStoryFolderByID(uuid: currentStoryFolderID) == nil,
-            let firstFolder = getStoryFolders().first
-        else {
-            return
-        }
-        // Check for last selected story folder.
-        if let lastFolder = getLastSelectedStoryFolder() {
-            selectStoryFolder(uuid: lastFolder.uuid)
-            return
-        }
-        selectStoryFolder(uuid: firstFolder.uuid)
-    }
-
-    /// Get the last selected story folder if one exists.
-    ///
-    /// - Returns: A StoryFolder instance or nil.
-    ///
-    func getLastSelectedStoryFolder() -> StoryFolder? {
-        guard let siteID = currentSiteID else {
-            return nil
-        }
-
-        let key = AppConstants.lastSelectedStoryFolderKey + siteID.uuidString
-        guard
-            let uuidString = UserDefaults.shared.string(forKey: key),
-            let uuid = UUID(uuidString: uuidString),
-            let storyFolder = getStoryFolderByID(uuid: uuid)
-        else {
-            return nil
-        }
-
-        return storyFolder
     }
 
     /// Create a new story folder using the supplied string as its path.
@@ -245,39 +215,29 @@ extension FolderStore {
         }
     }
 
-    /// Rename a story folder. This updates the name of the story folder's underlying
-    /// directory as well as the name field in core data.
-    ///
-    /// - Parameters:
-    ///   - uuid: The uuid of the StoryFolder to update.
-    ///   - name: The new name.
-    ///
-    func renameStoryFolder(uuid: UUID, to name: String) {
-        // Get the folder.
-        guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
-            LogError(message: "Unable to find the story folder to rename.")
-            return
-        }
+}
 
-        // Update the name of its folder. We will assume it is not stale.
+// MARK: - Story Folder Selection
+
+extension FolderStore {
+
+    /// Select the default story folder if needed.
+    ///
+    private func selectDefaultStoryFolderIfNeeded() {
+        // Make sure there are story folders to retrieve.
         guard
-            let url = folderManager.urlFromBookmark(bookmark: storyFolder.bookmark),
-            let newUrl = folderManager.renameFolder(at: url, to: name)
+            let _ = currentSiteID,
+            getStoryFolderByID(uuid: currentStoryFolderID) == nil,
+            let firstFolder = getStoryFolders().first
         else {
-            LogError(message: "Unable to rename story folder")
             return
         }
-
-        LogInfo(message: "Success: \(newUrl)")
-
-        // Save the name in core data.
-        let objID = storyFolder.objectID
-        CoreDataManager.shared.performOnWriteContext { context in
-            let folder = context.object(with: objID) as! StoryFolder
-            folder.name = name
-
-            CoreDataManager.shared.saveContext(context: context)
+        // Check for last selected story folder.
+        if let lastFolder = getLastSelectedStoryFolder() {
+            selectStoryFolder(uuid: lastFolder.uuid)
+            return
         }
+        selectStoryFolder(uuid: firstFolder.uuid)
     }
 
     /// Ensure the selected story folder is any folder other than the one listed.
@@ -330,6 +290,188 @@ extension FolderStore {
         // in the list is selected.
         let newIndex = (index > 0) ? index - 1 : 1
         selectStoryFolder(uuid: results[newIndex]["uuid"]!)
+    }
+
+    /// Set the specified story folder as the selected folder.
+    ///
+    /// - Parameter uuid: The uuid of the story folder.
+    ///
+    func selectStoryFolder(uuid: UUID) {
+        guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
+            LogError(message: "Unable to select story folder.")
+            return
+        }
+        selectStoryFolder(folder: storyFolder)
+    }
+
+    /// Set the specified story folder as the selected folder.
+    ///
+    /// - Parameter uuid: The story folder.
+    ///
+    func selectStoryFolder(folder: StoryFolder) {
+        if let siteID = currentSiteID {
+            let key = AppConstants.lastSelectedStoryFolderKey + siteID.uuidString
+            UserDefaults.shared.set(folder.uuid.uuidString, forKey: key)
+        }
+        currentStoryFolderID = folder.uuid
+        emitChange()
+    }
+
+}
+
+// MARK: - Story Folder Retrieval
+
+extension FolderStore {
+
+    /// Get the last selected story folder if one exists.
+    ///
+    /// - Returns: A StoryFolder instance or nil.
+    ///
+    func getLastSelectedStoryFolder() -> StoryFolder? {
+        guard let siteID = currentSiteID else {
+            return nil
+        }
+
+        let key = AppConstants.lastSelectedStoryFolderKey + siteID.uuidString
+        guard
+            let uuidString = UserDefaults.shared.string(forKey: key),
+            let uuid = UUID(uuidString: uuidString),
+            let storyFolder = getStoryFolderByID(uuid: uuid)
+        else {
+            return nil
+        }
+
+        return storyFolder
+    }
+
+    /// Returns an array of StoryFolder instances for the current site.
+    ///
+    /// - Returns: An array of StoryFolder instances.
+    ///
+    func getStoryFolders() -> [StoryFolder] {
+        guard let siteID = currentSiteID else {
+            LogError(message: "Attempted to fetch story folders without a current site.")
+            return [StoryFolder]()
+        }
+
+        let context = CoreDataManager.shared.mainContext
+        let fetchRequest = StoryFolder.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
+        fetchRequest.sortDescriptors = sortMode.descriptors
+
+        if let results = try? context.fetch(fetchRequest) {
+            return results
+        }
+
+        return [StoryFolder]()
+    }
+
+    /// Get the number of story folders for the current site.
+    ///
+    /// - Returns: The number of folders.
+    ///
+    func getStoryFolderCount() -> Int {
+        guard let siteID = currentSiteID else {
+            return 0
+        }
+
+        let context = CoreDataManager.shared.mainContext
+        let fetchRequest = StoryFolder.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
+
+        if let count = try? context.count(for: fetchRequest) {
+            return count
+        }
+
+        return 0
+    }
+
+    func getStoryFolderByID(uuid: UUID) -> StoryFolder? {
+        let fetchRequest = StoryFolder.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "uuid == %@", uuid as CVarArg)
+        let context = CoreDataManager.shared.mainContext
+        do {
+            let results = try context.fetch(fetchRequest)
+            return results.first
+        } catch {
+            let error = error as NSError
+            LogError(message: error.localizedDescription)
+        }
+        return nil
+    }
+
+    /// Get a list of the post IDs for stories that have backing drafts.
+    ///
+    /// - Returns: An array of integers.
+    ///
+    func getStoryFolderPostIDs() -> [Int64] {
+        var postIDs = [Int64]()
+        guard let siteID = currentSiteID else {
+            LogError(message: "Attempted to fetch story folders without a current site.")
+            return postIDs
+        }
+
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = StoryFolder.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "postID > 0 AND site.uuid = %@", siteID as CVarArg)
+        fetchRequest.propertiesToFetch = ["postID"]
+        fetchRequest.resultType = .dictionaryResultType
+
+        let context = CoreDataManager.shared.mainContext
+
+        guard let results = try? context.fetch(fetchRequest) as? [[String: Int64]] else {
+            LogError(message: "Error fetching Story postIDs.")
+            return postIDs
+        }
+
+        for item in results {
+            guard let postID = item["postID"] else {
+                continue
+            }
+            postIDs.append(postID)
+        }
+
+        return postIDs
+    }
+
+}
+
+// MARK: - Story Folder Modification
+
+extension FolderStore {
+
+    /// Rename a story folder. This updates the name of the story folder's underlying
+    /// directory as well as the name field in core data.
+    ///
+    /// - Parameters:
+    ///   - uuid: The uuid of the StoryFolder to update.
+    ///   - name: The new name.
+    ///
+    func renameStoryFolder(uuid: UUID, to name: String) {
+        // Get the folder.
+        guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
+            LogError(message: "Unable to find the story folder to rename.")
+            return
+        }
+
+        // Update the name of its folder. We will assume it is not stale.
+        guard
+            let url = folderManager.urlFromBookmark(bookmark: storyFolder.bookmark),
+            let newUrl = folderManager.renameFolder(at: url, to: name)
+        else {
+            LogError(message: "Unable to rename story folder")
+            return
+        }
+
+        LogInfo(message: "Success: \(newUrl)")
+
+        // Save the name in core data.
+        let objID = storyFolder.objectID
+        CoreDataManager.shared.performOnWriteContext { context in
+            let folder = context.object(with: objID) as! StoryFolder
+            folder.name = name
+
+            CoreDataManager.shared.saveContext(context: context)
+        }
     }
 
     /// Delete the specified StoryFolder. This removes the entity from core data
@@ -389,120 +531,6 @@ extension FolderStore {
                 ShadowCaster.shared.castShadows()
             }
         }
-    }
-
-    /// Returns an array of StoryFolder instances for the current site.
-    ///
-    /// - Returns: An array of StoryFolder instances.
-    ///
-    func getStoryFolders() -> [StoryFolder] {
-        guard let siteID = currentSiteID else {
-            LogError(message: "Attempted to fetch story folders without a current site.")
-            return [StoryFolder]()
-        }
-
-        let context = CoreDataManager.shared.mainContext
-        let fetchRequest = StoryFolder.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
-        fetchRequest.sortDescriptors = sortMode.descriptors
-
-        if let results = try? context.fetch(fetchRequest) {
-            return results
-        }
-
-        return [StoryFolder]()
-    }
-
-    /// Get the number of story folders for the current site.
-    ///
-    /// - Returns: The number of folders.
-    ///
-    func getStoryFolderCount() -> Int {
-        guard let siteID = currentSiteID else {
-            return 0
-        }
-
-        let context = CoreDataManager.shared.mainContext
-        let fetchRequest = StoryFolder.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
-
-        if let count = try? context.count(for: fetchRequest) {
-            return count
-        }
-
-        return 0
-    }
-
-    func getStoryFolderByID(uuid: UUID) -> StoryFolder? {
-        let fetchRequest = StoryFolder.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "uuid == %@", uuid as CVarArg)
-        let context = CoreDataManager.shared.mainContext
-        do {
-            let results = try context.fetch(fetchRequest)
-            return results.first
-        } catch {
-            let error = error as NSError
-            LogError(message: error.localizedDescription)
-        }
-        return nil
-    }
-
-    /// Set the specified story folder as the selected folder.
-    ///
-    /// - Parameter uuid: The uuid of the story folder.
-    ///
-    func selectStoryFolder(uuid: UUID) {
-        guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
-            LogError(message: "Unable to select story folder.")
-            return
-        }
-        selectStoryFolder(folder: storyFolder)
-    }
-
-    /// Set the specified story folder as the selected folder.
-    ///
-    /// - Parameter uuid: The story folder.
-    ///
-    func selectStoryFolder(folder: StoryFolder) {
-        if let siteID = currentSiteID {
-            let key = AppConstants.lastSelectedStoryFolderKey + siteID.uuidString
-            UserDefaults.shared.set(folder.uuid.uuidString, forKey: key)
-        }
-        currentStoryFolderID = folder.uuid
-        emitChange()
-    }
-
-    /// Get a list of the post IDs for stories that have backing drafts.
-    ///
-    /// - Returns: An array of integers.
-    ///
-    func getStoryFolderPostIDs() -> [Int64] {
-        var postIDs = [Int64]()
-        guard let siteID = currentSiteID else {
-            LogError(message: "Attempted to fetch story folders without a current site.")
-            return postIDs
-        }
-
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = StoryFolder.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "postID > 0 AND site.uuid = %@", siteID as CVarArg)
-        fetchRequest.propertiesToFetch = ["postID"]
-        fetchRequest.resultType = .dictionaryResultType
-
-        let context = CoreDataManager.shared.mainContext
-
-        guard let results = try? context.fetch(fetchRequest) as? [[String: Int64]] else {
-            LogError(message: "Error fetching Story postIDs.")
-            return postIDs
-        }
-
-        for item in results {
-            guard let postID = item["postID"] else {
-                continue
-            }
-            postIDs.append(postID)
-        }
-
-        return postIDs
     }
 
 }
