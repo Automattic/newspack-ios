@@ -106,12 +106,20 @@ platform :ios do
   ########################################################################
   # Fastlane match code signing
   ########################################################################
+  lane :download_certs_and_profiles do |options|
+    alpha_code_signing
+  end
+
   private_lane :alpha_code_signing do |options|
     match(
       type: "enterprise",
       team_id: get_required_env("INT_EXPORT_TEAM_ID"),
-      readonly: options[:readonly] || is_ci,
-      app_identifier: ["com.automattic.newspack.alpha"])
+      readonly: true,
+      app_identifier: [
+        "com.automattic.newspack.alpha",
+        "com.automattic.newspack.alpha.share",
+      ]
+    )
   end
 
 end
