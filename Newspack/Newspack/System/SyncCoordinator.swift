@@ -175,7 +175,7 @@ extension SyncCoordinator {
 
 }
 
-// MARK: -  Session related
+// MARK: - Session related
 
 extension SyncCoordinator {
 

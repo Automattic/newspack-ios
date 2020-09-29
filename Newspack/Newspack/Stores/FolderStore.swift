@@ -771,7 +771,7 @@ extension FolderStore {
         let uuid = storyFolder.uuid!
         let params = [
             "title": storyFolder.name,
-            "status" : "draft",
+            "status": "draft",
             ] as [String: AnyObject]
         let remote = PostServiceRemote(wordPressComRestApi: SessionManager.shared.api)
         remote.createPost(postParams: params) { (remotePost, error) in
@@ -841,7 +841,7 @@ extension FolderStore {
 extension FolderStore {
     private struct Constants {
         static let defaultStoryFolderName = NSLocalizedString("New Story", comment: "Noun. This is the default name given to a new story folder.")
-        static let finishedStatuses = ["publish","future","spam","trash"]
+        static let finishedStatuses = ["publish", "future", "spam", "trash"]
     }
 }
 
