@@ -6,8 +6,19 @@ import NewspackFramework
 /// file system with what is currently stored in core data.
 ///
 class Reconciler {
+    static let reconcilerDidStart = NSNotification.Name("ReconcilerDidStart")
+    static let reconcilerDidStop = NSNotification.Name("ReconcilerDidStop")
 
     private var sessionReceipt: Any?
+    private(set) var processing = false {
+        didSet {
+            if processing {
+                NotificationCenter.default.post(name: Reconciler.reconcilerDidStart, object: nil)
+            } else {
+                NotificationCenter.default.post(name: Reconciler.reconcilerDidStop, object: nil)
+            }
+        }
+    }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -25,7 +36,9 @@ class Reconciler {
     /// and what is stored in core data.  If any are found they will be reconciled.
     ///
     func process() {
+        processing = true
         guard hasInitializedSession() else {
+            processing = false
             return
         }
 
@@ -33,6 +46,7 @@ class Reconciler {
 
         guard hasInconsistencies() else {
             LogInfo(message: "No inconsistencies found.")
+            processing = false
             return
         }
 
@@ -56,7 +70,6 @@ class Reconciler {
 
         /// Clean up group storage.
         manager.clearShadowAssets()
-
     }
 
     /// Attempt to copy the file referenced by the specified shadow asset to it's
@@ -106,6 +119,7 @@ class Reconciler {
             LogInfo(message: "StoryAssets where missing, or new assets were found for story: \(folder.name ?? "").")
             return true
         }
+
         return false
     }
 
@@ -119,19 +133,29 @@ class Reconciler {
         if !siteStore.currentSiteFolderExists() {
             LogInfo(message: "Recreating folder for current site.")
             siteStore.createSiteFolderIfNeeded()
+            processing = false
             return
         }
+
+        // Manage the rest of the work with a dispatch group so we can notify when work is complete.
+        let dispatchGroup = DispatchGroup()
 
         // Get story folder inconsistencies
         let (rawFolders, removedStories) = getInconsistentStoryFolders()
         let folderStore = StoreContainer.shared.folderStore
         if rawFolders.count > 0 {
             LogInfo(message: "Creating StoryFolders for \(rawFolders.count) discovered folders.")
-            folderStore.createStoryFoldersForURLs(urls: rawFolders)
+            dispatchGroup.enter()
+            folderStore.createStoryFoldersForURLs(urls: rawFolders, onComplete: {
+                dispatchGroup.leave()
+            })
         }
         if removedStories.count > 0 {
             LogInfo(message: "Deleting StoryFolders for \(removedStories.count) missing folders.")
-            folderStore.deleteStoryFolders(folders: removedStories)
+            dispatchGroup.enter()
+            folderStore.deleteStoryFolders(folders: removedStories, onComplete: {
+                dispatchGroup.leave()
+            })
         }
 
         // Get asset inconsistencies.
@@ -142,12 +166,22 @@ class Reconciler {
 
             if rawAssets.count > 0 {
                 LogInfo(message: "Creating StoryAssets for \(rawAssets.count) discovered items in story: \(folder.name ?? "").")
-                assetStore.createAssetsForURLs(urls: rawAssets, storyFolder: folder)
+                dispatchGroup.enter()
+                assetStore.createAssetsForURLs(urls: rawAssets, storyFolder: folder, onComplete: {
+                    dispatchGroup.leave()
+                })
             }
             if removedAssets.count > 0 {
                 LogDebug(message: "Deleting StoryAssets for \(removedAssets.count) missing items in story: \(folder.name ?? "").")
-                assetStore.deleteAssets(assets: removedAssets)
+                dispatchGroup.enter()
+                assetStore.deleteAssets(assets: removedAssets, onComplete: {
+                    dispatchGroup.leave()
+                })
             }
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            self.processing = false
         }
     }
 
