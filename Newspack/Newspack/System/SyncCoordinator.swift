@@ -20,24 +20,49 @@ enum SyncSteps {
 
 class SyncCoordinator {
 
-    private(set) var isRunning = false
+    private(set) var processing = false {
+        didSet {
+            if processing {
+                LogInfo(message: "SyncCoordinator started processing.")
+            } else {
+                LogInfo(message: "SyncCoordinator ended processing.")
+            }
+        }
+    }
     private var steps = SyncSteps.getSteps()
     private(set) var progressDictionary = [String: Any]()
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    init() {
+        if Environment.isTesting() {
+            return
+        }
+        listenForNotifications()
+    }
+
     func process() {
         guard
-            SessionManager.shared.state == .initialized,
-            !isRunning
+            hasInitializedSession(),
+            !processing
         else {
             return
         }
-        isRunning = true
+        guard !AppDelegate.shared.reconciler.processing else {
+            return
+        }
 
+        processing = true
+
+        steps = SyncSteps.getSteps()
         performNextStep()
     }
 
     private func performNextStep() {
         guard steps.count > 0 else {
+            processing = false
             return
         }
 
@@ -54,7 +79,6 @@ class SyncCoordinator {
 
     private func handleError(error: Error?) -> Bool {
         if let error = error {
-            isRunning = false
             LogError(message: "\(error)")
             return true
         }
@@ -75,6 +99,7 @@ extension SyncCoordinator {
         let store = StoreContainer.shared.folderStore
         store.syncAndProcessRemoteDrafts { [weak self] (error) in
             guard self?.handleError(error: error) == false else {
+                self?.processing = false
                 return
             }
             self?.performNextStep()
@@ -88,6 +113,7 @@ extension SyncCoordinator {
         let store = StoreContainer.shared.folderStore
         store.createRemoteDraftsIfNeeded { [weak self] (error) in
             guard self?.handleError(error: error) == false else {
+                self?.processing = false
                 return
             }
             self?.performNextStep()
@@ -100,6 +126,7 @@ extension SyncCoordinator {
         let store = StoreContainer.shared.folderStore
         store.pushUpdatesToRemote { [weak self] (error) in
             guard self?.handleError(error: error) == false else {
+                self?.processing = false
                 return
             }
             self?.performNextStep()
@@ -123,6 +150,38 @@ extension SyncCoordinator {
         // upload individually
         // record IDs when finished
         // remove progress object from dictionary.  (maybe dispatch notification?)
+    }
+
+}
+
+// MARK: - Notification related
+
+extension SyncCoordinator {
+
+    /// Listen for system notifications that would tell us we might need to
+    /// reconcile the file system and core data.
+    /// Note that .didBecomeActiveNotification is dispatched more often than
+    /// .willEnterForgroundNotification. If reconciliation is too frequent or
+    /// aggressive we can try switching notifications.
+    ///
+    func listenForNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleReconcilerStopped(notification:)), name: Reconciler.reconcilerDidStop, object: nil)
+    }
+
+    @objc
+    func handleReconcilerStopped(notification: Notification) {
+        process()
+    }
+
+}
+
+// MARK: -  Session related
+
+extension SyncCoordinator {
+
+    func hasInitializedSession() -> Bool {
+        let sessionState = SessionManager.shared.state
+        return sessionState == .initialized
     }
 
 }
