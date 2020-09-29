@@ -33,7 +33,7 @@ public class StoryFolder: NSManagedObject, StoryCellProvider {
     }
 
     var needsSync: Bool {
-        return true
+        return synced < modified
     }
 
     var textNoteCount: Int {
