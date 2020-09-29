@@ -589,7 +589,7 @@ extension FolderStore {
     ///
     /// - Parameter folderID: The UUID of the StoryFolder
     ///
-    func updateSyncedDate(for folderID: UUID) {
+    func updateSyncedDate(for folderID: UUID, onComplete:(() -> Void)? = nil) {
         guard let folder = getStoryFolderByID(uuid: folderID) else {
             return
         }
@@ -601,9 +601,12 @@ extension FolderStore {
             folder.synced = Date()
 
             CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+            }
         }
     }
-
 
     /// Delete the specified StoryFolder. This removes the entity from core data
     /// as well as the underlying directory.
@@ -623,7 +626,7 @@ extension FolderStore {
     ///
     /// - Parameter folders: An array of StoryFolders
     ///
-    func deleteStoryFolders(folders: [StoryFolder], onComplete:(()->Void)? = nil) {
+    func deleteStoryFolders(folders: [StoryFolder], onComplete:(() -> Void)? = nil) {
         // For each story folder, remove its bookmarked content and then delete.
 
         let uuids: [UUID] = folders.map { (folder) -> UUID in
