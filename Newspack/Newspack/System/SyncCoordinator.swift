@@ -64,7 +64,7 @@ class SyncCoordinator {
 
 // MARK: - Steps Methods
 
-extension SyncManager {
+extension SyncCoordinator {
 
     /// Step 1: Sync the remote post backing stories.
     /// This will clean up any posts that need to be removed or whose title has
