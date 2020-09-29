@@ -18,8 +18,7 @@ enum SyncSteps {
     }
 }
 
-/// TODO: Rename to SyncCoordinator and document.
-class SyncManager {
+class SyncCoordinator {
 
     private(set) var isRunning = false
     private var steps = SyncSteps.getSteps()
