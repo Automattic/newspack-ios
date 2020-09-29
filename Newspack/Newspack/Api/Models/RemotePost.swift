@@ -113,4 +113,17 @@ struct RemotePostStub {
         title = dict[stringAtKeyPath: "title.raw"]
         titleRendered = dict[stringAtKeyPath: "title.rendered"]
     }
+
+    /// Convenience initializer to create an instance from individual arguments.
+    ///
+    init(postID: Int64, dateGMT: Date, link: String, modifiedGMT: Date, status: String, title: String, titleRendered: String) {
+        self.postID = postID
+        self.dateGMT = dateGMT
+        self.link = link
+        self.modifiedGMT = modifiedGMT
+        self.status = status
+        self.title = title
+        self.titleRendered = titleRendered
+    }
+
 }
