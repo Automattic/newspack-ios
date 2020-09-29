@@ -447,7 +447,7 @@ extension FolderStore {
         }
 
         let fetchRequest = StoryFolder.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "postID == %@ AND site.uuid = %@", postID, siteID as CVarArg)
+        fetchRequest.predicate = NSPredicate(format: "postID == %d AND site.uuid = %@", postID, siteID as CVarArg)
         let context = CoreDataManager.shared.mainContext
         do {
             let results = try context.fetch(fetchRequest)
