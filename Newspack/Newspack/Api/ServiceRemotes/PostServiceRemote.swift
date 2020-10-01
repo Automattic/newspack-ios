@@ -58,7 +58,11 @@ class PostServiceRemote: ServiceRemoteCoreRest {
         let parameters = params.mergedWith(filter)
 
         api.GET("posts", parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
-            let array = response as! [[String: AnyObject]]
+            guard let array = response as? [[String: AnyObject]] else {
+                onComplete(nil, ApiError.unexpectedDataFormat)
+                return
+            }
+
             let posts = self.remotePostStubsFromResponse(response: array)
 
             onComplete(posts, nil)

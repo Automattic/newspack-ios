@@ -234,12 +234,9 @@ extension FolderStore {
         else {
             return
         }
-        // Check for last selected story folder.
-        if let lastFolder = getLastSelectedStoryFolder() {
-            selectStoryFolder(uuid: lastFolder.uuid)
-            return
-        }
-        selectStoryFolder(uuid: firstFolder.uuid)
+
+        let folder = getLastSelectedStoryFolder() ?? firstFolder
+        selectStoryFolder(uuid: folder.uuid)
     }
 
     /// Ensure the selected story folder is any folder other than the one listed.

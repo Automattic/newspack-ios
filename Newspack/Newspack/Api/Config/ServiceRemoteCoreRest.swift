@@ -1,6 +1,10 @@
 import Foundation
 import WordPressKit
 
+enum ApiError: Error {
+    case unexpectedDataFormat
+}
+
 /// Base class for core rest api service remotes.
 ///
 class ServiceRemoteCoreRest {
