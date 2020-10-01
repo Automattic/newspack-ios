@@ -76,10 +76,16 @@ class ShadowTests: XCTestCase {
     }
 
     func testClearShadowAssets() {
+        let manager = ShadowManager()
+        manager.clearShadowAssets()
+
+        // Confirm there is nothing to start.
+        var retrieved = manager.retrieveShadowAssets()
+        XCTAssertTrue(retrieved.count == 0)
+
         let data = "data".data(using: .ascii)!
         let asset = ShadowAsset(storyUUID: "story", bookmarkData: data)
 
-        let manager = ShadowManager()
         manager.storeShadowAssets(assets: [asset])
 
         let folderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppConstants.appGroupIdentifier)!
@@ -89,10 +95,7 @@ class ShadowTests: XCTestCase {
         XCTAssertTrue(FileManager.default.fileExists(atPath: file.path))
         XCTAssertTrue(success)
 
-        let obj = UserDefaults.shared.object(forKey: AppConstants.shadowAssetsKey)
-        XCTAssertNotNil(obj)
-
-        var retrieved = manager.retrieveShadowAssets()
+        retrieved = manager.retrieveShadowAssets()
         XCTAssertTrue(retrieved.count == 1)
 
         manager.clearShadowAssets()
