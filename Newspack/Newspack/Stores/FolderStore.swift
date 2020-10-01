@@ -70,6 +70,8 @@ class FolderStore: Store {
     }
 }
 
+// MARK: - Results Controller
+
 extension FolderStore {
 
     /// Convenience method for getting an NSFetchedResultsController configured
@@ -94,6 +96,8 @@ extension FolderStore {
 
     }
 }
+
+// MARK: - Sorting
 
 extension FolderStore {
 
@@ -123,6 +127,12 @@ extension FolderStore {
         return ""
     }
 
+}
+
+// MARK: - Story Folder Creation
+
+extension FolderStore {
+
     /// Creates a single, default, folder under the site's folder if there is a
     /// site, and there are currently no folders.
     ///
@@ -131,46 +141,6 @@ extension FolderStore {
             return
         }
         createStoryFolder()
-    }
-
-    /// Select the default story folder if needed.
-    ///
-    private func selectDefaultStoryFolderIfNeeded() {
-        // Make sure there are story folders to retrieve.
-        guard
-            let _ = currentSiteID,
-            getStoryFolderByID(uuid: currentStoryFolderID) == nil,
-            let firstFolder = getStoryFolders().first
-        else {
-            return
-        }
-        // Check for last selected story folder.
-        if let lastFolder = getLastSelectedStoryFolder() {
-            selectStoryFolder(uuid: lastFolder.uuid)
-            return
-        }
-        selectStoryFolder(uuid: firstFolder.uuid)
-    }
-
-    /// Get the last selected story folder if one exists.
-    ///
-    /// - Returns: A StoryFolder instance or nil.
-    ///
-    func getLastSelectedStoryFolder() -> StoryFolder? {
-        guard let siteID = currentSiteID else {
-            return nil
-        }
-
-        let key = AppConstants.lastSelectedStoryFolderKey + siteID.uuidString
-        guard
-            let uuidString = UserDefaults.shared.string(forKey: key),
-            let uuid = UUID(uuidString: uuidString),
-            let storyFolder = getStoryFolderByID(uuid: uuid)
-        else {
-            return nil
-        }
-
-        return storyFolder
     }
 
     /// Create a new story folder using the supplied string as its path.
@@ -227,9 +197,11 @@ extension FolderStore {
             let folderManager = SessionManager.shared.folderManager
 
             for url in urls {
+                let date = Date()
                 let storyFolder = StoryFolder(context: context)
                 storyFolder.uuid = UUID()
-                storyFolder.date = Date()
+                storyFolder.synced = date
+                storyFolder.modified = date
                 storyFolder.name = url.pathComponents.last
                 storyFolder.site = site
                 storyFolder.bookmark = folderManager.bookmarkForURL(url: url)
@@ -245,39 +217,26 @@ extension FolderStore {
         }
     }
 
-    /// Rename a story folder. This updates the name of the story folder's underlying
-    /// directory as well as the name field in core data.
-    ///
-    /// - Parameters:
-    ///   - uuid: The uuid of the StoryFolder to update.
-    ///   - name: The new name.
-    ///
-    func renameStoryFolder(uuid: UUID, to name: String) {
-        // Get the folder.
-        guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
-            LogError(message: "Unable to find the story folder to rename.")
-            return
-        }
+}
 
-        // Update the name of its folder. We will assume it is not stale.
+// MARK: - Story Folder Selection
+
+extension FolderStore {
+
+    /// Select the default story folder if needed.
+    ///
+    private func selectDefaultStoryFolderIfNeeded() {
+        // Make sure there are story folders to retrieve.
         guard
-            let url = folderManager.urlFromBookmark(bookmark: storyFolder.bookmark),
-            let newUrl = folderManager.renameFolder(at: url, to: name)
+            let _ = currentSiteID,
+            getStoryFolderByID(uuid: currentStoryFolderID) == nil,
+            let firstFolder = getStoryFolders().first
         else {
-            LogError(message: "Unable to rename story folder")
             return
         }
 
-        LogInfo(message: "Success: \(newUrl)")
-
-        // Save the name in core data.
-        let objID = storyFolder.objectID
-        CoreDataManager.shared.performOnWriteContext { context in
-            let folder = context.object(with: objID) as! StoryFolder
-            folder.name = name
-
-            CoreDataManager.shared.saveContext(context: context)
-        }
+        let folder = getLastSelectedStoryFolder() ?? firstFolder
+        selectStoryFolder(uuid: folder.uuid)
     }
 
     /// Ensure the selected story folder is any folder other than the one listed.
@@ -332,63 +291,56 @@ extension FolderStore {
         selectStoryFolder(uuid: results[newIndex]["uuid"]!)
     }
 
-    /// Delete the specified StoryFolder. This removes the entity from core data
-    /// as well as the underlying directory.
+    /// Set the specified story folder as the selected folder.
     ///
-    /// - Parameter uuid: The UUID of the folder.
+    /// - Parameter uuid: The uuid of the story folder.
     ///
-    func deleteStoryFolder(uuid: UUID) {
+    func selectStoryFolder(uuid: UUID) {
         guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
-            LogError(message: "Unable to delete story folder.")
+            LogError(message: "Unable to select story folder.")
             return
         }
-
-        deleteStoryFolders(folders: [storyFolder])
+        selectStoryFolder(folder: storyFolder)
     }
 
-    /// Delete each of the specified story folders.
+    /// Set the specified story folder as the selected folder.
     ///
-    /// - Parameter folders: An array of StoryFolders
+    /// - Parameter uuid: The story folder.
     ///
-    func deleteStoryFolders(folders: [StoryFolder], onComplete:(()->Void)? = nil) {
-        // For each story folder, remove its bookmarked content and then delete.
+    func selectStoryFolder(folder: StoryFolder) {
+        if let siteID = currentSiteID {
+            let key = AppConstants.lastSelectedStoryFolderKey + siteID.uuidString
+            UserDefaults.shared.set(folder.uuid.uuidString, forKey: key)
+        }
+        currentStoryFolderID = folder.uuid
+        emitChange()
+    }
 
-        let uuids: [UUID] = folders.map { (folder) -> UUID in
-            return folder.uuid
+}
+
+// MARK: - Story Folder Retrieval
+
+extension FolderStore {
+
+    /// Get the last selected story folder if one exists.
+    ///
+    /// - Returns: A StoryFolder instance or nil.
+    ///
+    func getLastSelectedStoryFolder() -> StoryFolder? {
+        guard let siteID = currentSiteID else {
+            return nil
         }
 
-        // If the story folder is the current folder, choose a different folder and select it.
-        selectStoryOtherThan(uuids: uuids)
-
-        var objIDs = [NSManagedObjectID]()
-        for folder in folders {
-            objIDs.append(folder.objectID)
-
-            guard let url = folderManager.urlFromBookmark(bookmark: folder.bookmark) else {
-                continue
-            }
-
-            // Remove the underlying directory
-            if !folderManager.deleteFolder(at: url) {
-                // TODO: For now emit change even if not successful. We'll wire up
-                // proper error handling later.
-                LogError(message: "Unable to delete the folder at \(url)")
-            }
+        let key = AppConstants.lastSelectedStoryFolderKey + siteID.uuidString
+        guard
+            let uuidString = UserDefaults.shared.string(forKey: key),
+            let uuid = UUID(uuidString: uuidString),
+            let storyFolder = getStoryFolderByID(uuid: uuid)
+        else {
+            return nil
         }
 
-        CoreDataManager.shared.performOnWriteContext { [weak self] context in
-            for objID in objIDs {
-                let folder = context.object(with: objID) as! StoryFolder
-                context.delete(folder)
-            }
-            CoreDataManager.shared.saveContext(context: context)
-
-            DispatchQueue.main.async {
-                self?.createDefaultStoryFolderIfNeeded()
-                onComplete?()
-                ShadowCaster.shared.castShadows()
-            }
-        }
+        return storyFolder
     }
 
     /// Returns an array of StoryFolder instances for the current site.
@@ -447,35 +399,450 @@ extension FolderStore {
         return nil
     }
 
-    /// Set the specified story folder as the selected folder.
+    /// Get a list of the post IDs for stories that have backing drafts.
     ///
-    /// - Parameter uuid: The uuid of the story folder.
+    /// - Returns: An array of integers.
     ///
-    func selectStoryFolder(uuid: UUID) {
+    func getStoryFolderPostIDs() -> [Int64] {
+        var postIDs = [Int64]()
+        guard let siteID = currentSiteID else {
+            LogError(message: "Attempted to fetch story folders without a current site.")
+            return postIDs
+        }
+
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = StoryFolder.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "postID > 0 AND site.uuid = %@", siteID as CVarArg)
+        fetchRequest.propertiesToFetch = ["postID"]
+        fetchRequest.resultType = .dictionaryResultType
+
+        let context = CoreDataManager.shared.mainContext
+
+        guard let results = try? context.fetch(fetchRequest) as? [[String: Int64]] else {
+            LogError(message: "Error fetching Story postIDs.")
+            return postIDs
+        }
+
+        for item in results {
+            guard let postID = item["postID"] else {
+                continue
+            }
+            postIDs.append(postID)
+        }
+
+        return postIDs
+    }
+
+    /// Get the story folder for the current site that has the specified postID.
+    ///
+    /// - Parameter postID: A post ID.
+    /// - Returns: A StoryFolder instance or nil if there was no match.
+    ///
+    func getStoryFolder(for postID: Int64) -> StoryFolder? {
+        guard let siteID = currentSiteID else {
+            LogError(message: "Attempted to fetch story folders without a current site.")
+            return nil
+        }
+
+        let fetchRequest = StoryFolder.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "postID == %d AND site.uuid = %@", postID, siteID as CVarArg)
+        let context = CoreDataManager.shared.mainContext
+        do {
+            let results = try context.fetch(fetchRequest)
+            return results.first
+        } catch {
+            let error = error as NSError
+            LogError(message: error.localizedDescription)
+        }
+        return nil
+    }
+
+    /// Get an array of StoryFolders that need a remote draft to be created.
+    ///
+    /// - Returns: An array of StoryFolders.
+    ///
+    func getStoryFoldersNeedingRemote() -> [StoryFolder] {
+        let folders = [StoryFolder]()
+        guard let siteID = currentSiteID else {
+            LogError(message: "Attempted to fetch story folders without a current site.")
+            return folders
+        }
+
+        let fetchRequest = StoryFolder.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "postID == 0 AND assets.@count > 0 AND site.uuid = %@", siteID as CVarArg)
+
+        let context = CoreDataManager.shared.mainContext
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            let error = error as NSError
+            LogError(message: error.localizedDescription)
+        }
+
+        return folders
+    }
+
+    /// Get an array of StoryFolders that have changes needing to be synced.
+    /// StoryFolders that do not have a remote post are not included.
+    ///
+    /// - Returns: An array of story folders.
+    ///
+    func getStoryFoldersWithChanges() -> [StoryFolder] {
+        let folders = [StoryFolder]()
+        guard let siteID = currentSiteID else {
+            LogError(message: "Attempted to fetch story folders without a current site.")
+            return folders
+        }
+
+        let fetchRequest = StoryFolder.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "modified > synced AND postID > 0 AND site.uuid = %@", siteID as CVarArg)
+
+        let context = CoreDataManager.shared.mainContext
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            let error = error as NSError
+            LogError(message: error.localizedDescription)
+        }
+
+        return folders
+    }
+}
+
+// MARK: - Story Folder Modification
+
+extension FolderStore {
+
+    /// Rename a story folder. This updates the name of the story folder's underlying
+    /// directory as well as the name field in core data.
+    ///
+    /// - Parameters:
+    ///   - uuid: The uuid of the StoryFolder to update.
+    ///   - name: The new name.
+    ///
+    func renameStoryFolder(uuid: UUID, to name: String, onComplete: (() -> Void)? = nil) {
+        // Get the folder.
         guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
-            LogError(message: "Unable to select story folder.")
+            LogError(message: "Unable to find the story folder to rename.")
+            onComplete?()
             return
         }
-        selectStoryFolder(folder: storyFolder)
-    }
 
-    /// Set the specified story folder as the selected folder.
-    ///
-    /// - Parameter uuid: The story folder.
-    ///
-    func selectStoryFolder(folder: StoryFolder) {
-        if let siteID = currentSiteID {
-            let key = AppConstants.lastSelectedStoryFolderKey + siteID.uuidString
-            UserDefaults.shared.set(folder.uuid.uuidString, forKey: key)
+        // Update the name of its folder. We will assume it is not stale.
+        guard
+            let url = folderManager.urlFromBookmark(bookmark: storyFolder.bookmark),
+            let newUrl = folderManager.renameFolder(at: url, to: name)
+        else {
+            LogError(message: "Unable to rename story folder")
+            onComplete?()
+            return
         }
-        currentStoryFolderID = folder.uuid
-        emitChange()
+
+        LogInfo(message: "Success: \(newUrl)")
+
+        // Save the name in core data.
+        let objID = storyFolder.objectID
+        CoreDataManager.shared.performOnWriteContext { context in
+            let folder = context.object(with: objID) as! StoryFolder
+            folder.name = name
+            folder.modified = Date()
+
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+            }
+        }
     }
 
+    /// After creating a draft post, associate the post ID to its StoryFolder.
+    ///
+    /// - Parameters:
+    ///   - postID: A post ID.
+    ///   - folderID: The uuid of the StoryFolder to update.
+    ///
+    func assignPostIDAfterCreatingDraft(postID: Int64, to folderID: UUID, onComplete: (() -> Void)? = nil) {
+        guard let folder = getStoryFolderByID(uuid: folderID) else {
+            return
+        }
+
+        let objID = folder.objectID
+        CoreDataManager.shared.performOnWriteContext { context in
+            let folder = context.object(with: objID) as! StoryFolder
+            folder.postID = postID
+
+            let date = Date()
+            folder.synced = date
+            folder.modified = date
+
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+            }
+        }
+    }
+
+    /// After syncing a story folder, update its synced date.
+    ///
+    /// - Parameter folderID: The UUID of the StoryFolder
+    ///
+    func updateSyncedDate(for folderID: UUID, onComplete:(() -> Void)? = nil) {
+        guard let folder = getStoryFolderByID(uuid: folderID) else {
+            return
+        }
+
+        let objID = folder.objectID
+        CoreDataManager.shared.performOnWriteContext { context in
+            let folder = context.object(with: objID) as! StoryFolder
+
+            folder.synced = Date()
+
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+            }
+        }
+    }
+
+    /// Delete the specified StoryFolder. This removes the entity from core data
+    /// as well as the underlying directory.
+    ///
+    /// - Parameter uuid: The UUID of the folder.
+    ///
+    func deleteStoryFolder(uuid: UUID) {
+        guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
+            LogError(message: "Unable to delete story folder.")
+            return
+        }
+
+        deleteStoryFolders(folders: [storyFolder])
+    }
+
+    /// Delete each of the specified story folders.
+    ///
+    /// - Parameter folders: An array of StoryFolders
+    ///
+    func deleteStoryFolders(folders: [StoryFolder], onComplete:(() -> Void)? = nil) {
+        // For each story folder, remove its bookmarked content and then delete.
+
+        let uuids: [UUID] = folders.map { (folder) -> UUID in
+            return folder.uuid
+        }
+
+        // If the story folder is the current folder, choose a different folder and select it.
+        selectStoryOtherThan(uuids: uuids)
+
+        var objIDs = [NSManagedObjectID]()
+        for folder in folders {
+            objIDs.append(folder.objectID)
+
+            guard let url = folderManager.urlFromBookmark(bookmark: folder.bookmark) else {
+                continue
+            }
+
+            // Remove the underlying directory
+            if !folderManager.deleteFolder(at: url) {
+                // TODO: For now emit change even if not successful. We'll wire up
+                // proper error handling later.
+                LogError(message: "Unable to delete the folder at \(url)")
+            }
+        }
+
+        CoreDataManager.shared.performOnWriteContext { [weak self] context in
+            for objID in objIDs {
+                let folder = context.object(with: objID) as! StoryFolder
+                context.delete(folder)
+            }
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                self?.createDefaultStoryFolderIfNeeded()
+                onComplete?()
+                ShadowCaster.shared.castShadows()
+            }
+        }
+    }
+
+}
+
+// MARK: - Syncing related
+
+extension FolderStore {
+
+    /// Syncs post data for StoryFolders that have a remote post (i.e. their postID
+    /// is not zero). Processes returned remote draft data.
+    ///
+    /// - Parameter onComplete: A block that is called when syncing and processing
+    /// is complete or if there is an error.
+    ///
+    func syncAndProcessRemoteDrafts(onComplete: @escaping (Error?) -> Void) {
+        let postIDs = getStoryFolderPostIDs()
+
+        // Sync the posts for these POST IDs.
+        let remote = PostServiceRemote(wordPressComRestApi: SessionManager.shared.api)
+        remote.fetchPostStubs(for: postIDs, page: 1, perPage: 100) { [weak self] (postStubs, error) in
+            guard let stubs = postStubs else {
+                LogError(message: "Error fetching post stubs.")
+                onComplete(error)
+                return
+            }
+
+            self?.processRemoteDrafts(postStubs: stubs, onComplete: onComplete)
+        }
+    }
+
+    /// Processes synced data from remote drafts.
+    ///
+    /// - Parameters:
+    ///   - postStubs: An array of RemotePostStubs representing the synced data.
+    ///   - onComplete: A block that is called when syncing and processing
+    /// is complete or if there is an error.
+    ///
+    func processRemoteDrafts(postStubs: [RemotePostStub], onComplete: @escaping (Error?) -> Void) {
+        var foldersToRemove = [StoryFolder]()
+
+        let processGroup = DispatchGroup()
+        // For each post stub
+        for stub in postStubs {
+            guard let folder = getStoryFolder(for: stub.postID) else {
+                continue
+            }
+
+            if Constants.finishedStatuses.contains(stub.status) {
+                foldersToRemove.append(folder)
+                continue
+            }
+
+            if stub.titleRendered != folder.name && !folder.needsSync {
+                processGroup.enter()
+                renameStoryFolder(uuid: folder.uuid, to: stub.titleRendered, onComplete: {
+                    processGroup.leave()
+                })
+            }
+        }
+
+        processGroup.enter()
+        deleteStoryFolders(folders: foldersToRemove, onComplete: {
+            processGroup.leave()
+        })
+
+        processGroup.notify(queue: .main) {
+            onComplete(nil)
+        }
+    }
+
+    /// Create remote drafts for any stories that need one created.
+    ///
+    /// - Parameter onComplete: A block that is called when complete or if there
+    /// is an error.
+    ///
+    func createRemoteDraftsIfNeeded(onComplete: @escaping (Error?) -> Void) {
+        let folders = getStoryFoldersNeedingRemote()
+        let processGroup = DispatchGroup()
+        var hasError = false
+
+        for folder in folders {
+            processGroup.enter()
+            createRemoteDraft(for: folder, onComplete: { error in
+                if let _ = error {
+                    hasError = true
+                }
+                processGroup.leave()
+            })
+        }
+
+        processGroup.notify(queue: .main) {
+            let error = hasError ? FolderSyncError.errorPushingRemoteUpdates : nil
+            onComplete(error)
+        }
+    }
+
+    /// Creates a remote draft for the specified story folder.
+    /// - Parameters:
+    ///   - storyFolder: The story folder needing a remote draft created.
+    ///   - onComplete: A block that is called when complete or if there
+    /// is an error.
+    ///
+    func createRemoteDraft(for storyFolder: StoryFolder, onComplete: @escaping (Error?) -> Void) {
+        let uuid = storyFolder.uuid!
+        let params = [
+            "title": storyFolder.name,
+            "status": "draft",
+            ] as [String: AnyObject]
+        let remote = PostServiceRemote(wordPressComRestApi: SessionManager.shared.api)
+        remote.createPost(postParams: params) { (remotePost, error) in
+            guard let remotePost = remotePost else {
+                LogError(message: "Error creating a remote draft for a story: \(error.debugDescription)")
+                onComplete(error)
+                return
+            }
+            self.assignPostIDAfterCreatingDraft(postID: remotePost.postID, to: uuid, onComplete: {
+                onComplete(nil)
+            })
+        }
+    }
+
+    /// Pushes any changes to StoryFolders to the remote site.
+    ///
+    /// - Parameter onComplete: A block that is called when complete or if there
+    /// is an error.
+    ///
+    func pushUpdatesToRemote(onComplete: @escaping (Error?) -> Void) {
+        let folders = getStoryFoldersWithChanges()
+        let processGroup = DispatchGroup()
+        var hasError = false
+
+        for folder in folders {
+            processGroup.enter()
+            syncChangesForFolder(folder: folder) { (error) in
+                if let _ = error {
+                    hasError = true
+                }
+                processGroup.leave()
+            }
+        }
+
+        processGroup.notify(queue: .main) {
+            let error = hasError ? FolderSyncError.errorCreatingDrafts : nil
+            onComplete(error)
+        }
+    }
+
+    /// Syncs changes to the specified story folder to the remote site.
+    ///
+    /// - Parameters:
+    ///   - folder: The StoryFolder to sync.
+    ///   - onComplete: A block that is called when complete or if there
+    /// is an error.
+    ///
+    func syncChangesForFolder(folder: StoryFolder, onComplete: @escaping (Error?) -> Void) {
+        let uuid = folder.uuid!
+        let remote = PostServiceRemote(wordPressComRestApi: SessionManager.shared.api)
+        let params = [
+            "title": folder.name
+        ] as [String: AnyObject]
+
+        remote.updatePost(postID: folder.postID, postParams: params) { (remotePost, error) in
+            guard let _ = remotePost else {
+                LogError(message: "Error updating a remote draft for a story: \(error.debugDescription)")
+                onComplete(error)
+                return
+            }
+
+            self.updateSyncedDate(for: uuid)
+        }
+    }
 }
 
 extension FolderStore {
     private struct Constants {
         static let defaultStoryFolderName = NSLocalizedString("New Story", comment: "Noun. This is the default name given to a new story folder.")
+        static let finishedStatuses = ["publish", "future", "spam", "trash"]
     }
+}
+
+enum FolderSyncError: Error {
+    case errorCreatingDrafts
+    case errorPushingRemoteUpdates
 }

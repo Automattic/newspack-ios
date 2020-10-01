@@ -89,6 +89,9 @@ class ShadowTests: XCTestCase {
         XCTAssertTrue(FileManager.default.fileExists(atPath: file.path))
         XCTAssertTrue(success)
 
+        let obj = UserDefaults.shared.object(forKey: AppConstants.shadowAssetsKey)
+        XCTAssertNotNil(obj)
+
         var retrieved = manager.retrieveShadowAssets()
         XCTAssertTrue(retrieved.count == 1)
 

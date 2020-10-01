@@ -33,6 +33,45 @@ class PostServiceRemote: ServiceRemoteCoreRest {
         })
     }
 
+    /// Fetch post stubs for the specified IDs.
+    ///
+    /// - Parameters:
+    ///   - postIDs: A list of post IDs to fetch.
+    ///   - page: The page to fetch. Default is 1.
+    ///   - perPage: The number of items per page. Default is 100.
+    ///   - onComplete: A completion block.
+    ///
+    func fetchPostStubs(for postIDs: [Int64],
+                        page: Int,
+                        perPage: Int,
+                        onComplete: @escaping (_ postIDs: [RemotePostStub]?, _ error: Error?) -> Void) {
+        let ids = postIDs.map { (item) -> String in
+            String(item)
+        }.joined(separator: ",")
+
+        let filter = ["id": ids] as [String: AnyObject]
+        let params = [
+            "_fields": "id,title,status,date_gmt,modified_gmt,_links",
+            "page": page,
+            "per_page": perPage
+        ] as [String: AnyObject]
+        let parameters = params.mergedWith(filter)
+
+        api.GET("posts", parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
+            guard let array = response as? [[String: AnyObject]] else {
+                onComplete(nil, ApiError.unexpectedDataFormat)
+                return
+            }
+
+            let posts = self.remotePostStubsFromResponse(response: array)
+
+            onComplete(posts, nil)
+
+        }, failure: { (error: NSError, httpResponse: HTTPURLResponse?) in
+            onComplete(nil, error)
+        })
+    }
+
     /// Fetch the specified post from the specified site
     ///
     /// - Parameters:
@@ -154,6 +193,19 @@ extension PostServiceRemote {
         var posts = [RemotePost]()
         for dict in response {
             posts.append(remotePostFromResponse(response: dict))
+        }
+        return posts
+    }
+
+    /// Format a posts endpoint response into an array of remote post stubs.
+    ///
+    /// - Parameter response: The response from an endpoint.
+    /// - Returns: An array of RemotePostStub objects.
+    ///
+    func remotePostStubsFromResponse(response: [[String: AnyObject]]) -> [RemotePostStub] {
+        var posts = [RemotePostStub]()
+        for dict in response {
+            posts.append(RemotePostStub(dict: dict))
         }
         return posts
     }

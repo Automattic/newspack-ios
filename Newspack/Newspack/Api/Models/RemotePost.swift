@@ -88,3 +88,42 @@ struct RemotePostID {
     }
 
 }
+
+/// Abbreviated remote representation of a post object.
+///
+struct RemotePostStub {
+    let postID: Int64
+    let dateGMT: Date
+    let link: String
+    let modifiedGMT: Date
+    let status: String
+    let title: String
+    let titleRendered: String
+
+    /// Convenience initializer to create an instance from a dictionary.
+    ///
+    /// - Parameter dict: The source dictionary
+    ///
+    init(dict: [String: AnyObject]) {
+        postID = dict[intForKey: "id"]
+        dateGMT = Date.dateFromGMTString(string: dict[stringForKey: "date_gmt"])!
+        link = dict[stringForKey: "link"]
+        modifiedGMT = Date.dateFromGMTString(string: dict[stringForKey: "modified_gmt"])!
+        status = dict[stringForKey: "status"]
+        title = dict[stringAtKeyPath: "title.raw"]
+        titleRendered = dict[stringAtKeyPath: "title.rendered"]
+    }
+
+    /// Convenience initializer to create an instance from individual arguments.
+    ///
+    init(postID: Int64, dateGMT: Date, link: String, modifiedGMT: Date, status: String, title: String, titleRendered: String) {
+        self.postID = postID
+        self.dateGMT = dateGMT
+        self.link = link
+        self.modifiedGMT = modifiedGMT
+        self.status = status
+        self.title = title
+        self.titleRendered = titleRendered
+    }
+
+}

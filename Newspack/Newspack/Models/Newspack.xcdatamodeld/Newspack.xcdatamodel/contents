@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES">
         <attribute name="networkUrl" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
@@ -271,9 +271,10 @@
     <entity name="StoryFolder" representedClassName="StoryFolder" syncable="YES">
         <attribute name="bookmark" attributeType="Binary"/>
         <attribute name="date" attributeType="Date" defaultDateTimeInterval="599554800" usesScalarValueType="NO"/>
+        <attribute name="modified" attributeType="Date" defaultDateTimeInterval="599598000" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="postID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="removed" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="synced" attributeType="Date" defaultDateTimeInterval="599598000" usesScalarValueType="NO"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
         <relationship name="assets" toMany="YES" deletionRule="Cascade" destinationEntity="StoryAsset" inverseName="folder" inverseEntity="StoryAsset"/>
         <relationship name="site" maxCount="1" deletionRule="Nullify" destinationEntity="Site" inverseName="storyFolders" inverseEntity="Site"/>
@@ -306,7 +307,7 @@
         <element name="StagedMedia" positionX="-2097.73828125" positionY="129.59765625" width="128" height="208"/>
         <element name="Status" positionX="-1600.76953125" positionY="-2.2265625" width="128" height="165"/>
         <element name="StoryAsset" positionX="-1702.796875" positionY="382.8671875" width="128" height="283"/>
-        <element name="StoryFolder" positionX="-1515.86328125" positionY="210.171875" width="128" height="163"/>
+        <element name="StoryFolder" positionX="-1515.86328125" positionY="210.171875" width="128" height="178"/>
         <element name="User" positionX="-976.9921875" positionY="-127.2734375" width="128" height="163"/>
     </elements>
 </model>
