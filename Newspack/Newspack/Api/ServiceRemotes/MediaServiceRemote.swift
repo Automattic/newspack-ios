@@ -24,7 +24,8 @@ class MediaServiceRemote: ServiceRemoteCoreRest {
 
             let filter = ["id": ids] as [String: AnyObject]
             let params = [
-                "_fields": "id,date_gmt,media_details,mime_type,modified_gmt,source_url",
+                "context": "edit",
+                "_fields": "id,date_gmt,media_details,mime_type,modified_gmt,source_url,caption,title,alt_text",
                 "page": page,
                 "per_page": perPage
             ] as [String: AnyObject]
@@ -138,7 +139,7 @@ class MediaServiceRemote: ServiceRemoteCoreRest {
     ///   - onComplete: A completion call back.
     ///
     func updateMediaProperties(mediaID: Int64, mediaParameters: [String: AnyObject], onComplete: @escaping (_ media: RemoteMedia?, _ error: Error?) -> Void) {
-        let parameters = ["context": "edit"] as [String: AnyObject]
+        let parameters = sanitizeMediaParameters(parameters: mediaParameters)
         let path = "media/\(mediaID)"
         api.POST(path, parameters: parameters, success: { (response: AnyObject, httpResponse: HTTPURLResponse?) in
             let dict = response as! [String: AnyObject]
