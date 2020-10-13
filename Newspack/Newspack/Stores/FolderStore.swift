@@ -406,13 +406,14 @@ extension FolderStore {
 
     /// Get the StoryFolders that have the specified UUIDs.
     ///
-    /// - Parameter uuids: The UUIDs of the StoryFolders.
+    /// - Parameters:
+    ///   - uuids: The UUIDs of the StoryFolders.
+    ///   - context: The NSManagedObjectContext to fetch from.
     /// - Returns: An array of StoryFolders.
     ///
-    func getStoryFoldersForIDs(uuids: [UUID]) -> [StoryFolder] {
+    func getStoryFoldersForIDs(uuids: [UUID], context: NSManagedObjectContext) -> [StoryFolder] {
         let fetchRequest = StoryFolder.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "uuid IN %@", uuids as [CVarArg])
-        let context = CoreDataManager.shared.mainContext
+        fetchRequest.predicate = NSPredicate(format: "uuid IN %@", uuids)
         do {
             return try context.fetch(fetchRequest)
         } catch {

@@ -318,7 +318,7 @@ extension AssetStore {
     func handleDeletedRemoteMedia(for folderIDs: [UUID], remoteIDs: [Int64], onComplete: @escaping () -> Void) {
         CoreDataManager.shared.performOnWriteContext { [weak self] context in
             let store = StoreContainer.shared.folderStore
-            let folders = store.getStoryFoldersForIDs(uuids: folderIDs)
+            let folders = store.getStoryFoldersForIDs(uuids: folderIDs, context: context)
 
             if let assets = self?.getStoryAssets(for: folders, with: remoteIDs) {
                 for asset in assets {
@@ -457,7 +457,7 @@ extension AssetStore {
     func updateAssets(for folderIDs: [UUID], with remoteMedia: [RemoteMedia], onComplete: @escaping () -> Void) {
         CoreDataManager.shared.performOnWriteContext { [weak self] context in
             let store = StoreContainer.shared.folderStore
-            let folders = store.getStoryFoldersForIDs(uuids: folderIDs)
+            let folders = store.getStoryFoldersForIDs(uuids: folderIDs, context: context)
 
             for media in remoteMedia {
                 guard let asset = self?.getStoryAsset(for: folders, with: media.mediaID) else {
@@ -716,7 +716,7 @@ extension AssetStore {
     func getStoryAssetsNeedingUpload(storyFolder: StoryFolder) -> [StoryAsset] {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryAsset.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "folder = %@ AND remoteID == 0 AND type IS NOT text", storyFolder)
+        fetchRequest.predicate = NSPredicate(format: "folder == %@ AND remoteID == 0 AND type != 'text'", storyFolder)
         if let results = try? context.fetch(fetchRequest) {
             return results
         }
