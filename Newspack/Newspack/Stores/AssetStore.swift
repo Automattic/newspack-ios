@@ -406,15 +406,21 @@ extension AssetStore {
     ///   - remoteMedia: The RemoteMedia to use for the update.
     ///
     func updateAsset(asset: StoryAsset, with remoteMedia: RemoteMedia) {
-        let date = Date()
+        // Safety net.  Do not overwrite local changes that are more recent
+        // than the remote's last modified date.
+        if asset.modified > remoteMedia.modifiedGMT {
+            return
+        }
+
         asset.remoteID = remoteMedia.mediaID
         asset.sourceURL = remoteMedia.sourceURL
         asset.link = remoteMedia.link
-        asset.name = remoteMedia.titleRendered
+        asset.name = remoteMedia.title
         asset.altText = remoteMedia.altText
-        asset.caption = remoteMedia.captionRendered
+        asset.caption = remoteMedia.caption
         asset.date = remoteMedia.dateGMT
-        asset.synced = date
+        asset.modified = remoteMedia.modifiedGMT
+        asset.synced = Date()
     }
 
     /// Updates properties for the StoryAssets owned by the specified StoryFolders
@@ -750,7 +756,7 @@ extension AssetStore {
             let mediaID = asset.remoteID
             let params = [
                 "title": asset.name,
-                "captions": asset.caption,
+                "caption": asset.caption,
                 "alt_text": asset.altText
             ] as [String: AnyObject]
 
@@ -814,7 +820,7 @@ extension AssetStore {
 
                 let params = [
                     "title": asset.name,
-                    "captions": asset.caption,
+                    "caption": asset.caption,
                     "alt_text": asset.altText
                 ] as [String: AnyObject]
 
