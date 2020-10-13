@@ -255,14 +255,14 @@
         <attribute name="bookmark" optional="YES" attributeType="Binary"/>
         <attribute name="caption" attributeType="String" defaultValueString=""/>
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="lastSync" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="modified" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="link" attributeType="String" defaultValueString=""/>
+        <attribute name="modified" attributeType="Date" defaultDateTimeInterval="599554800" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
         <attribute name="order" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
-        <attribute name="pageURL" optional="YES" attributeType="URI"/>
         <attribute name="remoteID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sorted" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="srcURL" optional="YES" attributeType="URI"/>
+        <attribute name="sourceURL" attributeType="String" defaultValueString=""/>
+        <attribute name="synced" attributeType="Date" defaultDateTimeInterval="599554800" usesScalarValueType="NO"/>
         <attribute name="text" attributeType="String" defaultValueString=""/>
         <attribute name="type" attributeType="String"/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="NO"/>
