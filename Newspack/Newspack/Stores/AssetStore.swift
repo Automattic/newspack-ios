@@ -397,34 +397,6 @@ extension AssetStore {
         }
     }
 
-    /// Update the StoryAssets belonging to the specified StoryFolder with the values
-    /// in the RemoteMedia.
-    ///
-    /// - Parameters:
-    ///   - folder: The StoryFolder that owns the StoryAssets.
-    ///   - remoteMedia: An array of RemoteMedia containing properties for the StoryAssets.
-    ///   - onComplete: A block to call when the update is complete.
-    ///
-    func updateAssets(for folder: StoryFolder, with remoteMedia: [RemoteMedia], onComplete: @escaping () -> Void) {
-        let objID = folder.objectID
-        CoreDataManager.shared.performOnWriteContext {[weak self] context in
-            let storyFolder = context.object(with: objID) as! StoryFolder
-            for item in remoteMedia {
-                guard let asset = self?.getStoryAsset(for: storyFolder, with: item.mediaID) else {
-                    continue
-                }
-
-                self?.updateAsset(asset: asset, with: item)
-            }
-
-            CoreDataManager.shared.saveContext(context: context)
-
-            DispatchQueue.main.async {
-                onComplete()
-            }
-        }
-    }
-
     /// Update an individual StoryAsset instance with the relevant values from
     /// the specified RemoteMedia. This method DOES NOT save core data.
     /// Ideally the ManagedObject being modified should belong to the write context.
@@ -618,30 +590,6 @@ extension AssetStore {
             LogError(message: error.localizedDescription)
         }
         return nil
-    }
-
-    /// Get the StoryAsset's for the specified folder that have the specified remoteIDs.
-    ///
-    /// - Parameters:
-    ///   - folder: The StoryFolder that owns the StoryAssets.
-    ///   - remoteIDs: The remoteIDs that the StoryAssets should have.
-    /// - Returns: An array of StoryAssets
-    ///
-    func getStoryAssets(for folder: StoryFolder, with remoteIDs: [Int64]) -> [StoryAsset] {
-        let assets = [StoryAsset]()
-        guard let context = folder.managedObjectContext else {
-            return assets
-        }
-
-        let fetchRequest = StoryAsset.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "folder == %@ AND remoteID IN %@", folder, remoteIDs)
-        do {
-            return try context.fetch(fetchRequest)
-        } catch {
-            let error = error as NSError
-            LogError(message: error.localizedDescription)
-        }
-        return assets
     }
 
     /// Get the StoryAsset's for the specified StoryFolders that have the specified remoteIDs.
@@ -897,6 +845,5 @@ extension AssetStore {
             onComplete(remoteErrors)
         }
     }
-
 
 }
