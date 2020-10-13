@@ -8,12 +8,18 @@ enum SyncSteps {
     case syncRemoteStories
     case createRemoteStories
     case pushStoryUpdates
+    case syncRemoteAssets
+    case pushAssetUpdates
+    case createRemoteAssets
 
     static func getSteps() -> [SyncSteps] {
         return [
         .syncRemoteStories,
         .createRemoteStories,
-        .pushStoryUpdates
+        .pushStoryUpdates,
+        .syncRemoteAssets,
+        .createRemoteAssets,
+        .pushAssetUpdates
         ]
     }
 }
@@ -74,15 +80,31 @@ class SyncCoordinator {
                 createRemoteStoriesIfNeeded()
             case .pushStoryUpdates:
                 pushStoriesIfNeeded()
+            case .syncRemoteAssets:
+                syncRemoteAssets()
+            case .pushAssetUpdates:
+                pushAssetUpdatesIfNeeded()
+            case .createRemoteAssets:
+                createNewAssetsIfNeeded()
         }
     }
 
     private func handleError(error: Error?) -> Bool {
         if let error = error {
-            LogError(message: "\(error)")
-            return true
+            return handleErrors(errors: [error])
         }
+
         return false
+    }
+
+    private func handleErrors(errors: [Error]) -> Bool {
+        guard errors.count > 0 else {
+            return false
+        }
+        for error in errors {
+            LogError(message: "\(error)")
+        }
+        return true
     }
 }
 
@@ -133,23 +155,46 @@ extension SyncCoordinator {
         }
     }
 
-
-    // sync remote asset info
+    /// Step 4: For each story, sync it's remote assets and check for any that have
+    /// been modified (data not file).
+    /// If an asset was deleted on the server, flag it locally to not sync but do not delete.
+    /// Let the user manually delete, or manually upload again.
+    ///
     func syncRemoteAssets() {
-        // TODO
-        // for each story, sync it's remote assets
-        // check for any that have been modified where we might need to reconcile the remote file
-        // if an asset was deleted on the server, flag it locally to not sync but don't delete it.  Let the user manually delete or manually upload again. (move it into do not upload list)
+        let store = StoreContainer.shared.assetStore
+        store.syncRemoteAssets { [weak self] (error) in
+            guard self?.handleError(error: error) == false else {
+                self?.processing = false
+                return
+            }
+            self?.performNextStep()
+        }
     }
 
-    // Upload assets that are stale or need to be uploaded.
-    func pushAssetsIfNeeded() {
-        // TODO
-        // get assets that need uploading
-        // record progress object in dictionary
-        // upload individually
-        // record IDs when finished
-        // remove progress object from dictionary.  (maybe dispatch notification?)
+    /// Step 5: For each story, check for assets that have local changes that need to be pushed.
+    ///
+    func pushAssetUpdatesIfNeeded() {
+        let store = StoreContainer.shared.assetStore
+        store.pushUpdatesToRemote { [weak self] (errors) in
+            guard self?.handleErrors(errors: errors) == false else {
+                self?.processing = false
+                return
+            }
+            self?.performNextStep()
+        }
+    }
+
+    /// Step 6: For each story, check for assets that need to be uploaded.
+    ///
+    func createNewAssetsIfNeeded() {
+        let store = StoreContainer.shared.assetStore
+        store.createRemoteMedia { [weak self] (errors) in
+            guard self?.handleErrors(errors: errors) == false else {
+                self?.processing = false
+                return
+            }
+            self?.performNextStep()
+        }
     }
 
 }
