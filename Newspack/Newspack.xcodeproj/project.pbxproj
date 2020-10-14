@@ -55,6 +55,7 @@
 		E607386122A9A5EF00504EA4 /* AccountDetailsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E607386022A9A5EF00504EA4 /* AccountDetailsStoreTests.swift */; };
 		E60A25112425418E003F3C81 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E60A250F2425418E003F3C81 /* MainInterface.storyboard */; };
 		E60A25152425418E003F3C81 /* NewspackShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E60A250B2425418E003F3C81 /* NewspackShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E60E976E25376E8300144BB9 /* URL+TypeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60E976D25376E8300144BB9 /* URL+TypeHelpers.swift */; };
 		E610B64324EC59040011FBA8 /* UITableView+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E610B64224EC59040011FBA8 /* UITableView+Helpers.swift */; };
 		E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD12211FE86004E5B91 /* AppDelegate.swift */; };
 		E6138FD42211FE86004E5B91 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD32211FE86004E5B91 /* InitialViewController.swift */; };
@@ -392,6 +393,7 @@
 		E60A250B2425418E003F3C81 /* NewspackShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NewspackShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E60A25102425418E003F3C81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E60A25122425418E003F3C81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E60E976D25376E8300144BB9 /* URL+TypeHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+TypeHelpers.swift"; sourceTree = "<group>"; };
 		E610B64224EC59040011FBA8 /* UITableView+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Helpers.swift"; sourceTree = "<group>"; };
 		E6138FCE2211FE86004E5B91 /* Newspack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Newspack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6138FD12211FE86004E5B91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1350,6 +1352,7 @@
 				E68A965D246098C700BE664B /* NSObject+Helpers.swift */,
 				E610B64224EC59040011FBA8 /* UITableView+Helpers.swift */,
 				E696340F2440C1C400D906E0 /* UITableViewCell+Helpers.swift */,
+				E60E976D25376E8300144BB9 /* URL+TypeHelpers.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1918,6 +1921,7 @@
 				E68B2A0123048E050021283C /* EditorAttachmentImageProvider.swift in Sources */,
 				E6500F9A2368B63800CB8C6C /* ImageStore.swift in Sources */,
 				E6241B96224EC8CD00B578F5 /* SessionManager.swift in Sources */,
+				E60E976E25376E8300144BB9 /* URL+TypeHelpers.swift in Sources */,
 				E68689C0243C080400B7E363 /* FoldersViewController.swift in Sources */,
 				E641A66122A71A83008BBD85 /* SiteStore.swift in Sources */,
 				E6A10C6323579CE300435670 /* MediaAction.swift in Sources */,
