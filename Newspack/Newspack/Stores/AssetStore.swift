@@ -692,7 +692,7 @@ extension AssetStore {
     func syncRemoteAssets(onComplete: @escaping (Error?) -> Void) {
         let folderStore = StoreContainer.shared.folderStore
         let folders = folderStore.getStoryFoldersWithPosts()
-        let folderUUIDs = folders.map { $0.uuid! }
+        let folderUUIDs = folders.compactMap { $0.uuid }
         let remoteIDs = getStoryAssetsRemoteIDsForFolders(folders: folders)
         let dispatchGroup = DispatchGroup()
         let remote = MediaServiceRemote(wordPressComRestApi: SessionManager.shared.api)
@@ -745,7 +745,7 @@ extension AssetStore {
             return
         }
 
-        let folderUUIDs = folders.map { $0.uuid! }
+        let folderUUIDs = folders.compactMap { $0.uuid }
         let remote = MediaServiceRemote(wordPressComRestApi: SessionManager.shared.api)
         let dispatchGroup = DispatchGroup()
         var updatedMedia = [RemoteMedia]()
