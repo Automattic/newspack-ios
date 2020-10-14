@@ -122,11 +122,8 @@ extension AssetStore {
                 return
             }
             let folder = context.object(with: objID) as! StoryFolder
-            let asset = self.createAsset(type: .textNote, name: name, url: nil, storyFolder: folder, in: context)
+            let asset = self.createAsset(type: .textNote, name: name, mimeType: "text/plain", url: nil, storyFolder: folder, in: context)
             asset.text = text
-            let date = Date()
-            asset.modified = date
-            asset.synced = date
             CoreDataManager.shared.saveContext(context: context)
             DispatchQueue.main.async {
                 onComplete?()
@@ -142,20 +139,48 @@ extension AssetStore {
     ///   - onComplete: A closure to call when finished.
     ///
     func createAssetsForURLs(urls: [URL], storyFolder: StoryFolder, onComplete:(() -> Void)? = nil) {
-        // Create the core data proxy for the story asset.
         let objID = storyFolder.objectID
         CoreDataManager.shared.performOnWriteContext { [weak self] context in
-            guard let self = self else {
-                onComplete?()
-                return
-            }
             let folder = context.object(with: objID) as! StoryFolder
 
             for url in urls {
-                // TODO: There is more to do depending on the type of item.
-                // But we'll deal with this as we build out the individual features.
-                // For testing purposes we'll default to image for now.
-                let _ = self.createAsset(type: .image, name: url.lastPathComponent, url: url, storyFolder: folder, in: context)
+                // Get the type based off the fileURLs extension.
+                // By convention treat unknown types as images (for now) as this will work for heic files.
+                var type: StoryAssetType = .image
+                if url.isVideo {
+                    type = .video
+                } else if url.isAudio {
+                    type = .audioNote
+                }
+                let mime = url.mimeType ?? "application/octet-stream"
+                let _ = self?.createAsset(type: type, name: url.lastPathComponent, mimeType: mime, url: url, storyFolder: folder, in: context)
+            }
+
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+            }
+        }
+    }
+
+    /// Create new StoryAsset instances for the specified ImportedMedia.
+    ///
+    /// - Parameters:
+    ///   - importedMedia: An array of ImportedMedia items.
+    ///   - storyFolder: The parent StoryFolder for the new StoryAssets
+    ///   - onComplete: A closure to call when finished.
+    ///
+    func createAssetsForImportedMedia(importedMedia: [ImportedMedia], storyFolder: StoryFolder, onComplete:(() -> Void)? = nil) {
+        let objID = storyFolder.objectID
+        CoreDataManager.shared.performOnWriteContext { [weak self] context in
+            let folder = context.object(with: objID) as! StoryFolder
+
+            for media in importedMedia {
+                // Get the type based off the mime type of the imported asset.
+                // By convention treat unknown types as images (for now) as this will work for heic files.
+                let type = StoryAssetType.typeFromMimeType(mimeType: media.mimeType) ?? .image
+                let _ = self?.createAsset(type: type, name: media.fileURL.lastPathComponent, mimeType: media.mimeType, url: media.fileURL, storyFolder: folder, in: context)
             }
 
             CoreDataManager.shared.saveContext(context: context)
@@ -171,12 +196,13 @@ extension AssetStore {
     /// - Parameters:
     ///   - type: The type of asset.
     ///   - name: The asset's name.
+    ///   - mimeType: The mimeType for the asset.
     ///   - url: The file URL of the asset if there is a corresponding file system object.
     ///   - storyFolder: The asset's StoryFolder.
     ///   - context: A NSManagedObjectContext to use.
     /// - Returns: A new StoryAsset
     ///
-    func createAsset(type: StoryAssetType, name: String, url: URL?, storyFolder: StoryFolder, in context: NSManagedObjectContext) -> StoryAsset {
+    func createAsset(type: StoryAssetType, name: String, mimeType: String, url: URL?, storyFolder: StoryFolder, in context: NSManagedObjectContext) -> StoryAsset {
         let asset = StoryAsset(context: context)
         if let url = url {
             asset.bookmark = folderManager.bookmarkForURL(url: url)
@@ -188,6 +214,7 @@ extension AssetStore {
         asset.modified = date
         asset.synced = date
         asset.uuid = UUID()
+        asset.mimeType = mimeType
         asset.folder = storyFolder
 
         return asset
@@ -199,15 +226,15 @@ extension AssetStore {
     ///   - imports: A dictionary of imported assets. PHAsset IDs are keys.
     ///   - errors: A dictionary of errors. PHAsset IDs are keys.
     ///
-    func createAssetsForImports(imports: [String: URL], errors: [String: Error]) {
+    func createAssetsForImports(imports: [String: ImportedMedia], errors: [String: Error]) {
         guard let storyFolder = StoreContainer.shared.folderStore.currentStoryFolder else {
             return
         }
         if imports.count > 0 {
-            createAssetsForURLs(urls: Array(imports.values), storyFolder: storyFolder)
+            createAssetsForImportedMedia(importedMedia: Array(imports.values), storyFolder: storyFolder)
         }
         if errors.count > 0 {
-            //TODO: Handle errors
+            LogError(message: "Errors Importing Media: \(errors)")
         }
     }
 
@@ -459,7 +486,7 @@ extension AssetStore {
     ///   - assetID: The UUID of the StoryAsset to update.
     ///   - remoteID: A RemoteMedia instance.
     ///
-    func updateAsset(assetID: UUID, with remoteMedia: RemoteMedia) {
+    func updateAsset(assetID: UUID, with remoteMedia: RemoteMedia, onComplete: @escaping () -> Void) {
         guard let asset = getStoryAssetByID(uuid: assetID) else {
             return
         }
@@ -471,6 +498,10 @@ extension AssetStore {
             self?.updateAsset(asset: asset, with: remoteMedia)
 
             CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete()
+            }
         }
     }
 
@@ -663,19 +694,31 @@ extension AssetStore {
     }
 
     /// Get a list of StoryAssets needing to have their respective media file uploaded.
+    /// The returned assets can belong to any folder for the current site.
     ///
-    /// - Parameter storyFolder: The StoryFolder that owns the StoryAssets.
+    /// - Parameter limit: The max number of results to return.
     /// - Returns: An array of StoryAssets.
     ///
-    func getStoryAssetsNeedingUpload(storyFolder: StoryFolder) -> [StoryAsset] {
+    func storyAssetsNeedingUpload(limit: Int = 0) -> [StoryAsset] {
+        guard
+            let currentFolder = StoreContainer.shared.folderStore.currentStoryFolder,
+            let site = currentFolder.site
+        else {
+            return []
+        }
+
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryAsset.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "folder == %@ AND remoteID == 0 AND type != 'text'", storyFolder)
+
+        fetchRequest.predicate = NSPredicate(format: "folder.site == %@ AND remoteID == 0 AND type != 'text'", site)
+        if limit > 0 {
+            fetchRequest.fetchLimit = limit
+        }
         if let results = try? context.fetch(fetchRequest) {
             return results
         }
 
-        return [StoryAsset]()
+        return []
     }
 
 }
@@ -793,62 +836,62 @@ extension AssetStore {
     ///
     /// - Parameter onComplete: A block to call when the update is complete.
     ///
-    func createRemoteMedia(onComplete: @escaping ([Error]) -> Void) {
-        let folderStore = StoreContainer.shared.folderStore
-        let folders = folderStore.getStoryFoldersWithPosts()
+    func batchCreateRemoteMedia(batchSize: Int, onComplete: @escaping (Int, [Error]) -> Void) {
+        let assets = storyAssetsNeedingUpload(limit: batchSize)
+        let count = assets.count
+        guard count > 0 else {
+            // Nothing to upload.
+            onComplete(0, [])
+            return
+        }
+
         let folderManager = SessionManager.shared.folderManager
         let remote = MediaServiceRemote(wordPressComRestApi: SessionManager.shared.api)
         let dispatchGroup = DispatchGroup()
         var remoteErrors = [Error]()
 
-        for folder in folders {
-            let assets = getStoryAssetsNeedingUpload(storyFolder: folder)
-            guard assets.count > 0 else {
+        for asset in assets {
+            guard
+                let bookmark = asset.bookmark,
+                let fileURL = folderManager.urlFromBookmark(bookmark: bookmark),
+                let assetID = asset.uuid
+            else {
                 continue
             }
 
-            for asset in assets {
-                guard
-                    let bookmark = asset.bookmark,
-                    let fileURL = folderManager.urlFromBookmark(bookmark: bookmark),
-                    let assetID = asset.uuid
-                else {
-                    continue
-                }
+            dispatchGroup.enter()
 
-                dispatchGroup.enter()
+            let params = [
+                "title": asset.name,
+                "caption": asset.caption,
+                "alt_text": asset.altText
+            ] as [String: AnyObject]
 
-                let params = [
-                    "title": asset.name,
-                    "caption": asset.caption,
-                    "alt_text": asset.altText
-                ] as [String: AnyObject]
+            let progress = remote.createMedia(mediaParameters: params, localURL: fileURL, filename: asset.name, mimeType: asset.mimeType) { [weak self] (remoteMedia, error) in
 
-                // TODO: Handle mime type in a better fashion
-                let progress = remote.createMedia(mediaParameters: params, localURL: fileURL, filename: asset.name, mimeType: "image.jpg") { [weak self] (remoteMedia, error) in
-                    dispatchGroup.leave()
+                // TODO: Clean up Progress now that it's finished.
 
-                    // TODO: Clean up Progress now that it's finished.
-
-                    guard let remoteMedia = remoteMedia else {
-                        if let error = error {
-                            remoteErrors.append(error)
-                        }
-                        return
+                guard let remoteMedia = remoteMedia else {
+                    if let error = error {
+                        remoteErrors.append(error)
+                        dispatchGroup.leave()
                     }
-
-                    self?.updateAsset(assetID: assetID, with: remoteMedia)
+                    return
                 }
 
-                if let progress = progress {
-                    LogInfo(message: progress.description)
-                    // TODO: Implement mechanism to share progress with UI.
-                }
+                self?.updateAsset(assetID: assetID, with: remoteMedia, onComplete: {
+                    dispatchGroup.leave()
+                })
+            }
+
+            if let progress = progress {
+                LogInfo(message: progress.description)
+                // TODO: Implement mechanism to share progress with UI.
             }
         }
 
         dispatchGroup.notify(queue: .main) {
-            onComplete(remoteErrors)
+            onComplete(count, remoteErrors)
         }
     }
 

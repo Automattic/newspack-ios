@@ -13,6 +13,13 @@ enum MediaImporterError: Error {
     case missingUniformTypeIdentifier
 }
 
+/// A lightweight data model for imported media.
+///
+struct ImportedMedia {
+    let fileURL: URL
+    let mimeType: String
+}
+
 /// A utility for copying PHAssets to a specified directory in the file system.
 ///
 class MediaImporter {
@@ -40,13 +47,13 @@ class MediaImporter {
     private var assets = [PHAsset]()
 
     /// Container dictionary. Imported asset identifiers are keys and their fileURLs are values.
-    private var imported = [String: URL]()
+    private var imported = [String: ImportedMedia]()
 
     /// Container dictionary. Errored asset identifiers are keys and their errors are values.
     private var errors = [String: Error]()
 
     /// Callback executed when importing is complete.
-    private var completionHandler: (( [String: URL], [String: Error] ) -> Void)?
+    private var completionHandler: (( [String: ImportedMedia], [String: Error] ) -> Void)?
 
     /// Designated initializer.
     ///
@@ -67,7 +74,7 @@ class MediaImporter {
     ///   - assets: An array of PHAssets to copy to the destination directory.
     ///   - onComplete: An optional completion handler.
     ///
-    func importAssets(assets: [PHAsset], onComplete: (([String: URL], [String: Error]) -> Void)?) {
+    func importAssets(assets: [PHAsset], onComplete: (([String: ImportedMedia], [String: Error]) -> Void)?) {
         self.assets.append(contentsOf: assets)
         completionHandler = onComplete
         importNext()
@@ -104,8 +111,8 @@ extension MediaImporter {
         currentImportID = asset.identifier()
 
         importAsset(asset: asset) { [weak self] (asset, fileURL, filename, mimeType, error) in
-            if let fileURL = fileURL {
-                self?.imported[asset.identifier()] = fileURL
+            if let fileURL = fileURL, let mimeType = mimeType {
+                self?.imported[asset.identifier()] = ImportedMedia(fileURL: fileURL, mimeType: mimeType)
             }
 
             if let error = error {
