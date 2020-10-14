@@ -112,7 +112,6 @@ extension MediaImporter {
 
         importAsset(asset: asset) { [weak self] (asset, fileURL, filename, mimeType, error) in
             if let fileURL = fileURL, let mimeType = mimeType {
-
                 self?.imported[asset.identifier()] = ImportedMedia(fileURL: fileURL, mimeType: mimeType)
             }
 
