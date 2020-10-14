@@ -603,32 +603,6 @@ extension AssetStore {
         return remoteIDs
     }
 
-    /// Gets the StoryAsset belonging to the specifie StoryFolder that has the
-    /// specified remoteID. The StoryFolder's ManagedObjectContext will be used
-    /// for fetching.
-    ///
-    /// - Parameters:
-    ///   - folder: The StoryFolder that owns the StoryAsset.
-    ///   - remoteID: The value of the StoryAsset's remoteID.
-    /// - Returns: The StoryAsset instance or nil.
-    ///
-    func getStoryAsset(for folder: StoryFolder, with remoteID: Int64) -> StoryAsset? {
-        guard let context =  folder.managedObjectContext else {
-            return nil
-        }
-
-        let fetchRequest = StoryAsset.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "folder == %@ AND remoteID == %d", folder, remoteID)
-
-        do {
-            return try context.fetch(fetchRequest).first
-        } catch {
-            let error = error as NSError
-            LogError(message: error.localizedDescription)
-        }
-        return nil
-    }
-
     /// Get the StoryAsset's for the specified StoryFolders that have the specified remoteIDs.
     ///
     /// - Parameters:
