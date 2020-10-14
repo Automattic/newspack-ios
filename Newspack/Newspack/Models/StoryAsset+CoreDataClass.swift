@@ -1,5 +1,6 @@
 import Foundation
 import CoreData
+import CoreServices
 
 @objc(StoryAsset)
 public class StoryAsset: NSManagedObject, TextNoteCellProvider, PhotoCellProvider, VideoCellProvider, AudioCellProvider {
@@ -41,4 +42,31 @@ enum StoryAssetType: String {
 
         }
     }
+
+    /// Return the type of asset for the specified mimeType. TextNotes do not have
+    /// backing files so .textNote is not a valid result.
+    ///
+    /// - Parameter mimeType: A string representing a mime type.
+    /// - Returns: The type of asset for the mime type or nil if there was no match.
+    ///
+    static func typeFromMimeType(mimeType: String) -> StoryAssetType? {
+        guard let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, mimeType as NSString, nil)?.takeRetainedValue() as NSString? else {
+            return nil
+        }
+
+        if UTTypeConformsTo(uti, kUTTypeImage) {
+            return .image
+        }
+
+        if UTTypeConformsTo(uti, kUTTypeVideo) {
+            return .video
+        }
+
+        if UTTypeConformsTo(uti, kUTTypeAudio) {
+            return .audioNote
+        }
+
+        return nil
+    }
+
 }
