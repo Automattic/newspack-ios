@@ -23,14 +23,16 @@ extension StoryAsset {
     @NSManaged public var uuid: UUID!
     @NSManaged public var order: Int16 // Default is -1
     @NSManaged public var date: Date!
-    @NSManaged public var lastSync: Date?
-    @NSManaged public var modified: Date?
+    // Synced indicates the date last synced.
+    @NSManaged public var synced: Date!
+    // Modified indicate the date last modified. If synced > modified data is current.
+    @NSManaged public var modified: Date!
     @NSManaged public var text: String!
     @NSManaged public var sorted: Bool
     @NSManaged public var altText: String!
     @NSManaged public var caption: String!
     @NSManaged public var remoteID: Int64
-    @NSManaged public var srcURL: URL?
-    @NSManaged public var pageURL: URL?
+    @NSManaged public var sourceURL: String!
+    @NSManaged public var link: String!
     @NSManaged public var folder: StoryFolder!
 }

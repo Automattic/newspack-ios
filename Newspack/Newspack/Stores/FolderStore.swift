@@ -385,6 +385,11 @@ extension FolderStore {
         return 0
     }
 
+    /// Get the StoryFolder that has the specified UUID.
+    ///
+    /// - Parameter uuid: The UUID of the StoryFolder.
+    /// - Returns: The StoryFolder instance or nil.
+    ///
     func getStoryFolderByID(uuid: UUID) -> StoryFolder? {
         let fetchRequest = StoryFolder.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "uuid == %@", uuid as CVarArg)
@@ -397,6 +402,25 @@ extension FolderStore {
             LogError(message: error.localizedDescription)
         }
         return nil
+    }
+
+    /// Get the StoryFolders that have the specified UUIDs.
+    ///
+    /// - Parameters:
+    ///   - uuids: The UUIDs of the StoryFolders.
+    ///   - context: The NSManagedObjectContext to fetch from.
+    /// - Returns: An array of StoryFolders.
+    ///
+    func getStoryFoldersForIDs(uuids: [UUID], context: NSManagedObjectContext) -> [StoryFolder] {
+        let fetchRequest = StoryFolder.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "uuid IN %@", uuids)
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            let error = error as NSError
+            LogError(message: error.localizedDescription)
+        }
+        return []
     }
 
     /// Get a list of the post IDs for stories that have backing drafts.
@@ -506,6 +530,32 @@ extension FolderStore {
 
         return folders
     }
+
+    /// Get an array of StoryFolders for the current site that have existing remote posts.
+    ///
+    /// - Returns: An array of StoryFolders.
+    ///
+    func getStoryFoldersWithPosts() -> [StoryFolder] {
+        let folders = [StoryFolder]()
+        guard let siteID = currentSiteID else {
+            LogError(message: "Attempted to fetch story folders without a current site.")
+            return folders
+        }
+
+        let fetchRequest = StoryFolder.defaultFetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "postID > 0 AND site.uuid = %@", siteID as CVarArg)
+
+        let context = CoreDataManager.shared.mainContext
+        do {
+            return try context.fetch(fetchRequest)
+        } catch {
+            let error = error as NSError
+            LogError(message: error.localizedDescription)
+        }
+
+        return folders
+    }
+
 }
 
 // MARK: - Story Folder Modification
