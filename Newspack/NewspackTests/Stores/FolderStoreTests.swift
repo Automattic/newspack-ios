@@ -203,11 +203,11 @@ class FolderStoreTests: BaseTest {
         for folder in folders {
             let context = folder.managedObjectContext!
             if folder.name == "alpha" {
-                let _ = assetStore.createAsset(type: .image, name: "alphaImage", url: nil, storyFolder: folder, in: context)
+                let _ = assetStore.createAsset(type: .image, name: "alphaImage", mimeType: "image/png", url: nil, storyFolder: folder, in: context)
                 try? context.save()
 
             } else if folder.name == "gamma" {
-                let _ = assetStore.createAsset(type: .image, name: "gammaImage", url: nil, storyFolder: folder, in: context)
+                let _ = assetStore.createAsset(type: .image, name: "gammaImage", mimeType: "image/png", url: nil, storyFolder: folder, in: context)
                 try? context.save()
                 let expect = expectation(description: "expect")
                 folderStore.assignPostIDAfterCreatingDraft(postID: 4, to: folder.uuid!, onComplete: {
