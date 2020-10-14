@@ -214,6 +214,7 @@ extension AssetStore {
         asset.modified = date
         asset.synced = date
         asset.uuid = UUID()
+        asset.mimeType = mimeType
         asset.folder = storyFolder
 
         return asset
@@ -485,7 +486,7 @@ extension AssetStore {
     ///   - assetID: The UUID of the StoryAsset to update.
     ///   - remoteID: A RemoteMedia instance.
     ///
-    func updateAsset(assetID: UUID, with remoteMedia: RemoteMedia) {
+    func updateAsset(assetID: UUID, with remoteMedia: RemoteMedia, onComplete: @escaping () -> Void) {
         guard let asset = getStoryAssetByID(uuid: assetID) else {
             return
         }
@@ -497,6 +498,10 @@ extension AssetStore {
             self?.updateAsset(asset: asset, with: remoteMedia)
 
             CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete()
+            }
         }
     }
 
@@ -689,19 +694,31 @@ extension AssetStore {
     }
 
     /// Get a list of StoryAssets needing to have their respective media file uploaded.
+    /// The returned assets can belong to any folder for the current site.
     ///
-    /// - Parameter storyFolder: The StoryFolder that owns the StoryAssets.
+    /// - Parameter limit: The max number of results to return.
     /// - Returns: An array of StoryAssets.
     ///
-    func getStoryAssetsNeedingUpload(storyFolder: StoryFolder) -> [StoryAsset] {
+    func storyAssetsNeedingUpload(limit: Int = 0) -> [StoryAsset] {
+        guard
+            let currentFolder = StoreContainer.shared.folderStore.currentStoryFolder,
+            let site = currentFolder.site
+        else {
+            return []
+        }
+
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryAsset.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "folder == %@ AND remoteID == 0 AND type != 'text'", storyFolder)
+
+        fetchRequest.predicate = NSPredicate(format: "folder.site == %@ AND remoteID == 0 AND type != 'text'", site)
+        if limit > 0 {
+            fetchRequest.fetchLimit = limit
+        }
         if let results = try? context.fetch(fetchRequest) {
             return results
         }
 
-        return [StoryAsset]()
+        return []
     }
 
 }
@@ -819,61 +836,62 @@ extension AssetStore {
     ///
     /// - Parameter onComplete: A block to call when the update is complete.
     ///
-    func createRemoteMedia(onComplete: @escaping ([Error]) -> Void) {
-        let folderStore = StoreContainer.shared.folderStore
-        let folders = folderStore.getStoryFoldersWithPosts()
+    func batchCreateRemoteMedia(batchSize: Int, onComplete: @escaping (Int, [Error]) -> Void) {
+        let assets = storyAssetsNeedingUpload(limit: batchSize)
+        let count = assets.count
+        guard count > 0 else {
+            // Nothing to upload.
+            onComplete(0, [])
+            return
+        }
+
         let folderManager = SessionManager.shared.folderManager
         let remote = MediaServiceRemote(wordPressComRestApi: SessionManager.shared.api)
         let dispatchGroup = DispatchGroup()
         var remoteErrors = [Error]()
 
-        for folder in folders {
-            let assets = getStoryAssetsNeedingUpload(storyFolder: folder)
-            guard assets.count > 0 else {
+        for asset in assets {
+            guard
+                let bookmark = asset.bookmark,
+                let fileURL = folderManager.urlFromBookmark(bookmark: bookmark),
+                let assetID = asset.uuid
+            else {
                 continue
             }
 
-            for asset in assets {
-                guard
-                    let bookmark = asset.bookmark,
-                    let fileURL = folderManager.urlFromBookmark(bookmark: bookmark),
-                    let assetID = asset.uuid
-                else {
-                    continue
-                }
+            dispatchGroup.enter()
 
-                dispatchGroup.enter()
+            let params = [
+                "title": asset.name,
+                "caption": asset.caption,
+                "alt_text": asset.altText
+            ] as [String: AnyObject]
 
-                let params = [
-                    "title": asset.name,
-                    "caption": asset.caption,
-                    "alt_text": asset.altText
-                ] as [String: AnyObject]
+            let progress = remote.createMedia(mediaParameters: params, localURL: fileURL, filename: asset.name, mimeType: asset.mimeType) { [weak self] (remoteMedia, error) in
 
-                let progress = remote.createMedia(mediaParameters: params, localURL: fileURL, filename: asset.name, mimeType: asset.mimeType) { [weak self] (remoteMedia, error) in
-                    dispatchGroup.leave()
+                // TODO: Clean up Progress now that it's finished.
 
-                    // TODO: Clean up Progress now that it's finished.
-
-                    guard let remoteMedia = remoteMedia else {
-                        if let error = error {
-                            remoteErrors.append(error)
-                        }
-                        return
+                guard let remoteMedia = remoteMedia else {
+                    if let error = error {
+                        remoteErrors.append(error)
+                        dispatchGroup.leave()
                     }
-
-                    self?.updateAsset(assetID: assetID, with: remoteMedia)
+                    return
                 }
 
-                if let progress = progress {
-                    LogInfo(message: progress.description)
-                    // TODO: Implement mechanism to share progress with UI.
-                }
+                self?.updateAsset(assetID: assetID, with: remoteMedia, onComplete: {
+                    dispatchGroup.leave()
+                })
+            }
+
+            if let progress = progress {
+                LogInfo(message: progress.description)
+                // TODO: Implement mechanism to share progress with UI.
             }
         }
 
         dispatchGroup.notify(queue: .main) {
-            onComplete(remoteErrors)
+            onComplete(count, remoteErrors)
         }
     }
 

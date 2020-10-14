@@ -188,12 +188,21 @@ extension SyncCoordinator {
     ///
     func createNewAssetsIfNeeded() {
         let store = StoreContainer.shared.assetStore
-        store.createRemoteMedia { [weak self] (errors) in
+        let batchSize = 3
+        store.batchCreateRemoteMedia(batchSize: batchSize) { [weak self] (count, errors) in
+            // Bail on any errors.
             guard self?.handleErrors(errors: errors) == false else {
                 self?.processing = false
                 return
             }
-            self?.performNextStep()
+
+            if count < batchSize {
+                self?.performNextStep()
+                return
+            }
+
+            // Keep going until there are none left.
+            self?.createNewAssetsIfNeeded()
         }
     }
 
