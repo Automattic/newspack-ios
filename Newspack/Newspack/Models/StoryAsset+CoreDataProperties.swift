@@ -34,5 +34,6 @@ extension StoryAsset {
     @NSManaged public var remoteID: Int64
     @NSManaged public var sourceURL: String!
     @NSManaged public var link: String!
+    @NSManaged public var mimeType: String! // Default is application/octet-stream
     @NSManaged public var folder: StoryFolder!
 }

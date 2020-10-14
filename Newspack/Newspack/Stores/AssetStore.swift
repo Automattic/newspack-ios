@@ -122,11 +122,8 @@ extension AssetStore {
                 return
             }
             let folder = context.object(with: objID) as! StoryFolder
-            let asset = self.createAsset(type: .textNote, name: name, url: nil, storyFolder: folder, in: context)
+            let asset = self.createAsset(type: .textNote, name: name, mimeType: "text/plain", url: nil, storyFolder: folder, in: context)
             asset.text = text
-            let date = Date()
-            asset.modified = date
-            asset.synced = date
             CoreDataManager.shared.saveContext(context: context)
             DispatchQueue.main.async {
                 onComplete?()
@@ -155,7 +152,8 @@ extension AssetStore {
                 } else if url.isAudio {
                     type = .audioNote
                 }
-                let _ = self?.createAsset(type: type, name: url.lastPathComponent, url: url, storyFolder: folder, in: context)
+                let mime = url.mimeType ?? "application/octet-stream"
+                let _ = self?.createAsset(type: type, name: url.lastPathComponent, mimeType: mime, url: url, storyFolder: folder, in: context)
             }
 
             CoreDataManager.shared.saveContext(context: context)
@@ -182,7 +180,7 @@ extension AssetStore {
                 // Get the type based off the mime type of the imported asset.
                 // By convention treat unknown types as images (for now) as this will work for heic files.
                 let type = StoryAssetType.typeFromMimeType(mimeType: media.mimeType) ?? .image
-                let _ = self?.createAsset(type: type, name: media.fileURL.lastPathComponent, url: media.fileURL, storyFolder: folder, in: context)
+                let _ = self?.createAsset(type: type, name: media.fileURL.lastPathComponent, mimeType: media.mimeType, url: media.fileURL, storyFolder: folder, in: context)
             }
 
             CoreDataManager.shared.saveContext(context: context)
@@ -198,12 +196,13 @@ extension AssetStore {
     /// - Parameters:
     ///   - type: The type of asset.
     ///   - name: The asset's name.
+    ///   - mimeType: The mimeType for the asset.
     ///   - url: The file URL of the asset if there is a corresponding file system object.
     ///   - storyFolder: The asset's StoryFolder.
     ///   - context: A NSManagedObjectContext to use.
     /// - Returns: A new StoryAsset
     ///
-    func createAsset(type: StoryAssetType, name: String, url: URL?, storyFolder: StoryFolder, in context: NSManagedObjectContext) -> StoryAsset {
+    func createAsset(type: StoryAssetType, name: String, mimeType: String, url: URL?, storyFolder: StoryFolder, in context: NSManagedObjectContext) -> StoryAsset {
         let asset = StoryAsset(context: context)
         if let url = url {
             asset.bookmark = folderManager.bookmarkForURL(url: url)
