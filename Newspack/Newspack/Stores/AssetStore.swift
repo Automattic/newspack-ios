@@ -147,10 +147,15 @@ extension AssetStore {
             let folder = context.object(with: objID) as! StoryFolder
 
             for url in urls {
-                // TODO: There is more to do depending on the type of item.
-                // But we'll deal with this as we build out the individual features.
-                // For testing purposes we'll default to image for now.
-                let _ = self?.createAsset(type: .image, name: url.lastPathComponent, url: url, storyFolder: folder, in: context)
+                // Get the type based off the fileURLs extension.
+                // By convention treat unknown types as images (for now) as this will work for heic files.
+                var type: StoryAssetType = .image
+                if url.isVideo {
+                    type = .video
+                } else if url.isAudio {
+                    type = .audioNote
+                }
+                let _ = self?.createAsset(type: type, name: url.lastPathComponent, url: url, storyFolder: folder, in: context)
             }
 
             CoreDataManager.shared.saveContext(context: context)
@@ -226,7 +231,7 @@ extension AssetStore {
             return
         }
         if imports.count > 0 {
-            createAssetsForURLs(urls: Array(imports.values), storyFolder: storyFolder)
+            createAssetsForImportedMedia(importedMedia: Array(imports.values), storyFolder: storyFolder)
         }
         if errors.count > 0 {
             LogError(message: "Errors Importing Media: \(errors)")
