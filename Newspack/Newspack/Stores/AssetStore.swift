@@ -142,20 +142,42 @@ extension AssetStore {
     ///   - onComplete: A closure to call when finished.
     ///
     func createAssetsForURLs(urls: [URL], storyFolder: StoryFolder, onComplete:(() -> Void)? = nil) {
-        // Create the core data proxy for the story asset.
         let objID = storyFolder.objectID
         CoreDataManager.shared.performOnWriteContext { [weak self] context in
-            guard let self = self else {
-                onComplete?()
-                return
-            }
             let folder = context.object(with: objID) as! StoryFolder
 
             for url in urls {
                 // TODO: There is more to do depending on the type of item.
                 // But we'll deal with this as we build out the individual features.
                 // For testing purposes we'll default to image for now.
-                let _ = self.createAsset(type: .image, name: url.lastPathComponent, url: url, storyFolder: folder, in: context)
+                let _ = self?.createAsset(type: .image, name: url.lastPathComponent, url: url, storyFolder: folder, in: context)
+            }
+
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+            }
+        }
+    }
+
+    /// Create new StoryAsset instances for the specified ImportedMedia.
+    ///
+    /// - Parameters:
+    ///   - importedMedia: An array of ImportedMedia items.
+    ///   - storyFolder: The parent StoryFolder for the new StoryAssets
+    ///   - onComplete: A closure to call when finished.
+    ///
+    func createAssetsForImportedMedia(importedMedia: [ImportedMedia], storyFolder: StoryFolder, onComplete:(() -> Void)? = nil) {
+        let objID = storyFolder.objectID
+        CoreDataManager.shared.performOnWriteContext { [weak self] context in
+            let folder = context.object(with: objID) as! StoryFolder
+
+            for media in importedMedia {
+                // Get the type based off the mime type of the imported asset.
+                // By convention treat unknown types as images (for now) as this will work for heic files.
+                let type = StoryAssetType.typeFromMimeType(mimeType: media.mimeType) ?? .image
+                let _ = self?.createAsset(type: type, name: media.fileURL.lastPathComponent, url: media.fileURL, storyFolder: folder, in: context)
             }
 
             CoreDataManager.shared.saveContext(context: context)
@@ -199,7 +221,7 @@ extension AssetStore {
     ///   - imports: A dictionary of imported assets. PHAsset IDs are keys.
     ///   - errors: A dictionary of errors. PHAsset IDs are keys.
     ///
-    func createAssetsForImports(imports: [String: URL], errors: [String: Error]) {
+    func createAssetsForImports(imports: [String: ImportedMedia], errors: [String: Error]) {
         guard let storyFolder = StoreContainer.shared.folderStore.currentStoryFolder else {
             return
         }
@@ -207,7 +229,7 @@ extension AssetStore {
             createAssetsForURLs(urls: Array(imports.values), storyFolder: storyFolder)
         }
         if errors.count > 0 {
-            //TODO: Handle errors
+            LogError(message: "Errors Importing Media: \(errors)")
         }
     }
 
