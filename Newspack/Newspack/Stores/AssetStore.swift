@@ -850,8 +850,7 @@ extension AssetStore {
                     "alt_text": asset.altText
                 ] as [String: AnyObject]
 
-                // TODO: Handle mime type in a better fashion
-                let progress = remote.createMedia(mediaParameters: params, localURL: fileURL, filename: asset.name, mimeType: "image.jpg") { [weak self] (remoteMedia, error) in
+                let progress = remote.createMedia(mediaParameters: params, localURL: fileURL, filename: asset.name, mimeType: asset.mimeType) { [weak self] (remoteMedia, error) in
                     dispatchGroup.leave()
 
                     // TODO: Clean up Progress now that it's finished.
