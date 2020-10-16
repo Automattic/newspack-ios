@@ -56,6 +56,8 @@
 		E60A25112425418E003F3C81 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E60A250F2425418E003F3C81 /* MainInterface.storyboard */; };
 		E60A25152425418E003F3C81 /* NewspackShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E60A250B2425418E003F3C81 /* NewspackShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E60E976E25376E8300144BB9 /* URL+TypeHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60E976D25376E8300144BB9 /* URL+TypeHelpers.swift */; };
+		E60E97702537936800144BB9 /* URLTypeHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60E976F2537936800144BB9 /* URLTypeHelperTests.swift */; };
+		E60E977225379CAC00144BB9 /* AssetStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E60E977125379CAC00144BB9 /* AssetStoreTests.swift */; };
 		E610B64324EC59040011FBA8 /* UITableView+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E610B64224EC59040011FBA8 /* UITableView+Helpers.swift */; };
 		E6138FD22211FE86004E5B91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD12211FE86004E5B91 /* AppDelegate.swift */; };
 		E6138FD42211FE86004E5B91 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6138FD32211FE86004E5B91 /* InitialViewController.swift */; };
@@ -395,6 +397,8 @@
 		E60A25102425418E003F3C81 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E60A25122425418E003F3C81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E60E976D25376E8300144BB9 /* URL+TypeHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+TypeHelpers.swift"; sourceTree = "<group>"; };
+		E60E976F2537936800144BB9 /* URLTypeHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLTypeHelperTests.swift; sourceTree = "<group>"; };
+		E60E977125379CAC00144BB9 /* AssetStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStoreTests.swift; sourceTree = "<group>"; };
 		E610B64224EC59040011FBA8 /* UITableView+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Helpers.swift"; sourceTree = "<group>"; };
 		E6138FCE2211FE86004E5B91 /* Newspack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Newspack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6138FD12211FE86004E5B91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -755,6 +759,7 @@
 			children = (
 				E6051DEE23075F8A005AAF0B /* DateTests.swift */,
 				E6051DF023076191005AAF0B /* DictionaryMergeTests.swift */,
+				E60E976F2537936800144BB9 /* URLTypeHelperTests.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1188,6 +1193,7 @@
 				E607385C22A9A5C300504EA4 /* SiteStoreTests.swift */,
 				E65875A923A8139500185C75 /* StagedMediaImporterTests.swift */,
 				E65875AB23A813EA00185C75 /* StagedMediaStoreTests.swift */,
+				E60E977125379CAC00144BB9 /* AssetStoreTests.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -1958,8 +1964,10 @@
 				E607385D22A9A5C300504EA4 /* SiteStoreTests.swift in Sources */,
 				E6DCB05224AE3BF300C4FD01 /* SortOrganizerTests.swift in Sources */,
 				E6051DEF23075F8A005AAF0B /* DateTests.swift in Sources */,
+				E60E97702537936800144BB9 /* URLTypeHelperTests.swift in Sources */,
 				E6B8CFDD24ABC48C0068C6BE /* FolderStoreTests.swift in Sources */,
 				E65875AC23A813EA00185C75 /* StagedMediaStoreTests.swift in Sources */,
+				E60E977225379CAC00144BB9 /* AssetStoreTests.swift in Sources */,
 				E61FC605229F2F10009E1748 /* SiteServiceRemoteTests.swift in Sources */,
 				E65875A623A811A400185C75 /* MediaStoreTests.swift in Sources */,
 				E61FC609229F329A009E1748 /* Loader.swift in Sources */,

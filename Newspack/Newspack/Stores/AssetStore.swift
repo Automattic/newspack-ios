@@ -286,11 +286,11 @@ extension AssetStore {
     ///
     /// - Parameter assetID: The UUID of the specified StoryAsset.
     ///
-    func deleteAsset(assetID: UUID) {
+    func deleteAsset(assetID: UUID, onComplete: (() -> Void)? = nil) {
         guard let asset = getStoryAssetByID(uuid: assetID) else {
             return
         }
-        deleteAssets(assets: [asset])
+        deleteAssets(assets: [asset], onComplete: onComplete)
     }
 
     /// Deletes the specified assets and triggers the specified callback.
@@ -390,7 +390,7 @@ extension AssetStore {
     ///   - assetID: The UUID of the StoryAsset
     ///   - caption: The text for the caption.
     ///
-    func updateCaption(assetID: UUID, caption: String) {
+    func updateCaption(assetID: UUID, caption: String, onComplete: (() -> Void)? = nil) {
         guard let asset = getStoryAssetByID(uuid: assetID) else {
             return
         }
@@ -401,6 +401,10 @@ extension AssetStore {
             asset.caption = caption
             asset.modified = Date()
             CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+            }
         }
     }
 
@@ -410,7 +414,7 @@ extension AssetStore {
     ///   - assetID: The UUID of the StoryAsset
     ///   - altText: The text for the altText.
     ///
-    func updateAltText(assetID: UUID, altText: String) {
+    func updateAltText(assetID: UUID, altText: String, onComplete: (() -> Void)? = nil) {
         guard let asset = getStoryAssetByID(uuid: assetID) else {
             return
         }
@@ -421,6 +425,10 @@ extension AssetStore {
             asset.altText = altText
             asset.modified = Date()
             CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+            }
         }
     }
 
@@ -603,32 +611,6 @@ extension AssetStore {
         return remoteIDs
     }
 
-    /// Gets the StoryAsset belonging to the specifie StoryFolder that has the
-    /// specified remoteID. The StoryFolder's ManagedObjectContext will be used
-    /// for fetching.
-    ///
-    /// - Parameters:
-    ///   - folder: The StoryFolder that owns the StoryAsset.
-    ///   - remoteID: The value of the StoryAsset's remoteID.
-    /// - Returns: The StoryAsset instance or nil.
-    ///
-    func getStoryAsset(for folder: StoryFolder, with remoteID: Int64) -> StoryAsset? {
-        guard let context =  folder.managedObjectContext else {
-            return nil
-        }
-
-        let fetchRequest = StoryAsset.defaultFetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "folder == %@ AND remoteID == %d", folder, remoteID)
-
-        do {
-            return try context.fetch(fetchRequest).first
-        } catch {
-            let error = error as NSError
-            LogError(message: error.localizedDescription)
-        }
-        return nil
-    }
-
     /// Get the StoryAsset's for the specified StoryFolders that have the specified remoteIDs.
     ///
     /// - Parameters:
@@ -710,7 +692,7 @@ extension AssetStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryAsset.defaultFetchRequest()
 
-        fetchRequest.predicate = NSPredicate(format: "folder.site == %@ AND remoteID == 0 AND type != 'text'", site)
+        fetchRequest.predicate = NSPredicate(format: "folder.site == %@ AND remoteID == 0 AND type != 'textNote'", site)
         if limit > 0 {
             fetchRequest.fetchLimit = limit
         }
