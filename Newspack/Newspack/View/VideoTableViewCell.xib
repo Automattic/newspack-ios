@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -17,67 +17,74 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="56"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8cY-I5-G1W">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kad-Hh-iCN">
                         <rect key="frame" x="16" y="0.0" width="288" height="56"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TEz-I3-UB8">
-                                <rect key="frame" x="0.0" y="12" width="32" height="32"/>
-                                <color key="backgroundColor" name="Blue0"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="30i-gb-fgh"/>
-                                    <constraint firstAttribute="width" constant="32" id="X2P-HC-e2v"/>
-                                </constraints>
-                            </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="xlg-6K-jFq">
-                                <rect key="frame" x="40" y="6" width="216" height="44"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8cY-I5-G1W">
+                                <rect key="frame" x="0.0" y="0.0" width="288" height="54"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filename.png" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pg7-Ch-Igx">
-                                        <rect key="frame" x="0.0" y="0.0" width="216" height="24.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A short caption" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5h-C3-VYT">
-                                        <rect key="frame" x="0.0" y="24.5" width="216" height="19.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TEz-I3-UB8">
+                                        <rect key="frame" x="0.0" y="11" width="32" height="32"/>
+                                        <color key="backgroundColor" name="Blue0"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="30i-gb-fgh"/>
+                                            <constraint firstAttribute="width" constant="32" id="X2P-HC-e2v"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="xlg-6K-jFq">
+                                        <rect key="frame" x="40" y="5" width="216" height="44"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filename.png" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pg7-Ch-Igx">
+                                                <rect key="frame" x="0.0" y="0.0" width="216" height="24.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A short caption" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L5h-C3-VYT">
+                                                <rect key="frame" x="0.0" y="24.5" width="216" height="19.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="epk-Dg-mRB"/>
+                                        </constraints>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pM3-hf-VKx">
+                                        <rect key="frame" x="264" y="15" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="mYN-Py-CEg"/>
+                                        </constraints>
+                                        <state key="normal" image="cloud-upload"/>
+                                        <connections>
+                                            <action selector="handleSyncTapped" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LmC-fD-O0e"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="epk-Dg-mRB"/>
-                                </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pM3-hf-VKx">
-                                <rect key="frame" x="264" y="16" width="24" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="24" id="mYN-Py-CEg"/>
-                                </constraints>
-                                <state key="normal" image="cloud-upload"/>
-                                <connections>
-                                    <action selector="handleSyncTapped" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LmC-fD-O0e"/>
-                                </connections>
-                            </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="8Id-7s-2UU">
+                                <rect key="frame" x="0.0" y="54" width="288" height="2"/>
+                            </progressView>
                         </subviews>
                     </stackView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="play.circle.fill" catalog="system" id="V7Y-4a-CSY">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="play.circle.fill" catalog="system" id="V7Y-4a-CSY">
                         <rect key="frame" x="19" y="16" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="tintColor" name="White"/>
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="V7Y-4a-CSY" firstAttribute="centerY" secondItem="TEz-I3-UB8" secondAttribute="centerY" id="8YS-9c-xCL"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="8cY-I5-G1W" secondAttribute="trailing" id="EJx-LF-0id"/>
-                    <constraint firstItem="8cY-I5-G1W" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="F4E-Lq-Ep3"/>
-                    <constraint firstAttribute="bottom" secondItem="8cY-I5-G1W" secondAttribute="bottom" id="TPE-vn-e3y"/>
-                    <constraint firstItem="V7Y-4a-CSY" firstAttribute="centerX" secondItem="TEz-I3-UB8" secondAttribute="centerX" id="V5W-JU-kJB"/>
-                    <constraint firstItem="8cY-I5-G1W" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="hsa-GX-ugX"/>
+                    <constraint firstItem="kad-Hh-iCN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="KqK-aW-Tks"/>
+                    <constraint firstItem="kad-Hh-iCN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="WFM-Ko-rC2"/>
+                    <constraint firstAttribute="bottom" secondItem="kad-Hh-iCN" secondAttribute="bottom" id="eYL-J9-HL8"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="kad-Hh-iCN" secondAttribute="trailing" id="yoo-bu-PCG"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="captionLabel" destination="L5h-C3-VYT" id="XeR-xA-MH2"/>
+                <outlet property="progressView" destination="8Id-7s-2UU" id="UOk-Rc-D1f"/>
                 <outlet property="syncButton" destination="pM3-hf-VKx" id="eci-WH-lJL"/>
                 <outlet property="thumbnail" destination="TEz-I3-UB8" id="IG1-gT-zM3"/>
                 <outlet property="titleLabel" destination="pg7-Ch-Igx" id="WvG-Xh-kOV"/>

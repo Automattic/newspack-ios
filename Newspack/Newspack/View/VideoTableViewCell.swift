@@ -1,11 +1,12 @@
 import UIKit
 
 protocol VideoCellProvider {
+    var uuid: UUID! { get }
     var name: String! { get }
     var caption: String! { get }
 }
 
-class VideoTableViewCell: UITableViewCell {
+class VideoTableViewCell: ProgressCell {
 
     static let imageSize = CGSize(width: 32, height: 32)
 
@@ -35,6 +36,7 @@ class VideoTableViewCell: UITableViewCell {
         thumbnail.image = image
         titleLabel.text = video.name
         captionLabel.text = video.caption
+        observeProgress(uuid: video.uuid)
     }
 
 }

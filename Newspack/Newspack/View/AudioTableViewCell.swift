@@ -1,11 +1,12 @@
 import UIKit
 
 protocol AudioCellProvider {
+    var uuid: UUID! { get }
     var name: String! { get }
     var caption: String! { get }
 }
 
-class AudioTableViewCell: UITableViewCell {
+class AudioTableViewCell: ProgressCell {
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var captionLabel: UILabel!
@@ -30,6 +31,7 @@ class AudioTableViewCell: UITableViewCell {
     func configure(audio: AudioCellProvider) {
         titleLabel.text = audio.name
         captionLabel.text = audio.caption
+        observeProgress(uuid: audio.uuid)
     }
 
 }
