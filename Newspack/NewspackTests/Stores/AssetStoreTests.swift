@@ -165,7 +165,8 @@ class AssetStoreTests: BaseTest {
         }
 
         let folder = folderStore.currentStoryFolder!
-        let asset = folder.assets.first!
+        let asset = folder.assets.filter{ $0.remoteID == 0 }.first!
+
         XCTAssertEqual(0, asset.remoteID)
 
         var remoteItem = RemoteMedia(dict: response)
