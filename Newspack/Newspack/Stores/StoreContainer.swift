@@ -18,6 +18,7 @@ class StoreContainer {
     private(set) var stagedMediaStore = StagedMediaStore()
     private(set) var folderStore = FolderStore()
     private(set) var assetStore = AssetStore()
+    private(set) var progressStore = ProgressStore()
 
     private init() {}
 
@@ -34,7 +35,7 @@ class StoreContainer {
         // NOTE: The SiteStore must be reset BEFORE any other store that interacts
         // with folders, as the SiteStore is responsible for creating the site's
         // folder--the parent container for StoryFolders etc.
-        // It must also be set before any store that relies on retrieving the
+        // It must also be set before any store that relies on retrieving the site.
         siteStore = SiteStore(dispatcher: dispatcher, siteID: site?.uuid)
 
         postStore = PostStore(dispatcher: dispatcher, siteID: site?.uuid)
@@ -45,5 +46,6 @@ class StoreContainer {
         stagedMediaStore = StagedMediaStore(dispatcher: dispatcher, siteID: site?.uuid)
         folderStore = FolderStore(dispatcher: dispatcher, siteID: site?.uuid)
         assetStore = AssetStore(dispatcher: dispatcher)
+        progressStore = ProgressStore()
     }
 }
