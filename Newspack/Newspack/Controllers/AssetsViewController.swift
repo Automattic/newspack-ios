@@ -16,23 +16,29 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
     @IBOutlet var tableView: UITableView!
 
     private var dataSource: AssetDataSource!
+    private let refreshControl = UIRefreshControl()
+    private var syncReceipt: Any?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        configureCells()
         configureDataSource()
         configureSortControl()
         configureNavbar()
         configureStyle()
         configureEditButton()
-        tableView.tableFooterView = UIView()
+        configureTableView()
+        configureSyncListener()
     }
 
-    func configureCells() {
+    func configureTableView() {
         tableView.register(UINib(nibName: "TextNoteTableViewCell", bundle: nil), forCellReuseIdentifier: TextNoteTableViewCell.reuseIdentifier)
         tableView.register(UINib(nibName: "PhotoTableViewCell", bundle: nil), forCellReuseIdentifier: PhotoTableViewCell.reuseIdentifier)
         tableView.register(UINib(nibName: "VideoTableViewCell", bundle: nil), forCellReuseIdentifier: VideoTableViewCell.reuseIdentifier)
+
+        tableView.tableFooterView = UIView()
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(handleRefreshControl(sender:)), for: .valueChanged)
     }
 
     func configureDataSource() {
@@ -70,6 +76,12 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
         editButton.isHidden = !dataSource.isSortable
     }
 
+    func configureSyncListener() {
+        syncReceipt = SyncCoordinator.shared.onChange { [weak self] in
+            self?.handleSyncStateChange()
+        }
+    }
+
 }
 
 // MARK: - Actions
@@ -98,6 +110,17 @@ extension AssetsViewController {
 
     @IBAction func handleSyncTapped(sender: UIBarButtonItem) {
         LogDebug(message: "tapped sync")
+    }
+
+    @objc func handleRefreshControl(sender: UIRefreshControl) {
+        let action = SyncAction.syncAssets
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+    }
+
+    func handleSyncStateChange() {
+        if !SyncCoordinator.shared.syncingAssets {
+            refreshControl.endRefreshing()
+        }
     }
 
 }
