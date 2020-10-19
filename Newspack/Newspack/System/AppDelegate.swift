@@ -12,7 +12,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // We want a single instance of the Reconciler for the lifecycle of the app.
     // We'll instantiate it here for convenience.
     let reconciler = Reconciler()
-    let syncCoordinator = SyncCoordinator()
 
     var sessionReceipt: Any?
     var window: UIWindow?
