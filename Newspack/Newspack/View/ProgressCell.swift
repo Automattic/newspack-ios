@@ -4,6 +4,12 @@ class ProgressCell: UITableViewCell {
 
     @IBOutlet var progressView: UIProgressView!
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        progressView.trackTintColor = .clear
+        progressView.trackImage = nil
+    }
+
     override func willMove(toWindow newWindow: UIWindow?) {
         if newWindow == nil {
             stopListeningForProgress()
@@ -37,7 +43,8 @@ class ProgressCell: UITableViewCell {
     }
 
     func observeProgress(uuid: UUID) {
-        progressView.observedProgress = StoreContainer.shared.progressStore.progress(for: uuid)
         startListeningForProgress(uuid: uuid)
+        progressView.progress = 0
+        progressView.observedProgress = StoreContainer.shared.progressStore.progress(for: uuid)
     }
 }
