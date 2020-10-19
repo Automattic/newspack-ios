@@ -213,6 +213,7 @@ extension FolderStore {
                 self?.selectDefaultStoryFolderIfNeeded()
                 onComplete?()
                 ShadowCaster.shared.castShadows()
+                SyncCoordinator.shared.process(steps: [.createRemoteStories])
             }
         }
     }
@@ -600,6 +601,7 @@ extension FolderStore {
 
             DispatchQueue.main.async {
                 onComplete?()
+                SyncCoordinator.shared.process(steps: [.pushStoryUpdates])
             }
         }
     }

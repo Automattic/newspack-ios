@@ -187,6 +187,7 @@ extension AssetStore {
 
             DispatchQueue.main.async {
                 onComplete?()
+                SyncCoordinator.shared.process(steps: [.createRemoteAssets])
             }
         }
     }
@@ -404,6 +405,7 @@ extension AssetStore {
 
             DispatchQueue.main.async {
                 onComplete?()
+                SyncCoordinator.shared.process(steps: [.pushAssetUpdates])
             }
         }
     }
@@ -428,6 +430,7 @@ extension AssetStore {
 
             DispatchQueue.main.async {
                 onComplete?()
+                SyncCoordinator.shared.process(steps: [.pushAssetUpdates])
             }
         }
     }
