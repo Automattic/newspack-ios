@@ -47,19 +47,6 @@ class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
 
     static let shared = SyncCoordinator()
 
-    private var processing = false {
-        didSet {
-            if processing {
-                LogInfo(message: "SyncCoordinator started processing.")
-            } else {
-                // Make sure the queue is empty.
-                stepQueue = []
-                LogInfo(message: "SyncCoordinator ended processing.")
-            }
-            state = processing ? .processing : .idle
-        }
-    }
-
     var syncingStories: Bool {
         return Set(stepQueue).intersection(SyncSteps.storySteps()).count > 0
     }
@@ -68,7 +55,18 @@ class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
         return Set(stepQueue).intersection(SyncSteps.assetSteps()).count > 0
     }
 
-    private var stepQueue = [SyncSteps]()
+    private var stepQueue = [SyncSteps]() {
+        didSet {
+            if oldValue.count == 0 && stepQueue.count > 0 {
+                LogInfo(message: "SyncCoordinator started processing.")
+            }
+            if oldValue.count > 0 && stepQueue.count == 0 {
+                LogInfo(message: "SyncCoordinator stopped processing.")
+            }
+            state = stepQueue.count > 0 ? .processing : .idle
+        }
+    }
+
     private(set) var progressDictionary = [String: Any]()
     private var sessionReceipt: Any?
     private var dispatcherReceipt: Any?
@@ -92,7 +90,7 @@ class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
         // Stop processing sync steps whenever the session changes.
         // Regeister for the new session dispatcher.
         sessionReceipt = SessionManager.shared.onChange {
-            self.processing = false
+            self.stepQueue = []
             self.refreshSessionListener()
         }
         refreshSessionListener()
@@ -126,26 +124,27 @@ class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
             return
         }
 
-        if processing {
-            // Add to the queue / remove dups and return.
-            stepQueue.append(contentsOf: steps)
-            stepQueue = stepQueue.uniqued()
-            return
-        }
+        // Assign steps to the stepqueue to trigger onChanged event if needed.
+        let enqueue = stepQueue + steps
+        stepQueue = enqueue.uniqued()
 
-        processing = true
-
-        stepQueue = steps
         performNextStep()
     }
 
     private func performNextStep() {
+        assert(Thread.isMainThread)
         guard stepQueue.count > 0 else {
-            processing = false
             return
         }
 
-        let step = stepQueue.removeFirst()
+        guard let step = stepQueue.first else {
+            stepQueue = [] // Assign empty just in case.
+            return
+        }
+
+        // Update the queue.
+        stepQueue = Array(stepQueue.dropFirst())
+
         switch step {
             case .syncRemoteStories:
                 syncAndProcessRemoteStories()
@@ -166,7 +165,6 @@ class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
         if let error = error {
             return handleErrors(errors: [error])
         }
-
         return false
     }
 
@@ -192,12 +190,12 @@ extension SyncCoordinator {
     private func syncAndProcessRemoteStories() {
         /// Get a list of post IDs from our stories.
         let store = StoreContainer.shared.folderStore
-        store.syncAndProcessRemoteDrafts { [weak self] (error) in
-            guard self?.handleError(error: error) == false else {
-                self?.processing = false
+        store.syncAndProcessRemoteDrafts { [unowned self] (error) in
+            guard self.handleError(error: error) == false else {
+                self.stepQueue = []
                 return
             }
-            self?.performNextStep()
+            self.performNextStep()
         }
     }
 
@@ -206,12 +204,12 @@ extension SyncCoordinator {
     ///
     private func createRemoteStoriesIfNeeded() {
         let store = StoreContainer.shared.folderStore
-        store.createRemoteDraftsIfNeeded { [weak self] (error) in
-            guard self?.handleError(error: error) == false else {
-                self?.processing = false
+        store.createRemoteDraftsIfNeeded { [unowned self] (error) in
+            guard self.handleError(error: error) == false else {
+                self.stepQueue = []
                 return
             }
-            self?.performNextStep()
+            self.performNextStep()
         }
     }
 
@@ -219,12 +217,12 @@ extension SyncCoordinator {
     ///
     private func pushStoriesIfNeeded() {
         let store = StoreContainer.shared.folderStore
-        store.pushUpdatesToRemote { [weak self] (error) in
-            guard self?.handleError(error: error) == false else {
-                self?.processing = false
+        store.pushUpdatesToRemote { [unowned self] (error) in
+            guard self.handleError(error: error) == false else {
+                self.stepQueue = []
                 return
             }
-            self?.performNextStep()
+            self.performNextStep()
         }
     }
 
@@ -235,12 +233,12 @@ extension SyncCoordinator {
     ///
     private func syncRemoteAssets() {
         let store = StoreContainer.shared.assetStore
-        store.syncRemoteAssets { [weak self] (error) in
-            guard self?.handleError(error: error) == false else {
-                self?.processing = false
+        store.syncRemoteAssets { [unowned self] (error) in
+            guard self.handleError(error: error) == false else {
+                self.stepQueue = []
                 return
             }
-            self?.performNextStep()
+            self.performNextStep()
         }
     }
 
@@ -248,12 +246,12 @@ extension SyncCoordinator {
     ///
     private func pushAssetUpdatesIfNeeded() {
         let store = StoreContainer.shared.assetStore
-        store.pushUpdatesToRemote { [weak self] (errors) in
-            guard self?.handleErrors(errors: errors) == false else {
-                self?.processing = false
+        store.pushUpdatesToRemote { [unowned self] (errors) in
+            guard self.handleErrors(errors: errors) == false else {
+                self.stepQueue = []
                 return
             }
-            self?.performNextStep()
+            self.performNextStep()
         }
     }
 
@@ -262,20 +260,20 @@ extension SyncCoordinator {
     private func createNewAssetsIfNeeded() {
         let store = StoreContainer.shared.assetStore
         let batchSize = 3
-        store.batchCreateRemoteMedia(batchSize: batchSize) { [weak self] (count, errors) in
+        store.batchCreateRemoteMedia(batchSize: batchSize) { [unowned self] (count, errors) in
             // Bail on any errors.
-            guard self?.handleErrors(errors: errors) == false else {
-                self?.processing = false
+            guard self.handleErrors(errors: errors) == false else {
+                self.stepQueue = []
                 return
             }
 
             if count < batchSize {
-                self?.performNextStep()
+                self.performNextStep()
                 return
             }
 
             // Keep going until there are none left.
-            self?.createNewAssetsIfNeeded()
+            self.createNewAssetsIfNeeded()
         }
     }
 
