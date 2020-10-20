@@ -72,7 +72,7 @@ class ProgressStore {
     ///
     private func notify(key: ProgressKey, added: Bool) {
         let name = added ? ProgressStore.startedTrackingProgress : ProgressStore.stoppedTrackingProgress
-        NotificationCenter.default.post(name: name , object: key)
+        NotificationCenter.default.post(name: name, object: key)
     }
 
     /// Get a ProgressKey for the specified UUID.
