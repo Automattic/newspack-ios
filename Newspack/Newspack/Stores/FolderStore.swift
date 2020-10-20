@@ -730,10 +730,11 @@ extension FolderStore {
     ///
     func syncAndProcessRemoteDrafts(onComplete: @escaping (Error?) -> Void) {
         let postIDs = getStoryFolderPostIDs()
+        let perPage = min(postIDs.count, 100)
 
         // Sync the posts for these POST IDs.
         let remote = PostServiceRemote(wordPressComRestApi: SessionManager.shared.api)
-        remote.fetchPostStubs(for: postIDs, page: 1, perPage: 100) { [weak self] (postStubs, error) in
+        remote.fetchPostStubs(for: postIDs, page: 1, perPage: perPage) { [weak self] (postStubs, error) in
             guard let stubs = postStubs else {
                 LogError(message: "Error fetching post stubs.")
                 onComplete(error)
