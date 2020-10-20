@@ -7,6 +7,7 @@ class ProgressStore {
     static let stoppedTrackingProgress = NSNotification.Name("stoppedTrackingProgress")
 
     private var store = [UUID: Progress]()
+    private var progressKeys = [UUID: ProgressKey]()
 
     func progress(for uuid: UUID) -> Progress? {
         return store[uuid]
@@ -15,6 +16,7 @@ class ProgressStore {
     func add(progress: Progress, for uuid: UUID) {
         remove(for: uuid) // remove stale progress if it exists.
         store[uuid] = progress
+        _ = keyForUUID(uuid: uuid)
         notify(uuid: uuid, added: true)
     }
 
@@ -22,12 +24,32 @@ class ProgressStore {
         guard let _ = store.removeValue(forKey: uuid) else {
             return
         }
+        progressKeys.removeValue(forKey: uuid)
+
         notify(uuid: uuid, added: false)
     }
 
-    func notify(uuid: UUID, added: Bool) {
+    private func notify(uuid: UUID, added: Bool) {
         let name = added ? ProgressStore.startedTrackingProgress : ProgressStore.stoppedTrackingProgress
-        NotificationCenter.default.post(name: name , object: uuid)
+        let obj = keyForUUID(uuid: uuid)
+        NotificationCenter.default.post(name: name , object: obj)
     }
 
+    func keyForUUID(uuid: UUID) -> ProgressKey {
+        if let obj = progressKeys[uuid] {
+            return obj
+        }
+
+        let obj = ProgressKey(uuid: uuid)
+        progressKeys[uuid] = obj
+        return obj
+    }
+
+}
+
+class ProgressKey {
+    let uuid: UUID
+    init(uuid: UUID) {
+        self.uuid = uuid
+    }
 }

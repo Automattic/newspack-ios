@@ -23,8 +23,9 @@ class ProgressCell: UITableViewCell {
     }
 
     func startListeningForProgress(uuid: UUID) {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleStartedTrackingProgress(notification:)), name: ProgressStore.startedTrackingProgress, object: uuid)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleStoppedTrackingProgress(notification:)), name: ProgressStore.stoppedTrackingProgress, object: uuid)
+        let key = StoreContainer.shared.progressStore.keyForUUID(uuid: uuid)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleStartedTrackingProgress(notification:)), name: ProgressStore.startedTrackingProgress, object: key)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleStoppedTrackingProgress(notification:)), name: ProgressStore.stoppedTrackingProgress, object: key)
     }
 
     func stopListeningForProgress() {
@@ -32,10 +33,10 @@ class ProgressCell: UITableViewCell {
     }
 
     @objc func handleStartedTrackingProgress(notification: Notification) {
-        guard let uuid = notification.object as? UUID else {
+        guard let key = notification.object as? ProgressKey else {
             return
         }
-        progressView.observedProgress = StoreContainer.shared.progressStore.progress(for: uuid)
+        progressView.observedProgress = StoreContainer.shared.progressStore.progress(for: key.uuid)
     }
 
     @objc func handleStoppedTrackingProgress(notification: Notification) {
@@ -45,6 +46,7 @@ class ProgressCell: UITableViewCell {
     func observeProgress(uuid: UUID) {
         startListeningForProgress(uuid: uuid)
         progressView.progress = 0
-        progressView.observedProgress = StoreContainer.shared.progressStore.progress(for: uuid)
+        let key = StoreContainer.shared.progressStore.keyForUUID(uuid: uuid)
+        progressView.observedProgress = StoreContainer.shared.progressStore.progress(for: key.uuid)
     }
 }
