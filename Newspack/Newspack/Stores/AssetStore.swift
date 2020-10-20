@@ -187,7 +187,7 @@ extension AssetStore {
 
             DispatchQueue.main.async {
                 onComplete?()
-                SyncCoordinator.shared.process(steps: [.createRemoteAssets])
+                SyncCoordinator.shared.process(steps: [.createRemoteStories, .createRemoteAssets])
             }
         }
     }
