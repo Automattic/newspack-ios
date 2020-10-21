@@ -5,6 +5,7 @@ class FolderViewController: UITableViewController {
     @IBOutlet var saveButton: UIBarButtonItem!
     @IBOutlet var cancelButton: UIBarButtonItem!
 
+    var syncToggle: UISwitch?
     var textField: UITextField?
     var storyUUID: UUID?
 
@@ -18,6 +19,7 @@ class FolderViewController: UITableViewController {
 
     private func configureCells() {
         tableView.register(UINib(nibName: "TextFieldTableViewCell", bundle: nil), forCellReuseIdentifier: TextFieldTableViewCell.reuseIdentifier)
+        tableView.register(UINib(nibName: "SwitchTableViewCell", bundle: nil), forCellReuseIdentifier: SwitchTableViewCell.reuseIdentifier)
     }
 
     private func configureStyle() {
@@ -32,6 +34,14 @@ class FolderViewController: UITableViewController {
         }
     }
 
+    enum FolderSections: Int, CaseIterable {
+        case title
+        case sync
+
+        static func count() -> Int {
+            return FolderSections.allCases.count
+        }
+    }
 }
 
 // MARK: - Actions
@@ -70,7 +80,7 @@ extension FolderViewController {
 extension FolderViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return FolderSections.count()
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -78,6 +88,47 @@ extension FolderViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch FolderSections(rawValue: indexPath.section) {
+        case .title:
+            return cellForTitleSection(at: indexPath)
+        case .sync:
+            return cellForSyncSection(at: indexPath)
+        default:
+            // This shouldn't happen.
+            return UITableViewCell()
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+
+        guard
+            indexPath.section == FolderSections.sync.rawValue,
+            let toggle = syncToggle
+        else {
+                return
+        }
+        toggle.setOn(!toggle.isOn, animated: true)
+    }
+
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.section == FolderSections.title.rawValue {
+            textField?.becomeFirstResponder()
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        switch FolderSections(rawValue: section) {
+        case .title:
+            return textForTitleSectionFooter()
+        case .sync:
+            return textForSyncSectionFooter()
+        default:
+            return nil
+        }
+    }
+
+    func cellForTitleSection(at indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.reuseIdentifier, for: indexPath) as! TextFieldTableViewCell
         Appearance.style(cell: cell)
         cell.delegate = self
@@ -100,16 +151,28 @@ extension FolderViewController {
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        textField?.becomeFirstResponder()
+    func cellForSyncSection(at indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SwitchTableViewCell.reuseIdentifier, for: indexPath) as! SwitchTableViewCell
+        Appearance.style(cell: cell)
+
+        let title = NSLocalizedString("Upload assets immediately", comment: "A short prompt providing instruction to the user.")
+        cell.configureCell(title: title, toggleOn: true)
+        syncToggle = cell.toggle
+        cell.selectionStyle = .none
+
+        return cell
     }
 
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    func textForTitleSectionFooter() -> String {
         if let _ = storyUUID {
             return NSLocalizedString("Change the story's title.", comment: "A short prompt providing instruction to the user.")
         } else {
             return NSLocalizedString("Give the story a title.", comment: "A short prompt providing instruction to the user.")
         }
+    }
+
+    func textForSyncSectionFooter() -> String {
+        return NSLocalizedString("When enabled, newly added assets must be manually uploaded.", comment: "A short statement describing the effect of a toggle control.")
     }
 
 }
