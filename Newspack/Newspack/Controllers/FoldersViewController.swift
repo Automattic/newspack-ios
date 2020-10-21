@@ -10,20 +10,25 @@ class FoldersViewController: ToolbarViewController, UITableViewDelegate {
     @IBOutlet var tableView: UITableView!
 
     private var dataSource: FolderDataSource!
+    private let refreshControl = UIRefreshControl()
+    private var syncReceipt: Any?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        registerCells()
         configureDataSource()
         configureSortControls()
         configureNavbar()
         configureStyle()
-        tableView.tableFooterView = UIView()
+        configureTableView()
+        configureSyncListener()
     }
 
-    func registerCells() {
+    func configureTableView() {
         tableView.register(UINib(nibName: "StoryTableViewCell", bundle: nil), forCellReuseIdentifier: StoryTableViewCell.reuseIdentifier)
+        tableView.tableFooterView = UIView()
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(handleRefreshControl(sender:)), for: .valueChanged)
     }
 
     func configureDataSource() {
@@ -64,6 +69,12 @@ class FoldersViewController: ToolbarViewController, UITableViewDelegate {
     func configureDirectionButton(ascending: Bool) {
         let image: UIImage = ascending ? .gridicon(.chevronUp) : .gridicon(.chevronDown)
         directionButton.setImage(image, for: .normal)
+    }
+
+    func configureSyncListener() {
+        syncReceipt = SyncCoordinator.shared.onChange { [weak self] in
+            self?.handleSyncStateChange()
+        }
     }
 
 }
@@ -117,6 +128,17 @@ extension FoldersViewController {
         let navController = UINavigationController(rootViewController: controller)
         navController.modalPresentationStyle = .formSheet
         self.present(navController, animated: true, completion: nil)
+    }
+
+    @objc func handleRefreshControl(sender: UIRefreshControl) {
+        let action = SyncAction.syncStories
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+    }
+
+    func handleSyncStateChange() {
+        if !SyncCoordinator.shared.syncingStories {
+            refreshControl.endRefreshing()
+        }
     }
 
 }

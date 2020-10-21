@@ -52,6 +52,7 @@ class PostServiceRemote: ServiceRemoteCoreRest {
         let filter = ["id": ids] as [String: AnyObject]
         let params = [
             "_fields": "id,title,status,date_gmt,modified_gmt,_links",
+            "status": "draft,pending",
             "page": page,
             "per_page": perPage
         ] as [String: AnyObject]

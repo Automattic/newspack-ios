@@ -2,11 +2,12 @@ import UIKit
 import NewspackFramework
 
 protocol PhotoCellProvider {
+    var uuid: UUID! { get }
     var name: String! { get }
     var caption: String! { get }
 }
 
-class PhotoTableViewCell: UITableViewCell {
+class PhotoTableViewCell: ProgressCell {
 
     static let imageSize = CGSize(width: 32, height: 32)
 
@@ -36,6 +37,7 @@ class PhotoTableViewCell: UITableViewCell {
         thumbnail.image = image
         titleLabel.text = photo.name
         captionLabel.text = photo.caption
+        observeProgress(uuid: photo.uuid)
     }
 
 }

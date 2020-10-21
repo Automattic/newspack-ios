@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -17,60 +17,69 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="VGd-H8-JGt">
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7T4-nS-S4k">
                         <rect key="frame" x="16" y="0.0" width="288" height="58"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a7J-Pb-36d">
-                                <rect key="frame" x="0.0" y="13" width="32" height="32"/>
-                                <color key="backgroundColor" name="Blue0"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="32" id="9An-YK-PNE"/>
-                                    <constraint firstAttribute="height" constant="32" id="ySF-cN-mip"/>
-                                </constraints>
-                            </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="v11-sv-yYq">
-                                <rect key="frame" x="40" y="7" width="216" height="44"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="VGd-H8-JGt">
+                                <rect key="frame" x="0.0" y="0.0" width="288" height="56"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filename.png" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ipi-AX-Kta">
-                                        <rect key="frame" x="0.0" y="0.0" width="216" height="24.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A short caption" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IEH-g8-IVe">
-                                        <rect key="frame" x="0.0" y="24.5" width="216" height="19.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a7J-Pb-36d">
+                                        <rect key="frame" x="0.0" y="12" width="32" height="32"/>
+                                        <color key="backgroundColor" name="Blue0"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="9An-YK-PNE"/>
+                                            <constraint firstAttribute="height" constant="32" id="ySF-cN-mip"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="v11-sv-yYq">
+                                        <rect key="frame" x="40" y="6" width="216" height="44"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filename.png" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ipi-AX-Kta">
+                                                <rect key="frame" x="0.0" y="0.0" width="216" height="24.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A short caption" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IEH-g8-IVe">
+                                                <rect key="frame" x="0.0" y="24.5" width="216" height="19.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="4sW-PR-bbI"/>
+                                        </constraints>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aSr-TH-1KN">
+                                        <rect key="frame" x="264" y="16" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="24" id="Cge-Ah-Eqz"/>
+                                        </constraints>
+                                        <state key="normal" image="cloud-upload"/>
+                                        <connections>
+                                            <action selector="handleSyncTapped" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Wce-v9-tqP"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="4sW-PR-bbI"/>
-                                </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aSr-TH-1KN">
-                                <rect key="frame" x="264" y="17" width="24" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="24" id="Cge-Ah-Eqz"/>
-                                </constraints>
-                                <state key="normal" image="cloud-upload"/>
-                                <connections>
-                                    <action selector="handleSyncTapped" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Wce-v9-tqP"/>
-                                </connections>
-                            </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="uhs-ot-xaX">
+                                <rect key="frame" x="0.0" y="56" width="288" height="2"/>
+                            </progressView>
                         </subviews>
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="VGd-H8-JGt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="5mD-xP-dHt"/>
-                    <constraint firstItem="VGd-H8-JGt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Las-uT-gSG"/>
-                    <constraint firstAttribute="bottom" secondItem="VGd-H8-JGt" secondAttribute="bottom" id="Zul-q0-5AS"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="VGd-H8-JGt" secondAttribute="trailing" id="teK-dF-IF0"/>
+                    <constraint firstAttribute="bottom" secondItem="7T4-nS-S4k" secondAttribute="bottom" id="LTj-M3-Rmo"/>
+                    <constraint firstItem="7T4-nS-S4k" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="QvN-H1-5Yn"/>
+                    <constraint firstItem="7T4-nS-S4k" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="gax-kK-V4u"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="7T4-nS-S4k" secondAttribute="trailing" id="p4t-u1-iJz"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="captionLabel" destination="IEH-g8-IVe" id="tJE-Fw-GhO"/>
+                <outlet property="progressView" destination="uhs-ot-xaX" id="opn-4B-U6p"/>
                 <outlet property="syncButton" destination="aSr-TH-1KN" id="nBl-xP-XCc"/>
                 <outlet property="thumbnail" destination="a7J-Pb-36d" id="fxm-KA-RtJ"/>
                 <outlet property="titleLabel" destination="Ipi-AX-Kta" id="lJd-7N-ZQb"/>

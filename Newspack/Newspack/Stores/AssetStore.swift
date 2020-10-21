@@ -187,6 +187,7 @@ extension AssetStore {
 
             DispatchQueue.main.async {
                 onComplete?()
+                SyncCoordinator.shared.process(steps: [.createRemoteStories, .createRemoteAssets])
             }
         }
     }
@@ -404,6 +405,7 @@ extension AssetStore {
 
             DispatchQueue.main.async {
                 onComplete?()
+                SyncCoordinator.shared.process(steps: [.pushAssetUpdates])
             }
         }
     }
@@ -428,6 +430,7 @@ extension AssetStore {
 
             DispatchQueue.main.async {
                 onComplete?()
+                SyncCoordinator.shared.process(steps: [.pushAssetUpdates])
             }
         }
     }
@@ -851,7 +854,7 @@ extension AssetStore {
 
             let progress = remote.createMedia(mediaParameters: params, localURL: fileURL, filename: asset.name, mimeType: asset.mimeType) { [weak self] (remoteMedia, error) in
 
-                // TODO: Clean up Progress now that it's finished.
+                StoreContainer.shared.progressStore.remove(for: assetID)
 
                 guard let remoteMedia = remoteMedia else {
                     if let error = error {
@@ -867,8 +870,7 @@ extension AssetStore {
             }
 
             if let progress = progress {
-                LogInfo(message: progress.description)
-                // TODO: Implement mechanism to share progress with UI.
+                StoreContainer.shared.progressStore.add(progress: progress, for: assetID)
             }
         }
 

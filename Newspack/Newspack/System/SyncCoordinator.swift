@@ -1,10 +1,11 @@
 import Foundation
 import NewspackFramework
+import WordPressFlux
 
 /// An enum that defines the steps involved in syncing content, and the order in
 /// which they should be performed.
 ///
-enum SyncSteps {
+enum SyncSteps: Hashable {
     case syncRemoteStories
     case createRemoteStories
     case pushStoryUpdates
@@ -13,66 +14,137 @@ enum SyncSteps {
     case createRemoteAssets
 
     static func getSteps() -> [SyncSteps] {
+        var steps = [SyncSteps]()
+        steps.append(contentsOf: storySteps())
+        steps.append(contentsOf: assetSteps())
+        return steps
+    }
+
+    static func storySteps() -> [SyncSteps] {
         return [
         .syncRemoteStories,
         .createRemoteStories,
-        .pushStoryUpdates,
+        .pushStoryUpdates
+        ]
+    }
+
+    static func assetSteps() -> [SyncSteps] {
+        return [
         .syncRemoteAssets,
         .createRemoteAssets,
         .pushAssetUpdates
         ]
     }
+
 }
 
-class SyncCoordinator {
+enum SyncCoordinatorState {
+    case idle
+    case processing
+}
 
-    private(set) var processing = false {
+class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
+
+    static let shared = SyncCoordinator()
+
+    var syncingStories: Bool {
+        return Set(stepQueue).intersection(SyncSteps.storySteps()).count > 0
+    }
+
+    var syncingAssets: Bool {
+        return Set(stepQueue).intersection(SyncSteps.assetSteps()).count > 0
+    }
+
+    private var stepQueue = [SyncSteps]() {
         didSet {
-            if processing {
+            if oldValue.count == 0 && stepQueue.count > 0 {
                 LogInfo(message: "SyncCoordinator started processing.")
-            } else {
-                LogInfo(message: "SyncCoordinator ended processing.")
             }
+            if oldValue.count > 0 && stepQueue.count == 0 {
+                LogInfo(message: "SyncCoordinator stopped processing.")
+            }
+            state = stepQueue.count > 0 ? .processing : .idle
         }
     }
-    private var steps = SyncSteps.getSteps()
+
     private(set) var progressDictionary = [String: Any]()
+    private var sessionReceipt: Any?
+    private var dispatcherReceipt: Any?
 
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 
     init() {
+        super.init(initialState: .idle)
+
         if Environment.isTesting() {
             return
         }
+
         listenForNotifications()
+        listenToSession()
     }
 
-    func process() {
+    private func listenToSession() {
+        // Stop processing sync steps whenever the session changes.
+        // Register for the new session dispatcher.
+        sessionReceipt = SessionManager.shared.onChange {
+            self.stepQueue = []
+            self.refreshSessionListener()
+        }
+        refreshSessionListener()
+    }
+
+    private func refreshSessionListener() {
+        dispatcherReceipt = SessionManager.shared.sessionDispatcher.register { action in
+            self.handleAction(action: action)
+        }
+    }
+
+    private func handleAction(action: Action) {
+        guard let action = action as? SyncAction else {
+            return
+        }
+        switch action {
+        case .syncAll:
+            process()
+        case .syncStories:
+            process(steps: SyncSteps.storySteps())
+        case .syncAssets:
+            process(steps: SyncSteps.assetSteps())
+        }
+    }
+
+    func process(steps: [SyncSteps] = SyncSteps.getSteps()) {
         guard
             hasInitializedSession(),
-            !processing
+            !AppDelegate.shared.reconciler.processing
         else {
             return
         }
-        guard !AppDelegate.shared.reconciler.processing else {
-            return
-        }
 
-        processing = true
+        // Assign steps to the stepqueue to trigger onChanged event if needed.
+        let enqueue = stepQueue + steps
+        stepQueue = enqueue.uniqued()
 
-        steps = SyncSteps.getSteps()
         performNextStep()
     }
 
     private func performNextStep() {
-        guard steps.count > 0 else {
-            processing = false
+        assert(Thread.isMainThread)
+        guard stepQueue.count > 0 else {
             return
         }
 
-        let step = steps.removeFirst()
+        guard let step = stepQueue.first else {
+            stepQueue = [] // Assign empty just in case.
+            return
+        }
+
+        // Update the queue.
+        stepQueue = Array(stepQueue.dropFirst())
+
         switch step {
             case .syncRemoteStories:
                 syncAndProcessRemoteStories()
@@ -93,7 +165,6 @@ class SyncCoordinator {
         if let error = error {
             return handleErrors(errors: [error])
         }
-
         return false
     }
 
@@ -116,42 +187,42 @@ extension SyncCoordinator {
     /// This will clean up any posts that need to be removed or whose title has
     /// changed. If successful it calls the next step.
     ///
-    func syncAndProcessRemoteStories() {
+    private func syncAndProcessRemoteStories() {
         /// Get a list of post IDs from our stories.
         let store = StoreContainer.shared.folderStore
-        store.syncAndProcessRemoteDrafts { [weak self] (error) in
-            guard self?.handleError(error: error) == false else {
-                self?.processing = false
+        store.syncAndProcessRemoteDrafts { [unowned self] (error) in
+            guard self.handleError(error: error) == false else {
+                self.stepQueue = []
                 return
             }
-            self?.performNextStep()
+            self.performNextStep()
         }
     }
 
     /// Step 2: Create remote drafts for any stories that need one.
     /// Create remote drafts for any stories who are ready for a remote.
     ///
-    func createRemoteStoriesIfNeeded() {
+    private func createRemoteStoriesIfNeeded() {
         let store = StoreContainer.shared.folderStore
-        store.createRemoteDraftsIfNeeded { [weak self] (error) in
-            guard self?.handleError(error: error) == false else {
-                self?.processing = false
+        store.createRemoteDraftsIfNeeded { [unowned self] (error) in
+            guard self.handleError(error: error) == false else {
+                self.stepQueue = []
                 return
             }
-            self?.performNextStep()
+            self.performNextStep()
         }
     }
 
     /// Step 3: Push changes to StoryFolders to the remote site.
     ///
-    func pushStoriesIfNeeded() {
+    private func pushStoriesIfNeeded() {
         let store = StoreContainer.shared.folderStore
-        store.pushUpdatesToRemote { [weak self] (error) in
-            guard self?.handleError(error: error) == false else {
-                self?.processing = false
+        store.pushUpdatesToRemote { [unowned self] (error) in
+            guard self.handleError(error: error) == false else {
+                self.stepQueue = []
                 return
             }
-            self?.performNextStep()
+            self.performNextStep()
         }
     }
 
@@ -160,49 +231,49 @@ extension SyncCoordinator {
     /// If an asset was deleted on the server, flag it locally to not sync but do not delete.
     /// Let the user manually delete, or manually upload again.
     ///
-    func syncRemoteAssets() {
+    private func syncRemoteAssets() {
         let store = StoreContainer.shared.assetStore
-        store.syncRemoteAssets { [weak self] (error) in
-            guard self?.handleError(error: error) == false else {
-                self?.processing = false
+        store.syncRemoteAssets { [unowned self] (error) in
+            guard self.handleError(error: error) == false else {
+                self.stepQueue = []
                 return
             }
-            self?.performNextStep()
+            self.performNextStep()
         }
     }
 
     /// Step 5: For each story, check for assets that have local changes that need to be pushed.
     ///
-    func pushAssetUpdatesIfNeeded() {
+    private func pushAssetUpdatesIfNeeded() {
         let store = StoreContainer.shared.assetStore
-        store.pushUpdatesToRemote { [weak self] (errors) in
-            guard self?.handleErrors(errors: errors) == false else {
-                self?.processing = false
+        store.pushUpdatesToRemote { [unowned self] (errors) in
+            guard self.handleErrors(errors: errors) == false else {
+                self.stepQueue = []
                 return
             }
-            self?.performNextStep()
+            self.performNextStep()
         }
     }
 
     /// Step 6: For each story, check for assets that need to be uploaded.
     ///
-    func createNewAssetsIfNeeded() {
+    private func createNewAssetsIfNeeded() {
         let store = StoreContainer.shared.assetStore
         let batchSize = 3
-        store.batchCreateRemoteMedia(batchSize: batchSize) { [weak self] (count, errors) in
+        store.batchCreateRemoteMedia(batchSize: batchSize) { [unowned self] (count, errors) in
             // Bail on any errors.
-            guard self?.handleErrors(errors: errors) == false else {
-                self?.processing = false
+            guard self.handleErrors(errors: errors) == false else {
+                self.stepQueue = []
                 return
             }
 
             if count < batchSize {
-                self?.performNextStep()
+                self.performNextStep()
                 return
             }
 
             // Keep going until there are none left.
-            self?.createNewAssetsIfNeeded()
+            self.createNewAssetsIfNeeded()
         }
     }
 
@@ -218,7 +289,7 @@ extension SyncCoordinator {
     /// .willEnterForgroundNotification. If reconciliation is too frequent or
     /// aggressive we can try switching notifications.
     ///
-    func listenForNotifications() {
+    private func listenForNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleReconcilerStopped(notification:)), name: Reconciler.reconcilerDidStop, object: nil)
     }
 
@@ -233,7 +304,7 @@ extension SyncCoordinator {
 
 extension SyncCoordinator {
 
-    func hasInitializedSession() -> Bool {
+    private func hasInitializedSession() -> Bool {
         let sessionState = SessionManager.shared.state
         return sessionState == .initialized
     }
