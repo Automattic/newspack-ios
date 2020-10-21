@@ -1,6 +1,7 @@
 import Foundation
 import NewspackFramework
 import WordPressFlux
+import Alamofire
 
 /// An enum that defines the steps involved in syncing content, and the order in
 /// which they should be performed.
@@ -74,6 +75,8 @@ class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
     private var sessionReceipt: Any?
     private var dispatcherReceipt: Any?
     private var backgroundTaskID = UIBackgroundTaskIdentifier.invalid
+    private let reachability = NetworkReachabilityManager()
+    private var syncInterruptedDueToNetworkError = false
 
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -88,6 +91,7 @@ class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
 
         listenForNotifications()
         listenToSession()
+        listenToReachability()
     }
 
     private func listenToSession() {
@@ -127,6 +131,10 @@ class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
         else {
             return
         }
+
+        // Always reset the network error flag when attempting to process the queue.
+        // If the network is unavailable it will be reset.
+        syncInterruptedDueToNetworkError = false
 
         // Assign steps to the stepqueue to trigger onChanged event if needed.
         let enqueue = stepQueue + steps
@@ -176,11 +184,19 @@ class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
         guard errors.count > 0 else {
             return false
         }
+
         for error in errors {
             LogError(message: "\(error)")
         }
+
+        // If not reachable assume a networking error
+        syncInterruptedDueToNetworkError = reachability?.isReachable == false
+
+        // Always empty the queue on error
+        stepQueue = []
         return true
     }
+
 }
 
 // MARK: - Steps Methods
@@ -196,7 +212,6 @@ extension SyncCoordinator {
         let store = StoreContainer.shared.folderStore
         store.syncAndProcessRemoteDrafts { [unowned self] (error) in
             guard self.handleError(error: error) == false else {
-                self.stepQueue = []
                 return
             }
             self.performNextStep()
@@ -210,7 +225,6 @@ extension SyncCoordinator {
         let store = StoreContainer.shared.folderStore
         store.createRemoteDraftsIfNeeded { [unowned self] (error) in
             guard self.handleError(error: error) == false else {
-                self.stepQueue = []
                 return
             }
             self.performNextStep()
@@ -223,7 +237,6 @@ extension SyncCoordinator {
         let store = StoreContainer.shared.folderStore
         store.pushUpdatesToRemote { [unowned self] (error) in
             guard self.handleError(error: error) == false else {
-                self.stepQueue = []
                 return
             }
             self.performNextStep()
@@ -239,7 +252,6 @@ extension SyncCoordinator {
         let store = StoreContainer.shared.assetStore
         store.syncRemoteAssets { [unowned self] (error) in
             guard self.handleError(error: error) == false else {
-                self.stepQueue = []
                 return
             }
             self.performNextStep()
@@ -252,7 +264,6 @@ extension SyncCoordinator {
         let store = StoreContainer.shared.assetStore
         store.pushUpdatesToRemote { [unowned self] (errors) in
             guard self.handleErrors(errors: errors) == false else {
-                self.stepQueue = []
                 return
             }
             self.performNextStep()
@@ -267,7 +278,6 @@ extension SyncCoordinator {
         store.batchCreateRemoteMedia(batchSize: batchSize) { [unowned self] (count, errors) in
             // Bail on any errors.
             guard self.handleErrors(errors: errors) == false else {
-                self.stepQueue = []
                 return
             }
 
@@ -339,6 +349,28 @@ extension SyncCoordinator {
     func clearBackgroundTask() {
         UIApplication.shared.endBackgroundTask(backgroundTaskID)
         backgroundTaskID = .invalid
+    }
+
+}
+
+// MARK: - Reachability
+
+extension SyncCoordinator {
+
+    private func listenToReachability() {
+        reachability?.listener = { status in
+            if status == .reachable(.ethernetOrWiFi) || status == .reachable(.wwan) {
+                self.handleNetworkBecameReachable()
+            }
+        }
+        reachability?.startListening()
+    }
+
+    private func handleNetworkBecameReachable() {
+        guard syncInterruptedDueToNetworkError else {
+            return
+        }
+        process()
     }
 
 }
