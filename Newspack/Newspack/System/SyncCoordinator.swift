@@ -88,7 +88,7 @@ class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
 
     private func listenToSession() {
         // Stop processing sync steps whenever the session changes.
-        // Regeister for the new session dispatcher.
+        // Register for the new session dispatcher.
         sessionReceipt = SessionManager.shared.onChange {
             self.stepQueue = []
             self.refreshSessionListener()
