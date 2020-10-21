@@ -46,6 +46,7 @@ enum SyncCoordinatorState {
 class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
 
     static let shared = SyncCoordinator()
+    static private let syncTaskIdentifier = "syncTaskIdentifier"
 
     var syncingStories: Bool {
         return Set(stepQueue).intersection(SyncSteps.storySteps()).count > 0
@@ -59,9 +60,11 @@ class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
         didSet {
             if oldValue.count == 0 && stepQueue.count > 0 {
                 LogInfo(message: "SyncCoordinator started processing.")
+                configureBackgroundTask()
             }
             if oldValue.count > 0 && stepQueue.count == 0 {
                 LogInfo(message: "SyncCoordinator stopped processing.")
+                clearBackgroundTask()
             }
             state = stepQueue.count > 0 ? .processing : .idle
         }
@@ -70,6 +73,7 @@ class SyncCoordinator: StatefulStore<SyncCoordinatorState> {
     private(set) var progressDictionary = [String: Any]()
     private var sessionReceipt: Any?
     private var dispatcherReceipt: Any?
+    private var backgroundTaskID = UIBackgroundTaskIdentifier.invalid
 
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -307,6 +311,34 @@ extension SyncCoordinator {
     private func hasInitializedSession() -> Bool {
         let sessionState = SessionManager.shared.state
         return sessionState == .initialized
+    }
+
+}
+
+// MARK: - Long running task related
+
+extension SyncCoordinator {
+
+    /// Configures a long running task with the application.
+    /// This should be called when staring to process sync steps. The companion
+    /// clearBackgroundTasks method should be called when all steps are complete.
+    /// This should let long media uploads have a better chance of completing if
+    /// the app is backgrounded while an upload is underway.
+    ///
+    func configureBackgroundTask() {
+        guard backgroundTaskID == .invalid else {
+            // THere is already a long running task cnofigured. No need to configure another.
+            return
+        }
+
+        backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: SyncCoordinator.syncTaskIdentifier, expirationHandler: {
+            self.clearBackgroundTask()
+        })
+    }
+
+    func clearBackgroundTask() {
+        UIApplication.shared.endBackgroundTask(backgroundTaskID)
+        backgroundTaskID = .invalid
     }
 
 }
