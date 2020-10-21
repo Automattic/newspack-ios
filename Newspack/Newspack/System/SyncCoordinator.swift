@@ -359,6 +359,7 @@ extension SyncCoordinator {
 
     private func listenToReachability() {
         reachability?.listener = { status in
+            LogInfo(message: "Network Status: \(status)")
             if status == .reachable(.ethernetOrWiFi) || status == .reachable(.wwan) {
                 self.handleNetworkBecameReachable()
             }
