@@ -492,6 +492,8 @@ extension FolderStore {
     }
 
     /// Get an array of StoryFolders that need a remote draft to be created.
+    /// Even if the StoryFolder is set to not auto sync. the story will still be
+    /// returned provided it has at least one asset.
     ///
     /// - Returns: An array of StoryFolders.
     ///
