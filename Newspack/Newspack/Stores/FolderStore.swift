@@ -57,9 +57,9 @@ class FolderStore: Store {
             case .createStoryFolder:
                 // Create a story folder with the default name, appending a suffix if needed.
                 createStoryFolder(path: Constants.defaultStoryFolderName, addSuffix: true)
-            case .createStoryFolderNamed(let path, let addSuffix):
+            case .createStoryFolderNamed(let path, let addSuffix, let autoSync):
                 createStoryFolder(path: path, addSuffix: addSuffix)
-            case .renameStoryFolder(let uuid, let name):
+            case .updateStoryFolder(let uuid, let name, let autoSync):
                 renameStoryFolder(uuid: uuid, to: name)
             case .deleteStoryFolder(let uuid):
                 deleteStoryFolder(uuid: uuid)

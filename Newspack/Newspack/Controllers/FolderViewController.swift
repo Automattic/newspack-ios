@@ -49,7 +49,7 @@ class FolderViewController: UITableViewController {
 extension FolderViewController {
 
     @IBAction func handleSaveTapped(sender: UIBarButtonItem) {
-        saveStoryTitle()
+        saveStory()
         dismiss(animated: true, completion: nil)
     }
 
@@ -57,18 +57,19 @@ extension FolderViewController {
         dismiss(animated: true, completion: nil)
     }
 
-    func saveStoryTitle() {
+    func saveStory() {
         guard let title = textField?.text, title.count > 0 else {
             return
         }
+        let autoSync = syncToggle?.isOn == false ? false : true
 
         if let uuid = storyUUID {
             // Edit story action
-            let action = FolderAction.renameStoryFolder(folderID: uuid, name: title)
+            let action = FolderAction.updateStoryFolder(folderID: uuid, name: title, autoSyncAssets: autoSync)
             SessionManager.shared.sessionDispatcher.dispatch(action)
         } else {
             // New story action
-            let action = FolderAction.createStoryFolderNamed(path: title, addSuffix: true)
+            let action = FolderAction.createStoryFolderNamed(path: title, addSuffix: true, autoSyncAssets: autoSync)
             SessionManager.shared.sessionDispatcher.dispatch(action)
         }
     }
@@ -187,8 +188,7 @@ extension FolderViewController {
 extension FolderViewController: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        saveStoryTitle()
-        dismiss(animated: true, completion: nil)
+        saveStory()
         return true
     }
 
