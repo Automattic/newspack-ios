@@ -259,9 +259,7 @@
         <attribute name="mimeType" attributeType="String" defaultValueString="application/octet-stream"/>
         <attribute name="modified" attributeType="Date" defaultDateTimeInterval="599554800" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
-        <attribute name="order" attributeType="Integer 16" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="remoteID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="sorted" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="sourceURL" attributeType="String" defaultValueString=""/>
         <attribute name="synced" attributeType="Date" defaultDateTimeInterval="599554800" usesScalarValueType="NO"/>
         <attribute name="text" attributeType="String" defaultValueString=""/>
@@ -308,7 +306,7 @@
         <element name="StagedEdits" positionX="-868.6484375" positionY="-275.66015625" width="128" height="118"/>
         <element name="StagedMedia" positionX="-2097.73828125" positionY="129.59765625" width="128" height="208"/>
         <element name="Status" positionX="-1600.76953125" positionY="-2.2265625" width="128" height="165"/>
-        <element name="StoryAsset" positionX="-1702.796875" positionY="382.8671875" width="128" height="298"/>
+        <element name="StoryAsset" positionX="-1702.796875" positionY="382.8671875" width="128" height="268"/>
         <element name="StoryFolder" positionX="-1515.86328125" positionY="210.171875" width="128" height="193"/>
         <element name="User" positionX="-976.9921875" positionY="-127.2734375" width="128" height="163"/>
     </elements>
