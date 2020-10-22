@@ -58,9 +58,11 @@ class FolderStore: Store {
                 // Create a story folder with the default name, appending a suffix if needed.
                 createStoryFolder(path: Constants.defaultStoryFolderName, addSuffix: true)
             case .createStoryFolderNamed(let path, let addSuffix, let autoSync):
-                createStoryFolder(path: path, addSuffix: addSuffix)
-            case .updateStoryFolder(let uuid, let name, let autoSync):
-                renameStoryFolder(uuid: uuid, to: name)
+                createStoryFolder(path: path, addSuffix: addSuffix, autoSyncAssets: autoSync)
+            case .updateStoryFolderName(let uuid, let name):
+                updateStoryFolderName(uuid: uuid, to: name)
+            case .updateStoryFolderAutoSync(let uuid, let autoSync):
+                updateStoryFolderAutoSync(uuid: uuid, to: autoSync)
             case .deleteStoryFolder(let uuid):
                 deleteStoryFolder(uuid: uuid)
             case .selectStoryFolder(let uuid):
@@ -151,9 +153,11 @@ extension FolderStore {
     ///   name in core data.
     ///   - addSuffix: Whether to add a numeric suffix to the folder name if there
     /// is already a folder with that name.
+    ///   - autoSyncAssets: True if the folder's assets should automatically sync when added. False otherwise.
+    ///   - onComplete: A block to call when creation is complete.
     ///
-    func createStoryFolder(path: String = Constants.defaultStoryFolderName, addSuffix: Bool = false, onComplete:(()-> Void)? = nil) {
-        createStoryFoldersForPaths(paths: [path], addSuffix: addSuffix, onComplete: onComplete)
+    func createStoryFolder(path: String = Constants.defaultStoryFolderName, addSuffix: Bool = false, autoSyncAssets: Bool = true, onComplete:(()-> Void)? = nil) {
+        createStoryFoldersForPaths(paths: [path], addSuffix: addSuffix, autoSyncAssets: autoSyncAssets, onComplete: onComplete)
     }
 
     /// Create new StoryFolders for each of the specified folder names.
@@ -163,8 +167,10 @@ extension FolderStore {
     ///   name in core data.
     ///   - addSuffix: Whether to add a numeric suffix to the folder name if there
     /// is already a folder with that name.
+    ///   - autoSyncAssets: True if the folder's assets should automatically sync when added. False otherwise.
+    ///   - onComplete: A block to call when creation is complete.
     ///
-    func createStoryFoldersForPaths(paths: [String], addSuffix: Bool = false, onComplete:(()-> Void)? = nil) {
+    func createStoryFoldersForPaths(paths: [String], addSuffix: Bool = false, autoSyncAssets: Bool = true, onComplete:(()-> Void)? = nil) {
         var urls = [URL]()
         for path in paths {
             guard let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) else {
@@ -175,14 +181,17 @@ extension FolderStore {
             urls.append(url)
         }
 
-        createStoryFoldersForURLs(urls: urls, onComplete: onComplete)
+        createStoryFoldersForURLs(urls: urls, autoSyncAssets: autoSyncAssets, onComplete: onComplete)
     }
 
     /// Create new story folders for each of the specified URLs.
     ///
-    /// - Parameter urls: An array of file URLs
+    /// - Parameters:
+    ///   - urls: An array of file URLs
+    ///   - autoSyncAssets: True if the folder's assets should automatically sync when added. False otherwise.
+    ///   - onComplete: A block to call when creation is complete.
     ///
-    func createStoryFoldersForURLs(urls: [URL], onComplete:(()-> Void)? = nil) {
+    func createStoryFoldersForURLs(urls: [URL], autoSyncAssets: Bool, onComplete:(()-> Void)? = nil) {
         guard
             let siteID = currentSiteID,
             let siteObjID = StoreContainer.shared.siteStore.getSiteByUUID(siteID)?.objectID
@@ -205,6 +214,7 @@ extension FolderStore {
                 storyFolder.name = url.pathComponents.last
                 storyFolder.site = site
                 storyFolder.bookmark = folderManager.bookmarkForURL(url: url)
+                storyFolder.autoSyncAssets = autoSyncAssets
             }
 
             CoreDataManager.shared.saveContext(context: context)
@@ -570,7 +580,7 @@ extension FolderStore {
     ///   - uuid: The uuid of the StoryFolder to update.
     ///   - name: The new name.
     ///
-    func renameStoryFolder(uuid: UUID, to name: String, onComplete: (() -> Void)? = nil) {
+    func updateStoryFolderName(uuid: UUID, to name: String, onComplete: (() -> Void)? = nil) {
         // Get the folder.
         guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
             LogError(message: "Unable to find the story folder to rename.")
@@ -602,6 +612,31 @@ extension FolderStore {
             DispatchQueue.main.async {
                 onComplete?()
                 SyncCoordinator.shared.process(steps: [.pushStoryUpdates])
+            }
+        }
+    }
+
+    func updateStoryFolderAutoSync(uuid: UUID, to autoSyncAssets: Bool, onComplete: (() -> Void)? = nil) {
+        // Get the folder.
+        guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
+            LogError(message: "Unable to find the story folder to update.")
+            onComplete?()
+            return
+        }
+
+        // Save the name in core data.
+        let objID = storyFolder.objectID
+        CoreDataManager.shared.performOnWriteContext { context in
+            let folder = context.object(with: objID) as! StoryFolder
+            folder.autoSyncAssets = autoSyncAssets
+
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+                if autoSyncAssets {
+                    SyncCoordinator.shared.process(steps: SyncSteps.assetSteps())
+                }
             }
         }
     }
@@ -769,7 +804,7 @@ extension FolderStore {
 
             if stub.titleRendered != folder.name && !folder.needsSync {
                 processGroup.enter()
-                renameStoryFolder(uuid: folder.uuid, to: stub.titleRendered, onComplete: {
+                updateStoryFolderName(uuid: folder.uuid, to: stub.titleRendered, onComplete: {
                     processGroup.leave()
                 })
             }

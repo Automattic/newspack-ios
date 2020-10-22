@@ -9,6 +9,10 @@ class FolderViewController: UITableViewController {
     var textField: UITextField?
     var storyUUID: UUID?
 
+    var shouldAutoSync: Bool {
+        return syncToggle?.isOn == false ? false : true
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -61,17 +65,24 @@ extension FolderViewController {
         guard let title = textField?.text, title.count > 0 else {
             return
         }
-        let autoSync = syncToggle?.isOn == false ? false : true
 
         if let uuid = storyUUID {
             // Edit story action
-            let action = FolderAction.updateStoryFolder(folderID: uuid, name: title, autoSyncAssets: autoSync)
+            let action = FolderAction.updateStoryFolderName(folderID: uuid, name: title)
             SessionManager.shared.sessionDispatcher.dispatch(action)
         } else {
             // New story action
-            let action = FolderAction.createStoryFolderNamed(path: title, addSuffix: true, autoSyncAssets: autoSync)
+            let action = FolderAction.createStoryFolderNamed(path: title, addSuffix: true, autoSyncAssets: shouldAutoSync)
             SessionManager.shared.sessionDispatcher.dispatch(action)
         }
+    }
+
+    func updateAutoSync() {
+        guard let uuid = storyUUID else {
+            return
+        }
+        let action = FolderAction.updateStoryFolderAutoSync(folderID: uuid, autoSync: shouldAutoSync)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 
 }
@@ -163,6 +174,9 @@ extension FolderViewController {
 
         let title = NSLocalizedString("Upload assets immediately", comment: "A short prompt providing instruction to the user.")
         cell.configureCell(title: title, toggleOn: toggleOn)
+        cell.onChange = { [weak self] _ in
+            self?.updateAutoSync()
+        }
         syncToggle = cell.toggle
         cell.selectionStyle = .none
 

@@ -146,7 +146,7 @@ class Reconciler {
         if rawFolders.count > 0 {
             LogInfo(message: "Creating StoryFolders for \(rawFolders.count) discovered folders.")
             dispatchGroup.enter()
-            folderStore.createStoryFoldersForURLs(urls: rawFolders, onComplete: {
+            folderStore.createStoryFoldersForURLs(urls: rawFolders, autoSyncAssets: false, onComplete: {
                 dispatchGroup.leave()
             })
         }
