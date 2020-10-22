@@ -11,11 +11,14 @@ struct SortRule {
     let displayName: String
     /// Whether to sort ascending or not.
     var ascending: Bool
+    /// Whether to sort ascending or not.
+    let caseInsensitive: Bool
 
-    init(field: String, displayName: String, ascending: Bool) {
+    init(field: String, displayName: String, ascending: Bool, caseInsensitive: Bool = false) {
         self.field = field
         self.displayName = displayName
         self.ascending = ascending
+        self.caseInsensitive = caseInsensitive
     }
 
     /// A convenience initializer. Use to restore a serialized sort rule from a
@@ -27,7 +30,8 @@ struct SortRule {
         guard
             let field = dict["field"] as? String,
             let displayName = dict["displayName"] as? String,
-            let ascending = dict["ascending"] as? Bool
+            let ascending = dict["ascending"] as? Bool,
+            let caseInsensitive = dict["caseInsensitive"] as? Bool
         else {
             // We should never get here but...
             fatalError()
@@ -35,6 +39,7 @@ struct SortRule {
         self.field = field
         self.displayName = displayName
         self.ascending = ascending
+        self.caseInsensitive = caseInsensitive
     }
 
     /// Changes the value of ascending.
@@ -53,7 +58,8 @@ struct SortRule {
         return [
             "field": field,
             "displayName": displayName,
-            "ascending": ascending
+            "ascending": ascending,
+            "caseInsensitive": caseInsensitive
         ]
     }
 }
@@ -85,7 +91,11 @@ class SortMode {
     var descriptors: [NSSortDescriptor] {
         var arr = [NSSortDescriptor]()
         for rule in rules {
-            arr.append(NSSortDescriptor(key: rule.field, ascending: rule.ascending))
+            if rule.caseInsensitive {
+                arr.append(NSSortDescriptor(key: rule.field, ascending: rule.ascending, selector: #selector(NSString.localizedCaseInsensitiveCompare)))
+            } else {
+                arr.append(NSSortDescriptor(key: rule.field, ascending: rule.ascending))
+            }
         }
         return arr
     }
