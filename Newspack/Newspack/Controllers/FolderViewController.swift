@@ -155,8 +155,13 @@ extension FolderViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: SwitchTableViewCell.reuseIdentifier, for: indexPath) as! SwitchTableViewCell
         Appearance.style(cell: cell)
 
+        var toggleOn = true
+        if let uuid = storyUUID, let story = StoreContainer.shared.folderStore.getStoryFolderByID(uuid: uuid) {
+            toggleOn = story.autoSyncAssets
+        }
+
         let title = NSLocalizedString("Upload assets immediately", comment: "A short prompt providing instruction to the user.")
-        cell.configureCell(title: title, toggleOn: true)
+        cell.configureCell(title: title, toggleOn: toggleOn)
         syncToggle = cell.toggle
         cell.selectionStyle = .none
 
