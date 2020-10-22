@@ -14,6 +14,7 @@ class AssetStore: Store {
     lazy private(set) var sortOrganizer: SortOrganizer = {
         let typeRules: [SortRule] = [
             SortRule(field: "type", displayName: NSLocalizedString("Type", comment: "Noun. The type or category of something."), ascending: false, caseInsensitive: true),
+            SortRule(field: "name", displayName: NSLocalizedString("Name", comment: "Noun. An item's name."), ascending: true, caseInsensitive: true),
             SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true)
         ]
         let typeSort = SortMode(defaultsKey: "AssetSortModeType",
@@ -25,20 +26,26 @@ class AssetStore: Store {
                                     }
                                     return type.displayName()
                                 }
-        let orderRules: [SortRule] = [
-            SortRule(field: "sorted", displayName: NSLocalizedString("Sorted", comment: "Adjective. Refers whether items have been sorted or are unsorted."), ascending: false),
-            SortRule(field: "order", displayName: NSLocalizedString("Order", comment: "Noun. Refers to the order or arrangement of items in a list."), ascending: true),
-            SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true)
+        let dateRules: [SortRule] = [
+            SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true),
+            SortRule(field: "name", displayName: NSLocalizedString("Name", comment: "Noun. An item's name."), ascending: true, caseInsensitive: true),
         ]
-        let orderSort = SortMode(defaultsKey: "AssetSortModeOrder",
-                                 title: NSLocalizedString("Order", comment: "Noun. Refers to the order or arrangement of items in a list."),
-                                 rules: orderRules,
+        let dateSort = SortMode(defaultsKey: "AssetSortModeDate",
+                                 title: NSLocalizedString("Date", comment: "Noun. The date something was created."),
+                                 rules: dateRules,
                                  hasSections: true) { (title) -> String in
-                                    let sorted = NSLocalizedString("Sorted", comment: "Noun. Refers to items that have been sorted into a specific order or grouping.")
-                                    let unsorted = NSLocalizedString("Unsorted", comment: "Noun. Refers to items that have been not been sorted into a specific order or grouping.")
-                                    return title == "1" ? sorted : unsorted
+                                    let formatter = DateFormatter()
+                                    formatter.dateFormat = "yyyy-MM-dd' 'HH:mm:ssZ"
+                                    guard let date = formatter.date(from: title) else {
+                                        return ""
+                                    }
+
+                                    formatter.dateStyle = .short
+                                    formatter.timeStyle = .short
+
+                                    return formatter.string(from: date)
                                 }
-        return SortOrganizer(defaultsKey: "AssetSortOrganizerIndex", modes: [typeSort, orderSort])
+        return SortOrganizer(defaultsKey: "AssetSortOrganizerIndex", modes: [typeSort, dateSort])
     }()
 
     // TODO: This is a stub for now and will be improved as features are added.
