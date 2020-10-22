@@ -270,6 +270,7 @@
         <relationship name="folder" maxCount="1" deletionRule="Nullify" destinationEntity="StoryFolder" inverseName="assets" inverseEntity="StoryFolder"/>
     </entity>
     <entity name="StoryFolder" representedClassName="StoryFolder" syncable="YES">
+        <attribute name="autoSyncAssets" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
         <attribute name="bookmark" attributeType="Binary"/>
         <attribute name="date" attributeType="Date" defaultDateTimeInterval="599554800" usesScalarValueType="NO"/>
         <attribute name="modified" attributeType="Date" defaultDateTimeInterval="599598000" usesScalarValueType="NO"/>
@@ -308,7 +309,7 @@
         <element name="StagedMedia" positionX="-2097.73828125" positionY="129.59765625" width="128" height="208"/>
         <element name="Status" positionX="-1600.76953125" positionY="-2.2265625" width="128" height="165"/>
         <element name="StoryAsset" positionX="-1702.796875" positionY="382.8671875" width="128" height="298"/>
-        <element name="StoryFolder" positionX="-1515.86328125" positionY="210.171875" width="128" height="178"/>
+        <element name="StoryFolder" positionX="-1515.86328125" positionY="210.171875" width="128" height="193"/>
         <element name="User" positionX="-976.9921875" positionY="-127.2734375" width="128" height="163"/>
     </elements>
 </model>

@@ -21,6 +21,7 @@ extension StoryFolder {
     @NSManaged public var assets: Set<StoryAsset>!
     @NSManaged public var site: Site!
     @NSManaged public var uuid: UUID!
+    @NSManaged public var autoSyncAssets: Bool
 
 }
 
