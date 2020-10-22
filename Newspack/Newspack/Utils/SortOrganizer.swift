@@ -30,16 +30,16 @@ struct SortRule {
         guard
             let field = dict["field"] as? String,
             let displayName = dict["displayName"] as? String,
-            let ascending = dict["ascending"] as? Bool,
-            let caseInsensitive = dict["caseInsensitive"] as? Bool
+            let ascending = dict["ascending"] as? Bool
         else {
             // We should never get here but...
             fatalError()
         }
+
         self.field = field
         self.displayName = displayName
         self.ascending = ascending
-        self.caseInsensitive = caseInsensitive
+        self.caseInsensitive = dict["caseInsensitive"] as? Bool ?? false
     }
 
     /// Changes the value of ascending.
