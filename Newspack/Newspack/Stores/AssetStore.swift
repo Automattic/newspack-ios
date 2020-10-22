@@ -46,13 +46,6 @@ class AssetStore: Store {
         return ["png", "jpg", "jpeg"]
     }
 
-    /// Whethher the StoryAssets managed by the store can be sorted. This applies
-    /// only to the assets wrangled by the SortOrganizer.
-    var canSortAssets: Bool {
-        // True if the selected sort option is orderSort.
-        return sortOrganizer.selectedIndex == 1
-    }
-
     override init(dispatcher: ActionDispatcher = .global) {
 
         folderManager = SessionManager.shared.folderManager
@@ -67,8 +60,6 @@ class AssetStore: Store {
             switch action {
             case .sortMode(let index):
                 selectSortMode(index: index)
-            case .applyOrder(let order):
-                applySortOrder(order: order)
             case .createAssetFor(let text):
                 createAssetFor(text: text)
             case .deleteAsset(let uuid):
@@ -359,29 +350,6 @@ extension AssetStore {
             DispatchQueue.main.async {
                 onComplete()
             }
-        }
-    }
-
-    /// Updates the sort order of the StoryAssets matching the specified UUIDs.
-    ///
-    /// - Parameter order: A dictionary representing the StoryAssets to update.
-    /// Keys should be the asset UUIDs and values should be the desired sort order
-    /// for the assets.
-    ///
-    func applySortOrder(order: [UUID: Int]) {
-        CoreDataManager.shared.performOnWriteContext { context in
-            for (key, value) in order {
-                let fetchRequest = StoryAsset.defaultFetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "uuid = %@", key as CVarArg)
-
-                guard let asset = try? context.fetch(fetchRequest).first else {
-                    continue
-                }
-
-                asset.order = Int16(value)
-            }
-
-            CoreDataManager.shared.saveContext(context: context)
         }
     }
 

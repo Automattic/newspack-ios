@@ -6,7 +6,6 @@ import WordPressFlux
 ///
 enum AssetAction: Action {
     case sortMode(index: Int)
-    case applyOrder(order: [UUID: Int])
     case createAssetFor(text: String)
     case deleteAsset(assetID: UUID)
     case importMedia(assets: [PHAsset])
