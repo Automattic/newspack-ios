@@ -21,7 +21,7 @@ class FolderStore: Store {
         let nameField = "name"
         return [
             SortRule(field: dateField, displayName: displayNameForField(field: dateField), ascending: true),
-            SortRule(field: nameField, displayName: displayNameForField(field: nameField), ascending: true)
+            SortRule(field: nameField, displayName: displayNameForField(field: nameField), ascending: true, caseInsensitive: true)
         ]
     }()
 
