@@ -38,22 +38,6 @@ class FoldersViewController: ToolbarViewController, UITableViewDelegate {
     }
 
     func configureSortControl() {
-//        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
-//            return
-//        }
-//        let rules = StoreContainer.shared.folderStore.sortRules
-//
-//        var selectedIndex = 0
-//        for (index, item) in rules.enumerated() {
-//            sortControl.setTitle(item.displayName, forSegmentAt: index)
-//            if item.field == rule.field {
-//                selectedIndex = index
-//            }
-//        }
-//
-//        sortControl.selectedSegmentIndex = selectedIndex
-//
-//        configureDirectionButton(ascending: rule.ascending)
         let store = StoreContainer.shared.folderStore
         guard let rule = store.sortOrganizer.selectedMode.rules.first else {
             return
@@ -106,23 +90,9 @@ extension FoldersViewController {
 
         // refresh data source.
         dataSource.refresh()
-
-//        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
-//            return
-//        }
-//        let ascending = rule.ascending
-//        let rules = StoreContainer.shared.folderStore.sortRules
-//        let field = rules[sender.selectedSegmentIndex].field
-//        dataSource.sortBy(field: field, ascending: ascending)
     }
 
     @IBAction func handleDirectionButtonTapped(sender: UIButton) {
-//        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
-//            return
-//        }
-//
-//        dataSource.sortBy(field: rule.field, ascending: !rule.ascending)
-//        configureDirectionButton(ascending: !rule.ascending)
         let store = StoreContainer.shared.folderStore
         guard let rule = store.sortOrganizer.selectedMode.rules.first else {
             return
