@@ -324,6 +324,17 @@
                                             <action selector="handleSortChangedWithSender:" destination="NWk-Co-Z8t" eventType="valueChanged" id="rav-mh-nq8"/>
                                         </connections>
                                     </segmentedControl>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sgC-21-Pss">
+                                        <rect key="frame" x="275.5" y="10" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="80t-fF-TPn"/>
+                                            <constraint firstAttribute="width" constant="24" id="eSa-A0-i0m"/>
+                                        </constraints>
+                                        <state key="normal" image="chevron-down"/>
+                                        <connections>
+                                            <action selector="handleDirectionButtonTappedWithSender:" destination="NWk-Co-Z8t" eventType="touchUpInside" id="e5k-5D-Tmy"/>
+                                        </connections>
+                                    </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMB-nt-ccw">
                                         <rect key="frame" x="0.0" y="43" width="375" height="1"/>
                                         <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
@@ -336,6 +347,8 @@
                                 <constraints>
                                     <constraint firstItem="iLK-I6-MuO" firstAttribute="centerY" secondItem="4KS-uW-XyS" secondAttribute="centerY" id="LOl-qD-G6k"/>
                                     <constraint firstAttribute="bottom" secondItem="AMB-nt-ccw" secondAttribute="bottom" id="MX9-eX-bou"/>
+                                    <constraint firstItem="sgC-21-Pss" firstAttribute="centerY" secondItem="4KS-uW-XyS" secondAttribute="centerY" id="OOT-8n-aoR"/>
+                                    <constraint firstItem="sgC-21-Pss" firstAttribute="leading" secondItem="iLK-I6-MuO" secondAttribute="trailing" constant="8" id="Wys-Yy-4Pq"/>
                                     <constraint firstAttribute="trailing" secondItem="AMB-nt-ccw" secondAttribute="trailing" id="ZFs-b2-u4Z"/>
                                     <constraint firstItem="iLK-I6-MuO" firstAttribute="centerX" secondItem="4KS-uW-XyS" secondAttribute="centerX" id="bus-Nq-SZy"/>
                                     <constraint firstAttribute="height" constant="44" id="pyr-ic-t2l"/>
@@ -400,6 +413,7 @@
                     <connections>
                         <outlet property="audioNoteButton" destination="GnL-gZ-eCi" id="RlS-n1-NlY"/>
                         <outlet property="cameraButton" destination="QOd-iL-h26" id="Vak-vA-3Ie"/>
+                        <outlet property="directionButton" destination="sgC-21-Pss" id="9yM-jd-KHQ"/>
                         <outlet property="photoButton" destination="fcy-JG-eKM" id="Ctf-YY-KUS"/>
                         <outlet property="sortControl" destination="iLK-I6-MuO" id="aAT-mL-p5F"/>
                         <outlet property="syncButton" destination="YoR-aT-oGj" id="IqL-DZ-n6V"/>

@@ -11,6 +11,7 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
     }
 
     @IBOutlet var sortControl: UISegmentedControl!
+    @IBOutlet var directionButton: UIButton!
     @IBOutlet var syncButton: UIBarButtonItem!
     @IBOutlet var tableView: UITableView!
 
@@ -47,6 +48,9 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
 
     func configureSortControl() {
         let assetStore = StoreContainer.shared.assetStore
+        guard let rule = assetStore.sortOrganizer.selectedMode.rules.first else {
+            return
+        }
 
         sortControl.removeAllSegments()
         for (index, mode) in assetStore.sortOrganizer.modes.enumerated() {
@@ -54,6 +58,8 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
         }
 
         sortControl.selectedSegmentIndex = assetStore.sortOrganizer.selectedIndex
+
+        configureDirectionButton(ascending: rule.ascending)
     }
 
     func configureNavbar() {
@@ -66,6 +72,11 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
 
     func configureStyle() {
         Appearance.style(view: view, tableView: tableView)
+    }
+
+    func configureDirectionButton(ascending: Bool) {
+        let image: UIImage = ascending ? .gridicon(.chevronUp) : .gridicon(.chevronDown)
+        directionButton.setImage(image, for: .normal)
     }
 
     func configureSyncListener() {
@@ -88,6 +99,15 @@ extension AssetsViewController {
 
         // refresh data source.
         dataSource.refresh()
+    }
+
+    @IBAction func handleDirectionButtonTapped(sender: UIButton) {
+        let assetStore = StoreContainer.shared.assetStore
+        guard let rule = assetStore.sortOrganizer.selectedMode.rules.first else {
+            return
+        }
+        dataSource.updateSort(ascending: !rule.ascending)
+        configureDirectionButton(ascending: !rule.ascending)
     }
 
     @IBAction func handleSyncTapped(sender: UIBarButtonItem) {
@@ -241,6 +261,8 @@ class AssetDataSource: UITableViewDiffableDataSource<String, NSManagedObjectID> 
     // animate changes.
     weak var tableView: UITableView?
 
+    private var sorting = false
+
     override init(tableView: UITableView, cellProvider: @escaping UITableViewDiffableDataSource<String, NSManagedObjectID>.CellProvider) {
         self.tableView = tableView
         super.init(tableView: tableView, cellProvider: cellProvider)
@@ -271,6 +293,17 @@ class AssetDataSource: UITableViewDiffableDataSource<String, NSManagedObjectID> 
         try? resultsController.performFetch()
     }
 
+    func updateSort(ascending: Bool) {
+        let action = AssetAction.sortDirection(ascending: ascending)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+
+        // Set the sorting flag so we animate any changes.
+        sorting = true
+
+        resultsController.fetchRequest.sortDescriptors = StoreContainer.shared.assetStore.sortOrganizer.selectedMode.descriptors
+        try? resultsController.performFetch()
+    }
+
     /// Updates the current datasource snapshot. Changes are animated only if
     /// the tableView has a window (and is presumed visible).
     ///
@@ -280,7 +313,8 @@ class AssetDataSource: UITableViewDiffableDataSource<String, NSManagedObjectID> 
         // Needs further exploration to figure out why.
         // Also, when animating it makes reording look a little weird.
         // For these reasons we'll disable animating.
-        apply(snapshot, animatingDifferences: false, completion: nil)
+        apply(snapshot, animatingDifferences: sorting, completion: nil)
+        sorting = false
     }
 
     // MARK: - Overrides for cell deletion behaviors
