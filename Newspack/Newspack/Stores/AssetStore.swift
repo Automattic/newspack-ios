@@ -40,8 +40,8 @@ class AssetStore: Store {
                                         return ""
                                     }
 
-                                    formatter.dateStyle = .short
-                                    formatter.timeStyle = .short
+                                    formatter.dateStyle = .medium
+                                    formatter.timeStyle = .none
 
                                     return formatter.string(from: date)
                                 }
@@ -215,7 +215,8 @@ extension AssetStore {
         asset.assetType = type
         asset.name = assetName(from: name)
         let date = Date()
-        asset.date = date
+        // The date field is used for sorting table sections. We only care about the day of the week so normalize the time value.
+        asset.date = Calendar(identifier: Calendar.Identifier.iso8601).startOfDay(for: date)
         asset.modified = date
         asset.synced = date
         asset.uuid = UUID()
@@ -437,7 +438,6 @@ extension AssetStore {
         asset.name = remoteMedia.title
         asset.altText = remoteMedia.altText
         asset.caption = remoteMedia.caption
-        asset.date = remoteMedia.dateGMT
         asset.modified = remoteMedia.modifiedGMT
         asset.synced = Date()
     }

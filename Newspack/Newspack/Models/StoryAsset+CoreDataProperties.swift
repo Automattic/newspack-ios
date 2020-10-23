@@ -21,7 +21,7 @@ extension StoryAsset {
     @NSManaged public var bookmark: Data? // Text notes do not have local files. RemoteMedia may not have local files.
     @NSManaged public var name: String!
     @NSManaged public var uuid: UUID!
-    @NSManaged public var date: Date!
+    @NSManaged public var date: Date! // The creation date.
     // Synced indicates the date last synced.
     @NSManaged public var synced: Date!
     // Modified indicate the date last modified. If synced > modified data is current.
