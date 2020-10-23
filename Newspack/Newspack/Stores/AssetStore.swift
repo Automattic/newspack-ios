@@ -503,8 +503,9 @@ extension AssetStore {
     /// Flag an asset for upload.
     ///
     /// - Parameters:
-    ///   - assetID: <#assetID description#>
-    ///   - onComplete: <#onComplete description#>
+    ///   - assetID: The UUID of the StoryAsset to upload.
+    ///   - onComplete: A block called after changes are saved.
+    ///
     func flagToUpload(assetID: UUID, onComplete: (() -> Void)? = nil) {
         guard
             let asset = getStoryAssetByID(uuid: assetID),
