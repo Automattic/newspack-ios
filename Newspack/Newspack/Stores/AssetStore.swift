@@ -84,7 +84,7 @@ class AssetStore: Store {
     }
 }
 
-// MARK: - Actions
+// MARK: - Sorting
 
 extension AssetStore {
 
