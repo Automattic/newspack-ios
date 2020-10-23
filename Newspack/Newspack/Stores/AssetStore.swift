@@ -508,7 +508,8 @@ extension AssetStore {
     func flagToUpload(assetID: UUID, onComplete: (() -> Void)? = nil) {
         guard
             let asset = getStoryAssetByID(uuid: assetID),
-            asset.assetType != .textNote
+            asset.assetType != .textNote, // Do not flag text notes.
+            asset.remoteID == 0 // Do not flag assets that already have a remote.
         else {
             return
         }
