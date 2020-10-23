@@ -401,13 +401,7 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Assets" id="YtF-a8-687">
-                        <barButtonItem key="rightBarButtonItem" image="cloud-upload" largeContentSizeImage="cloud-upload" id="YoR-aT-oGj">
-                            <connections>
-                                <action selector="handleSyncTappedWithSender:" destination="NWk-Co-Z8t" id="gLL-2i-pfm"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Assets" id="YtF-a8-687"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -416,7 +410,6 @@
                         <outlet property="directionButton" destination="sgC-21-Pss" id="9yM-jd-KHQ"/>
                         <outlet property="photoButton" destination="fcy-JG-eKM" id="Ctf-YY-KUS"/>
                         <outlet property="sortControl" destination="iLK-I6-MuO" id="aAT-mL-p5F"/>
-                        <outlet property="syncButton" destination="YoR-aT-oGj" id="IqL-DZ-n6V"/>
                         <outlet property="tableView" destination="IC9-M0-AO4" id="7tv-iN-yXH"/>
                         <outlet property="textNoteButton" destination="I7i-cV-h16" id="Izx-j7-0Rf"/>
                     </connections>
@@ -779,7 +772,6 @@
         <image name="chevron-down" width="24" height="24"/>
         <image name="chevron-left" width="24" height="24"/>
         <image name="chevron-right" width="24" height="24"/>
-        <image name="cloud-upload" width="24" height="24"/>
         <image name="create folder" width="128" height="128"/>
         <image name="cross" width="24" height="24"/>
         <image name="image-multiple" width="24" height="24"/>

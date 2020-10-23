@@ -12,7 +12,6 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
 
     @IBOutlet var sortControl: UISegmentedControl!
     @IBOutlet var directionButton: UIButton!
-    @IBOutlet var syncButton: UIBarButtonItem!
     @IBOutlet var tableView: UITableView!
 
     private var dataSource: AssetDataSource!
@@ -108,10 +107,6 @@ extension AssetsViewController {
         }
         dataSource.updateSort(ascending: !rule.ascending)
         configureDirectionButton(ascending: !rule.ascending)
-    }
-
-    @IBAction func handleSyncTapped(sender: UIBarButtonItem) {
-        LogDebug(message: "tapped sync")
     }
 
     @objc func handleRefreshControl(sender: UIRefreshControl) {
