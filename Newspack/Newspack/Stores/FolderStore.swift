@@ -16,18 +16,27 @@ class FolderStore: Store {
     /// before it is used.
     private(set) var currentStoryFolderID = UUID()
 
-    lazy var sortRules: [SortRule] = {
-        let dateField = "date"
-        let nameField = "name"
-        return [
-            SortRule(field: dateField, displayName: displayNameForField(field: dateField), ascending: true),
-            SortRule(field: nameField, displayName: displayNameForField(field: nameField), ascending: true, caseInsensitive: true)
+    /// Defines a SortOrganizer and its associated SortRules.
+    lazy private(set) var sortOrganizer: SortOrganizer = {
+        let nameRules: [SortRule] = [
+            SortRule(field: "name", displayName: NSLocalizedString("Name", comment: "Noun. An item's name."), ascending: true, caseInsensitive: true),
+            SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true)
         ]
-    }()
-
-    lazy private(set) var sortMode: SortMode = {
-        let rule = sortRules.first!
-        return SortMode(defaultsKey: "FolderStoreSortMode", title: "", rules: [rule], hasSections: false, resolver: nil)
+        let nameSort = SortMode(defaultsKey: "FolderSortModeName",
+                                title: NSLocalizedString("Name", comment: "Noun. The title of a list that is sorted by the name of objects in the list."),
+                                rules: nameRules,
+                                hasSections: false,
+                                resolver: nil)
+        let dateRules: [SortRule] = [
+            SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true),
+            SortRule(field: "name", displayName: NSLocalizedString("Name", comment: "Noun. An item's name."), ascending: true, caseInsensitive: true),
+        ]
+        let dateSort = SortMode(defaultsKey: "FolderSortModeDate",
+                                 title: NSLocalizedString("Date", comment: "Noun. The date something was created."),
+                                 rules: dateRules,
+                                 hasSections: false,
+                                 resolver: nil)
+        return SortOrganizer(defaultsKey: "AssetSortOrganizerIndex", modes: [dateSort, nameSort])
     }()
 
     /// A convenience getter to get the current story folder.
@@ -52,8 +61,10 @@ class FolderStore: Store {
     override func onDispatch(_ action: Action) {
         if let action = action as? FolderAction {
             switch action {
-            case .sortBy(let field, let ascending):
-                sortFolders(by: field, ascending: ascending)
+            case .sortMode(let index):
+                selectSortMode(index: index)
+            case .sortDirection(let ascending):
+                setSortDirection(ascending: ascending)
             case .createStoryFolder:
                 // Create a story folder with the default name, appending a suffix if needed.
                 createStoryFolder(path: Constants.defaultStoryFolderName, addSuffix: true)
@@ -90,7 +101,7 @@ extension FolderStore {
 
         let fetchRequest = StoryFolder.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
-        fetchRequest.sortDescriptors = sortMode.descriptors
+        fetchRequest.sortDescriptors = sortOrganizer.selectedMode.descriptors
         return NSFetchedResultsController(fetchRequest: fetchRequest,
                                           managedObjectContext: CoreDataManager.shared.mainContext,
                                           sectionNameKeyPath: nil,
@@ -103,30 +114,16 @@ extension FolderStore {
 
 extension FolderStore {
 
-    /// Update sort rules for folders and refetch data if the sort order has changed.
+    /// Update the sort rules for story assets returned by the stores results controller.
     ///
-    /// - Parameters:
-    ///   - field: The field to sort by.
-    ///   - ascending: true if the sort order should be ascending, or false if descending.
+    /// - Parameter sortMode: The sort mode to sort by.
     ///
-    private func sortFolders(by field: String, ascending: Bool) {
-        let rule = SortRule(field: field, displayName: displayNameForField(field: field), ascending: ascending)
-        sortMode.setRules(newRules: [rule])
+    func selectSortMode(index: Int) {
+        sortOrganizer.select(index: index)
     }
 
-    /// Get the user facing display name to use for the specified field.
-    ///
-    /// - Parameter field: The name of the sort field.
-    /// - Returns: The user facing String or an empty string if the specified field was not found.
-    ///
-    private func displayNameForField(field: String) -> String {
-        if field == "name" {
-            return NSLocalizedString("Name", comment: "Noun. An item's name.")
-        }
-        if field == "date" {
-            return NSLocalizedString("Date", comment: "Noun. An item's creation date.")
-        }
-        return ""
+    func setSortDirection(ascending: Bool) {
+        sortOrganizer.setAscending(ascending: ascending)
     }
 
 }
@@ -272,7 +269,7 @@ extension FolderStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = StoryFolder.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@ AND NOT (uuid IN %@)", siteID as CVarArg, uuidsToExclude)
-        fetchRequest.sortDescriptors = sortMode.descriptors
+        fetchRequest.sortDescriptors = sortOrganizer.selectedMode.descriptors
         fetchRequest.propertiesToFetch = ["uuid"]
         fetchRequest.resultType = .dictionaryResultType
 
@@ -367,7 +364,7 @@ extension FolderStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryFolder.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
-        fetchRequest.sortDescriptors = sortMode.descriptors
+        fetchRequest.sortDescriptors = sortOrganizer.selectedMode.descriptors
 
         if let results = try? context.fetch(fetchRequest) {
             return results

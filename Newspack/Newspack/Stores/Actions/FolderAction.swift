@@ -4,7 +4,8 @@ import WordPressFlux
 /// Supported Actions for changes to the FolderStore
 ///
 enum FolderAction: Action {
-    case sortBy(field: String, ascending: Bool)
+    case sortMode(index: Int)
+    case sortDirection(ascending: Bool)
     case createStoryFolder
     case createStoryFolderNamed(path: String, addSuffix: Bool, autoSyncAssets: Bool)
     case updateStoryFolderName(folderID: UUID, name: String)

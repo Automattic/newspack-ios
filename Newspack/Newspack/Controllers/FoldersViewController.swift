@@ -17,7 +17,7 @@ class FoldersViewController: ToolbarViewController, UITableViewDelegate {
         super.viewDidLoad()
 
         configureDataSource()
-        configureSortControls()
+        configureSortControl()
         configureNavbar()
         configureStyle()
         configureTableView()
@@ -37,21 +37,34 @@ class FoldersViewController: ToolbarViewController, UITableViewDelegate {
         })
     }
 
-    func configureSortControls() {
-        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
+    func configureSortControl() {
+//        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
+//            return
+//        }
+//        let rules = StoreContainer.shared.folderStore.sortRules
+//
+//        var selectedIndex = 0
+//        for (index, item) in rules.enumerated() {
+//            sortControl.setTitle(item.displayName, forSegmentAt: index)
+//            if item.field == rule.field {
+//                selectedIndex = index
+//            }
+//        }
+//
+//        sortControl.selectedSegmentIndex = selectedIndex
+//
+//        configureDirectionButton(ascending: rule.ascending)
+        let store = StoreContainer.shared.folderStore
+        guard let rule = store.sortOrganizer.selectedMode.rules.first else {
             return
         }
-        let rules = StoreContainer.shared.folderStore.sortRules
 
-        var selectedIndex = 0
-        for (index, item) in rules.enumerated() {
-            sortControl.setTitle(item.displayName, forSegmentAt: index)
-            if item.field == rule.field {
-                selectedIndex = index
-            }
+        sortControl.removeAllSegments()
+        for (index, mode) in store.sortOrganizer.modes.enumerated() {
+            sortControl.insertSegment(withTitle: mode.title, at: index, animated: false)
         }
 
-        sortControl.selectedSegmentIndex = selectedIndex
+        sortControl.selectedSegmentIndex = store.sortOrganizer.selectedIndex
 
         configureDirectionButton(ascending: rule.ascending)
     }
@@ -88,21 +101,33 @@ extension FoldersViewController {
     }
 
     @IBAction func handleSortChanged(sender: UISegmentedControl) {
-        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
-            return
-        }
-        let ascending = rule.ascending
-        let rules = StoreContainer.shared.folderStore.sortRules
-        let field = rules[sender.selectedSegmentIndex].field
-        dataSource.sortBy(field: field, ascending: ascending)
+        let action = FolderAction.sortMode(index: sortControl.selectedSegmentIndex)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
+
+        // refresh data source.
+        dataSource.refresh()
+
+//        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
+//            return
+//        }
+//        let ascending = rule.ascending
+//        let rules = StoreContainer.shared.folderStore.sortRules
+//        let field = rules[sender.selectedSegmentIndex].field
+//        dataSource.sortBy(field: field, ascending: ascending)
     }
 
     @IBAction func handleDirectionButtonTapped(sender: UIButton) {
-        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
+//        guard let rule = StoreContainer.shared.folderStore.sortMode.rules.first else {
+//            return
+//        }
+//
+//        dataSource.sortBy(field: rule.field, ascending: !rule.ascending)
+//        configureDirectionButton(ascending: !rule.ascending)
+        let store = StoreContainer.shared.folderStore
+        guard let rule = store.sortOrganizer.selectedMode.rules.first else {
             return
         }
-
-        dataSource.sortBy(field: rule.field, ascending: !rule.ascending)
+        dataSource.updateSort(ascending: !rule.ascending)
         configureDirectionButton(ascending: !rule.ascending)
     }
 
@@ -245,13 +270,21 @@ class FolderDataSource: UITableViewDiffableDataSource<String, NSManagedObjectID>
         return resultsController.object(at: indexPath)
     }
 
-    func sortBy(field: String, ascending: Bool) {
-        let action = FolderAction.sortBy(field: field, ascending: ascending)
+    func refresh() {
+        resultsController.delegate = nil
+        resultsController = StoreContainer.shared.folderStore.getResultsController()
+        resultsController.delegate = self
+        try? resultsController.performFetch()
+    }
+
+    func updateSort(ascending: Bool) {
+        let action = FolderAction.sortDirection(ascending: ascending)
         SessionManager.shared.sessionDispatcher.dispatch(action)
 
         // Set the sorting flag so we animate any changes.
         sorting = true
-        resultsController.fetchRequest.sortDescriptors = StoreContainer.shared.folderStore.sortMode.descriptors
+
+        resultsController.fetchRequest.sortDescriptors = StoreContainer.shared.folderStore.sortOrganizer.selectedMode.descriptors
         try? resultsController.performFetch()
     }
 
