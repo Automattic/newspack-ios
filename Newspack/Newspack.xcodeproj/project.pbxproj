@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		4FAB13777359B858D8BF523C /* Pods_Newspack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E66E8A0D2235A15100E8DD88 /* Pods_Newspack.framework */; };
 		53FA9ACF624D704F1C07D5A9 /* Pods_NewspackTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14A3A0B3208C917FD7CE794E /* Pods_NewspackTests.framework */; };
 		7A86351C7029F458AD0CADB0 /* Pods_NewspackFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB9F8901FB918549E40317B /* Pods_NewspackFramework.framework */; };
 		E602E68022C1588600795CBA /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E602E67F22C1588600795CBA /* ApiService.swift */; };
@@ -534,6 +535,7 @@
 				E6257887222F0B2E00DE6F26 /* Photos.framework in Frameworks */,
 				E62018C624F9AB6800D96AFF /* NewspackFramework.framework in Frameworks */,
 				EA27D6504B828267DD8A28ED /* Pods_Newspack.framework in Frameworks */,
+				4FAB13777359B858D8BF523C /* Pods_Newspack.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1234,7 +1236,6 @@
 				255955E8A0A04FB77360458E /* [CP] Copy Pods Resources */,
 				E62018CC24F9AB6800D96AFF /* Embed Frameworks */,
 				E6E1FA692216123600119ECE /* Embed App Extensions */,
-				E603CD94222DDD1A005B4127 /* Copy Gutenberg JS */,
 			);
 			buildRules = (
 			);
@@ -1527,24 +1528,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NewspackTests/Pods-NewspackTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		E603CD94222DDD1A005B4127 /* Copy Gutenberg JS */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Gutenberg JS";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Print commands before executing them (useful for troubleshooting)\nset -x\nDEST=$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\n\nif [[ \"$CONFIGURATION\" = *Debug* && ! \"$PLATFORM_NAME\" == *simulator ]]; then\nIP=$(ipconfig getifaddr en0)\nif [ -z \"$IP\" ]; then\nIP=$(ifconfig | grep 'inet ' | grep -v ' 127.' | cut -d\\   -f2  | awk 'NR==1{print $1}')\nfi\n\necho \"$IP\" > \"$DEST/ip.txt\"\nfi\n\nBUNDLE_FILE=\"$DEST/main.jsbundle\"\ncp ${PODS_ROOT}/Gutenberg/bundle/ios/App.js \"${BUNDLE_FILE}\"\n\n";
 		};
 		E6E1FA812216134E00119ECE /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
