@@ -12,4 +12,5 @@ enum AssetAction: Action {
     case importMedia(assets: [PHAsset])
     case updateCaption(assetID: UUID, caption: String)
     case updateAltText(assetID: UUID, altText: String)
+    case flagToUpload(assetID: UUID)
 }

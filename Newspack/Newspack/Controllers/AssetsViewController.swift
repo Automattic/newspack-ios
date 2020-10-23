@@ -126,7 +126,8 @@ extension AssetsViewController {
     }
 
     func handleCellSyncAction(uuid: UUID) {
-        print(uuid)
+        let action = AssetAction.flagToUpload(assetID: uuid)
+        SessionManager.shared.sessionDispatcher.dispatch(action)
     }
 
 }

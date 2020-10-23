@@ -79,6 +79,8 @@ class AssetStore: Store {
                 updateCaption(assetID: assetID, caption: caption)
             case .updateAltText(let assetID, let altText):
                 updateAltText(assetID: assetID, altText: altText)
+            case .flagToUpload(let assetID):
+                flagToUpload(assetID: assetID)
             }
         }
     }
@@ -440,6 +442,7 @@ extension AssetStore {
         asset.caption = remoteMedia.caption
         asset.modified = remoteMedia.modifiedGMT
         asset.synced = Date()
+        asset.flagToUpload = false
     }
 
     /// Updates properties for the StoryAssets owned by the specified StoryFolders
@@ -495,6 +498,35 @@ extension AssetStore {
                 onComplete()
             }
         }
+    }
+
+    /// Flag an asset for upload.
+    ///
+    /// - Parameters:
+    ///   - assetID: <#assetID description#>
+    ///   - onComplete: <#onComplete description#>
+    func flagToUpload(assetID: UUID, onComplete: (() -> Void)? = nil) {
+        guard
+            let asset = getStoryAssetByID(uuid: assetID),
+            asset.assetType != .textNote
+        else {
+            return
+        }
+
+        let objID = asset.objectID
+        CoreDataManager.shared.performOnWriteContext { context in
+            let asset = context.object(with: objID) as! StoryAsset
+
+            asset.flagToUpload = true
+
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+                SyncCoordinator.shared.process(steps: [.createRemoteAssets])
+            }
+        }
+
     }
 
 }
@@ -676,7 +708,10 @@ extension AssetStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryAsset.defaultFetchRequest()
 
-        fetchRequest.predicate = NSPredicate(format: "folder.site == %@ AND folder.autoSyncAssets == true AND remoteID == 0 AND type != 'textNote'", site)
+        let predicateA = NSPredicate(format: "folder.site == %@ AND remoteID == 0 AND type != 'textNote'", site)
+        let predicateB = NSPredicate(format: "folder.autoSyncAssets == true OR flagToUpload == true")
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicateA, predicateB])
+
         if limit > 0 {
             fetchRequest.fetchLimit = limit
         }
