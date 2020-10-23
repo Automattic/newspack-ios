@@ -66,7 +66,6 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
             return
         }
         navigationItem.title = currentStory.name
-        syncButton.image = .gridicon(.cloudUpload)
     }
 
     func configureStyle() {
