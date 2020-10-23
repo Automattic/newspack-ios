@@ -12,13 +12,19 @@ class AssetStore: Store {
 
     /// Defines a SortOrganizer and its associated SortRules.
     lazy private(set) var sortOrganizer: SortOrganizer = {
-        let typeRules: [SortRule] = [
-            SortRule(field: "type", displayName: NSLocalizedString("Type", comment: "Noun. The type or category of something."), ascending: false, caseInsensitive: true),
-            SortRule(field: "name", displayName: NSLocalizedString("Name", comment: "Noun. An item's name."), ascending: true, caseInsensitive: true),
-            SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true)
+        let nameStr = NSLocalizedString("Name", comment: "Noun. An item's name.")
+        let dateStr = NSLocalizedString("Date", comment: "Noun. The date something was created.")
+        let typeStr = NSLocalizedString("Type", comment: "Noun. The type or category of something.")
+        let nameRule = SortRule(field: "name", displayName: nameStr, ascending: true, caseInsensitive: true)
+        let dateRule = SortRule(field: "date", displayName: dateStr, ascending: true)
+
+        let typeRules = [
+            SortRule(field: "type", displayName: typeStr, ascending: false, caseInsensitive: true),
+            nameRule,
+            dateRule
         ]
         let typeSort = SortMode(defaultsKey: "AssetSortModeType",
-                                title: NSLocalizedString("Type", comment: "Noun. The title of a list that is sorted by the types of objects in the list."),
+                                title: typeStr,
                                 rules: typeRules,
                                 hasSections: true) { (title) -> String in
                                     guard let type = StoryAssetType(rawValue: title) else {
@@ -26,12 +32,9 @@ class AssetStore: Store {
                                     }
                                     return type.displayName()
                                 }
-        let dateRules: [SortRule] = [
-            SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true),
-            SortRule(field: "name", displayName: NSLocalizedString("Name", comment: "Noun. An item's name."), ascending: true, caseInsensitive: true),
-        ]
+        let dateRules = [dateRule, nameRule]
         let dateSort = SortMode(defaultsKey: "AssetSortModeDate",
-                                 title: NSLocalizedString("Date", comment: "Noun. The date something was created."),
+                                 title: dateStr,
                                  rules: dateRules,
                                  hasSections: true) { (title) -> String in
                                     let formatter = DateFormatter()

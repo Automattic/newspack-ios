@@ -18,21 +18,20 @@ class FolderStore: Store {
 
     /// Defines a SortOrganizer and its associated SortRules.
     lazy private(set) var sortOrganizer: SortOrganizer = {
-        let nameRules: [SortRule] = [
-            SortRule(field: "name", displayName: NSLocalizedString("Name", comment: "Noun. An item's name."), ascending: true, caseInsensitive: true),
-            SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true)
-        ]
+        let nameStr = NSLocalizedString("Name", comment: "Noun. An item's name.")
+        let dateStr = NSLocalizedString("Date", comment: "Noun. The date something was created.")
+        let nameRule = SortRule(field: "name", displayName: nameStr, ascending: true, caseInsensitive: true)
+        let dateRule = SortRule(field: "date", displayName: dateStr, ascending: true)
+
+        let nameRules = [nameRule, dateRule]
         let nameSort = SortMode(defaultsKey: "FolderSortModeName",
-                                title: NSLocalizedString("Name", comment: "Noun. The title of a list that is sorted by the name of objects in the list."),
+                                title: nameStr,
                                 rules: nameRules,
                                 hasSections: false,
                                 resolver: nil)
-        let dateRules: [SortRule] = [
-            SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true),
-            SortRule(field: "name", displayName: NSLocalizedString("Name", comment: "Noun. An item's name."), ascending: true, caseInsensitive: true),
-        ]
+        let dateRules = [dateRule, nameRule]
         let dateSort = SortMode(defaultsKey: "FolderSortModeDate",
-                                 title: NSLocalizedString("Date", comment: "Noun. The date something was created."),
+                                 title: dateStr,
                                  rules: dateRules,
                                  hasSections: false,
                                  resolver: nil)
