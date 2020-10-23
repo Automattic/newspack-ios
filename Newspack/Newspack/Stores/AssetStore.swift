@@ -67,6 +67,8 @@ class AssetStore: Store {
             switch action {
             case .sortMode(let index):
                 selectSortMode(index: index)
+            case .sortDirection(let ascending):
+                setSortDirection(ascending: ascending)
             case .createAssetFor(let text):
                 createAssetFor(text: text)
             case .deleteAsset(let uuid):
@@ -92,6 +94,10 @@ extension AssetStore {
     ///
     func selectSortMode(index: Int) {
         sortOrganizer.select(index: index)
+    }
+
+    func setSortDirection(ascending: Bool) {
+        sortOrganizer.setAscending(ascending: ascending)
     }
 
 }
