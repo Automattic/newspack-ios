@@ -194,6 +194,7 @@ class SortMode {
         }
         UserDefaults.shared.set(arr, forKey: defaultsKey)
     }
+
 }
 
 /// Manages a list of sort modes.
@@ -249,5 +250,18 @@ class SortOrganizer {
     ///
     private func savedIndex() -> Int {
         return UserDefaults.shared.integer(forKey: defaultsKey)
+    }
+
+    /// Set the ascending property for the first rule for each managed sort mode.
+    ///
+    /// - Parameter ascending: True or false.
+    ///
+    func setAscending(ascending: Bool) {
+        for mode in modes {
+            guard let rule = mode.rules.first else {
+                continue
+            }
+            mode.updateRule(for: rule.field, value: ascending)
+        }
     }
 }
