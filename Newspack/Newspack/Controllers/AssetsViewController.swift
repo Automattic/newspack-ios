@@ -125,6 +125,10 @@ extension AssetsViewController {
         }
     }
 
+    func handleCellSyncAction(uuid: UUID) {
+        print(uuid)
+    }
+
 }
 
 // MARK: - Cell Actions
@@ -202,7 +206,9 @@ extension AssetsViewController {
         let cell = tableView.dequeueReusableCell(ofType: PhotoTableViewCell.self, for: indexPath)
 
         let image = thumbnail(from: storyAsset, size: PhotoTableViewCell.imageSize)
-        cell.configure(photo: storyAsset, image: image)
+        cell.configure(photo: storyAsset, image: image, callback: { [weak self] uuid in
+            self?.handleCellSyncAction(uuid: uuid)
+        })
         return cell
     }
 
@@ -210,14 +216,18 @@ extension AssetsViewController {
         let cell = tableView.dequeueReusableCell(ofType: VideoTableViewCell.self, for: indexPath)
 
         let image = thumbnail(from: storyAsset, size: VideoTableViewCell.imageSize)
-        cell.configure(video: storyAsset, image: image)
+        cell.configure(video: storyAsset, image: image, callback: { [weak self] uuid in
+            self?.handleCellSyncAction(uuid: uuid)
+        })
         return cell
     }
 
     func configureAudioCell(tableView: UITableView, indexPath: IndexPath, storyAsset: StoryAsset) -> AudioTableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: AudioTableViewCell.self, for: indexPath)
 
-        cell.configure(audio: storyAsset)
+        cell.configure(audio: storyAsset, callback: { [weak self] uuid in
+            self?.handleCellSyncAction(uuid: uuid)
+        })
         return cell
     }
 

@@ -5,6 +5,15 @@ import CoreServices
 @objc(StoryAsset)
 public class StoryAsset: NSManagedObject, TextNoteCellProvider, PhotoCellProvider, VideoCellProvider, AudioCellProvider {
 
+    var needsManualUpload: Bool {
+        // A remote ID means the asset is already uploaded.
+        // Text notes do not have files to upload.
+        if remoteID > 0 || assetType == .textNote {
+            return false
+        }
+        return !folder.autoSyncAssets
+    }
+
 }
 
 enum StoryAssetType: String {
