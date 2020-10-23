@@ -12,6 +12,7 @@ extension StoryFolder {
     // postID is non-optional due to ObjC so we'll let its default be 0.
     // If postID is > 0 then there is a valid draft associated with the story.
     @NSManaged public var postID: Int64
+    @NSManaged public var date: Date! // The creation date.
     // Synced indicates the date last synced.
     @NSManaged public var synced: Date!
     // Modified indicate the date last modified. If synced > modified data is current.

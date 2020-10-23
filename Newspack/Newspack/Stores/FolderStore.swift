@@ -206,6 +206,7 @@ extension FolderStore {
                 let date = Date()
                 let storyFolder = StoryFolder(context: context)
                 storyFolder.uuid = UUID()
+                storyFolder.date = date
                 storyFolder.synced = date
                 storyFolder.modified = date
                 storyFolder.name = url.pathComponents.last
