@@ -676,7 +676,7 @@ extension AssetStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryAsset.defaultFetchRequest()
 
-        fetchRequest.predicate = NSPredicate(format: "folder.site == %@ AND remoteID == 0 AND type != 'textNote'", site)
+        fetchRequest.predicate = NSPredicate(format: "folder.site == %@ AND folder.autoSyncAssets == true AND remoteID == 0 AND type != 'textNote'", site)
         if limit > 0 {
             fetchRequest.fetchLimit = limit
         }
