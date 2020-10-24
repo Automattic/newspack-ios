@@ -34,8 +34,8 @@ class AuthenticationManager {
                                                                 enableSignInWithApple: false,
                                                                 enableSignupWithGoogle: false,
                                                                 enableUnifiedAuth: false,
-                                                                enableUnifiedSiteAddress: false,
-                                                                enableUnifiedGoogle: false)
+//                                                                enableUnifiedSiteAddress: false,
+                                                                enableUnifiedCarousel: false)
 
         let style = WordPressAuthenticatorStyle(primaryNormalBackgroundColor: .primaryButtonBackground,
                                                 primaryNormalBorderColor: nil,

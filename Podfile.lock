@@ -21,14 +21,14 @@ PODS:
     - GTMAppAuth (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
   - Gridicons (1.0.1)
-  - GTMAppAuth (1.0.0):
-    - AppAuth/Core (~> 1.0)
-    - GTMSessionFetcher (~> 1.1)
-  - GTMSessionFetcher (1.4.0):
-    - GTMSessionFetcher/Full (= 1.4.0)
-  - GTMSessionFetcher/Core (1.4.0)
-  - GTMSessionFetcher/Full (1.4.0):
-    - GTMSessionFetcher/Core (= 1.4.0)
+  - GTMAppAuth (1.1.0):
+    - AppAuth/Core (~> 1.4)
+    - GTMSessionFetcher (~> 1.4)
+  - GTMSessionFetcher (1.5.0):
+    - GTMSessionFetcher/Full (= 1.5.0)
+  - GTMSessionFetcher/Core (1.5.0)
+  - GTMSessionFetcher/Full (1.5.0):
+    - GTMSessionFetcher/Core (= 1.5.0)
   - KeychainAccess (3.2.0)
   - lottie-ios (3.1.6)
   - NSObject-SafeExpectations (0.0.4)
@@ -48,7 +48,7 @@ PODS:
     - OHHTTPStubs/Default
   - SVProgressHUD (2.2.5)
   - UIDeviceIdentifier (1.5.0)
-  - WordPressAuthenticator (1.23.3):
+  - WordPressAuthenticator (1.27.0):
     - 1PasswordExtension (= 1.8.6)
     - Alamofire (= 4.8)
     - CocoaLumberjack (~> 3.5)
@@ -57,23 +57,23 @@ PODS:
     - lottie-ios (= 3.1.6)
     - "NSURL+IDN (= 0.4)"
     - SVProgressHUD (= 2.2.5)
-    - WordPressKit (~> 4.14-beta)
-    - WordPressShared (~> 1.11-beta)
+    - WordPressKit (~> 4.18-beta)
+    - WordPressShared (~> 1.12-beta)
     - WordPressUI (~> 1.7.0)
   - WordPressFlux (1.0.0)
-  - WordPressKit (4.15.0):
+  - WordPressKit (4.19.0):
     - Alamofire (~> 4.8.0)
     - CocoaLumberjack (~> 3.4)
     - NSObject-SafeExpectations (= 0.0.4)
     - UIDeviceIdentifier (~> 1)
-    - WordPressShared (~> 1.10-beta)
-    - wpxmlrpc (= 0.8.5)
-  - WordPressShared (1.11.0):
+    - WordPressShared (~> 1.12)
+    - wpxmlrpc (~> 0.9.0)
+  - WordPressShared (1.12.0):
     - CocoaLumberjack (~> 3.4)
     - FormatterKit/TimeIntervalFormatter (= 1.8.2)
-  - WordPressUI (1.7.1)
-  - WPMediaPicker (1.7.1)
-  - wpxmlrpc (0.8.5)
+  - WordPressUI (1.7.2)
+  - WPMediaPicker (1.7.2)
+  - wpxmlrpc (0.9.0)
 
 DEPENDENCIES:
   - Alamofire (= 4.8.0)
@@ -82,11 +82,11 @@ DEPENDENCIES:
   - CocoaLumberjack/Swift (= 3.5.3)
   - KeychainAccess (= 3.2.0)
   - OHHTTPStubs/Swift (= 8.0.0)
-  - WordPressAuthenticator (~> 1.23.3)
+  - WordPressAuthenticator (~> 1.27.0)
   - WordPressFlux (= 1.0.0)
-  - WordPressKit (~> 4.15.0)
-  - WordPressUI (~> 1.7.0)
-  - WPMediaPicker (~> 1.7.0)
+  - WordPressKit (~> 4.19)
+  - WordPressUI (~> 1.7.2)
+  - WPMediaPicker (~> 1.7.2)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -124,8 +124,8 @@ SPEC CHECKSUMS:
   FormatterKit: 4b8f29acc9b872d5d12a63efb560661e8f2e1b98
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   Gridicons: 8e19276b20bb15d1fda1d4d0db96d066d170135b
-  GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
-  GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
+  GTMAppAuth: 197a8dabfea5d665224aa00d17f164fc2248dab9
+  GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   KeychainAccess: 3b1bf8a77eb4c6ea1ce9404c292e48f948954c6b
   lottie-ios: 85ce835dd8c53e02509f20729fc7d6a4e6645a0a
   NSObject-SafeExpectations: ab8fe623d36b25aa1f150affa324e40a2f3c0374
@@ -133,14 +133,14 @@ SPEC CHECKSUMS:
   OHHTTPStubs: 9cbce6364bec557cc3439aa6bb7514670d780881
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   UIDeviceIdentifier: a79ccdfc940373835a7d8e9fc7541e6bf61b6319
-  WordPressAuthenticator: 19a4f2039a764fe380da4ff35f83be582d1e2815
+  WordPressAuthenticator: 2808ae2692e9e5ded6780c7bfb74e6a1571a1906
   WordPressFlux: a381542b0a0414ef85fb0b2a0f9dbde78ffe0637
-  WordPressKit: c826b111887299024822fee12432ce62accf4d7c
-  WordPressShared: b56046080c99d41519d097c970df663fda48e218
-  WordPressUI: 9da5d966b8beb091950cd96880db398d7f30e246
-  WPMediaPicker: 46ae5807c8f64d30a39c28812ad150837a424ed2
-  wpxmlrpc: 6a9bdd6ab9d1b159b384b0df0f3f39de9af4fecf
+  WordPressKit: bbd17cd14a7f68080bdeb350c3780a40c29fd937
+  WordPressShared: 38cb62e9cb998d4dc3c1611f17934c6875a6b3e8
+  WordPressUI: cb5d0c58f92778b6dffcdcb8234ed8d7a930ce90
+  WPMediaPicker: d5ae9a83cd5cc0e4de46bfc1c59120aa86658bc3
+  wpxmlrpc: bf55a43a7e710bd2a4fb8c02dfe83b1246f14f13
 
-PODFILE CHECKSUM: eb519e79fa31d5d07aa8ff0b5e2c34dec2a70698
+PODFILE CHECKSUM: a906cd81d7db1cdd032cb97c2f1277e16418841a
 
 COCOAPODS: 1.8.4
