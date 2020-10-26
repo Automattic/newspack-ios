@@ -41,6 +41,7 @@ final class MainNavController: UINavigationController {
         // finished launching.
         handleSessionChange()
         listenForSessionChanges()
+        listenForAuthErrors()
         delegate = self
     }
 
@@ -65,6 +66,34 @@ final class MainNavController: UINavigationController {
         setViewControllers([sidebarContainerController], animated: true)
 
         presentedViewController?.dismiss(animated: true, completion: nil)
+    }
+
+}
+
+// Auth Related
+
+extension MainNavController {
+
+    func showAuthentication() {
+        authenticationManager = AuthenticationManager()
+        authenticationManager?.showAuthenticator(controller: self)
+    }
+
+    func clearAuthManager() {
+        authenticationManager = nil
+    }
+
+    func listenForAuthErrors() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleAuthError), name: .authNeedsRestart, object: nil)
+    }
+
+    @objc func handleAuthError() {
+        // Dismiss the current instance of authentication.
+        clearAuthManager()
+        presentedViewController?.dismiss(animated: true, completion: { [weak self] in
+            // Show a new instance.
+            self?.showAuthentication()
+        })
     }
 
 }
@@ -148,13 +177,12 @@ extension MainNavController: UINavigationControllerDelegate {
 
         let state = SessionManager.shared.state
         if state == .uninitialized && viewController is InitialViewController {
-            authenticationManager = AuthenticationManager()
-            authenticationManager?.showAuthenticator(controller: self)
+            showAuthentication()
             return
         }
 
         if state == .initialized {
-            authenticationManager = nil
+            clearAuthManager()
         }
     }
 
