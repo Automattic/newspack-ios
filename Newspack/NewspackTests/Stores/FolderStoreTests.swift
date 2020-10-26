@@ -228,7 +228,7 @@ class FolderStoreTests: BaseTest {
         for folder in folders {
             if folder.name == "alpha" {
                 let expect = expectation(description: "expect")
-                folderStore.renameStoryFolder(uuid: folder.uuid, to: "delta", onComplete: {
+                folderStore.updateStoryFolderName(uuid: folder.uuid, to: "delta", onComplete: {
                     expect.fulfill()
                 })
                 wait(for: [expect], timeout: 1)
@@ -237,7 +237,7 @@ class FolderStoreTests: BaseTest {
                 let expect = expectation(description: "expect")
                 let uuid = folder.uuid!
                 folderStore.assignPostIDAfterCreatingDraft(postID: 4, to: uuid, onComplete: {
-                    self.folderStore.renameStoryFolder(uuid: uuid, to: "zeta", onComplete: {
+                    self.folderStore.updateStoryFolderName(uuid: uuid, to: "zeta", onComplete: {
                         expect.fulfill()
                     })
                 })

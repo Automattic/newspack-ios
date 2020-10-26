@@ -16,18 +16,26 @@ class FolderStore: Store {
     /// before it is used.
     private(set) var currentStoryFolderID = UUID()
 
-    lazy var sortRules: [SortRule] = {
-        let dateField = "date"
-        let nameField = "name"
-        return [
-            SortRule(field: dateField, displayName: displayNameForField(field: dateField), ascending: true),
-            SortRule(field: nameField, displayName: displayNameForField(field: nameField), ascending: true)
-        ]
-    }()
+    /// Defines a SortOrganizer and its associated SortRules.
+    lazy private(set) var sortOrganizer: SortOrganizer = {
+        let nameStr = NSLocalizedString("Name", comment: "Noun. An item's name.")
+        let dateStr = NSLocalizedString("Date", comment: "Noun. The date something was created.")
+        let nameRule = SortRule(field: "name", displayName: nameStr, ascending: true, caseInsensitive: true)
+        let dateRule = SortRule(field: "date", displayName: dateStr, ascending: true)
 
-    lazy private(set) var sortMode: SortMode = {
-        let rule = sortRules.first!
-        return SortMode(defaultsKey: "FolderStoreSortMode", title: "", rules: [rule], hasSections: false, resolver: nil)
+        let nameRules = [nameRule, dateRule]
+        let nameSort = SortMode(defaultsKey: "FolderSortModeName",
+                                title: nameStr,
+                                rules: nameRules,
+                                hasSections: false,
+                                resolver: nil)
+        let dateRules = [dateRule, nameRule]
+        let dateSort = SortMode(defaultsKey: "FolderSortModeDate",
+                                 title: dateStr,
+                                 rules: dateRules,
+                                 hasSections: false,
+                                 resolver: nil)
+        return SortOrganizer(defaultsKey: "AssetSortOrganizerIndex", modes: [dateSort, nameSort])
     }()
 
     /// A convenience getter to get the current story folder.
@@ -52,15 +60,19 @@ class FolderStore: Store {
     override func onDispatch(_ action: Action) {
         if let action = action as? FolderAction {
             switch action {
-            case .sortBy(let field, let ascending):
-                sortFolders(by: field, ascending: ascending)
+            case .sortMode(let index):
+                selectSortMode(index: index)
+            case .sortDirection(let ascending):
+                setSortDirection(ascending: ascending)
             case .createStoryFolder:
                 // Create a story folder with the default name, appending a suffix if needed.
                 createStoryFolder(path: Constants.defaultStoryFolderName, addSuffix: true)
-            case .createStoryFolderNamed(let path, let addSuffix):
-                createStoryFolder(path: path, addSuffix: addSuffix)
-            case .renameStoryFolder(let uuid, let name):
-                renameStoryFolder(uuid: uuid, to: name)
+            case .createStoryFolderNamed(let path, let addSuffix, let autoSync):
+                createStoryFolder(path: path, addSuffix: addSuffix, autoSyncAssets: autoSync)
+            case .updateStoryFolderName(let uuid, let name):
+                updateStoryFolderName(uuid: uuid, to: name)
+            case .updateStoryFolderAutoSync(let uuid, let autoSync):
+                updateStoryFolderAutoSync(uuid: uuid, to: autoSync)
             case .deleteStoryFolder(let uuid):
                 deleteStoryFolder(uuid: uuid)
             case .selectStoryFolder(let uuid):
@@ -88,7 +100,7 @@ extension FolderStore {
 
         let fetchRequest = StoryFolder.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
-        fetchRequest.sortDescriptors = sortMode.descriptors
+        fetchRequest.sortDescriptors = sortOrganizer.selectedMode.descriptors
         return NSFetchedResultsController(fetchRequest: fetchRequest,
                                           managedObjectContext: CoreDataManager.shared.mainContext,
                                           sectionNameKeyPath: nil,
@@ -101,30 +113,16 @@ extension FolderStore {
 
 extension FolderStore {
 
-    /// Update sort rules for folders and refetch data if the sort order has changed.
+    /// Update the sort rules for story assets returned by the stores results controller.
     ///
-    /// - Parameters:
-    ///   - field: The field to sort by.
-    ///   - ascending: true if the sort order should be ascending, or false if descending.
+    /// - Parameter sortMode: The sort mode to sort by.
     ///
-    private func sortFolders(by field: String, ascending: Bool) {
-        let rule = SortRule(field: field, displayName: displayNameForField(field: field), ascending: ascending)
-        sortMode.setRules(newRules: [rule])
+    func selectSortMode(index: Int) {
+        sortOrganizer.select(index: index)
     }
 
-    /// Get the user facing display name to use for the specified field.
-    ///
-    /// - Parameter field: The name of the sort field.
-    /// - Returns: The user facing String or an empty string if the specified field was not found.
-    ///
-    private func displayNameForField(field: String) -> String {
-        if field == "name" {
-            return NSLocalizedString("Name", comment: "Noun. An item's name.")
-        }
-        if field == "date" {
-            return NSLocalizedString("Date", comment: "Noun. An item's creation date.")
-        }
-        return ""
+    func setSortDirection(ascending: Bool) {
+        sortOrganizer.setAscending(ascending: ascending)
     }
 
 }
@@ -151,9 +149,11 @@ extension FolderStore {
     ///   name in core data.
     ///   - addSuffix: Whether to add a numeric suffix to the folder name if there
     /// is already a folder with that name.
+    ///   - autoSyncAssets: True if the folder's assets should automatically sync when added. False otherwise.
+    ///   - onComplete: A block to call when creation is complete.
     ///
-    func createStoryFolder(path: String = Constants.defaultStoryFolderName, addSuffix: Bool = false, onComplete:(()-> Void)? = nil) {
-        createStoryFoldersForPaths(paths: [path], addSuffix: addSuffix, onComplete: onComplete)
+    func createStoryFolder(path: String = Constants.defaultStoryFolderName, addSuffix: Bool = false, autoSyncAssets: Bool = true, onComplete:(()-> Void)? = nil) {
+        createStoryFoldersForPaths(paths: [path], addSuffix: addSuffix, autoSyncAssets: autoSyncAssets, onComplete: onComplete)
     }
 
     /// Create new StoryFolders for each of the specified folder names.
@@ -163,8 +163,10 @@ extension FolderStore {
     ///   name in core data.
     ///   - addSuffix: Whether to add a numeric suffix to the folder name if there
     /// is already a folder with that name.
+    ///   - autoSyncAssets: True if the folder's assets should automatically sync when added. False otherwise.
+    ///   - onComplete: A block to call when creation is complete.
     ///
-    func createStoryFoldersForPaths(paths: [String], addSuffix: Bool = false, onComplete:(()-> Void)? = nil) {
+    func createStoryFoldersForPaths(paths: [String], addSuffix: Bool = false, autoSyncAssets: Bool = true, onComplete:(()-> Void)? = nil) {
         var urls = [URL]()
         for path in paths {
             guard let url = folderManager.createFolderAtPath(path: path, ifExistsAppendSuffix: addSuffix) else {
@@ -175,14 +177,17 @@ extension FolderStore {
             urls.append(url)
         }
 
-        createStoryFoldersForURLs(urls: urls, onComplete: onComplete)
+        createStoryFoldersForURLs(urls: urls, autoSyncAssets: autoSyncAssets, onComplete: onComplete)
     }
 
     /// Create new story folders for each of the specified URLs.
     ///
-    /// - Parameter urls: An array of file URLs
+    /// - Parameters:
+    ///   - urls: An array of file URLs
+    ///   - autoSyncAssets: True if the folder's assets should automatically sync when added. False otherwise.
+    ///   - onComplete: A block to call when creation is complete.
     ///
-    func createStoryFoldersForURLs(urls: [URL], onComplete:(()-> Void)? = nil) {
+    func createStoryFoldersForURLs(urls: [URL], autoSyncAssets: Bool, onComplete:(()-> Void)? = nil) {
         guard
             let siteID = currentSiteID,
             let siteObjID = StoreContainer.shared.siteStore.getSiteByUUID(siteID)?.objectID
@@ -200,11 +205,13 @@ extension FolderStore {
                 let date = Date()
                 let storyFolder = StoryFolder(context: context)
                 storyFolder.uuid = UUID()
+                storyFolder.date = date
                 storyFolder.synced = date
                 storyFolder.modified = date
                 storyFolder.name = url.pathComponents.last
                 storyFolder.site = site
                 storyFolder.bookmark = folderManager.bookmarkForURL(url: url)
+                storyFolder.autoSyncAssets = autoSyncAssets
             }
 
             CoreDataManager.shared.saveContext(context: context)
@@ -262,7 +269,7 @@ extension FolderStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = StoryFolder.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@ AND NOT (uuid IN %@)", siteID as CVarArg, uuidsToExclude)
-        fetchRequest.sortDescriptors = sortMode.descriptors
+        fetchRequest.sortDescriptors = sortOrganizer.selectedMode.descriptors
         fetchRequest.propertiesToFetch = ["uuid"]
         fetchRequest.resultType = .dictionaryResultType
 
@@ -357,7 +364,7 @@ extension FolderStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryFolder.defaultFetchRequest()
         fetchRequest.predicate = NSPredicate(format: "site.uuid = %@", siteID as CVarArg)
-        fetchRequest.sortDescriptors = sortMode.descriptors
+        fetchRequest.sortDescriptors = sortOrganizer.selectedMode.descriptors
 
         if let results = try? context.fetch(fetchRequest) {
             return results
@@ -482,6 +489,8 @@ extension FolderStore {
     }
 
     /// Get an array of StoryFolders that need a remote draft to be created.
+    /// Even if the StoryFolder is set to not auto sync. the story will still be
+    /// returned provided it has at least one asset.
     ///
     /// - Returns: An array of StoryFolders.
     ///
@@ -570,7 +579,7 @@ extension FolderStore {
     ///   - uuid: The uuid of the StoryFolder to update.
     ///   - name: The new name.
     ///
-    func renameStoryFolder(uuid: UUID, to name: String, onComplete: (() -> Void)? = nil) {
+    func updateStoryFolderName(uuid: UUID, to name: String, onComplete: (() -> Void)? = nil) {
         // Get the folder.
         guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
             LogError(message: "Unable to find the story folder to rename.")
@@ -602,6 +611,31 @@ extension FolderStore {
             DispatchQueue.main.async {
                 onComplete?()
                 SyncCoordinator.shared.process(steps: [.pushStoryUpdates])
+            }
+        }
+    }
+
+    func updateStoryFolderAutoSync(uuid: UUID, to autoSyncAssets: Bool, onComplete: (() -> Void)? = nil) {
+        // Get the folder.
+        guard let storyFolder = getStoryFolderByID(uuid: uuid) else {
+            LogError(message: "Unable to find the story folder to update.")
+            onComplete?()
+            return
+        }
+
+        // Save the name in core data.
+        let objID = storyFolder.objectID
+        CoreDataManager.shared.performOnWriteContext { context in
+            let folder = context.object(with: objID) as! StoryFolder
+            folder.autoSyncAssets = autoSyncAssets
+
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+                if autoSyncAssets {
+                    SyncCoordinator.shared.process(steps: SyncSteps.assetSteps())
+                }
             }
         }
     }
@@ -769,7 +803,7 @@ extension FolderStore {
 
             if stub.titleRendered != folder.name && !folder.needsSync {
                 processGroup.enter()
-                renameStoryFolder(uuid: folder.uuid, to: stub.titleRendered, onComplete: {
+                updateStoryFolderName(uuid: folder.uuid, to: stub.titleRendered, onComplete: {
                     processGroup.leave()
                 })
             }

@@ -4,6 +4,7 @@ protocol VideoCellProvider {
     var uuid: UUID! { get }
     var name: String! { get }
     var caption: String! { get }
+    var needsManualUpload: Bool { get }
 }
 
 class VideoTableViewCell: ProgressCell {
@@ -14,6 +15,9 @@ class VideoTableViewCell: ProgressCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var captionLabel: UILabel!
     @IBOutlet var syncButton: UIButton!
+
+    var uuid: UUID?
+    var syncCallback: ((UUID) -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,14 +33,20 @@ class VideoTableViewCell: ProgressCell {
     }
 
     @IBAction func handleSyncTapped() {
-        print("tapped")
+        guard let uuid = uuid else {
+            return
+        }
+        syncCallback?(uuid)
     }
 
-    func configure(video: VideoCellProvider, image: UIImage?) {
+    func configure(video: VideoCellProvider, image: UIImage?, callback: @escaping (UUID) -> Void) {
+        uuid = video.uuid
         thumbnail.image = image
         titleLabel.text = video.name
         captionLabel.text = video.caption
         observeProgress(uuid: video.uuid)
+        syncButton.isHidden = !video.needsManualUpload
+        syncCallback = callback
     }
 
 }
