@@ -118,7 +118,7 @@ extension FolderViewController {
             indexPath.section == FolderSections.sync.rawValue,
             let toggle = syncToggle
         else {
-                return
+            return
         }
         toggle.setOn(!toggle.isOn, animated: true)
     }
