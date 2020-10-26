@@ -12,14 +12,12 @@ protocol StoryCellProvider {
     var imageCount: Int { get }
     var videoCount: Int { get }
     var audioNoteCount: Int { get }
-    var needsSync: Bool { get }
 }
 
 
 class StoryTableViewCell: UITableViewCell {
 
     @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var syncImage: UIImageView!
     @IBOutlet var iconView: UIStackView!
     // Note: Using buttons for convenience since they contain an image and a label.
     // User interaction should be disabled in the xib.
@@ -65,17 +63,8 @@ class StoryTableViewCell: UITableViewCell {
         audioIcon.isHidden = story.audioNoteCount == 0
         audioIcon.setTitle(String(story.audioNoteCount), for: .normal)
 
-        if story.postID > 0 {
-            syncImage.image = .gridicon(.cloudUpload)
-            syncImage.tintColor = story.needsSync ? .neutral(.shade30) : .accent
-        } else {
-            syncImage.image = .gridicon(.cloudOutline)
-            syncImage.tintColor = .neutral(.shade30)
-        }
-
-        // Hide or show the icon view and sync image.
+        // Hide or show the icon view
         iconView.isHidden = (textIcon.isHidden && photosIcon.isHidden && videoIcon.isHidden && audioIcon.isHidden)
-        syncImage.isHidden = iconView.isHidden
     }
 
 }

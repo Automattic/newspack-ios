@@ -324,12 +324,15 @@
                                             <action selector="handleSortChangedWithSender:" destination="NWk-Co-Z8t" eventType="valueChanged" id="rav-mh-nq8"/>
                                         </connections>
                                     </segmentedControl>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PRZ-Np-Cex">
-                                        <rect key="frame" x="275.5" y="5.5" width="30" height="33"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <state key="normal" title="Edit"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sgC-21-Pss">
+                                        <rect key="frame" x="275.5" y="10" width="24" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="80t-fF-TPn"/>
+                                            <constraint firstAttribute="width" constant="24" id="eSa-A0-i0m"/>
+                                        </constraints>
+                                        <state key="normal" image="chevron-down"/>
                                         <connections>
-                                            <action selector="handleToggleEditingWithSender:" destination="NWk-Co-Z8t" eventType="touchUpInside" id="mgg-qt-4DC"/>
+                                            <action selector="handleDirectionButtonTappedWithSender:" destination="NWk-Co-Z8t" eventType="touchUpInside" id="e5k-5D-Tmy"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AMB-nt-ccw">
@@ -342,14 +345,13 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="PRZ-Np-Cex" firstAttribute="centerY" secondItem="4KS-uW-XyS" secondAttribute="centerY" id="7vi-6J-zNj"/>
                                     <constraint firstItem="iLK-I6-MuO" firstAttribute="centerY" secondItem="4KS-uW-XyS" secondAttribute="centerY" id="LOl-qD-G6k"/>
                                     <constraint firstAttribute="bottom" secondItem="AMB-nt-ccw" secondAttribute="bottom" id="MX9-eX-bou"/>
+                                    <constraint firstItem="sgC-21-Pss" firstAttribute="centerY" secondItem="4KS-uW-XyS" secondAttribute="centerY" id="OOT-8n-aoR"/>
+                                    <constraint firstItem="sgC-21-Pss" firstAttribute="leading" secondItem="iLK-I6-MuO" secondAttribute="trailing" constant="8" id="Wys-Yy-4Pq"/>
                                     <constraint firstAttribute="trailing" secondItem="AMB-nt-ccw" secondAttribute="trailing" id="ZFs-b2-u4Z"/>
                                     <constraint firstItem="iLK-I6-MuO" firstAttribute="centerX" secondItem="4KS-uW-XyS" secondAttribute="centerX" id="bus-Nq-SZy"/>
-                                    <constraint firstItem="PRZ-Np-Cex" firstAttribute="leading" secondItem="iLK-I6-MuO" secondAttribute="trailing" constant="8" id="eGv-K1-Aup"/>
                                     <constraint firstAttribute="height" constant="44" id="pyr-ic-t2l"/>
-                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="PRZ-Np-Cex" secondAttribute="trailing" priority="750" id="tcF-q9-JCe"/>
                                     <constraint firstItem="AMB-nt-ccw" firstAttribute="leading" secondItem="4KS-uW-XyS" secondAttribute="leading" id="ymL-Fz-Nj1"/>
                                 </constraints>
                             </view>
@@ -399,22 +401,15 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Assets" id="YtF-a8-687">
-                        <barButtonItem key="rightBarButtonItem" image="cloud-upload" largeContentSizeImage="cloud-upload" id="YoR-aT-oGj">
-                            <connections>
-                                <action selector="handleSyncTappedWithSender:" destination="NWk-Co-Z8t" id="gLL-2i-pfm"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Assets" id="YtF-a8-687"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="audioNoteButton" destination="GnL-gZ-eCi" id="RlS-n1-NlY"/>
                         <outlet property="cameraButton" destination="QOd-iL-h26" id="Vak-vA-3Ie"/>
-                        <outlet property="editButton" destination="PRZ-Np-Cex" id="oDl-bs-43F"/>
+                        <outlet property="directionButton" destination="sgC-21-Pss" id="9yM-jd-KHQ"/>
                         <outlet property="photoButton" destination="fcy-JG-eKM" id="Ctf-YY-KUS"/>
                         <outlet property="sortControl" destination="iLK-I6-MuO" id="aAT-mL-p5F"/>
-                        <outlet property="syncButton" destination="YoR-aT-oGj" id="IqL-DZ-n6V"/>
                         <outlet property="tableView" destination="IC9-M0-AO4" id="7tv-iN-yXH"/>
                         <outlet property="textNoteButton" destination="I7i-cV-h16" id="Izx-j7-0Rf"/>
                     </connections>
@@ -777,7 +772,6 @@
         <image name="chevron-down" width="24" height="24"/>
         <image name="chevron-left" width="24" height="24"/>
         <image name="chevron-right" width="24" height="24"/>
-        <image name="cloud-upload" width="24" height="24"/>
         <image name="create folder" width="128" height="128"/>
         <image name="cross" width="24" height="24"/>
         <image name="image-multiple" width="24" height="24"/>

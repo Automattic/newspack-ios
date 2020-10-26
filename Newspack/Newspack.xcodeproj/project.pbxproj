@@ -261,6 +261,8 @@
 		E6D44DF1234BDBA000B51438 /* MediaApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF0234BDBA000B51438 /* MediaApiService.swift */; };
 		E6D44DF3234BDBB500B51438 /* MediaServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */; };
 		E6D6346D251940E8001F20BF /* SyncCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D6346C251940E8001F20BF /* SyncCoordinator.swift */; };
+		E6DB2E002540DB840065572A /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DB2DFE2540DB840065572A /* SwitchTableViewCell.swift */; };
+		E6DB2E012540DB840065572A /* SwitchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6DB2DFF2540DB840065572A /* SwitchTableViewCell.xib */; };
 		E6DCB05224AE3BF300C4FD01 /* SortOrganizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DCB05124AE3BF300C4FD01 /* SortOrganizerTests.swift */; };
 		E6E1834D22D6D44D009C2D0A /* remote-post-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834B22D6D44C009C2D0A /* remote-post-edit.json */; };
 		E6E1834E22D6D44D009C2D0A /* remote-post-id-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6E1834C22D6D44D009C2D0A /* remote-post-id-edit.json */; };
@@ -613,6 +615,8 @@
 		E6D44DF0234BDBA000B51438 /* MediaApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaApiService.swift; sourceTree = "<group>"; };
 		E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceRemote.swift; sourceTree = "<group>"; };
 		E6D6346C251940E8001F20BF /* SyncCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinator.swift; sourceTree = "<group>"; };
+		E6DB2DFE2540DB840065572A /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
+		E6DB2DFF2540DB840065572A /* SwitchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwitchTableViewCell.xib; sourceTree = "<group>"; };
 		E6DCB05124AE3BF300C4FD01 /* SortOrganizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrganizerTests.swift; sourceTree = "<group>"; };
 		E6DF5574242E7139007DDC47 /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
 		E6DF5577242E7242007DDC47 /* FolderManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManagerTests.swift; sourceTree = "<group>"; };
@@ -982,6 +986,8 @@
 				E605B32D24F4499F00E1768B /* TextFieldTableViewCell.swift */,
 				E605B32E24F4499F00E1768B /* TextFieldTableViewCell.xib */,
 				E6A20370253A388600D85EE0 /* ProgressCell.swift */,
+				E6DB2DFE2540DB840065572A /* SwitchTableViewCell.swift */,
+				E6DB2DFF2540DB840065572A /* SwitchTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1564,6 +1570,7 @@
 				E65469F724C78C420083FAA5 /* acknowledgements.htm in Resources */,
 				E6AB672924E88182003D5D2A /* VideoTableViewCell.xib in Resources */,
 				E6138FDF2211FE88004E5B91 /* LaunchScreen.storyboard in Resources */,
+				E6DB2E012540DB840065572A /* SwitchTableViewCell.xib in Resources */,
 				E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */,
 				E605B33024F4499F00E1768B /* TextFieldTableViewCell.xib in Resources */,
 				E6D2194124EF27F90011A2C1 /* ImageTableViewCell.xib in Resources */,
@@ -1815,6 +1822,7 @@
 				E6D2194024EF27F90011A2C1 /* ImageTableViewCell.swift in Sources */,
 				E6AB672224E88182003D5D2A /* CellBackgroundView.swift in Sources */,
 				E610B64324EC59040011FBA8 /* UITableView+Helpers.swift in Sources */,
+				E6DB2E002540DB840065572A /* SwitchTableViewCell.swift in Sources */,
 				E6034B1422529414007DB6DD /* UserAgent.swift in Sources */,
 				E6500F9D2368F36500CB8C6C /* MediaDetailViewController.swift in Sources */,
 				E68408A024D0D0ED00C36AB9 /* FolderViewController.swift in Sources */,

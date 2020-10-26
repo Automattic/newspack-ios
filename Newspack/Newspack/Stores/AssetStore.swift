@@ -12,12 +12,19 @@ class AssetStore: Store {
 
     /// Defines a SortOrganizer and its associated SortRules.
     lazy private(set) var sortOrganizer: SortOrganizer = {
-        let typeRules: [SortRule] = [
-            SortRule(field: "type", displayName: NSLocalizedString("Type", comment: "Noun. The type or category of something."), ascending: false),
-            SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true)
+        let nameStr = NSLocalizedString("Name", comment: "Noun. An item's name.")
+        let dateStr = NSLocalizedString("Date", comment: "Noun. The date something was created.")
+        let typeStr = NSLocalizedString("Type", comment: "Noun. The type or category of something.")
+        let nameRule = SortRule(field: "name", displayName: nameStr, ascending: true, caseInsensitive: true)
+        let dateRule = SortRule(field: "date", displayName: dateStr, ascending: true)
+
+        let typeRules = [
+            SortRule(field: "type", displayName: typeStr, ascending: false, caseInsensitive: true),
+            nameRule,
+            dateRule
         ]
         let typeSort = SortMode(defaultsKey: "AssetSortModeType",
-                                title: NSLocalizedString("Type", comment: "Noun. The title of a list that is sorted by the types of objects in the list."),
+                                title: typeStr,
                                 rules: typeRules,
                                 hasSections: true) { (title) -> String in
                                     guard let type = StoryAssetType(rawValue: title) else {
@@ -25,32 +32,28 @@ class AssetStore: Store {
                                     }
                                     return type.displayName()
                                 }
-        let orderRules: [SortRule] = [
-            SortRule(field: "sorted", displayName: NSLocalizedString("Sorted", comment: "Adjective. Refers whether items have been sorted or are unsorted."), ascending: false),
-            SortRule(field: "order", displayName: NSLocalizedString("Order", comment: "Noun. Refers to the order or arrangement of items in a list."), ascending: true),
-            SortRule(field: "date", displayName: NSLocalizedString("Date", comment: "Noun. The date something was created."), ascending: true)
-        ]
-        let orderSort = SortMode(defaultsKey: "AssetSortModeOrder",
-                                 title: NSLocalizedString("Order", comment: "Noun. Refers to the order or arrangement of items in a list."),
-                                 rules: orderRules,
+        let dateRules = [dateRule, nameRule]
+        let dateSort = SortMode(defaultsKey: "AssetSortModeDate",
+                                 title: dateStr,
+                                 rules: dateRules,
                                  hasSections: true) { (title) -> String in
-                                    let sorted = NSLocalizedString("Sorted", comment: "Noun. Refers to items that have been sorted into a specific order or grouping.")
-                                    let unsorted = NSLocalizedString("Unsorted", comment: "Noun. Refers to items that have been not been sorted into a specific order or grouping.")
-                                    return title == "1" ? sorted : unsorted
+                                    let formatter = DateFormatter()
+                                    formatter.dateFormat = "yyyy-MM-dd' 'HH:mm:ssZ"
+                                    guard let date = formatter.date(from: title) else {
+                                        return ""
+                                    }
+
+                                    formatter.dateStyle = .medium
+                                    formatter.timeStyle = .none
+
+                                    return formatter.string(from: date)
                                 }
-        return SortOrganizer(defaultsKey: "AssetSortOrganizerIndex", modes: [typeSort, orderSort])
+        return SortOrganizer(defaultsKey: "AssetSortOrganizerIndex", modes: [typeSort, dateSort])
     }()
 
     // TODO: This is a stub for now and will be improved as features are added.
     var allowedExtensions: [String] {
         return ["png", "jpg", "jpeg"]
-    }
-
-    /// Whethher the StoryAssets managed by the store can be sorted. This applies
-    /// only to the assets wrangled by the SortOrganizer.
-    var canSortAssets: Bool {
-        // True if the selected sort option is orderSort.
-        return sortOrganizer.selectedIndex == 1
     }
 
     override init(dispatcher: ActionDispatcher = .global) {
@@ -67,8 +70,8 @@ class AssetStore: Store {
             switch action {
             case .sortMode(let index):
                 selectSortMode(index: index)
-            case .applyOrder(let order):
-                applySortOrder(order: order)
+            case .sortDirection(let ascending):
+                setSortDirection(ascending: ascending)
             case .createAssetFor(let text):
                 createAssetFor(text: text)
             case .deleteAsset(let uuid):
@@ -79,12 +82,14 @@ class AssetStore: Store {
                 updateCaption(assetID: assetID, caption: caption)
             case .updateAltText(let assetID, let altText):
                 updateAltText(assetID: assetID, altText: altText)
+            case .flagToUpload(let assetID):
+                flagToUpload(assetID: assetID)
             }
         }
     }
 }
 
-// MARK: - Actions
+// MARK: - Sorting
 
 extension AssetStore {
 
@@ -94,6 +99,10 @@ extension AssetStore {
     ///
     func selectSortMode(index: Int) {
         sortOrganizer.select(index: index)
+    }
+
+    func setSortDirection(ascending: Bool) {
+        sortOrganizer.setAscending(ascending: ascending)
     }
 
 }
@@ -211,7 +220,8 @@ extension AssetStore {
         asset.assetType = type
         asset.name = assetName(from: name)
         let date = Date()
-        asset.date = date
+        // The date field is used for sorting table sections. We only care about the day of the week so normalize the time value.
+        asset.date = Calendar(identifier: Calendar.Identifier.iso8601).startOfDay(for: date)
         asset.modified = date
         asset.synced = date
         asset.uuid = UUID()
@@ -362,29 +372,6 @@ extension AssetStore {
         }
     }
 
-    /// Updates the sort order of the StoryAssets matching the specified UUIDs.
-    ///
-    /// - Parameter order: A dictionary representing the StoryAssets to update.
-    /// Keys should be the asset UUIDs and values should be the desired sort order
-    /// for the assets.
-    ///
-    func applySortOrder(order: [UUID: Int]) {
-        CoreDataManager.shared.performOnWriteContext { context in
-            for (key, value) in order {
-                let fetchRequest = StoryAsset.defaultFetchRequest()
-                fetchRequest.predicate = NSPredicate(format: "uuid = %@", key as CVarArg)
-
-                guard let asset = try? context.fetch(fetchRequest).first else {
-                    continue
-                }
-
-                asset.order = Int16(value)
-            }
-
-            CoreDataManager.shared.saveContext(context: context)
-        }
-    }
-
     /// Updates the caption of a StoryAsset matching the specified UUID.
     ///
     /// - Parameters:
@@ -456,9 +443,9 @@ extension AssetStore {
         asset.name = remoteMedia.title
         asset.altText = remoteMedia.altText
         asset.caption = remoteMedia.caption
-        asset.date = remoteMedia.dateGMT
         asset.modified = remoteMedia.modifiedGMT
         asset.synced = Date()
+        asset.flagToUpload = false
     }
 
     /// Updates properties for the StoryAssets owned by the specified StoryFolders
@@ -514,6 +501,39 @@ extension AssetStore {
                 onComplete()
             }
         }
+    }
+
+    /// Flag an asset for upload.
+    ///
+    /// - Parameters:
+    ///   - assetID: The UUID of the StoryAsset to upload.
+    ///   - onComplete: A block called after changes are saved.
+    ///
+    func flagToUpload(assetID: UUID, onComplete: (() -> Void)? = nil) {
+        guard
+            let asset = getStoryAssetByID(uuid: assetID),
+            asset.assetType != .textNote, // Do not flag text notes.
+            asset.remoteID == 0, // Do not flag assets that already have a remote.
+            asset.flagToUpload == false // Skip if asset is already flagged.
+        else {
+            onComplete?()
+            return
+        }
+
+        let objID = asset.objectID
+        CoreDataManager.shared.performOnWriteContext { context in
+            let asset = context.object(with: objID) as! StoryAsset
+
+            asset.flagToUpload = true
+
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+                SyncCoordinator.shared.process(steps: [.createRemoteAssets])
+            }
+        }
+
     }
 
 }
@@ -695,7 +715,10 @@ extension AssetStore {
         let context = CoreDataManager.shared.mainContext
         let fetchRequest = StoryAsset.defaultFetchRequest()
 
-        fetchRequest.predicate = NSPredicate(format: "folder.site == %@ AND remoteID == 0 AND type != 'textNote'", site)
+        let predicateA = NSPredicate(format: "folder.site == %@ AND remoteID == 0 AND type != 'textNote'", site)
+        let predicateB = NSPredicate(format: "folder.autoSyncAssets == true OR flagToUpload == true")
+        fetchRequest.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicateA, predicateB])
+
         if limit > 0 {
             fetchRequest.fetchLimit = limit
         }

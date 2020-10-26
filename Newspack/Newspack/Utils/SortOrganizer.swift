@@ -11,11 +11,14 @@ struct SortRule {
     let displayName: String
     /// Whether to sort ascending or not.
     var ascending: Bool
+    /// Whether to sort ascending or not.
+    let caseInsensitive: Bool
 
-    init(field: String, displayName: String, ascending: Bool) {
+    init(field: String, displayName: String, ascending: Bool, caseInsensitive: Bool = false) {
         self.field = field
         self.displayName = displayName
         self.ascending = ascending
+        self.caseInsensitive = caseInsensitive
     }
 
     /// A convenience initializer. Use to restore a serialized sort rule from a
@@ -32,9 +35,11 @@ struct SortRule {
             // We should never get here but...
             fatalError()
         }
+
         self.field = field
         self.displayName = displayName
         self.ascending = ascending
+        self.caseInsensitive = dict["caseInsensitive"] as? Bool ?? false
     }
 
     /// Changes the value of ascending.
@@ -53,7 +58,8 @@ struct SortRule {
         return [
             "field": field,
             "displayName": displayName,
-            "ascending": ascending
+            "ascending": ascending,
+            "caseInsensitive": caseInsensitive
         ]
     }
 }
@@ -85,7 +91,11 @@ class SortMode {
     var descriptors: [NSSortDescriptor] {
         var arr = [NSSortDescriptor]()
         for rule in rules {
-            arr.append(NSSortDescriptor(key: rule.field, ascending: rule.ascending))
+            if rule.caseInsensitive {
+                arr.append(NSSortDescriptor(key: rule.field, ascending: rule.ascending, selector: #selector(NSString.localizedCaseInsensitiveCompare)))
+            } else {
+                arr.append(NSSortDescriptor(key: rule.field, ascending: rule.ascending))
+            }
         }
         return arr
     }
@@ -184,6 +194,7 @@ class SortMode {
         }
         UserDefaults.shared.set(arr, forKey: defaultsKey)
     }
+
 }
 
 /// Manages a list of sort modes.
@@ -239,5 +250,18 @@ class SortOrganizer {
     ///
     private func savedIndex() -> Int {
         return UserDefaults.shared.integer(forKey: defaultsKey)
+    }
+
+    /// Set the ascending property for the first rule for each managed sort mode.
+    ///
+    /// - Parameter ascending: True or false.
+    ///
+    func setAscending(ascending: Bool) {
+        for mode in modes {
+            guard let rule = mode.rules.first else {
+                continue
+            }
+            mode.updateRule(for: rule.field, value: ascending)
+        }
     }
 }
