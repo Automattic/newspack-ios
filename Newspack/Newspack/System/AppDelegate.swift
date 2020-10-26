@@ -90,11 +90,7 @@ extension AppDelegate {
     }
 
     func handleSessionChange() {
-        let sessionState = SessionManager.shared.state
-        if sessionState == .initialized {
-            StartupHelper.resetSyncFlags()
-            StartupHelper.purgeStaleStagedEdits()
-        }
+        // TODO: This may no longer be needed.
     }
 
 }

@@ -18,28 +18,13 @@ class MediaServiceRemoteTests: RemoteTestCase {
         receipt = nil
     }
 
-
-    func testFetchMediaItems() {
-        let expect = expectation(description: "fetch media")
-        stubRemoteResponse("media", filename: remoteMediasEditFile, contentType: .ApplicationJSON)
-        let filter = ["media_type": "image"] as [String: AnyObject]
-        let remote = MediaServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent") )
-        remote.fetchMediaItems(filter: filter, page: 1, perPage: 10) { (result, error) in
-            expect.fulfill()
-            XCTAssertEqual(result!.count, 10)
-        }
-
-        waitForExpectations(timeout: timeout, handler: nil)
-
-    }
-
     func testFetchMedia() {
         let expect = expectation(description: "fetch media")
 
-        stubRemoteResponse("media", filename: remoteMediaEditFile, contentType: .ApplicationJSON)
+        stubRemoteResponse("media", filename: remoteMediasEditFile, contentType: .ApplicationJSON)
 
         let remote = MediaServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"))
-        remote.fetchMedia(mediaID: 1) { (media, error) in
+        remote.fetchMedia(for: [1]) { (media, error) in
             XCTAssertNotNil(media)
             expect.fulfill()
         }
@@ -57,7 +42,7 @@ class MediaServiceRemoteTests: RemoteTestCase {
         let params = ["title": "Example"] as [String: AnyObject]
         let remote = MediaServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent") )
 
-        remote.createMedia(mediaParameters: params, localURL: localURL, filename: "image.png", mimeType: "image/png") { (media, error) in
+        _ = remote.createMedia(mediaParameters: params, localURL: localURL, filename: "image.png", mimeType: "image/png") { (media, error) in
             expect.fulfill()
             XCTAssertNotNil(media)
         }
@@ -73,18 +58,6 @@ class MediaServiceRemoteTests: RemoteTestCase {
         for param in sanitizedParams {
             XCTAssertTrue(expectedKeys.contains(param.key))
         }
-    }
-
-    func testRemoteItemsFromResponse() {
-        guard let response = Loader.jsonObject(for: "remote-medias-edit") as? [[String: AnyObject]] else {
-            XCTAssert(false)
-            return
-        }
-
-        let remote = MediaServiceRemote(wordPressComRestApi: WordPressCoreRestApi(oAuthToken: "token", userAgent: "agent"))
-        let result = remote.remoteItemsFromResponse(response: response)
-
-        XCTAssert(result.count == 10)
     }
 
     func testRemoteMediaArrayFromResponse() {

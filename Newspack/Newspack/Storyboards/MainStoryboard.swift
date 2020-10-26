@@ -7,9 +7,6 @@ class MainStoryboard {
         typealias RawValue = String
         case initial = "InitialViewController"
         case siteMenu = "SiteMenuViewController"
-        case postList = "PostListViewController"
-        case editor = "EditorViewController"
-        case mediaDetail = "MediaDetailViewController"
         case storyNav = "StoryNavigationController"
         case folderList = "FoldersViewController"
         case assetsList = "AssetsViewController"

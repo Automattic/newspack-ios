@@ -72,23 +72,6 @@ struct RemotePost {
     }
 }
 
-/// Represent idntifying information about a post.
-///
-struct RemotePostID {
-    let postID: Int64
-    let dateGMT: Date
-    let modifiedGMT: Date
-    let revisionCount: Int16
-
-    init(dict: [String: AnyObject]) {
-        postID = dict[intForKey: "id"]
-        dateGMT = Date.dateFromGMTString(string: dict[stringForKey: "date_gmt"])!
-        modifiedGMT = Date.dateFromGMTString(string: dict[stringForKey: "modified_gmt"])!
-        revisionCount = Int16(dict[intAtKeyPath: "_links.version-history.count"])
-    }
-
-}
-
 /// Abbreviated remote representation of a post object.
 ///
 struct RemotePostStub {
