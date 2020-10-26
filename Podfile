@@ -24,8 +24,7 @@ target 'Newspack' do
     pod 'Alamofire', '4.8.0'
     pod 'AlamofireImage', '3.5.2'
 
-    # pod 'WordPressAuthenticator', '~> 1.28.0-beta.2'
-    pod 'WordPressAuthenticator', :git => 'https://github.com/wordpress-mobile/WordPressAuthenticator-iOS.git', :commit => '63ac8b3115ca153265f3d567ac0525287f91f8e6'
+    pod 'WordPressAuthenticator', '~> 1.28.0-beta.2'
     pod 'WordPressKit', '~> 4.19'
     pod 'WPMediaPicker', '~> 1.7.2'
     pod 'WordPressFlux', '1.0.0'
