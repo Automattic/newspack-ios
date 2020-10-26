@@ -17,9 +17,6 @@ class ProgressKey {
 ///
 class ProgressStore {
 
-    static let startedTrackingProgress = NSNotification.Name("startedTrackingProgress")
-    static let stoppedTrackingProgress = NSNotification.Name("stoppedTrackingProgress")
-
     private var store = [UUID: Progress]()
     private var progressKeys = [UUID: ProgressKey]()
 
@@ -71,7 +68,7 @@ class ProgressStore {
     ///   - added: Whether progress is being tracked or not.
     ///
     private func notify(key: ProgressKey, added: Bool) {
-        let name = added ? ProgressStore.startedTrackingProgress : ProgressStore.stoppedTrackingProgress
+        let name:Notification.Name = added ? .startedTrackingProgress : .stoppedTrackingProgress
         NotificationCenter.default.post(name: name, object: key)
     }
 
@@ -92,4 +89,9 @@ class ProgressStore {
         return key
     }
 
+}
+
+extension Notification.Name {
+    static let startedTrackingProgress = Notification.Name("startedTrackingProgress")
+    static let stoppedTrackingProgress = Notification.Name("stoppedTrackingProgress")
 }

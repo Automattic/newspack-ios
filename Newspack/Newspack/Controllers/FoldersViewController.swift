@@ -81,7 +81,7 @@ class FoldersViewController: ToolbarViewController, UITableViewDelegate {
 extension FoldersViewController {
 
     @IBAction func handleMenuButtonTapped(sender: UIBarButtonItem) {
-        NotificationCenter.default.post(name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
+        NotificationCenter.default.post(name: .toggleSidebarNotification, object: nil)
     }
 
     @IBAction func handleSortChanged(sender: UISegmentedControl) {

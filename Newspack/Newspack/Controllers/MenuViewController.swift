@@ -177,7 +177,7 @@ extension MenuDataSource {
         let action = AccountAction.removeAccount(uuid: account.uuid)
         SessionManager.shared.sessionDispatcher.dispatch(action)
         Notification.send(.logoutTapped)
-        NotificationCenter.default.post(name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
+        NotificationCenter.default.post(name: .toggleSidebarNotification, object: nil)
     }
 
     func showAbout() {
@@ -189,7 +189,7 @@ extension MenuDataSource {
 
     func selectSite(uuid: UUID) {
         // For now, we only support a single site, so just toggle closed the menu.
-        NotificationCenter.default.post(name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
+        NotificationCenter.default.post(name: .toggleSidebarNotification, object: nil)
     }
 }
 

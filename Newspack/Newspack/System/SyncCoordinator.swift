@@ -304,7 +304,7 @@ extension SyncCoordinator {
     /// aggressive we can try switching notifications.
     ///
     private func listenForNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleReconcilerStopped(notification:)), name: Reconciler.reconcilerDidStop, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleReconcilerStopped(notification:)), name: .reconcilerDidStop, object: nil)
     }
 
     @objc

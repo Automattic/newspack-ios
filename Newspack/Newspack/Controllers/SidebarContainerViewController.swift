@@ -12,8 +12,6 @@ protocol SidebarContainerDelegate: AnyObject {
 
 class SidebarContainerViewController: UIViewController {
 
-    static let toggleSidebarNotification = NSNotification.Name("toggleSidebarNotification")
-
     struct Constants {
         static let alpha1_0 = CGFloat(1)
         static let alpha0_5 = CGFloat(0.5)
@@ -149,7 +147,7 @@ class SidebarContainerViewController: UIViewController {
         mainViewController.didMove(toParent: self)
         sidebarViewController.didMove(toParent: self)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(handleToggleSidebarNotification(notification:)), name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleToggleSidebarNotification(notification:)), name: .toggleSidebarNotification, object: nil)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -451,4 +449,8 @@ extension SidebarContainerViewController {
         panGestureRecognizer.isEnabled = false
         panGestureRecognizer.isEnabled = true
     }
+}
+
+extension Notification.Name {
+    static let toggleSidebarNotification = Notification.Name("toggleSidebarNotification")
 }

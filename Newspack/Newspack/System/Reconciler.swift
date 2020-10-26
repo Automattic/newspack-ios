@@ -6,16 +6,14 @@ import NewspackFramework
 /// file system with what is currently stored in core data.
 ///
 class Reconciler {
-    static let reconcilerDidStart = NSNotification.Name("ReconcilerDidStart")
-    static let reconcilerDidStop = NSNotification.Name("ReconcilerDidStop")
 
     private var sessionReceipt: Any?
     private(set) var processing = false {
         didSet {
             if processing {
-                NotificationCenter.default.post(name: Reconciler.reconcilerDidStart, object: nil)
+                NotificationCenter.default.post(name: .reconcilerDidStart, object: nil)
             } else {
-                NotificationCenter.default.post(name: Reconciler.reconcilerDidStop, object: nil)
+                NotificationCenter.default.post(name: .reconcilerDidStop, object: nil)
             }
         }
     }
@@ -362,4 +360,9 @@ extension Reconciler {
         process()
     }
 
+}
+
+extension Notification.Name {
+    static let reconcilerDidStart = Notification.Name("ReconcilerDidStart")
+    static let reconcilerDidStop = Notification.Name("ReconcilerDidStop")
 }
