@@ -513,8 +513,10 @@ extension AssetStore {
         guard
             let asset = getStoryAssetByID(uuid: assetID),
             asset.assetType != .textNote, // Do not flag text notes.
-            asset.remoteID == 0 // Do not flag assets that already have a remote.
+            asset.remoteID == 0, // Do not flag assets that already have a remote.
+            asset.flagToUpload == false // Skip if asset is already flagged.
         else {
+            onComplete?()
             return
         }
 
