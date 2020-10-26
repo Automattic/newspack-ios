@@ -5,22 +5,15 @@ import CoreServices
 @objc(StoryAsset)
 public class StoryAsset: NSManagedObject, TextNoteCellProvider, PhotoCellProvider, VideoCellProvider, AudioCellProvider {
 
-    public override func willSave() {
-        super.willSave()
-
-        updateSortedIfNeeded()
-    }
-
-    /// Called from willSave which will be called again if there are any changes
-    /// so only update the property if necessary.
-    ///
-    func updateSortedIfNeeded() {
-        let isSorted = order != -1
-        if sorted == isSorted {
-            return
+    var needsManualUpload: Bool {
+        // A remote ID means the asset is already uploaded.
+        // Text notes do not have files to upload.
+        if remoteID > 0 || assetType == .textNote {
+            return false
         }
-        sorted = isSorted
+        return !folder.autoSyncAssets
     }
+
 }
 
 enum StoryAssetType: String {

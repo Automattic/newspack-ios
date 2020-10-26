@@ -5,6 +5,7 @@ protocol PhotoCellProvider {
     var uuid: UUID! { get }
     var name: String! { get }
     var caption: String! { get }
+    var needsManualUpload: Bool { get }
 }
 
 class PhotoTableViewCell: ProgressCell {
@@ -15,6 +16,9 @@ class PhotoTableViewCell: ProgressCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var captionLabel: UILabel!
     @IBOutlet var syncButton: UIButton!
+
+    var uuid: UUID?
+    var syncCallback: ((UUID) -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,14 +34,20 @@ class PhotoTableViewCell: ProgressCell {
     }
 
     @IBAction func handleSyncTapped() {
-        print("tapped")
+        guard let uuid = uuid else {
+            return
+        }
+        syncCallback?(uuid)
     }
 
-    func configure(photo: PhotoCellProvider, image: UIImage?) {
+    func configure(photo: PhotoCellProvider, image: UIImage?, callback: @escaping (UUID) -> Void) {
+        uuid = photo.uuid
         thumbnail.image = image
         titleLabel.text = photo.name
         captionLabel.text = photo.caption
         observeProgress(uuid: photo.uuid)
+        syncButton.isHidden = !photo.needsManualUpload
+        syncCallback = callback
     }
 
 }
