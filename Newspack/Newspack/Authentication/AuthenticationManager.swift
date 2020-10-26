@@ -4,6 +4,19 @@ import WordPressFlux
 import Gridicons
 import NewspackFramework
 
+struct AuthenticationConstants {
+    /// Login with site URL instructions.
+    ///
+    static let siteInstructions = NSLocalizedString(
+        "Enter the address of the Newspack site you'd like to connect.",
+        comment: "Sign in instructions for logging in with a URL."
+    )
+
+    static let usernamePasswordInstructions = NSLocalizedString(
+        "Enter your WordPress.com username and password to connect to your Newspack site.",
+        comment: "Instructions for logging into Newspack with WordPress.com credentials.")
+}
+
 class AuthenticationManager {
 
     /// Used to hold the competion callback when syncing.
@@ -34,7 +47,6 @@ class AuthenticationManager {
                                                                 enableSignInWithApple: false,
                                                                 enableSignupWithGoogle: false,
                                                                 enableUnifiedAuth: false,
-//                                                                enableUnifiedSiteAddress: false,
                                                                 enableUnifiedCarousel: false)
 
         let style = WordPressAuthenticatorStyle(primaryNormalBackgroundColor: .primaryButtonBackground,
@@ -64,7 +76,14 @@ class AuthenticationManager {
                                                 prologueBackgroundColor: .primary,
                                                 prologueTitleColor: .textInverted)
 
-        WordPressAuthenticator.initialize(configuration: configuration, style: style, unifiedStyle: nil)
+        let displayStrings = WordPressAuthenticatorDisplayStrings(siteLoginInstructions: AuthenticationConstants.siteInstructions,
+                                                                  usernamePasswordInstructions: AuthenticationConstants.usernamePasswordInstructions)
+
+        WordPressAuthenticator.initialize(configuration: configuration,
+                                          style: style,
+                                          unifiedStyle: nil,
+                                          displayImages: WordPressAuthenticatorDisplayImages.defaultImages,
+                                          displayStrings: displayStrings)
         initialized = true
     }
 
@@ -104,13 +123,14 @@ class AuthenticationManager {
 
         let accountHelper = AccountSetupHelper(token: authToken, network: url)
         accountHelper.configure { (error) in
-            if error == nil {
-                self.performSyncCompletion()
+            if let error = error {
+                // This could happen if there is a network error whle configuring the account.
+                // In this case we probably need to restart the flow from the beginning.
+                LogError(message: error.localizedDescription)
+                self.promptAndNotifyUnableToLogIn()
                 return
             }
-
-            // TODO: Handle the error.
-            // Probably we need to restart the flow?
+            self.performSyncCompletion()
         }
     }
 
@@ -126,14 +146,35 @@ class AuthenticationManager {
 
 extension AuthenticationManager: WordPressAuthenticatorDelegate {
 
+    func promptAndNotifyUnableToLogIn() {
+        let alertTitle = NSLocalizedString("Unable to Log In", comment: "The title of an error message.")
+        let actionTitle = NSLocalizedString("OK", comment: "OK. A button title.")
+        let alertMessage = NSLocalizedString("Newspack was unable to log in.", comment: "An error message.")
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
+        let action = UIAlertAction(title: actionTitle, style: .default, handler: { _ in
+            NotificationCenter.default.post(name: .authNeedsRestart, object: nil)
+        })
+        alert.addAction(action)
+
+        AppDelegate.shared.window?.rootViewController?.present(alert, animated: true, completion: nil)
+    }
+
     func userAuthenticatedWithAppleUserID(_ appleUserID: String) {
         // No op
     }
 
     func shouldPresentUsernamePasswordController(for siteInfo: WordPressComSiteInfo?, onCompletion: @escaping (Error?, Bool) -> Void) {
-        onCompletion(nil, true)
+        if siteInfo?.isWPCom == false && siteInfo?.hasJetpack == false {
+            let error = AuthErrors.invalidCredentialsError()
+            onCompletion(error, false)
+            return
+        }
+        // Pass false, regardless of whether this is a self-hosted site or not.
+        // This is so the authenticator will always attempt wpcom auth.
+        // The instructions shown to the user will be to use wpcom credentials.
+        onCompletion(nil, false)
     }
-
 
     /// Indicates if the active Authenticator can be dismissed, or not.
     ///
@@ -220,11 +261,14 @@ extension AuthenticationManager: WordPressAuthenticatorDelegate {
     ///     - onCompletion: Closure to be executed on completion.
     ///
     func sync(credentials: AuthenticatorCredentials, onCompletion: @escaping () -> Void) {
-        if let creds = credentials.wpcom {
-            processCredentials(authToken: creds.authToken, url: creds.siteURL, onCompletion: onCompletion)
-        } else if let _ = credentials.wporg {
-            // TODO: handle this
+        guard let creds = credentials.wpcom else {
+            // A self-hosted (or unsupported) login.
+            // This shouldn't happen but if it does log the error and restart the flow.
+            LogError(message: "Attempted log in with unsupported credentials.")
+            self.promptAndNotifyUnableToLogIn()
+            return
         }
+        processCredentials(authToken: creds.authToken, url: creds.siteURL, onCompletion: onCompletion)
     }
 
     /// Signals the Host App that a given Analytics Event has occurred.
@@ -244,4 +288,30 @@ extension AuthenticationManager: WordPressAuthenticatorDelegate {
     func track(event: WPAnalyticsStat, error: Error) {
 
     }
+
+}
+
+struct AuthErrors: Error {
+    static let errorDomain = "com.automattic.newspack.auth"
+
+    enum Codes: Int {
+        case invalidCredentials
+    }
+
+    static func invalidCredentialsError() -> Error {
+        let domain = errorDomain
+
+        let message = NSLocalizedString(
+            "Unable to log in with the credentials provided. Please use the WordPress.com credentials used to connect your Newspack site to Jetpack.",
+            comment: "An error message.")
+
+        let userInfo = [NSLocalizedDescriptionKey: message]
+
+        return NSError(domain: domain, code: AuthErrors.Codes.invalidCredentials.rawValue, userInfo: userInfo)
+    }
+
+}
+
+extension Notification.Name {
+    static let authNeedsRestart = Notification.Name("AuthenticationNeedsRestart")
 }
