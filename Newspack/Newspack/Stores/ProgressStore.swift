@@ -68,7 +68,7 @@ class ProgressStore {
     ///   - added: Whether progress is being tracked or not.
     ///
     private func notify(key: ProgressKey, added: Bool) {
-        let name:Notification.Name = added ? .startedTrackingProgress : .stoppedTrackingProgress
+        let name: Notification.Name = added ? .startedTrackingProgress : .stoppedTrackingProgress
         NotificationCenter.default.post(name: name, object: key)
     }
 
