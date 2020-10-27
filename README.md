@@ -13,3 +13,4 @@ A companion app to the Newspack service.
 
 If you need to update installed pods due to changes in the `Podfile` run `bundle exec pod install` to ensure the correct versio of CocoaPods is used.
 
+Test.
