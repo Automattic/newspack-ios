@@ -8,6 +8,7 @@ class MenuViewController: UITableViewController {
 
     private let topInset = CGFloat(44)
     private var receipt: Any?
+    private var sessionReceipt: Any?
 
     lazy var menuDataSource: MenuDataSource = {
         return MenuDataSource(presenter: self)
@@ -16,13 +17,15 @@ class MenuViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        receipt = StoreContainer.shared.accountDetailsStore.onChange {
-            self.configureHeader()
+        sessionReceipt = SessionManager.shared.onChange { [weak self] in
+            self?.handleSessionChanged()
         }
 
         configureInsets()
         configureHeader()
         configureStyle()
+
+        handleSessionChanged()
     }
 
     func configureHeader() {
@@ -42,7 +45,22 @@ class MenuViewController: UITableViewController {
     }
 }
 
+// MARK: - Session Related
+
+extension MenuViewController {
+
+    func handleSessionChanged() {
+        receipt = StoreContainer.shared.accountDetailsStore.onChange {
+            self.configureHeader()
+        }
+        menuDataSource.updateSections()
+        tableView.reloadData()
+    }
+
+}
+
 // MARK: - TableView Methods
+
 extension MenuViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
         return menuDataSource.sections.count
@@ -177,7 +195,7 @@ extension MenuDataSource {
         let action = AccountAction.removeAccount(uuid: account.uuid)
         SessionManager.shared.sessionDispatcher.dispatch(action)
         Notification.send(.logoutTapped)
-        NotificationCenter.default.post(name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
+        NotificationCenter.default.post(name: .toggleSidebarNotification, object: nil)
     }
 
     func showAbout() {
@@ -189,7 +207,7 @@ extension MenuDataSource {
 
     func selectSite(uuid: UUID) {
         // For now, we only support a single site, so just toggle closed the menu.
-        NotificationCenter.default.post(name: SidebarContainerViewController.toggleSidebarNotification, object: nil)
+        NotificationCenter.default.post(name: .toggleSidebarNotification, object: nil)
     }
 }
 
