@@ -147,17 +147,7 @@ class AuthenticationManager {
 extension AuthenticationManager: WordPressAuthenticatorDelegate {
 
     func promptAndNotifyUnableToLogIn() {
-        let alertTitle = NSLocalizedString("Unable to Log In", comment: "The title of an error message.")
-        let actionTitle = NSLocalizedString("OK", comment: "OK. A button title.")
-        let alertMessage = NSLocalizedString("Newspack was unable to log in.", comment: "An error message.")
-        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
-
-        let action = UIAlertAction(title: actionTitle, style: .default, handler: { _ in
-            NotificationCenter.default.post(name: .authNeedsRestart, object: nil)
-        })
-        alert.addAction(action)
-
-        AppDelegate.shared.window?.rootViewController?.present(alert, animated: true, completion: nil)
+        NotificationCenter.default.post(name: .authNeedsRestart, object: nil)
     }
 
     func userAuthenticatedWithAppleUserID(_ appleUserID: String) {

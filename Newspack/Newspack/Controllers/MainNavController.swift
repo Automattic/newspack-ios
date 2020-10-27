@@ -88,6 +88,21 @@ extension MainNavController {
     }
 
     @objc func handleAuthError() {
+        let alertTitle = NSLocalizedString("Unable to Log In", comment: "The title of an error message.")
+        let actionTitle = NSLocalizedString("OK", comment: "OK. A button title.")
+        let alertMessage = NSLocalizedString("Newspack was unable to log in. Please try again.", comment: "An error message.")
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
+        let action = UIAlertAction(title: actionTitle, style: .default, handler: { [weak self] _ in
+            self?.restartAuth()
+        })
+        alert.addAction(action)
+
+        let controller = presentedViewController ?? self
+        controller.present(alert, animated: true, completion: nil)
+    }
+
+    func restartAuth() {
         // Dismiss the current instance of authentication.
         clearAuthManager()
         presentedViewController?.dismiss(animated: true, completion: { [weak self] in
