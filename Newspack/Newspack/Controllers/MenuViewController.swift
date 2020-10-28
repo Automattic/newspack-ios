@@ -53,8 +53,11 @@ extension MenuViewController {
         receipt = StoreContainer.shared.accountDetailsStore.onChange {
             self.configureHeader()
         }
-        menuDataSource.updateSections()
-        tableView.reloadData()
+        // To avoid a subtle UI behavior when logging out only reload when initalized.
+        if SessionManager.shared.state == .initialized {
+            menuDataSource.updateSections()
+            tableView.reloadData()
+        }
     }
 
 }
