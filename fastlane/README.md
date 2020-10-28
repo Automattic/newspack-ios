@@ -21,6 +21,11 @@ or alternatively using `brew cask install fastlane`
 fastlane ios build_and_upload_installable_build
 ```
 Builds and uploads an installable build
+### ios download_certs_and_profiles
+```
+fastlane ios download_certs_and_profiles
+```
+
 
 ----
 

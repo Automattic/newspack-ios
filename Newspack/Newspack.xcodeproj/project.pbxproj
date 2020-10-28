@@ -2044,6 +2044,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SECRETS_PATH = "$(SRCROOT)/../.configure-files/newspack_app_credentials.json";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2066,6 +2067,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SECRETS_PATH = "$(SRCROOT)/../.configure-files/newspack_app_credentials.json";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -2367,9 +2369,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.automattic.newspack.alpha;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match InHouse com.automattic.newspack.alpha";
+				SECRETS_PATH = "$(SRCROOT)/../.configure-files/newspack_app_credentials.json";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
