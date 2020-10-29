@@ -17,7 +17,7 @@ extension Data {
 
         self.copyBytes(to: &values, count: 1)
 
-        switch (values[0]) {
+        switch values[0] {
         case 0xFF:
             return .jpg
         case 0x89:
