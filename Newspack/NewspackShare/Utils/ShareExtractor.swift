@@ -1,14 +1,20 @@
 import Foundation
 import CoreServices
 import UIKit
+import NewspackFramework
 
 /// A type that represents the information we can extract from an extension context
 ///
 struct ExtractedShare {
     var images: [ExtractedImage]
+    var movies: [ExtractedMovie]
 }
 
 struct ExtractedImage {
+    let url: URL
+}
+
+struct ExtractedMovie {
     let url: URL
 }
 
@@ -30,8 +36,10 @@ struct ShareExtractor {
     ///   - completion: the block to be called when the extractor has obtained content.
     ///
     func loadShare(completion: @escaping (ExtractedShare) -> Void) {
-        extractImages { extractedImages in
-            completion(ExtractedShare(images: extractedImages))
+        extractMovies { extractedMovies in
+            self.extractImages { extractedImages in
+                completion(ExtractedShare(images: extractedImages, movies: extractedMovies))
+            }
         }
     }
 
@@ -56,12 +64,17 @@ private struct ExtractedItem {
     /// An image
     ///
     var images = [ExtractedImage]()
+    var movies = [ExtractedMovie]()
 }
 
 private extension ShareExtractor {
 
     var imageExtractor: ExtensionContentExtractor? {
         return ImageExtractor(tempDirectory: tempDirectory)
+    }
+
+    var movieExtractor: ExtensionContentExtractor? {
+        return MovieExtractor(tempDirectory: tempDirectory)
     }
 
     func extractImages(completion: @escaping ([ExtractedImage]) -> Void) {
@@ -75,21 +88,43 @@ private extension ShareExtractor {
                 return
             }
             var extractedImages = [ExtractedImage]()
-            extractedItems.forEach({ item in
-                item.images.forEach({ extractedImage in
+            extractedItems.forEach { item in
+                item.images.forEach { extractedImage in
                     extractedImages.append(extractedImage)
-                })
-            })
+                }
+            }
 
             completion(extractedImages)
         }
+    }
+
+    func extractMovies(completion: @escaping ([ExtractedMovie]) -> Void) {
+        guard let movieExtractor = movieExtractor else {
+            completion([])
+            return
+        }
+        movieExtractor.extract(context: extensionContext) { extractedItems in
+            guard extractedItems.count > 0 else {
+                completion([])
+                return
+            }
+            var extractedMovies = [ExtractedMovie]()
+            extractedItems.forEach { item in
+                item.movies.forEach { movie in
+                    extractedMovies.append(movie)
+                }
+            }
+
+            completion(extractedMovies)
+        }
+
     }
 }
 
 private protocol ExtensionContentExtractor {
     func canHandle(context: NSExtensionContext) -> Bool
     func extract(context: NSExtensionContext, completion: @escaping ([ExtractedItem]) -> Void)
-    func saveToSharedContainer(image: UIImage) -> URL?
+    func saveToSharedContainer(data: Data, fileExtension: String) -> URL?
     func saveToSharedContainer(wrapper: FileWrapper) -> URL?
     func copyToSharedContainer(url: URL) -> URL?
 }
@@ -136,18 +171,14 @@ private extension TypeBasedExtensionContentExtractor {
         syncGroup.notify(queue: DispatchQueue.main) {
             completion(results)
         }
-
     }
 
-    // TODO: We probably need PNG and HEIC options as well.  Not just JPGs. TBD.
-    func saveToSharedContainer(image: UIImage) -> URL? {
-        guard let encodedMedia = image.JPEGEncoded(),
-            let fullPath = tempPath(for: "jpg") else {
-                return nil
+    func saveToSharedContainer(data: Data, fileExtension: String) -> URL? {
+        guard let fullPath = tempPath(for: fileExtension) else {
+            return nil
         }
-
         do {
-            try encodedMedia.write(to: fullPath, options: [.atomic])
+            try data.write(to: fullPath, options: [.atomic])
         } catch {
             print("Error saving \(fullPath) to shared container: \(String(describing: error))")
             return nil
@@ -202,17 +233,55 @@ private struct ImageExtractor: TypeBasedExtensionContentExtractor {
 
         switch payload {
         case let url as URL:
-            if let imageURL = copyToSharedContainer(url: url) {
-                returnedItem.images = [ExtractedImage(url: imageURL)]
+            if let itemURL = copyToSharedContainer(url: url) {
+                returnedItem.images = [ExtractedImage(url: itemURL)]
             }
-        case let data as Data:
-            if let image = UIImage(data: data),
-                let imageURL = saveToSharedContainer(image: image) {
-                returnedItem.images = [ExtractedImage(url: imageURL)]
+        case var data as Data:
+            if data.imageContentType == .unknown, let encodedData = encodeImageDataAsJPEG(data: data) {
+                data = encodedData
+            }
+            let ext = data.imageContentType.fileExtension
+            if let itemURL = saveToSharedContainer(data: data, fileExtension: ext) {
+                returnedItem.images = [ExtractedImage(url: itemURL)]
             }
         case let image as UIImage:
-            if let imageURL = saveToSharedContainer(image: image) {
-                returnedItem.images = [ExtractedImage(url: imageURL)]
+            // If we have a UIImage, just save as a JPEG for now.
+            if let data = image.JPEGEncoded(),
+               let itemURL = saveToSharedContainer(data: data, fileExtension: Data.ImageContentType.jpg.fileExtension) {
+                returnedItem.images = [ExtractedImage(url: itemURL)]
+            }
+        default:
+            break
+        }
+        return returnedItem
+    }
+
+    func encodeImageDataAsJPEG(data: Data) -> Data? {
+        guard
+            let image = UIImage(data: data),
+            let data = image.JPEGEncoded()
+        else {
+            return nil
+        }
+        return data
+    }
+}
+
+private struct MovieExtractor: TypeBasedExtensionContentExtractor {
+    typealias Payload = AnyObject
+    let acceptedType = kUTTypeMovie as String // Note: The UTI for kUTTypeMovie encompases other types like kUTTypeVideo
+    let tempDirectory: URL
+    func convert(payload: AnyObject) -> ExtractedItem? {
+        var returnedItem = ExtractedItem()
+
+        switch payload {
+        case let url as URL:
+            if let itemURL = copyToSharedContainer(url: url) {
+                returnedItem.movies = [ExtractedMovie(url: itemURL)]
+            }
+        case let data as Data:
+            if let itemURL = saveToSharedContainer(data: data, fileExtension: "mp4") {
+                returnedItem.movies = [ExtractedMovie(url: itemURL)]
             }
         default:
             break

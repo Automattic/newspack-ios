@@ -764,6 +764,11 @@ extension FolderStore {
     ///
     func syncAndProcessRemoteDrafts(onComplete: @escaping (Error?) -> Void) {
         let postIDs = getStoryFolderPostIDs()
+        if postIDs.count == 0 {
+            onComplete(nil)
+            return
+        }
+
         let perPage = min(postIDs.count, 100)
 
         // Sync the posts for these POST IDs.

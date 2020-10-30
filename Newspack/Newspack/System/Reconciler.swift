@@ -273,7 +273,7 @@ class Reconciler {
 
         // Filter out any items that are not supported types.
         rawItems = rawItems.filter({ (url) -> Bool in
-            return store.allowedExtensions.contains(url.pathExtension.lowercased())
+            return store.isSupportedType(url: url)
         })
 
         for asset in assets {

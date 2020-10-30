@@ -51,11 +51,6 @@ class AssetStore: Store {
         return SortOrganizer(defaultsKey: "AssetSortOrganizerIndex", modes: [typeSort, dateSort])
     }()
 
-    // TODO: This is a stub for now and will be improved as features are added.
-    var allowedExtensions: [String] {
-        return ["png", "jpg", "jpeg"]
-    }
-
     override init(dispatcher: ActionDispatcher = .global) {
 
         folderManager = SessionManager.shared.folderManager
@@ -87,6 +82,21 @@ class AssetStore: Store {
             }
         }
     }
+}
+
+// MARK: - Validation
+
+extension AssetStore {
+
+    /// Check if a URL points to a supported asset type.
+    ///
+    /// - Parameter url: A file URL to check.
+    /// - Returns: True if the URL points to a supported type. Otherwise false.
+    ///
+    func isSupportedType(url: URL) -> Bool {
+        return url.isImage || url.isVideo
+    }
+
 }
 
 // MARK: - Sorting

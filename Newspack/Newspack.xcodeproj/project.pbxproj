@@ -192,6 +192,7 @@
 		E6AB672924E88182003D5D2A /* VideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6AB671E24E88182003D5D2A /* VideoTableViewCell.xib */; };
 		E6AB672A24E88182003D5D2A /* StoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB671F24E88182003D5D2A /* StoryTableViewCell.swift */; };
 		E6AC98B823CCD5DE00E95381 /* MainNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AC98B723CCD5DE00E95381 /* MainNavController.swift */; };
+		E6AE5243254A103E002FADD7 /* Data+ImageContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AE5242254A103E002FADD7 /* Data+ImageContentType.swift */; };
 		E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */; };
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
 		E6B7728824BCD8DA00CA8AB8 /* SortOrganizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6B7728724BCD8DA00CA8AB8 /* SortOrganizer.swift */; };
@@ -484,6 +485,7 @@
 		E6AB671E24E88182003D5D2A /* VideoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoTableViewCell.xib; sourceTree = "<group>"; };
 		E6AB671F24E88182003D5D2A /* StoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryTableViewCell.swift; sourceTree = "<group>"; };
 		E6AC98B723CCD5DE00E95381 /* MainNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavController.swift; sourceTree = "<group>"; };
+		E6AE5242254A103E002FADD7 /* Data+ImageContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+ImageContentType.swift"; sourceTree = "<group>"; };
 		E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-ids-edit.json"; sourceTree = "<group>"; };
 		E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-edit.json"; sourceTree = "<group>"; };
 		E6B7728724BCD8DA00CA8AB8 /* SortOrganizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortOrganizer.swift; sourceTree = "<group>"; };
@@ -1000,6 +1002,7 @@
 			children = (
 				E628CBA12527C23100770B44 /* Array+Helpers.swift */,
 				E6B779E924EB2FC5007EA033 /* CGSize+Helpers.swift */,
+				E6AE5242254A103E002FADD7 /* Data+ImageContentType.swift */,
 				E630E33E250029020028BBF2 /* FileManager+Helpers.swift */,
 				E63FF0EB24AA864C0002A32F /* URL+FileReference.swift */,
 				E6C3988B24ACDFC400E0EBE6 /* UserDefaults+Newspack.swift */,
@@ -1741,6 +1744,7 @@
 			files = (
 				E62018DB24F9B18500D96AFF /* UserDefaults+Newspack.swift in Sources */,
 				E61FA94324FD777C0060D301 /* ModelConstants.swift in Sources */,
+				E6AE5243254A103E002FADD7 /* Data+ImageContentType.swift in Sources */,
 				E62018DD24F9B1C700D96AFF /* Environment.swift in Sources */,
 				E63A3A3624FEF84700ACA871 /* ColorStudio.swift in Sources */,
 				E625B03525004F3300C55EDC /* ImageResizer.swift in Sources */,

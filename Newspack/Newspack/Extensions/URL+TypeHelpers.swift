@@ -39,6 +39,13 @@ extension URL {
         return UTTypeConformsTo(uti, kUTTypeMovie)
     }
 
+    var isText: Bool {
+        guard let uti = utiFromPathExtension as NSString? else {
+            return false
+        }
+        return UTTypeConformsTo(uti, kUTTypeText)
+    }
+
     var isPDF: Bool {
         guard let uti = utiFromPathExtension as NSString? else {
             return false

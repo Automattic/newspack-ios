@@ -1,4 +1,5 @@
 import UIKit
+import AVFoundation
 import NewspackFramework
 
 class ShareMediaViewController: UIViewController {
@@ -16,6 +17,9 @@ class ShareMediaViewController: UIViewController {
     var shadowSites = [ShadowSite]()
     var targetStory: ShadowStory?
     var imageURLs = [URL]()
+    var movieURLs = [URL]()
+
+    var mediaDataSource = ShareMediaDataSource()
 
     lazy var extracter: ShareExtractor = {
         guard let tmpDir = FolderManager.createTemporaryDirectory() else {
@@ -133,34 +137,43 @@ extension ShareMediaViewController {
 
     func handleSharedItems(items: ExtractedShare) {
         // Obtain image previews for each shared image.
-        imageURLs = items.images.map { (item) -> URL in
+        imageURLs = items.images.map { item -> URL in
             return item.url
         }
+
+        movieURLs = items.movies.map { item -> URL in
+            return item.url
+        }
+
+        mediaDataSource.buildSections(images: imageURLs, movies: movieURLs)
 
         collectionView.reloadData()
     }
 
     func processSharedItems() {
-        let movedImages = moveImages(images: imageURLs)
-        castShadows(images: movedImages)
+        let urls = imageURLs + movieURLs
+        let movedItems = moveItems(at: urls)
+        castShadows(items: movedItems)
+
     }
 
-    func moveImages(images: [URL]) -> [URL] {
+    func moveItems(at urls: [URL]) -> [URL] {
         let groupFolder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppConstants.appGroupIdentifier)
-        var movedImages = [URL]()
-        for image in imageURLs {
-            let destination = FileManager.default.availableFileURL(for: image.lastPathComponent, isDirectory: false, relativeTo: groupFolder)
+        var movedItems = [URL]()
+
+        for url in urls {
+            let destination = FileManager.default.availableFileURL(for: url.lastPathComponent, isDirectory: false, relativeTo: groupFolder)
             do {
-                try FileManager.default.copyItem(at: image, to: destination)
-                movedImages.append(destination)
+                try FileManager.default.copyItem(at: url, to: destination)
+                movedItems.append(destination)
             } catch {
                 print(error)
             }
         }
-        return movedImages
+        return movedItems
     }
 
-    func castShadows(images: [URL]) {
+    func castShadows(items: [URL]) {
         guard let story = targetStory else {
             // TODO: Handle error
             return
@@ -168,8 +181,8 @@ extension ShareMediaViewController {
 
         let folderManager = FolderManager()
         var shadows = [ShadowAsset]()
-        for image in images {
-            guard let data = folderManager.bookmarkForURL(url: image) else {
+        for item in items {
+            guard let data = folderManager.bookmarkForURL(url: item) else {
                 continue
             }
             let asset = ShadowAsset(storyUUID: story.uuid, bookmarkData: data)
@@ -192,6 +205,25 @@ extension ShareMediaViewController {
         }
 
         return ImageResizer.shared.resizeImage(image: image, identifier: url.path, fillingSize: size)
+    }
+
+    func thumbnailForMovie(at url: URL, size: CGSize) -> UIImage? {
+        if let thumb = ImageResizer.shared.resizedImage(identifier: url.path, size: size) {
+            return thumb
+        }
+
+        let asset = AVURLAsset(url: url, options: nil)
+        let generator = AVAssetImageGenerator(asset: asset)
+        generator.appliesPreferredTrackTransform = true
+        let time = CMTimeMake(value: 0, timescale: 1)
+
+        guard let cgImage = try? generator.copyCGImage(at: time, actualTime: nil) else {
+            return nil
+        }
+
+        return ImageResizer.shared.resizeImage(image: UIImage(cgImage: cgImage),
+                                               identifier: url.path,
+                                               fillingSize: size)
     }
 
 }
@@ -272,19 +304,25 @@ extension ShareMediaViewController: StorySelectorViewControllerDelegate {
 extension ShareMediaViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return mediaDataSource.sections.count
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageURLs.count
+        return mediaDataSource.sections[section].rows.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCellReuseIdentifier", for: indexPath) as! PhotoCell
 
-        let url = imageURLs[indexPath.row]
-        let thumbnail = thumbnailForImage(at: url, size: CGSize(width: minThumbSize, height: minThumbSize))
-        cell.imageView.image = thumbnail
+        let url = mediaDataSource.sections[indexPath.section].rows[indexPath.row].url
+
+        switch mediaDataSource.sections[indexPath.section].type {
+        case .photo:
+            cell.imageView.image = thumbnailForImage(at: url, size: CGSize(width: minThumbSize, height: minThumbSize))
+        case .movie:
+            cell.imageView.image = thumbnailForMovie(at: url, size: CGSize(width: minThumbSize, height: minThumbSize))
+        }
 
         return cell
     }
@@ -314,12 +352,77 @@ extension ShareMediaViewController: UICollectionViewDelegate, UICollectionViewDa
     }
 
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CollectionHeaderView", for: indexPath) as? CollectionHeaderView {
-            ShareAppearance.style(collectionHeader: sectionHeader)
-            sectionHeader.textLabel.text = NSLocalizedString("Photos", comment: "Noun. A collection of thumbnails of images the user is sharing.").uppercased()
-            return sectionHeader
+        guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "CollectionHeaderView", for: indexPath) as? CollectionHeaderView else {
+            return CollectionHeaderView()
         }
-        return CollectionHeaderView()
+
+        ShareAppearance.style(collectionHeader: sectionHeader)
+
+        switch mediaDataSource.sections[indexPath.section].type {
+        case .photo:
+            sectionHeader.textLabel.text = NSLocalizedString("Photos", comment: "Noun. A collection of thumbnails of images the user is sharing.").uppercased()
+        case .movie:
+            sectionHeader.textLabel.text = NSLocalizedString("Movies", comment: "Noun. A collection of thumbnails of movies the user is sharing.").uppercased()
+        }
+
+        return sectionHeader
+    }
+
+}
+
+enum ShareSectionType {
+    case photo
+    case movie
+}
+
+struct ShareMediaRow {
+    let url: URL
+}
+
+struct ShareMediaSection {
+    let title: String
+    let rows: [ShareMediaRow]
+    let type: ShareSectionType
+}
+
+class ShareMediaDataSource {
+
+    private(set) var sections = [ShareMediaSection]()
+
+    func buildSections(images: [URL], movies: [URL]) {
+        sections = [ShareMediaSection]()
+        if let section = buildPhotoSection(items: images) {
+            sections.append(section)
+        }
+        if let section = buildMovieSection(items: movies) {
+            sections.append(section)
+        }
+    }
+
+    func buildPhotoSection(items: [URL]) -> ShareMediaSection? {
+        guard items.count > 0 else {
+            return nil
+        }
+
+        let title = NSLocalizedString("Photos", comment: "Noun. A collection of thumbnails of photos the user is sharing.")
+        var rows = [ShareMediaRow]()
+        for item in items {
+            rows.append(ShareMediaRow(url: item))
+        }
+        return ShareMediaSection(title: title, rows: rows, type: .photo)
+    }
+
+    func buildMovieSection(items: [URL]) -> ShareMediaSection? {
+        guard items.count > 0 else {
+            return nil
+        }
+
+        let title = NSLocalizedString("Movies", comment: "Noun. A collection of thumbnails of movies the user is sharing.")
+        var rows = [ShareMediaRow]()
+        for item in items {
+            rows.append(ShareMediaRow(url: item))
+        }
+        return ShareMediaSection(title: title, rows: rows, type: .movie)
     }
 
 }
