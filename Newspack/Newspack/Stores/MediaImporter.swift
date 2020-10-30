@@ -212,10 +212,11 @@ extension MediaImporter {
     }
 
     /// Copy the file backing a PHAsset to a local directory in preparation for uploading.
-    ///
-    /// - Parameter asset: A PHAsset instance.
-    /// - Parameter contentEditingInput: A PHContentEditingInput instance
-    /// - Returns: The file URL for the copied asset or nil.
+    /// - Parameters:
+    ///   - asset: A PHAsset instance.
+    ///   - contentEditingInput: A PHContentEditingInput instance
+    ///   - onComplete: A block to call on completion. The block accepts an optional URL.
+    /// - Throws: Can throw an exection if there is an error writing the file.
     ///
     func copyAssetToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput, onComplete: @escaping (URL?) -> Void) throws {
         switch asset.mediaType {
@@ -232,9 +233,11 @@ extension MediaImporter {
 
     /// Copy the image backing a PHAsset to a local directory in preparation for uploading.
     ///
-    /// - Parameter asset: A PHAsset instance.  An image is expected.
-    /// - Parameter contentEditingInput: A PHContentEditingInput instance
-    /// - Returns: The file URL for the copied asset or nil.
+    /// - Parameters:
+    ///   - asset: A PHAsset instance.
+    ///   - contentEditingInput: A PHContentEditingInput instance
+    ///   - onComplete: A block to call on completion. The block accepts an optional URL.
+    /// - Throws: Can throw an exection if there is an error writing the file.
     ///
     func copyImageToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput, onComplete: @escaping (URL?) -> Void) throws {
         guard
@@ -255,9 +258,11 @@ extension MediaImporter {
 
     /// Copy the image backing a PHAsset to a local directory in preparation for uploading.
     ///
-    /// - Parameter asset: A PHAsset instance.  A video is expected.
-    /// - Parameter contentEditingInput: A PHContentEditingInput instance
-    /// - Returns: The file URL for the copied asset or nil.
+    /// - Parameters:
+    ///   - asset: A PHAsset instance.
+    ///   - contentEditingInput: A PHContentEditingInput instance
+    ///   - onComplete: A block to call on completion. The block accepts an optional URL.
+    /// - Throws: Can throw an exection if there is an error writing the file.
     ///
     func copyVideoToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput, onComplete: @escaping (URL?) -> Void) throws {
         onComplete(nil)
