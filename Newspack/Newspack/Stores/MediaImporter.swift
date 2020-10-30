@@ -132,9 +132,6 @@ extension MediaImporter {
     /// - Parameter onComplete: A completion handler called when the import is complete.
     ///
     func importAsset(asset: PHAsset, onComplete: @escaping ((PHAsset, URL?, String?, String?, Error?) -> Void)) {
-
-        // TODO: Need to segment on mediaType. For now, assume image.
-
         let options = PHContentEditingInputRequestOptions()
         options.isNetworkAccessAllowed = true
 
@@ -154,10 +151,11 @@ extension MediaImporter {
             }
 
             do {
-                let originalFileName = contentEditingInput.fullSizeImageURL?.pathComponents.last
-                let mime = self.mimeTypeFromUTI(identifier: uniformTypeIdentifier)
-                let fileURL = try self.copyAssetToFile(asset: asset, contentEditingInput: contentEditingInput)
-                onComplete(asset, fileURL, originalFileName, mime, nil)
+                try self.copyAssetToFile(asset: asset, contentEditingInput: contentEditingInput, onComplete: { fileURL in
+                    let originalFileName = contentEditingInput.fullSizeImageURL?.pathComponents.last
+                    let mime = self.mimeTypeFromUTI(identifier: uniformTypeIdentifier)
+                    onComplete(asset, fileURL, originalFileName, mime, nil)
+                })
             } catch {
                 onComplete(asset, nil, nil, nil, error)
             }
@@ -219,18 +217,17 @@ extension MediaImporter {
     /// - Parameter contentEditingInput: A PHContentEditingInput instance
     /// - Returns: The file URL for the copied asset or nil.
     ///
-    func copyAssetToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput) throws -> URL? {
+    func copyAssetToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput, onComplete: @escaping (URL?) -> Void) throws {
         switch asset.mediaType {
         case .image:
-            return try copyImageToFile(asset: asset, contentEditingInput: contentEditingInput)
+            try copyImageToFile(asset: asset, contentEditingInput: contentEditingInput, onComplete: onComplete)
         case .video:
-            return try copyVideoToFile(asset: asset, contentEditingInput: contentEditingInput)
+            try copyVideoToFile(asset: asset, contentEditingInput: contentEditingInput, onComplete: onComplete)
         case .audio:
-            break
+            onComplete(nil)
         default:
-            return nil
+            onComplete(nil)
         }
-        return nil
     }
 
     /// Copy the image backing a PHAsset to a local directory in preparation for uploading.
@@ -239,7 +236,7 @@ extension MediaImporter {
     /// - Parameter contentEditingInput: A PHContentEditingInput instance
     /// - Returns: The file URL for the copied asset or nil.
     ///
-    func copyImageToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput) throws -> URL? {
+    func copyImageToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput, onComplete: @escaping (URL?) -> Void) throws {
         guard
             let originalFileURL = contentEditingInput.fullSizeImageURL,
             let originalImage = CIImage(contentsOf: originalFileURL),
@@ -253,7 +250,7 @@ extension MediaImporter {
 
         try writeImage(image: image, withUTI: uti, toFile: fileURL)
 
-        return fileURL
+        onComplete(fileURL)
     }
 
     /// Copy the image backing a PHAsset to a local directory in preparation for uploading.
@@ -262,8 +259,8 @@ extension MediaImporter {
     /// - Parameter contentEditingInput: A PHContentEditingInput instance
     /// - Returns: The file URL for the copied asset or nil.
     ///
-    func copyVideoToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput) throws -> URL? {
-        return nil
+    func copyVideoToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput, onComplete: @escaping (URL?) -> Void) throws {
+        onComplete(nil)
     }
 
     /// Find a usable import URL for the original URL. If a file already exists
