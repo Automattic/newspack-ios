@@ -215,11 +215,31 @@ extension MediaImporter {
 
     /// Copy the file backing a PHAsset to a local directory in preparation for uploading.
     ///
-    /// - Parameter asset: A PHAsset instance.  An image is expected.
+    /// - Parameter asset: A PHAsset instance.
     /// - Parameter contentEditingInput: A PHContentEditingInput instance
     /// - Returns: The file URL for the copied asset or nil.
     ///
     func copyAssetToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput) throws -> URL? {
+        switch asset.mediaType {
+        case .image:
+            return try copyImageToFile(asset: asset, contentEditingInput: contentEditingInput)
+        case .video:
+            return try copyVideoToFile(asset: asset, contentEditingInput: contentEditingInput)
+        case .audio:
+            break
+        default:
+            return nil
+        }
+        return nil
+    }
+
+    /// Copy the image backing a PHAsset to a local directory in preparation for uploading.
+    ///
+    /// - Parameter asset: A PHAsset instance.  An image is expected.
+    /// - Parameter contentEditingInput: A PHContentEditingInput instance
+    /// - Returns: The file URL for the copied asset or nil.
+    ///
+    func copyImageToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput) throws -> URL? {
         guard
             let originalFileURL = contentEditingInput.fullSizeImageURL,
             let originalImage = CIImage(contentsOf: originalFileURL),
@@ -234,6 +254,16 @@ extension MediaImporter {
         try writeImage(image: image, withUTI: uti, toFile: fileURL)
 
         return fileURL
+    }
+
+    /// Copy the image backing a PHAsset to a local directory in preparation for uploading.
+    ///
+    /// - Parameter asset: A PHAsset instance.  A video is expected.
+    /// - Parameter contentEditingInput: A PHContentEditingInput instance
+    /// - Returns: The file URL for the copied asset or nil.
+    ///
+    func copyVideoToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput) throws -> URL? {
+        return nil
     }
 
     /// Find a usable import URL for the original URL. If a file already exists
