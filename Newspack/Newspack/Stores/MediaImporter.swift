@@ -265,7 +265,26 @@ extension MediaImporter {
     /// - Throws: Can throw an exection if there is an error writing the file.
     ///
     func copyVideoToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput, onComplete: @escaping (URL?) -> Void) throws {
-        onComplete(nil)
+        guard
+            let avAsset = contentEditingInput.audiovisualAsset as? AVURLAsset,
+            let exporter = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPresetHighestQuality),
+            let uniformTypeIdentifier = contentEditingInput.uniformTypeIdentifier
+        else {
+            LogError(message: "Tried to export a video but could not retrive the AVAsset.")
+            onComplete(nil)
+            return
+
+        }
+
+        let fileURL = importURLForOriginalURL(originalURL: avAsset.url)
+        exporter.outputURL = fileURL
+        exporter.outputFileType = AVFileType(rawValue: uniformTypeIdentifier)
+
+        exporter.exportAsynchronously {
+            DispatchQueue.main.async {
+                onComplete(fileURL)
+            }
+        }
     }
 
     /// Find a usable import URL for the original URL. If a file already exists
