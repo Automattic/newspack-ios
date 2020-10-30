@@ -143,7 +143,7 @@ extension MediaImporter {
 
             guard
                 let contentEditingInput = contentEditingInput,
-                let uniformTypeIdentifier = contentEditingInput.uniformTypeIdentifier
+                let uniformTypeIdentifier = self.uniformTypeIdentifier(from: contentEditingInput)
             else {
                 let error = MediaImporterError.missingUniformTypeIdentifier as NSError
                 onComplete(asset, nil, nil, nil, error)
@@ -160,6 +160,33 @@ extension MediaImporter {
                 onComplete(asset, nil, nil, nil, error)
             }
         }
+    }
+
+    /// A helper method for retrieving a uniform type identifier from an
+    /// PHContentEditingInput instance in a more robust fashion.
+    ///
+    /// - Parameter input: An PHContentEditingInput instance.
+    /// - Returns: A uniform type identifier as a string, or nil if one was not available.
+    ///
+    func uniformTypeIdentifier(from input: PHContentEditingInput) -> String? {
+        if let uti = input.uniformTypeIdentifier {
+            return uti
+        }
+
+        // If input.uniformTypeIdentifier was nil, try to get the UTI from the
+        // respective file URL.
+        if input.mediaType == .video {
+            guard let asset = input.audiovisualAsset as? AVURLAsset else {
+                return nil
+            }
+            return asset.url.utiFromPathExtension
+        }
+
+        if input.mediaType == .image {
+            return input.fullSizeImageURL?.utiFromPathExtension
+        }
+
+        return nil
     }
 
     /// Attempt to get an asset's mime type from its uniform type identifier.
@@ -268,7 +295,7 @@ extension MediaImporter {
         guard
             let avAsset = contentEditingInput.audiovisualAsset as? AVURLAsset,
             let exporter = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPresetHighestQuality),
-            let uniformTypeIdentifier = contentEditingInput.uniformTypeIdentifier
+            let uniformTypeIdentifier = uniformTypeIdentifier(from: contentEditingInput)
         else {
             LogError(message: "Tried to export a video but could not retrive the AVAsset.")
             onComplete(nil)
