@@ -132,9 +132,6 @@ extension MediaImporter {
     /// - Parameter onComplete: A completion handler called when the import is complete.
     ///
     func importAsset(asset: PHAsset, onComplete: @escaping ((PHAsset, URL?, String?, String?, Error?) -> Void)) {
-
-        // TODO: Need to segment on mediaType. For now, assume image.
-
         let options = PHContentEditingInputRequestOptions()
         options.isNetworkAccessAllowed = true
 
@@ -146,7 +143,7 @@ extension MediaImporter {
 
             guard
                 let contentEditingInput = contentEditingInput,
-                let uniformTypeIdentifier = contentEditingInput.uniformTypeIdentifier
+                let uniformTypeIdentifier = self.uniformTypeIdentifier(from: contentEditingInput)
             else {
                 let error = MediaImporterError.missingUniformTypeIdentifier as NSError
                 onComplete(asset, nil, nil, nil, error)
@@ -154,14 +151,42 @@ extension MediaImporter {
             }
 
             do {
-                let originalFileName = contentEditingInput.fullSizeImageURL?.pathComponents.last
-                let mime = self.mimeTypeFromUTI(identifier: uniformTypeIdentifier)
-                let fileURL = try self.copyAssetToFile(asset: asset, contentEditingInput: contentEditingInput)
-                onComplete(asset, fileURL, originalFileName, mime, nil)
+                try self.copyAssetToFile(asset: asset, contentEditingInput: contentEditingInput, onComplete: { fileURL in
+                    let originalFileName = contentEditingInput.fullSizeImageURL?.pathComponents.last
+                    let mime = self.mimeTypeFromUTI(identifier: uniformTypeIdentifier)
+                    onComplete(asset, fileURL, originalFileName, mime, nil)
+                })
             } catch {
                 onComplete(asset, nil, nil, nil, error)
             }
         }
+    }
+
+    /// A helper method for retrieving a uniform type identifier from an
+    /// PHContentEditingInput instance in a more robust fashion.
+    ///
+    /// - Parameter input: An PHContentEditingInput instance.
+    /// - Returns: A uniform type identifier as a string, or nil if one was not available.
+    ///
+    func uniformTypeIdentifier(from input: PHContentEditingInput) -> String? {
+        if let uti = input.uniformTypeIdentifier {
+            return uti
+        }
+
+        // If input.uniformTypeIdentifier was nil, try to get the UTI from the
+        // respective file URL.
+        if input.mediaType == .video {
+            guard let asset = input.audiovisualAsset as? AVURLAsset else {
+                return nil
+            }
+            return asset.url.utiFromPathExtension
+        }
+
+        if input.mediaType == .image {
+            return input.fullSizeImageURL?.utiFromPathExtension
+        }
+
+        return nil
     }
 
     /// Attempt to get an asset's mime type from its uniform type identifier.
@@ -214,12 +239,34 @@ extension MediaImporter {
     }
 
     /// Copy the file backing a PHAsset to a local directory in preparation for uploading.
+    /// - Parameters:
+    ///   - asset: A PHAsset instance.
+    ///   - contentEditingInput: A PHContentEditingInput instance
+    ///   - onComplete: A block to call on completion. The block accepts an optional URL.
+    /// - Throws: Can throw an exection if there is an error writing the file.
     ///
-    /// - Parameter asset: A PHAsset instance.  An image is expected.
-    /// - Parameter contentEditingInput: A PHContentEditingInput instance
-    /// - Returns: The file URL for the copied asset or nil.
+    func copyAssetToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput, onComplete: @escaping (URL?) -> Void) throws {
+        switch asset.mediaType {
+        case .image:
+            try copyImageToFile(asset: asset, contentEditingInput: contentEditingInput, onComplete: onComplete)
+        case .video:
+            try copyVideoToFile(asset: asset, contentEditingInput: contentEditingInput, onComplete: onComplete)
+        case .audio:
+            onComplete(nil)
+        default:
+            onComplete(nil)
+        }
+    }
+
+    /// Copy the image backing a PHAsset to a local directory in preparation for uploading.
     ///
-    func copyAssetToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput) throws -> URL? {
+    /// - Parameters:
+    ///   - asset: A PHAsset instance.
+    ///   - contentEditingInput: A PHContentEditingInput instance
+    ///   - onComplete: A block to call on completion. The block accepts an optional URL.
+    /// - Throws: Can throw an exection if there is an error writing the file.
+    ///
+    func copyImageToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput, onComplete: @escaping (URL?) -> Void) throws {
         guard
             let originalFileURL = contentEditingInput.fullSizeImageURL,
             let originalImage = CIImage(contentsOf: originalFileURL),
@@ -233,7 +280,38 @@ extension MediaImporter {
 
         try writeImage(image: image, withUTI: uti, toFile: fileURL)
 
-        return fileURL
+        onComplete(fileURL)
+    }
+
+    /// Copy the image backing a PHAsset to a local directory in preparation for uploading.
+    ///
+    /// - Parameters:
+    ///   - asset: A PHAsset instance.
+    ///   - contentEditingInput: A PHContentEditingInput instance
+    ///   - onComplete: A block to call on completion. The block accepts an optional URL.
+    /// - Throws: Can throw an exection if there is an error writing the file.
+    ///
+    func copyVideoToFile(asset: PHAsset, contentEditingInput: PHContentEditingInput, onComplete: @escaping (URL?) -> Void) throws {
+        guard
+            let avAsset = contentEditingInput.audiovisualAsset as? AVURLAsset,
+            let exporter = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPresetHighestQuality),
+            let uniformTypeIdentifier = uniformTypeIdentifier(from: contentEditingInput)
+        else {
+            LogError(message: "Tried to export a video but could not retrive the AVAsset.")
+            onComplete(nil)
+            return
+
+        }
+
+        let fileURL = importURLForOriginalURL(originalURL: avAsset.url)
+        exporter.outputURL = fileURL
+        exporter.outputFileType = AVFileType(rawValue: uniformTypeIdentifier)
+
+        exporter.exportAsynchronously {
+            DispatchQueue.main.async {
+                onComplete(fileURL)
+            }
+        }
     }
 
     /// Find a usable import URL for the original URL. If a file already exists
