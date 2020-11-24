@@ -57,7 +57,7 @@ extension ToolbarViewController {
 
     @IBAction func handleCameraButton(sender: UIBarButtonItem) {
         guard MediaCaptureController.isCaptureAvailable() else {
-            // TODO: Show alert that the camera is not available.
+            showCameraUnavailableAlert()
             return
         }
 
@@ -69,6 +69,18 @@ extension ToolbarViewController {
 
     @IBAction func handleAudioNoteButton(sender: UIBarButtonItem) {
         LogDebug(message: "tapped \(sender.description)")
+    }
+
+    func showCameraUnavailableAlert() {
+        let alertTitle = NSLocalizedString("Camera Unavailable", comment: "The title of an error message.")
+        let actionTitle = NSLocalizedString("OK", comment: "OK. A button title.")
+        let alertMessage = NSLocalizedString("A camera is not available, or Newspack does not have permission to use the camera.", comment: "An error message.")
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
+        let action = UIAlertAction(title: actionTitle, style: .default, handler: nil)
+        alert.addAction(action)
+
+        present(alert, animated: true, completion: nil)
     }
 
 }
