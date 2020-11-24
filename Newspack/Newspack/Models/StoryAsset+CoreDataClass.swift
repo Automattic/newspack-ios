@@ -51,7 +51,7 @@ enum StoryAssetType: String {
             return .image
         }
 
-        if UTTypeConformsTo(uti, kUTTypeVideo) {
+        if UTTypeConformsTo(uti, kUTTypeMovie) {
             return .video
         }
 
