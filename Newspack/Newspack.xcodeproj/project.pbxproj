@@ -206,6 +206,7 @@
 		E6D0F28324EDC6F800DBE52E /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D0F28224EDC6F800DBE52E /* ImageViewController.swift */; };
 		E6D2194024EF27F90011A2C1 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D2193E24EF27F90011A2C1 /* ImageTableViewCell.swift */; };
 		E6D2194124EF27F90011A2C1 /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6D2193F24EF27F90011A2C1 /* ImageTableViewCell.xib */; };
+		E6D35CEC256F0D1E00DA2284 /* MediaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D35CEB256F0D1E00DA2284 /* MediaDetailViewController.swift */; };
 		E6D44DF3234BDBB500B51438 /* MediaServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */; };
 		E6D6346D251940E8001F20BF /* SyncCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D6346C251940E8001F20BF /* SyncCoordinator.swift */; };
 		E6DB2E002540DB840065572A /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DB2DFE2540DB840065572A /* SwitchTableViewCell.swift */; };
@@ -504,6 +505,7 @@
 		E6D0F28224EDC6F800DBE52E /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		E6D2193E24EF27F90011A2C1 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		E6D2193F24EF27F90011A2C1 /* ImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageTableViewCell.xib; sourceTree = "<group>"; };
+		E6D35CEB256F0D1E00DA2284 /* MediaDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailViewController.swift; sourceTree = "<group>"; };
 		E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceRemote.swift; sourceTree = "<group>"; };
 		E6D6346C251940E8001F20BF /* SyncCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinator.swift; sourceTree = "<group>"; };
 		E6DB2DFE2540DB840065572A /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
@@ -866,6 +868,7 @@
 				E684089F24D0D0ED00C36AB9 /* FolderViewController.swift */,
 				E6D0F28024EDC6C000DBE52E /* PhotoDetailViewController.swift */,
 				E670417A256DC01500375187 /* VideoDetailViewController.swift */,
+				E6D35CEB256F0D1E00DA2284 /* MediaDetailViewController.swift */,
 				E66E85A024CFA1010056E8AB /* StoryNavigationController.swift */,
 				E6D0F28224EDC6F800DBE52E /* ImageViewController.swift */,
 				E605B33124F44B1300E1768B /* TextFieldViewController.swift */,
@@ -1626,6 +1629,7 @@
 				E68408A024D0D0ED00C36AB9 /* FolderViewController.swift in Sources */,
 				E63EECD9234289F700669FFC /* SiteApiService.swift in Sources */,
 				E602E69222C1666C00795CBA /* AccountAction.swift in Sources */,
+				E6D35CEC256F0D1E00DA2284 /* MediaDetailViewController.swift in Sources */,
 				E6AB672824E88182003D5D2A /* VideoTableViewCell.swift in Sources */,
 				E6138FDA2211FE86004E5B91 /* Newspack.xcdatamodeld in Sources */,
 				E66CCA1E2303527D00F1CA59 /* Status+CoreDataClass.swift in Sources */,

@@ -17,6 +17,7 @@ class MainStoryboard {
         case imageView = "ImageViewController"
         case photoDetails = "PhotoDetailViewController"
         case videoDetails = "VideoDetailViewController"
+        case mediaDetails = "MediaDetailViewController"
         case textField = "TextFieldViewController"
     }
 

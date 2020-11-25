@@ -130,14 +130,8 @@ extension AssetsViewController {
 
 extension AssetsViewController {
 
-    func showImageDetail(asset: StoryAsset) {
-        let controller = MainStoryboard.instantiateViewController(withIdentifier: .photoDetails) as! PhotoDetailViewController
-        controller.asset = asset
-        navigationController?.pushViewController(controller, animated: true)
-    }
-
-    func showVideoDetails(asset: StoryAsset) {
-        let controller = MainStoryboard.instantiateViewController(withIdentifier: .videoDetails) as! VideoDetailViewController
+    func showMediaDetail(asset: StoryAsset) {
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .mediaDetails) as! MediaDetailViewController
         controller.asset = asset
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -153,11 +147,8 @@ extension AssetsViewController {
         let asset = dataSource.object(at: indexPath)
 
         switch asset.assetType {
-        case .image:
-            showImageDetail(asset: asset)
-            return
-        case .video:
-            showVideoDetails(asset: asset)
+        case .image, .video:
+            showMediaDetail(asset: asset)
             return
         default:
             break

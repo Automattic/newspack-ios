@@ -564,6 +564,25 @@
             </objects>
             <point key="canvasLocation" x="-353" y="149"/>
         </scene>
+        <!--Media Details-->
+        <scene sceneID="H9S-vj-ofO">
+            <objects>
+                <tableViewController storyboardIdentifier="MediaDetailViewController" title="Media Details" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yVb-gI-VC1" customClass="MediaDetailViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="KMG-7d-Kk3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="yVb-gI-VC1" id="bAF-Gr-y3o"/>
+                            <outlet property="delegate" destination="yVb-gI-VC1" id="ldC-gK-Qkk"/>
+                        </connections>
+                    </tableView>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="org-bl-e0f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="964" y="152"/>
+        </scene>
         <!--Photo Details-->
         <scene sceneID="H4I-Xf-XVI">
             <objects>
@@ -581,7 +600,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="git-xv-79o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="964" y="152"/>
+            <point key="canvasLocation" x="292" y="825"/>
         </scene>
         <!--Video Details-->
         <scene sceneID="8S9-0m-tEo">
