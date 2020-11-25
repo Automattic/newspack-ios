@@ -583,44 +583,6 @@
             </objects>
             <point key="canvasLocation" x="964" y="152"/>
         </scene>
-        <!--Photo Details-->
-        <scene sceneID="H4I-Xf-XVI">
-            <objects>
-                <tableViewController storyboardIdentifier="PhotoDetailViewController" title="Photo Details" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cen-pi-eRG" customClass="PhotoDetailViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="GNq-BY-put">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="cen-pi-eRG" id="J40-pP-0RU"/>
-                            <outlet property="delegate" destination="cen-pi-eRG" id="Goq-2m-QUD"/>
-                        </connections>
-                    </tableView>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="git-xv-79o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="292" y="825"/>
-        </scene>
-        <!--Video Details-->
-        <scene sceneID="8S9-0m-tEo">
-            <objects>
-                <tableViewController storyboardIdentifier="VideoDetailViewController" title="Video Details" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aaY-MM-rch" customClass="VideoDetailViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="fwh-9H-mOP">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <connections>
-                            <outlet property="dataSource" destination="aaY-MM-rch" id="ITu-V9-VjX"/>
-                            <outlet property="delegate" destination="aaY-MM-rch" id="kso-z9-StB"/>
-                        </connections>
-                    </tableView>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YkI-0p-Dlx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="964" y="826"/>
-        </scene>
         <!--Image-->
         <scene sceneID="1Yb-Pc-f3E">
             <objects>
