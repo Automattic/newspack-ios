@@ -198,57 +198,27 @@ class MediaDetailDataSource {
         return MediaDetailSection(title: nil, rows: [row])
     }
 
-    private func buildRowImage() -> UIImage? {
+    private func rowImageSize() -> CGSize {
         let height = CGFloat(ImageTableViewCell.imageHeight)
         let width = presenter?.view.readableContentGuide.layoutFrame.width ?? height * 2
 
-        let size = CGSize(width: width, height: height)
+        return CGSize(width: width, height: height)
+    }
 
-        if let image = ImageResizer.shared.resizedImage(identifier: asset.uuid.uuidString, size: size) {
-            return image
-        }
-        let folderManager = SessionManager.shared.folderManager
-        guard
-            let bookmark = asset.bookmark,
-            let url = folderManager.urlFromBookmark(bookmark: bookmark),
-            let image = UIImage(contentsOfFile: url.path)
-        else {
+    private func buildRowImage() -> UIImage? {
+        guard let bookmark = asset.bookmark else {
             return nil
         }
-
-        return ImageResizer.shared.resizeImage(image: image, identifier: asset.uuid.uuidString, fillingSize: size)
+        let size = rowImageSize()
+        return ImageMaker.imageFromImageFile(at: bookmark, size: size, identifier: asset.uuid.uuidString)
     }
 
     private func buildVideoImage() -> UIImage? {
-        let height = CGFloat(ImageTableViewCell.imageHeight)
-        let width = presenter?.view.readableContentGuide.layoutFrame.width ?? height * 2
-
-        let size = CGSize(width: width, height: height)
-
-        let folderManager = SessionManager.shared.folderManager
-        guard
-            let bookmark = asset.bookmark,
-            let url = folderManager.urlFromBookmark(bookmark: bookmark)
-        else {
+        guard let bookmark = asset.bookmark else {
             return nil
         }
-
-        if let image = ImageResizer.shared.resizedImage(identifier: url.path, size: size) {
-            return image
-        }
-
-        let asset = AVURLAsset(url: url, options: nil)
-        let generator = AVAssetImageGenerator(asset: asset)
-        generator.appliesPreferredTrackTransform = true
-        let time = CMTimeMake(value: 0, timescale: 1)
-
-        guard let cgImage = try? generator.copyCGImage(at: time, actualTime: nil) else {
-            return nil
-        }
-
-        return ImageResizer.shared.resizeImage(image: UIImage(cgImage: cgImage),
-                                               identifier: url.path,
-                                               fillingSize: size)
+        let size = rowImageSize()
+        return ImageMaker.imageFromVideoFile(at: bookmark, size: size, identifier: asset.uuid.uuidString)
     }
 
     private func buildCaptionSection() -> MediaDetailSection {

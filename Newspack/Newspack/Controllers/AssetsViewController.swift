@@ -227,25 +227,20 @@ extension AssetsViewController {
     }
 
     func thumbnail(from asset: StoryAsset, size: CGSize) -> UIImage? {
-        guard asset.assetType == .image else {
+        guard let bookmark = asset.bookmark else {
             return nil
         }
 
-        if let thumb = ImageResizer.shared.resizedImage(identifier: asset.uuid.uuidString, size: size) {
-            return thumb
+        if asset.assetType == .image {
+            return ImageMaker.imageFromImageFile(at: bookmark, size: size, identifier: asset.uuid.uuidString)
+
+        } else if asset.assetType == .video {
+            return ImageMaker.imageFromVideoFile(at: bookmark, size: size, identifier: asset.uuid.uuidString)
         }
 
-        let folderManager = SessionManager.shared.folderManager
-        guard
-            let bookmark = asset.bookmark,
-            let url = folderManager.urlFromBookmark(bookmark: bookmark),
-            let image = UIImage(contentsOfFile: url.path)
-        else {
-            return nil
-        }
-
-        return ImageResizer.shared.resizeImage(image: image, identifier: asset.uuid.uuidString, fillingSize: size)
+        return nil
     }
+
 }
 
 // MARK: - AssetDataSource

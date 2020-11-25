@@ -205,6 +205,7 @@
 		E6D2194024EF27F90011A2C1 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D2193E24EF27F90011A2C1 /* ImageTableViewCell.swift */; };
 		E6D2194124EF27F90011A2C1 /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6D2193F24EF27F90011A2C1 /* ImageTableViewCell.xib */; };
 		E6D35CEC256F0D1E00DA2284 /* MediaDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D35CEB256F0D1E00DA2284 /* MediaDetailViewController.swift */; };
+		E6D35CFD256F150800DA2284 /* ImageMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D35CFC256F150800DA2284 /* ImageMaker.swift */; };
 		E6D44DF3234BDBB500B51438 /* MediaServiceRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */; };
 		E6D6346D251940E8001F20BF /* SyncCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6D6346C251940E8001F20BF /* SyncCoordinator.swift */; };
 		E6DB2E002540DB840065572A /* SwitchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DB2DFE2540DB840065572A /* SwitchTableViewCell.swift */; };
@@ -502,6 +503,7 @@
 		E6D2193E24EF27F90011A2C1 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		E6D2193F24EF27F90011A2C1 /* ImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageTableViewCell.xib; sourceTree = "<group>"; };
 		E6D35CEB256F0D1E00DA2284 /* MediaDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailViewController.swift; sourceTree = "<group>"; };
+		E6D35CFC256F150800DA2284 /* ImageMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMaker.swift; sourceTree = "<group>"; };
 		E6D44DF2234BDBB500B51438 /* MediaServiceRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceRemote.swift; sourceTree = "<group>"; };
 		E6D6346C251940E8001F20BF /* SyncCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinator.swift; sourceTree = "<group>"; };
 		E6DB2DFE2540DB840065572A /* SwitchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTableViewCell.swift; sourceTree = "<group>"; };
@@ -993,6 +995,7 @@
 				E68BA80B2347BAA300AB60F9 /* Environment.swift */,
 				E6B779E724EB2F9D007EA033 /* ImageResizer.swift */,
 				E67339A5232EFEA3007C5E45 /* Logging.swift */,
+				E6D35CFC256F150800DA2284 /* ImageMaker.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1752,6 +1755,7 @@
 				E62018D424F9ACFD00D96AFF /* FolderManager.swift in Sources */,
 				E625B03625004F5700C55EDC /* CGSize+Helpers.swift in Sources */,
 				E62018DC24F9B18F00D96AFF /* URL+FileReference.swift in Sources */,
+				E6D35CFD256F150800DA2284 /* ImageMaker.swift in Sources */,
 				E63A3A3724FEF84C00ACA871 /* UIColor+ColorStudio.swift in Sources */,
 				E62018DA24F9AF4900D96AFF /* AppConstants.swift in Sources */,
 				E62018D824F9AE1500D96AFF /* Logging.swift in Sources */,
