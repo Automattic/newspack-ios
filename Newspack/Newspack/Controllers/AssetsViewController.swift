@@ -136,6 +136,12 @@ extension AssetsViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
 
+    func showVideoDetails(asset: StoryAsset) {
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .videoDetails) as! VideoDetailViewController
+        controller.asset = asset
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
 }
 
 // MARK: - TableViewDelegate methods
@@ -149,6 +155,9 @@ extension AssetsViewController {
         switch asset.assetType {
         case .image:
             showImageDetail(asset: asset)
+            return
+        case .video:
+            showVideoDetails(asset: asset)
             return
         default:
             break
