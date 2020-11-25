@@ -147,6 +147,7 @@
 		E66E8A05223596FE00E8DD88 /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A04223596FE00E8DD88 /* CoreDataManagerTests.swift */; };
 		E66E8A072235979500E8DD88 /* BaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A062235979500E8DD88 /* BaseTest.swift */; };
 		E66E8A1D2235CAC000E8DD88 /* AuthenticationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */; };
+		E670417B256DC01500375187 /* VideoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E670417A256DC01500375187 /* VideoDetailViewController.swift */; };
 		E6710A1722CE9F040036156E /* FadeTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6710A1622CE9F040036156E /* FadeTransitionController.swift */; };
 		E677AAEB24B3C954000FAA3D /* AssetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E677AAEA24B3C954000FAA3D /* AssetStore.swift */; };
 		E677AAED24B4EED9000FAA3D /* AssetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E677AAEC24B4EED9000FAA3D /* AssetAction.swift */; };
@@ -438,6 +439,7 @@
 		E66E8A0B2235A13400E8DD88 /* Aztec.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Aztec.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E66E8A0D2235A15100E8DD88 /* Pods_Newspack.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Newspack.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E66E8A1C2235CAC000E8DD88 /* AuthenticationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationManager.swift; sourceTree = "<group>"; };
+		E670417A256DC01500375187 /* VideoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailViewController.swift; sourceTree = "<group>"; };
 		E6710A1622CE9F040036156E /* FadeTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeTransitionController.swift; sourceTree = "<group>"; };
 		E67339A5232EFEA3007C5E45 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		E677AAEA24B3C954000FAA3D /* AssetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetStore.swift; sourceTree = "<group>"; };
@@ -863,6 +865,7 @@
 				E68689BF243C080400B7E363 /* FoldersViewController.swift */,
 				E684089F24D0D0ED00C36AB9 /* FolderViewController.swift */,
 				E6D0F28024EDC6C000DBE52E /* PhotoDetailViewController.swift */,
+				E670417A256DC01500375187 /* VideoDetailViewController.swift */,
 				E66E85A024CFA1010056E8AB /* StoryNavigationController.swift */,
 				E6D0F28224EDC6F800DBE52E /* ImageViewController.swift */,
 				E605B33124F44B1300E1768B /* TextFieldViewController.swift */,
@@ -1678,6 +1681,7 @@
 				E604EE4B24C774FB0015D284 /* SimpleTableViewCell.swift in Sources */,
 				E66CCA132303527C00F1CA59 /* Status+CoreDataProperties.swift in Sources */,
 				E605418F2369E1920078D978 /* Diagnostics.swift in Sources */,
+				E670417B256DC01500375187 /* VideoDetailViewController.swift in Sources */,
 				E63EECDB23428A0900669FFC /* UserApiService.swift in Sources */,
 				E69446A024DB3FB100D0BF56 /* MediaPickerViewController.swift in Sources */,
 				E66CCA0D2303527C00F1CA59 /* Site+CoreDataProperties.swift in Sources */,
