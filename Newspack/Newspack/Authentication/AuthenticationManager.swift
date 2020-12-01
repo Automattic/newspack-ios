@@ -154,16 +154,18 @@ extension AuthenticationManager: WordPressAuthenticatorDelegate {
         // No op
     }
 
-    func shouldPresentUsernamePasswordController(for siteInfo: WordPressComSiteInfo?, onCompletion: @escaping (Error?, Bool) -> Void) {
+    func shouldPresentUsernamePasswordController(for siteInfo: WordPressComSiteInfo?, onCompletion: @escaping (WordPressAuthenticatorResult) -> Void) {
         if siteInfo?.isWPCom == false && siteInfo?.hasJetpack == false {
             let error = AuthErrors.invalidCredentialsError()
-            onCompletion(error, false)
+            let result: WordPressAuthenticatorResult = .error(value: error)
+            onCompletion(result)
             return
         }
         // Pass false, regardless of whether this is a self-hosted site or not.
         // This is so the authenticator will always attempt wpcom auth.
         // The instructions shown to the user will be to use wpcom credentials.
-        onCompletion(nil, false)
+        let result: WordPressAuthenticatorResult = .presentPasswordController(value: false)
+        onCompletion(result)
     }
 
     /// Indicates if the active Authenticator can be dismissed, or not.
