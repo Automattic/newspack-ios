@@ -15,7 +15,7 @@ class MainStoryboard {
         case web = "WebViewController"
         case folder = "FolderViewController"
         case imageView = "ImageViewController"
-        case photoDetails = "PhotoDetailViewController"
+        case mediaDetails = "MediaDetailViewController"
         case textField = "TextFieldViewController"
     }
 

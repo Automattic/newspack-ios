@@ -1,15 +1,16 @@
 import UIKit
+import AVKit
 import CoreData
 import NewspackFramework
 
 /// Displays details about a photo asset
 ///
-class PhotoDetailViewController: UITableViewController {
+class MediaDetailViewController: UITableViewController {
 
     var asset: StoryAsset!
 
-    lazy var photoDataSource: PhotoDetailDataSource = {
-        return PhotoDetailDataSource(asset: asset, presenter: self)
+    lazy var mediaDataSource: MediaDetailDataSource = {
+        return MediaDetailDataSource(asset: asset, presenter: self)
     }()
 
     override func viewDidLoad() {
@@ -30,8 +31,8 @@ class PhotoDetailViewController: UITableViewController {
 
         // This is a little annoying but it's the simplest mechanism to refresh
         // cells after an edit.
-        if photoDataSource.needsRefresh {
-            photoDataSource.reload()
+        if mediaDataSource.needsRefresh {
+            mediaDataSource.reload()
             tableView.reloadData()
         }
     }
@@ -57,49 +58,49 @@ class PhotoDetailViewController: UITableViewController {
 
 // MARK: - Table view related
 
-extension PhotoDetailViewController {
+extension MediaDetailViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return photoDataSource.sections.count
+        return mediaDataSource.sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photoDataSource.sections[section].rows.count
+        return mediaDataSource.sections[section].rows.count
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let row = photoDataSource.row(indexPath: indexPath) else {
+        guard let row = mediaDataSource.row(indexPath: indexPath) else {
             return
         }
         row.callback()
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let row = photoDataSource.row(indexPath: indexPath) else {
+        guard let row = mediaDataSource.row(indexPath: indexPath) else {
             fatalError()
         }
 
-        if row is ImageRow {
-            return configureImageCell(tableView: tableView, indexPath: indexPath, row: row as! ImageRow)
+        if row is MediaImageRow {
+            return configureImageCell(tableView: tableView, indexPath: indexPath, row: row as! MediaImageRow)
         }
 
-        return configureInfoCell(tableView: tableView, indexPath: indexPath, row: row as! InfoRow)
+        return configureInfoCell(tableView: tableView, indexPath: indexPath, row: row as! MediaInfoRow)
     }
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let sec = photoDataSource.sections[section]
+        let sec = mediaDataSource.sections[section]
         return sec.title
     }
 
-    func configureImageCell(tableView: UITableView, indexPath: IndexPath, row: ImageRow) -> ImageTableViewCell {
+    func configureImageCell(tableView: UITableView, indexPath: IndexPath, row: MediaImageRow) -> ImageTableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: ImageTableViewCell.self, for: indexPath)
         cell.selectionStyle = .none
         cell.configureCell(image: row.image)
         return cell
     }
 
-    func configureInfoCell(tableView: UITableView, indexPath: IndexPath, row: InfoRow) -> UITableViewCell {
+    func configureInfoCell(tableView: UITableView, indexPath: IndexPath, row: MediaInfoRow) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SimpleTableViewCell.reuseIdentifier, for: indexPath)
         cell.accessoryType = .disclosureIndicator
 
@@ -119,31 +120,31 @@ extension PhotoDetailViewController {
 
 // MARK: - Data Model
 
-protocol PhotoDetailsRow {
+protocol MediaDetailsRow {
     var callback: () -> Void { get }
 }
 
-struct InfoRow: PhotoDetailsRow {
+struct MediaInfoRow: MediaDetailsRow {
     let title: String
     let placeholder: String
     let callback: () -> Void
 }
 
-struct ImageRow: PhotoDetailsRow {
+struct MediaImageRow: MediaDetailsRow {
     let image: UIImage?
     let callback: () -> Void
 }
 
-struct PhotoDetailSection {
+struct MediaDetailSection {
     let title: String?
-    let rows: [PhotoDetailsRow]
+    let rows: [MediaDetailsRow]
 }
 
-class PhotoDetailDataSource {
+class MediaDetailDataSource {
 
     private let asset: StoryAsset
     private weak var presenter: UIViewController?
-    private(set) var sections = [PhotoDetailSection]()
+    private(set) var sections = [MediaDetailSection]()
     private(set) var needsRefresh = false
 
     init(asset: StoryAsset, presenter: UIViewController) {
@@ -157,81 +158,99 @@ class PhotoDetailDataSource {
         updateSections()
     }
 
-    func section(indexPath: IndexPath) -> PhotoDetailSection? {
+    func section(indexPath: IndexPath) -> MediaDetailSection? {
         return sections[indexPath.section]
     }
 
-    func row(indexPath: IndexPath) -> PhotoDetailsRow? {
+    func row(indexPath: IndexPath) -> MediaDetailsRow? {
         return sections[indexPath.section].rows[indexPath.row]
     }
 
     private func updateSections() {
+        var firstSection = MediaDetailSection(title: "", rows: [])
+
+        if asset.assetType == .image {
+            firstSection = buildPhotoSection()
+        } else if asset.assetType == .video {
+            firstSection = buildVideoSection()
+        }
+
         sections = [
-            buildPhotoSection(),
+            firstSection,
             buildCaptionSection(),
             buildAltSection()
         ]
     }
 
-    private func buildPhotoSection() -> PhotoDetailSection {
+    private func buildPhotoSection() -> MediaDetailSection {
         let image = buildRowImage()
-        let row = ImageRow(image: image) { [weak self] in
+        let row = MediaImageRow(image: image) { [weak self] in
             self?.showImage()
         }
-        return PhotoDetailSection(title: nil, rows: [row])
+        return MediaDetailSection(title: nil, rows: [row])
     }
 
-    private func buildRowImage() -> UIImage? {
+    private func buildVideoSection() -> MediaDetailSection {
+        let image = buildVideoImage()
+        let row = MediaImageRow(image: image) { [weak self] in
+            self?.showVideo()
+        }
+        return MediaDetailSection(title: nil, rows: [row])
+    }
+
+    private func rowImageSize() -> CGSize {
         let height = CGFloat(ImageTableViewCell.imageHeight)
         let width = presenter?.view.readableContentGuide.layoutFrame.width ?? height * 2
 
-        let size = CGSize(width: width, height: height)
-
-        if let image = ImageResizer.shared.resizedImage(identifier: asset.uuid.uuidString, size: size) {
-            return image
-        }
-        let folderManager = SessionManager.shared.folderManager
-        guard
-            let bookmark = asset.bookmark,
-            let url = folderManager.urlFromBookmark(bookmark: bookmark),
-            let image = UIImage(contentsOfFile: url.path)
-        else {
-            return nil
-        }
-
-        return ImageResizer.shared.resizeImage(image: image, identifier: asset.uuid.uuidString, fillingSize: size)
+        return CGSize(width: width, height: height)
     }
 
-    private func buildCaptionSection() -> PhotoDetailSection {
-        var rows = [InfoRow]()
+    private func buildRowImage() -> UIImage? {
+        guard let bookmark = asset.bookmark else {
+            return nil
+        }
+        let size = rowImageSize()
+        return ImageMaker.imageFromImageFile(at: bookmark, size: size, identifier: asset.uuid.uuidString)
+    }
 
-        rows.append(InfoRow(title: asset.caption, placeholder: Constants.captionPlaceholder, callback: { [weak self] in
+    private func buildVideoImage() -> UIImage? {
+        guard let bookmark = asset.bookmark else {
+            return nil
+        }
+        let size = rowImageSize()
+        return ImageMaker.imageFromVideoFile(at: bookmark, size: size, identifier: asset.uuid.uuidString)
+    }
+
+    private func buildCaptionSection() -> MediaDetailSection {
+        var rows = [MediaInfoRow]()
+
+        rows.append(MediaInfoRow(title: asset.caption, placeholder: Constants.captionPlaceholder, callback: { [weak self] in
             self?.showEditCaption()
         }))
 
-        return PhotoDetailSection(title: Constants.captionTitle, rows: rows)
+        return MediaDetailSection(title: Constants.captionTitle, rows: rows)
     }
 
-    private func buildAltSection() -> PhotoDetailSection {
-        var rows = [InfoRow]()
+    private func buildAltSection() -> MediaDetailSection {
+        var rows = [MediaInfoRow]()
 
         let title = asset.altText ?? ""
-        rows.append(InfoRow(title: title, placeholder: Constants.altPlaceholder, callback: { [weak self] in
+        rows.append(MediaInfoRow(title: title, placeholder: Constants.altPlaceholder, callback: { [weak self] in
             self?.showEditAltText()
         }))
 
-        return PhotoDetailSection(title: Constants.altTitle, rows: rows)
+        return MediaDetailSection(title: Constants.altTitle, rows: rows)
     }
 
     struct Constants {
-        static let captionTitle = NSLocalizedString("Caption", comment: "Noun. An image caption.")
-        static let captionPlaceholder = NSLocalizedString("Enter a caption", comment: "Instruction. A prompt to enter a caption for an image.")
-        static let altTitle = NSLocalizedString("Alt Text", comment: "Noun. The name of the Alternative Text attribute of an HTML image tag.")
-        static let altPlaceholder = NSLocalizedString("Enter alt text", comment: "Instruction. A prompt to enter alt text for an image.")
+        static let captionTitle = NSLocalizedString("Caption", comment: "Noun. An media caption.")
+        static let captionPlaceholder = NSLocalizedString("Enter a caption", comment: "Instruction. A prompt to enter a caption for a media item.")
+        static let altTitle = NSLocalizedString("Alt Text", comment: "Noun. The name of the Alternative Text attribute of an HTML tag.")
+        static let altPlaceholder = NSLocalizedString("Enter alt text", comment: "Instruction. A prompt to enter alt text for a media item.")
     }
 }
 
-extension PhotoDetailDataSource {
+extension MediaDetailDataSource {
 
     private func showImage() {
         let folderManager = SessionManager.shared.folderManager
@@ -248,6 +267,23 @@ extension PhotoDetailDataSource {
         controller.modalPresentationStyle = .fullScreen
         controller.modalTransitionStyle = .crossDissolve
         presenter?.present(controller, animated: true)
+    }
+
+    private func showVideo() {
+        let folderManager = SessionManager.shared.folderManager
+        guard
+            let bookmark = asset.bookmark,
+            let url = folderManager.urlFromBookmark(bookmark: bookmark)
+        else {
+            return
+        }
+
+        let player = AVPlayer(url: url)
+        let controller = AVPlayerViewController()
+        controller.player = player
+        presenter?.present(controller, animated: true) {
+            player.play()
+        }
     }
 
     private func showEditCaption() {

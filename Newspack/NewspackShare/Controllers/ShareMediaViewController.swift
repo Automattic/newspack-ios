@@ -193,37 +193,11 @@ extension ShareMediaViewController {
     }
 
     func thumbnailForImage(at url: URL, size: CGSize) -> UIImage? {
-        if let thumb = ImageResizer.shared.resizedImage(identifier: url.path, size: size) {
-            return thumb
-        }
-
-        guard
-            url.isFileURL,
-            let image = UIImage(contentsOfFile: url.path)
-        else {
-            return nil
-        }
-
-        return ImageResizer.shared.resizeImage(image: image, identifier: url.path, fillingSize: size)
+        return ImageMaker.imageFromImageFile(at: url, size: size, identifier: url.path)
     }
 
     func thumbnailForMovie(at url: URL, size: CGSize) -> UIImage? {
-        if let thumb = ImageResizer.shared.resizedImage(identifier: url.path, size: size) {
-            return thumb
-        }
-
-        let asset = AVURLAsset(url: url, options: nil)
-        let generator = AVAssetImageGenerator(asset: asset)
-        generator.appliesPreferredTrackTransform = true
-        let time = CMTimeMake(value: 0, timescale: 1)
-
-        guard let cgImage = try? generator.copyCGImage(at: time, actualTime: nil) else {
-            return nil
-        }
-
-        return ImageResizer.shared.resizeImage(image: UIImage(cgImage: cgImage),
-                                               identifier: url.path,
-                                               fillingSize: size)
+        return ImageMaker.imageFromVideoFile(at: url, size: size, identifier: url.path)
     }
 
 }
