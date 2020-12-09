@@ -24,7 +24,7 @@ target 'Newspack' do
     pod 'Alamofire', '4.8.0'
     pod 'AlamofireImage', '3.5.2'
 
-    pod 'WordPressAuthenticator', '~> 1.30.0'
+    pod 'WordPressAuthenticator', '~> 1.31.0-beta.4'
     pod 'WordPressKit', '~> 4.19'
     pod 'WPMediaPicker', '~> 1.7.2'
     pod 'WordPressFlux', '1.0.0'
