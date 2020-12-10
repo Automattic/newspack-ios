@@ -145,6 +145,18 @@ class AuthenticationManager {
 
 
 extension AuthenticationManager: WordPressAuthenticatorDelegate {
+    var wpcomTermsOfServiceEnabled: Bool {
+        return true
+    }
+
+    func shouldHandleError(_ error: Error) -> Bool {
+        return false
+    }
+
+    func handleError(_ error: Error, onCompletion: @escaping (UIViewController) -> Void) {
+        // No op
+    }
+
 
     func promptAndNotifyUnableToLogIn() {
         NotificationCenter.default.post(name: .authNeedsRestart, object: nil)
