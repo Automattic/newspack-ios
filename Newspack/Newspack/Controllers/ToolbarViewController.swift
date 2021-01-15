@@ -45,9 +45,8 @@ class ToolbarViewController: UIViewController {
 extension ToolbarViewController {
 
     @IBAction func handleTextNoteButton(sender: UIBarButtonItem) {
-        // Temporary action just for testing.
-        let action = AssetAction.createAssetFor(text: "New Text Note")
-        SessionManager.shared.sessionDispatcher.dispatch(action)
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .textNote)
+        navigationController?.pushViewController(controller, animated: true)
     }
 
     @IBAction func handlePhotoButton(sender: UIBarButtonItem) {

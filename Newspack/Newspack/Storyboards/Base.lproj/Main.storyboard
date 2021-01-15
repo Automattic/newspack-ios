@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hEm-rr-Shu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hEm-rr-Shu">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -582,6 +582,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="org-bl-e0f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="964" y="152"/>
+        </scene>
+        <!--Text Note-->
+        <scene sceneID="LE5-GT-6u0">
+            <objects>
+                <viewController storyboardIdentifier="TextNoteViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Szu-9R-r4d" customClass="TextNoteViewController" customModule="Newspack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bdw-oB-Rer">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" layoutMarginsFollowReadableWidth="YES" allowsEditingTextAttributes="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4WP-Nh-iZJ">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Szu-9R-r4d" id="tsA-Yg-jtc"/>
+                                </connections>
+                            </textView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="rgZ-iq-w36"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="4WP-Nh-iZJ" firstAttribute="top" secondItem="rgZ-iq-w36" secondAttribute="top" id="E0q-0T-c6m"/>
+                            <constraint firstItem="rgZ-iq-w36" firstAttribute="bottom" secondItem="4WP-Nh-iZJ" secondAttribute="bottom" id="LKJ-4X-Sya"/>
+                            <constraint firstItem="rgZ-iq-w36" firstAttribute="trailing" secondItem="4WP-Nh-iZJ" secondAttribute="trailing" id="hRJ-U3-1Kl"/>
+                            <constraint firstItem="4WP-Nh-iZJ" firstAttribute="leading" secondItem="rgZ-iq-w36" secondAttribute="leading" id="y4n-Kd-lWC"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Text Note" id="GmV-cO-fF8"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="textView" destination="4WP-Nh-iZJ" id="yum-Rn-wHz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kFQ-dB-feh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="964" y="822.63868065967017"/>
         </scene>
         <!--Image-->
         <scene sceneID="1Yb-Pc-f3E">
