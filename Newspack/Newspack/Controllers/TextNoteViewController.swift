@@ -11,8 +11,8 @@ class TextNoteViewController: UIViewController {
 
         configureNavbar()
         configureToolbar()
-        configureStyle()
         configureTextView()
+        configureStyle()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -30,7 +30,8 @@ class TextNoteViewController: UIViewController {
     }
 
     func configureStyle() {
-
+        Appearance.style(textView: textView)
+        textView.textContainerInset = UIEdgeInsets.init(top: 16, left: 16, bottom: 16, right: 16)
     }
 
     func configureTextView() {
