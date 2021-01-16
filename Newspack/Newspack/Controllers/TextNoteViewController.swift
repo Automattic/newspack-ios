@@ -2,6 +2,11 @@ import UIKit
 
 class TextNoteViewController: UIViewController {
 
+    private struct Constants {
+        static let encodedTextKey = "encodedTextKey"
+        static let encodedAssetID = "encodedAssetID"
+    }
+
     @IBOutlet var textView: UITextView!
 
     var asset: StoryAsset?
@@ -26,6 +31,31 @@ class TextNoteViewController: UIViewController {
         coordinator.animate(alongsideTransition: { context in
             self.configureInsets()
         })
+    }
+
+    override func encodeRestorableState(with coder: NSCoder) {
+        super.encodeRestorableState(with: coder)
+
+        if let asset = asset {
+            coder.encode(asset.uuid.uuidString, forKey: Constants.encodedAssetID)
+        }
+
+        if !textView.text.isEmpty {
+            coder.encode(textView.text, forKey: Constants.encodedTextKey)
+        }
+    }
+
+    override func decodeRestorableState(with coder: NSCoder) {
+        super.decodeRestorableState(with: coder)
+
+        if let encodedID = coder.decodeObject(forKey: Constants.encodedAssetID) as? String,
+           let uuid = UUID(uuidString: encodedID) {
+            asset = StoreContainer.shared.assetStore.getStoryAssetByID(uuid: uuid)
+        }
+
+        if let text = coder.decodeObject(forKey: Constants.encodedTextKey) as? String {
+            textView.text = text
+        }
     }
 
     func configureNavbar() {
@@ -101,5 +131,5 @@ class TextNoteViewController: UIViewController {
 }
 
 extension TextNoteViewController: UITextViewDelegate {
-
+    // No op for now.
 }
