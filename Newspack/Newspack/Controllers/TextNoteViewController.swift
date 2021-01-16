@@ -13,12 +13,19 @@ class TextNoteViewController: UIViewController {
         configureToolbar()
         configureTextView()
         configureStyle()
+        configureInsets()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         saveOrDiscard()
+    }
+
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { context in
+            self.configureInsets()
+        })
     }
 
     func configureNavbar() {
@@ -31,7 +38,20 @@ class TextNoteViewController: UIViewController {
 
     func configureStyle() {
         Appearance.style(textView: textView)
-        textView.textContainerInset = UIEdgeInsets.init(top: 16, left: 16, bottom: 16, right: 16)
+        configureInsets()
+    }
+
+    func configureInsets() {
+        guard UIDevice().userInterfaceIdiom == .pad else {
+            textView.textContainerInset = UIEdgeInsets.init(top: 16, left: 16, bottom: 16, right: 16)
+            return
+        }
+
+        if UIApplication.shared.windows.first?.windowScene?.interfaceOrientation.isLandscape == true {
+            textView.textContainerInset = UIEdgeInsets.init(top: 16, left: 120, bottom: 16, right: 120)
+        } else {
+            textView.textContainerInset = UIEdgeInsets.init(top: 16, left: 60, bottom: 16, right: 60)
+        }
     }
 
     func configureTextView() {
