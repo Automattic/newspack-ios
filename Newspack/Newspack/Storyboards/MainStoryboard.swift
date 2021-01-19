@@ -17,6 +17,7 @@ class MainStoryboard {
         case imageView = "ImageViewController"
         case mediaDetails = "MediaDetailViewController"
         case textField = "TextFieldViewController"
+        case textNote = "TextNoteViewController"
     }
 
     static func instantiateViewController(withIdentifier identifier: Identifier) -> UIViewController {

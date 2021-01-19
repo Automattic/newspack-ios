@@ -136,6 +136,12 @@ extension AssetsViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
 
+    func showTextNoteDetail(asset: StoryAsset) {
+        let controller = MainStoryboard.instantiateViewController(withIdentifier: .textNote) as! TextNoteViewController
+        controller.asset = asset
+        navigationController?.pushViewController(controller, animated: true)
+    }
+
 }
 
 // MARK: - TableViewDelegate methods
@@ -150,6 +156,8 @@ extension AssetsViewController {
         case .image, .video:
             showMediaDetail(asset: asset)
             return
+        case .textNote:
+            showTextNoteDetail(asset: asset)
         default:
             break
         }

@@ -85,6 +85,13 @@ class Appearance {
         button.setImage(.gridicon(iconType, size: size), for: .normal)
         button.tintColor = .newspackBlue(.shade30)
     }
+
+    // MARK: - Text View Styles
+
+    static func style(textView: UITextView) {
+        textView.textColor = .text
+        textView.font = .preferredFont(forTextStyle: .body)
+    }
 }
 
 // MARK: - Fonts

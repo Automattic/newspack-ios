@@ -8,7 +8,6 @@ protocol TextNoteCellProvider {
 class TextNoteTableViewCell: UITableViewCell {
 
     @IBOutlet var titleLabel: UILabel!
-    @IBOutlet var syncButton: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -18,11 +17,6 @@ class TextNoteTableViewCell: UITableViewCell {
 
     func applyStyles() {
         titleLabel.textColor = .text
-        Appearance.style(cellSyncButton: syncButton, iconType: .cloudUpload)
-    }
-
-    @IBAction func handleSyncTapped() {
-        print("tapped")
     }
 
     func configure(note: TextNoteCellProvider) {

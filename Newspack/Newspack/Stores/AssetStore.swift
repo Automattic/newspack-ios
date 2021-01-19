@@ -69,6 +69,8 @@ class AssetStore: Store {
                 setSortDirection(ascending: ascending)
             case .createAssetFor(let text):
                 createAssetFor(text: text)
+            case .updateText(let assetID, let text):
+                updateText(assetID: assetID, text: text)
             case .deleteAsset(let uuid):
                 deleteAsset(assetID: uuid)
             case .importMedia(let assets):
@@ -428,6 +430,31 @@ extension AssetStore {
             DispatchQueue.main.async {
                 onComplete?()
                 SyncCoordinator.shared.process(steps: [.pushAssetUpdates])
+            }
+        }
+    }
+
+    /// Updates the text of a StoryAsset matching the specified UUID.
+    ///
+    /// - Parameters:
+    ///   - assetID: The UUID of the StoryAsset
+    ///   - text: The text for the text.
+    ///
+    func updateText(assetID: UUID, text: String, onComplete: (() -> Void)? = nil) {
+        guard let asset = getStoryAssetByID(uuid: assetID) else {
+            return
+        }
+
+        let objID = asset.objectID
+        CoreDataManager.shared.performOnWriteContext { context in
+            let asset = context.object(with: objID) as! StoryAsset
+            asset.text = text
+            asset.modified = Date()
+            CoreDataManager.shared.saveContext(context: context)
+
+            DispatchQueue.main.async {
+                onComplete?()
+                // No need to push updates for text changes until that is supported on the server.
             }
         }
     }

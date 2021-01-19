@@ -192,6 +192,7 @@
 		E6AB672924E88182003D5D2A /* VideoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6AB671E24E88182003D5D2A /* VideoTableViewCell.xib */; };
 		E6AB672A24E88182003D5D2A /* StoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AB671F24E88182003D5D2A /* StoryTableViewCell.swift */; };
 		E6AC98B823CCD5DE00E95381 /* MainNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AC98B723CCD5DE00E95381 /* MainNavController.swift */; };
+		E6AC9A25258D15B900F1EB4E /* TextNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AC9A24258D15B900F1EB4E /* TextNoteViewController.swift */; };
 		E6AE5243254A103E002FADD7 /* Data+ImageContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6AE5242254A103E002FADD7 /* Data+ImageContentType.swift */; };
 		E6B4034D22D8E12500A0DDCA /* remote-posts-ids-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */; };
 		E6B4034E22D8E12500A0DDCA /* remote-posts-edit.json in Resources */ = {isa = PBXBuildFile; fileRef = E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */; };
@@ -486,6 +487,7 @@
 		E6AB671E24E88182003D5D2A /* VideoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoTableViewCell.xib; sourceTree = "<group>"; };
 		E6AB671F24E88182003D5D2A /* StoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryTableViewCell.swift; sourceTree = "<group>"; };
 		E6AC98B723CCD5DE00E95381 /* MainNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavController.swift; sourceTree = "<group>"; };
+		E6AC9A24258D15B900F1EB4E /* TextNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextNoteViewController.swift; sourceTree = "<group>"; };
 		E6AE5242254A103E002FADD7 /* Data+ImageContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+ImageContentType.swift"; sourceTree = "<group>"; };
 		E6B4034B22D8E12400A0DDCA /* remote-posts-ids-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-ids-edit.json"; sourceTree = "<group>"; };
 		E6B4034C22D8E12400A0DDCA /* remote-posts-edit.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "remote-posts-edit.json"; sourceTree = "<group>"; };
@@ -871,6 +873,7 @@
 				E65469F824C7A1950083FAA5 /* WebViewController.swift */,
 				E694469D24DB3FA100D0BF56 /* MediaCaptureController.swift */,
 				E694469F24DB3FB100D0BF56 /* MediaPickerViewController.swift */,
+				E6AC9A24258D15B900F1EB4E /* TextNoteViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1686,6 +1689,7 @@
 				E66CCA0D2303527C00F1CA59 /* Site+CoreDataProperties.swift in Sources */,
 				E6A20371253A388600D85EE0 /* ProgressCell.swift in Sources */,
 				E604EE4924C774A80015D284 /* UserView.swift in Sources */,
+				E6AC9A25258D15B900F1EB4E /* TextNoteViewController.swift in Sources */,
 				E66CCA0B2303527C00F1CA59 /* Account+CoreDataProperties.swift in Sources */,
 				E63F3F3C236350BE00DB760E /* MediaTypeDiscerner.swift in Sources */,
 				E695A7E7244FD686007B29BB /* StoryAsset+CoreDataProperties.swift in Sources */,
