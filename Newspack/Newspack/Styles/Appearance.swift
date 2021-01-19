@@ -89,7 +89,7 @@ class Appearance {
     // MARK: - Text View Styles
 
     static func style(textView: UITextView) {
-        textView.textColor = .darkText
+        textView.textColor = .text
         textView.font = .preferredFont(forTextStyle: .body)
     }
 }
