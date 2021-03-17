@@ -153,7 +153,7 @@ extension ShareMediaViewController {
     }
 
     func processSharedItems() {
-        let urls = imageURLs + movieURLs
+        let urls = imageURLs + movieURLs + audioURLs
         let movedItems = moveItems(at: urls)
         castShadows(items: movedItems)
 
