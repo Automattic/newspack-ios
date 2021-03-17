@@ -42,7 +42,7 @@ struct ShareExtractor {
     ///
     func loadShare(completion: @escaping (ExtractedShare) -> Void) {
         extractAudio { (extractedAudio) in
-            extractMovies { extractedMovies in
+            self.extractMovies { extractedMovies in
                 self.extractImages { extractedImages in
                     completion(ExtractedShare(images: extractedImages, movies: extractedMovies, audio: extractedAudio))
                 }
