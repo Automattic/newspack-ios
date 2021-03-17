@@ -11,6 +11,7 @@ class ShareMediaViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var stackView: UIStackView!
 
+    let iconSize = CGSize(width: 44, height: 44)
     let minThumbSize = CGFloat(88)
     let interItemSpacing = CGFloat(2)
 
@@ -290,6 +291,7 @@ extension ShareMediaViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCellReuseIdentifier", for: indexPath) as! PhotoCell
+        cell.imageView.backgroundColor = .neutral(.shade5)
 
         let url = mediaDataSource.sections[indexPath.section].rows[indexPath.row].url
 
@@ -299,7 +301,7 @@ extension ShareMediaViewController: UICollectionViewDelegate, UICollectionViewDa
         case .movie:
             cell.imageView.image = thumbnailForMovie(at: url, size: CGSize(width: minThumbSize, height: minThumbSize))
         case .audio:
-            cell.imageView.image = .gridicon(.speaker)
+            cell.imageView.image = .gridicon(.microphone, size: iconSize)
         }
 
         return cell
