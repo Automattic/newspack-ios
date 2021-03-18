@@ -223,6 +223,7 @@ public class FolderManager {
     public func deleteItem(at source: URL) -> Bool {
         // Do not perform a delete operation on anything outside of our root folder.
         if !folder(rootFolder, contains: source) {
+            LogError(message: "Source item for deletion: \(source) is outside of the root folder: \(rootFolder)")
             return false
         }
 
@@ -230,7 +231,7 @@ public class FolderManager {
             try fileManager.removeItem(at: source)
             return true
         } catch {
-            LogError(message: "Error removing folder. \(error)")
+            LogError(message: "Error removing item. \(error)")
         }
 
         return false
