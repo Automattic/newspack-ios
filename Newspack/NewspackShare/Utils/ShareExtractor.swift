@@ -8,6 +8,7 @@ import NewspackFramework
 struct ExtractedShare {
     var images: [ExtractedImage]
     var movies: [ExtractedMovie]
+    var audio: [ExtractedAudio]
 }
 
 struct ExtractedImage {
@@ -15,6 +16,10 @@ struct ExtractedImage {
 }
 
 struct ExtractedMovie {
+    let url: URL
+}
+
+struct ExtractedAudio {
     let url: URL
 }
 
@@ -36,9 +41,11 @@ struct ShareExtractor {
     ///   - completion: the block to be called when the extractor has obtained content.
     ///
     func loadShare(completion: @escaping (ExtractedShare) -> Void) {
-        extractMovies { extractedMovies in
-            self.extractImages { extractedImages in
-                completion(ExtractedShare(images: extractedImages, movies: extractedMovies))
+        extractAudio { (extractedAudio) in
+            self.extractMovies { extractedMovies in
+                self.extractImages { extractedImages in
+                    completion(ExtractedShare(images: extractedImages, movies: extractedMovies, audio: extractedAudio))
+                }
             }
         }
     }
@@ -65,6 +72,7 @@ private struct ExtractedItem {
     ///
     var images = [ExtractedImage]()
     var movies = [ExtractedMovie]()
+    var audio = [ExtractedAudio]()
 }
 
 private extension ShareExtractor {
@@ -75,6 +83,10 @@ private extension ShareExtractor {
 
     var movieExtractor: ExtensionContentExtractor? {
         return MovieExtractor(tempDirectory: tempDirectory)
+    }
+
+    var audioExtractor: ExtensionContentExtractor? {
+        return AudioExtractor(tempDirectory: tempDirectory)
     }
 
     func extractImages(completion: @escaping ([ExtractedImage]) -> Void) {
@@ -117,8 +129,29 @@ private extension ShareExtractor {
 
             completion(extractedMovies)
         }
-
     }
+
+    func extractAudio(completion: @escaping ([ExtractedAudio]) -> Void) {
+        guard let audioExtractor = audioExtractor else {
+            completion([])
+            return
+        }
+        audioExtractor.extract(context: extensionContext) { extractedItems in
+            guard extractedItems.count > 0 else {
+                completion([])
+                return
+            }
+            var extractedAudio = [ExtractedAudio]()
+            extractedItems.forEach { item in
+                item.audio.forEach { audio in
+                    extractedAudio.append(audio)
+                }
+            }
+
+            completion(extractedAudio)
+        }
+    }
+
 }
 
 private protocol ExtensionContentExtractor {
@@ -282,6 +315,30 @@ private struct MovieExtractor: TypeBasedExtensionContentExtractor {
         case let data as Data:
             if let itemURL = saveToSharedContainer(data: data, fileExtension: "mp4") {
                 returnedItem.movies = [ExtractedMovie(url: itemURL)]
+            }
+        default:
+            break
+        }
+
+        return returnedItem
+    }
+}
+
+private struct AudioExtractor: TypeBasedExtensionContentExtractor {
+    typealias Payload = AnyObject
+    let acceptedType = kUTTypeAudio as String // Note: The UTI for kUTTypeAudio encompases other types
+    let tempDirectory: URL
+    func convert(payload: AnyObject) -> ExtractedItem? {
+        var returnedItem = ExtractedItem()
+
+        switch payload {
+        case let url as URL:
+            if let itemURL = copyToSharedContainer(url: url) {
+                returnedItem.audio = [ExtractedAudio(url: itemURL)]
+            }
+        case let data as Data:
+            if let itemURL = saveToSharedContainer(data: data, fileExtension: "mp3") { //TODO: Maybe this should be a wav or other non-mp3?
+                returnedItem.audio = [ExtractedAudio(url: itemURL)]
             }
         default:
             break

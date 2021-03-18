@@ -33,6 +33,7 @@ class AssetsViewController: ToolbarViewController, UITableViewDelegate {
         tableView.register(UINib(nibName: "TextNoteTableViewCell", bundle: nil), forCellReuseIdentifier: TextNoteTableViewCell.reuseIdentifier)
         tableView.register(UINib(nibName: "PhotoTableViewCell", bundle: nil), forCellReuseIdentifier: PhotoTableViewCell.reuseIdentifier)
         tableView.register(UINib(nibName: "VideoTableViewCell", bundle: nil), forCellReuseIdentifier: VideoTableViewCell.reuseIdentifier)
+        tableView.register(UINib(nibName: "AudioTableViewCell", bundle: nil), forCellReuseIdentifier: AudioTableViewCell.reuseIdentifier)
 
         tableView.tableFooterView = UIView()
         tableView.refreshControl = refreshControl

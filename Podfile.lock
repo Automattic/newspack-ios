@@ -80,6 +80,7 @@ DEPENDENCIES:
   - AlamofireImage (= 3.5.2)
   - CocoaLumberjack (= 3.5.3)
   - CocoaLumberjack/Swift (= 3.5.3)
+  - Gridicons (~> 1.0)
   - KeychainAccess (= 3.2.0)
   - OHHTTPStubs/Swift (= 8.0.0)
   - WordPressAuthenticator (~> 1.31.0-beta.4)
@@ -141,6 +142,6 @@ SPEC CHECKSUMS:
   WPMediaPicker: d5ae9a83cd5cc0e4de46bfc1c59120aa86658bc3
   wpxmlrpc: bf55a43a7e710bd2a4fb8c02dfe83b1246f14f13
 
-PODFILE CHECKSUM: 12d866fd38882d0b4236a17be7dc07d54f6f1cb7
+PODFILE CHECKSUM: 8ac00a67adcbc4aa9d6cb24f66fdadc05bb692e1
 
 COCOAPODS: 1.8.4

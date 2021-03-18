@@ -1,5 +1,6 @@
 import UIKit
 import AVFoundation
+import Gridicons
 import NewspackFramework
 
 class ShareMediaViewController: UIViewController {
@@ -10,6 +11,7 @@ class ShareMediaViewController: UIViewController {
     @IBOutlet var collectionView: UICollectionView!
     @IBOutlet var stackView: UIStackView!
 
+    let iconSize = CGSize(width: 44, height: 44)
     let minThumbSize = CGFloat(88)
     let interItemSpacing = CGFloat(2)
 
@@ -18,6 +20,7 @@ class ShareMediaViewController: UIViewController {
     var targetStory: ShadowStory?
     var imageURLs = [URL]()
     var movieURLs = [URL]()
+    var audioURLs = [URL]()
 
     var mediaDataSource = ShareMediaDataSource()
 
@@ -48,10 +51,6 @@ class ShareMediaViewController: UIViewController {
             interruptSharing()
             return
         }
-        // TODO: Check that we have valid data to work with.
-        // There should be shadow sites, and at least one target story.
-        // If missing show error.
-
 
         configureSharedItems()
     }
@@ -145,13 +144,17 @@ extension ShareMediaViewController {
             return item.url
         }
 
-        mediaDataSource.buildSections(images: imageURLs, movies: movieURLs)
+        audioURLs = items.audio.map { item -> URL in
+            return item.url
+        }
+
+        mediaDataSource.buildSections(images: imageURLs, movies: movieURLs, audio: audioURLs)
 
         collectionView.reloadData()
     }
 
     func processSharedItems() {
-        let urls = imageURLs + movieURLs
+        let urls = imageURLs + movieURLs + audioURLs
         let movedItems = moveItems(at: urls)
         castShadows(items: movedItems)
 
@@ -288,6 +291,7 @@ extension ShareMediaViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCellReuseIdentifier", for: indexPath) as! PhotoCell
+        cell.imageView.backgroundColor = .neutral(.shade5)
 
         let url = mediaDataSource.sections[indexPath.section].rows[indexPath.row].url
 
@@ -296,6 +300,8 @@ extension ShareMediaViewController: UICollectionViewDelegate, UICollectionViewDa
             cell.imageView.image = thumbnailForImage(at: url, size: CGSize(width: minThumbSize, height: minThumbSize))
         case .movie:
             cell.imageView.image = thumbnailForMovie(at: url, size: CGSize(width: minThumbSize, height: minThumbSize))
+        case .audio:
+            cell.imageView.image = .gridicon(.microphone, size: iconSize)
         }
 
         return cell
@@ -337,6 +343,8 @@ extension ShareMediaViewController: UICollectionViewDelegate, UICollectionViewDa
             sectionHeader.textLabel.text = NSLocalizedString("Photos", comment: "Noun. A collection of thumbnails of images the user is sharing.").uppercased()
         case .movie:
             sectionHeader.textLabel.text = NSLocalizedString("Movies", comment: "Noun. A collection of thumbnails of movies the user is sharing.").uppercased()
+        case .audio:
+            sectionHeader.textLabel.text = NSLocalizedString("Audio", comment: "Noun. A collection of thumbnails of audio files the user is sharing.").uppercased()
         }
 
         return sectionHeader
@@ -347,6 +355,7 @@ extension ShareMediaViewController: UICollectionViewDelegate, UICollectionViewDa
 enum ShareSectionType {
     case photo
     case movie
+    case audio
 }
 
 struct ShareMediaRow {
@@ -363,12 +372,15 @@ class ShareMediaDataSource {
 
     private(set) var sections = [ShareMediaSection]()
 
-    func buildSections(images: [URL], movies: [URL]) {
+    func buildSections(images: [URL], movies: [URL], audio: [URL]) {
         sections = [ShareMediaSection]()
         if let section = buildPhotoSection(items: images) {
             sections.append(section)
         }
         if let section = buildMovieSection(items: movies) {
+            sections.append(section)
+        }
+        if let section = buildAudioSection(items: audio) {
             sections.append(section)
         }
     }
@@ -397,6 +409,19 @@ class ShareMediaDataSource {
             rows.append(ShareMediaRow(url: item))
         }
         return ShareMediaSection(title: title, rows: rows, type: .movie)
+    }
+
+    func buildAudioSection(items: [URL]) -> ShareMediaSection? {
+        guard items.count > 0 else {
+            return nil
+        }
+
+        let title = NSLocalizedString("Audio", comment: "Noun. A collection of thumbnails of audio files the user is sharing.")
+        var rows = [ShareMediaRow]()
+        for item in items {
+            rows.append(ShareMediaRow(url: item))
+        }
+        return ShareMediaSection(title: title, rows: rows, type: .audio)
     }
 
 }

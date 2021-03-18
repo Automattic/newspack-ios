@@ -96,7 +96,7 @@ extension AssetStore {
     /// - Returns: True if the URL points to a supported type. Otherwise false.
     ///
     func isSupportedType(url: URL) -> Bool {
-        return url.isImage || url.isVideo
+        return url.isImage || url.isVideo || url.isAudio
     }
 
 }

@@ -39,6 +39,15 @@ target 'Newspack' do
 end
 
 
+## Newspack
+##
+target 'NewspackShare' do
+  project 'Newspack/Newspack.xcodeproj'
+
+  pod 'Gridicons', '~> 1.0'
+
+end
+
 
 ## Newspack
 ##
