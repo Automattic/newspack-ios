@@ -43,10 +43,12 @@ public class FolderManager {
         if
             let root = rootFolder,
             fileManager.fileExists(atPath: root.path, isDirectory: &isDirectory),
-            isDirectory.boolValue,
-            fileManager.isWritableFile(atPath: root.path)
+            isDirectory.boolValue
         {
             self.rootFolder = root
+            if !fileManager.isWritableFile(atPath: root.path) {
+                LogWarn(message: "The specified root folder may not be writable.")
+            }
         } else {
             self.rootFolder = documentDirectory
         }
