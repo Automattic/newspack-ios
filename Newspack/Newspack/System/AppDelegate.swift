@@ -22,18 +22,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configureEventMonitor()
         configureLogger()
 
+        // Configure the session prior to state restoration running.
+        configureSession()
+
         // Configure the window which should call makeKeyAndVisible.
         // Necessary in order to present the authentication flow.
         configureWindow()
-        // Configure the session prior to state restoration running.
-        configureSession()
 
         return true
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Appearance.configureGlobalAppearance()
-
 
         LogInfo(message: "Application did finish launching.")
 
