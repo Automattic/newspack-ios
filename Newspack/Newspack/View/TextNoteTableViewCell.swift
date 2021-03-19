@@ -16,6 +16,7 @@ class TextNoteTableViewCell: UITableViewCell {
     }
 
     func applyStyles() {
+        Appearance.style(cell: self)
         titleLabel.textColor = .text
     }
 
