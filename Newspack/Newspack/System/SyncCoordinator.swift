@@ -337,7 +337,7 @@ extension SyncCoordinator {
     ///
     func configureBackgroundTask() {
         guard backgroundTaskID == .invalid else {
-            // THere is already a long running task cnofigured. No need to configure another.
+            // There is already a long running task configured. No need to configure another.
             return
         }
 
