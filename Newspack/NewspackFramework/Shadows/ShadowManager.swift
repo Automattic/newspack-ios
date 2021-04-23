@@ -15,7 +15,7 @@ public class ShadowManager {
         }
         do {
             try FileManager.default.createDirectory(atPath: url.path, withIntermediateDirectories: false, attributes: nil)
-        } catch  {
+        } catch {
             return nil
         }
         return url
