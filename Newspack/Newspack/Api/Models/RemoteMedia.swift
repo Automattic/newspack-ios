@@ -53,7 +53,11 @@ struct RemoteMedia {
         guid = dict[stringAtKeyPath: "guid.raw"]
         guidRendered = dict[stringAtKeyPath: "guid.rendered"]
         link = dict[stringForKey: "link"]
-        mediaDetails = dict["media_details"] as! [String: AnyObject]
+        if let details = dict["media_details"] as? [String: AnyObject] {
+            mediaDetails = details
+        } else {
+            mediaDetails = [String: AnyObject]()
+        }
         mediaType = dict[stringForKey: "media_type"]
         mimeType = dict[stringForKey: "mime_type"]
         modified = dict[stringForKey: "modified"]
