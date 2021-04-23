@@ -42,8 +42,7 @@ class ShareMediaViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-let dict = UserDefaults.shared.dictionaryRepresentation()
-print("SHARE VIEW LOADED. DEFAULTS: \(dict.debugDescription)")
+
         configureStyle()
         configureNav()
         configureShadows()
