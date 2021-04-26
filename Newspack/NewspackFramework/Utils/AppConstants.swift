@@ -7,4 +7,5 @@ public class AppConstants {
     public static let lastSelectedStoryFolderKey = "LastSelectedStoryFolder_"
     public static let shadowSitesKey = "shadowSitesKey"
     public static let shadowAssetsKey = "shadowAssetsKey"
+    public static let sharedAssetsFolderName = "sharedAssets"
 }

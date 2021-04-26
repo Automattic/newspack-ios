@@ -5,6 +5,22 @@ import Foundation
 ///
 public class ShadowManager {
 
+    public static var shadowFolder: URL? {
+        guard let groupFolder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppConstants.appGroupIdentifier) else {
+            return nil
+        }
+        let url = groupFolder.appendingPathComponent(AppConstants.sharedAssetsFolderName, isDirectory: true)
+        if FileManager.default.fileExists(atPath: url.path) {
+            return url
+        }
+        do {
+            try FileManager.default.createDirectory(atPath: url.path, withIntermediateDirectories: false, attributes: nil)
+        } catch {
+            return nil
+        }
+        return url
+    }
+
     public init() {}
 
     /// Stores the passed array of shadow sites in shared defaults.
@@ -82,8 +98,8 @@ public class ShadowManager {
         // Purge stored defaults.
         UserDefaults.shared.removeObject(forKey: AppConstants.shadowAssetsKey)
 
-        guard let folderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppConstants.appGroupIdentifier) else {
-            LogWarn(message: "Unable to retrieve group directory URL.")
+        guard let folderURL = ShadowManager.shadowFolder else {
+            LogWarn(message: "Unable to retrieve group asset share directory URL.")
             return
         }
 

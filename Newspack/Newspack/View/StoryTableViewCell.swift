@@ -33,6 +33,7 @@ class StoryTableViewCell: UITableViewCell {
     }
 
     func applyStyles() {
+        Appearance.style(cell: self)
         Appearance.style(cellIconButton: textIcon, iconType: .posts)
         Appearance.style(cellIconButton: photosIcon, iconType: .imageMultiple)
         Appearance.style(cellIconButton: videoIcon, iconType: .video)

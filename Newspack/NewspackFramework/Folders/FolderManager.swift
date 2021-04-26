@@ -43,10 +43,12 @@ public class FolderManager {
         if
             let root = rootFolder,
             fileManager.fileExists(atPath: root.path, isDirectory: &isDirectory),
-            isDirectory.boolValue,
-            fileManager.isWritableFile(atPath: root.path)
+            isDirectory.boolValue
         {
             self.rootFolder = root
+            if !fileManager.isWritableFile(atPath: root.path) {
+                LogWarn(message: "The specified root folder may not be writable.")
+            }
         } else {
             self.rootFolder = documentDirectory
         }
@@ -223,6 +225,7 @@ public class FolderManager {
     public func deleteItem(at source: URL) -> Bool {
         // Do not perform a delete operation on anything outside of our root folder.
         if !folder(rootFolder, contains: source) {
+            LogError(message: "Source item for deletion: \(source) is outside of the root folder: \(rootFolder)")
             return false
         }
 
@@ -230,7 +233,7 @@ public class FolderManager {
             try fileManager.removeItem(at: source)
             return true
         } catch {
-            LogError(message: "Error removing folder. \(error)")
+            LogError(message: "Error removing item. \(error)")
         }
 
         return false

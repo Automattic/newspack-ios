@@ -26,6 +26,7 @@ class VideoTableViewCell: ProgressCell {
     }
 
     func applyStyles() {
+        Appearance.style(cell: self)
         titleLabel.textColor = .text
         captionLabel.textColor = .text
         Appearance.style(cellSyncButton: syncButton, iconType: .cloudUpload)

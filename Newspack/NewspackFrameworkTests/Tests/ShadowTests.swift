@@ -88,7 +88,7 @@ class ShadowTests: XCTestCase {
 
         manager.storeShadowAssets(assets: [asset])
 
-        let folderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppConstants.appGroupIdentifier)!
+        let folderURL = ShadowManager.shadowFolder!
         let file = FileManager.default.availableFileURL(for: "file.txt", isDirectory: false, relativeTo: folderURL)
         var success = false
         success = FileManager.default.createFile(atPath: file.path, contents: data, attributes: nil)

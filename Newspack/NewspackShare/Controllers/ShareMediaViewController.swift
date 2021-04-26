@@ -161,11 +161,11 @@ extension ShareMediaViewController {
     }
 
     func moveItems(at urls: [URL]) -> [URL] {
-        let groupFolder = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppConstants.appGroupIdentifier)
+        let shadowFolder = ShadowManager.shadowFolder
         var movedItems = [URL]()
 
         for url in urls {
-            let destination = FileManager.default.availableFileURL(for: url.lastPathComponent, isDirectory: false, relativeTo: groupFolder)
+            let destination = FileManager.default.availableFileURL(for: url.lastPathComponent, isDirectory: false, relativeTo: shadowFolder)
             do {
                 try FileManager.default.copyItem(at: url, to: destination)
                 movedItems.append(destination)
