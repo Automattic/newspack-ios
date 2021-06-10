@@ -129,6 +129,7 @@
 		E65469F724C78C420083FAA5 /* acknowledgements.htm in Resources */ = {isa = PBXBuildFile; fileRef = E65469F624C78C420083FAA5 /* acknowledgements.htm */; };
 		E65469F924C7A1950083FAA5 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65469F824C7A1950083FAA5 /* WebViewController.swift */; };
 		E65875A223A80A1300185C75 /* MediaServiceRemoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65875A123A80A1300185C75 /* MediaServiceRemoteTests.swift */; };
+		E65BF43C2672B28200E4C947 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E65BF43B2672B28200E4C947 /* AudioPlayer.swift */; };
 		E66B7D4522162754004355D3 /* ApiCredentials.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D3F22162754004355D3 /* ApiCredentials.tpl */; };
 		E66B7D4622162754004355D3 /* InfoPlist.tpl in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4022162754004355D3 /* InfoPlist.tpl */; };
 		E66B7D4822162754004355D3 /* replace_secrets.rb in Resources */ = {isa = PBXBuildFile; fileRef = E66B7D4422162754004355D3 /* replace_secrets.rb */; };
@@ -423,6 +424,7 @@
 		E65469F624C78C420083FAA5 /* acknowledgements.htm */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = acknowledgements.htm; sourceTree = "<group>"; };
 		E65469F824C7A1950083FAA5 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		E65875A123A80A1300185C75 /* MediaServiceRemoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaServiceRemoteTests.swift; sourceTree = "<group>"; };
+		E65BF43B2672B28200E4C947 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		E66B7D3F22162754004355D3 /* ApiCredentials.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ApiCredentials.tpl; sourceTree = "<group>"; };
 		E66B7D4022162754004355D3 /* InfoPlist.tpl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = InfoPlist.tpl; sourceTree = "<group>"; };
 		E66B7D4422162754004355D3 /* replace_secrets.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = replace_secrets.rb; sourceTree = "<group>"; };
@@ -962,6 +964,7 @@
 		E62018B224F9AB6700D96AFF /* NewspackFramework */ = {
 			isa = PBXGroup;
 			children = (
+				E65BF4352672B26D00E4C947 /* Audio */,
 				E6190C4624BF834B0060D00A /* ColorStudio.xcassets */,
 				E63A3A3524FEF82900ACA871 /* ColorStudio */,
 				E62018D924F9AF2100D96AFF /* Extensions */,
@@ -1140,6 +1143,14 @@
 				E63F3F3B236350BE00DB760E /* MediaTypeDiscerner.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		E65BF4352672B26D00E4C947 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				E65BF43B2672B28200E4C947 /* AudioPlayer.swift */,
+			);
+			path = Audio;
 			sourceTree = "<group>";
 		};
 		E66B7D3E22162754004355D3 /* Credentials */ = {
@@ -1802,6 +1813,7 @@
 				E61FA94024FD768C0060D301 /* ShadowManager.swift in Sources */,
 				E63A3A3824FEF85100ACA871 /* UIColor+SemanticColors.swift in Sources */,
 				E630E345250040700028BBF2 /* FileManager+Helpers.swift in Sources */,
+				E65BF43C2672B28200E4C947 /* AudioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
